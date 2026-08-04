@@ -1,0 +1,59 @@
+name: Sarj AI Developer API
+description: >-
+  Voice and chat AI agent platform (Arabic + English, KSA/MENA-focused). The public developer API is scoped to outbound
+  voice calls: place a call and retrieve its status, recording, transcript, and post-call report. Exposes a REST API
+  with a live OpenAPI 3.1 contract, a hosted MCP server, an llms.txt, and an official Python SDK.
+url: https://sarj-ai-developer-api.apievangelist.com/apis.yml
+created: '2026-08-04'
+modified: '2026-08-04'
+specificationVersion: '0.21'
+tags:
+  - voice AI
+  - voice agents
+  - conversational AI
+  - Arabic AI
+  - outbound calls
+  - telephony
+  - MCP
+  - agent-native
+  - Saudi Arabia
+  - MENA
+apis:
+  - name: Sarj Voice API
+    description: >-
+      REST API for placing outbound voice calls and retrieving call status, signed recording URL, transcript, and async
+      post-call report. Also exposes a hosted MCP server with createCall/getCall tools.
+    humanURL: https://platform-docs.sarj.ai
+    baseURL: https://platform-api.sarj.ai/api/v1
+    tags:
+      - voice AI
+      - voice agents
+      - conversational AI
+      - Arabic AI
+      - outbound calls
+      - telephony
+      - MCP
+      - agent-native
+      - Saudi Arabia
+      - MENA
+    properties:
+      - type: OpenAPI
+        url: https://platform-docs.sarj.ai/api-reference/openapi.json
+      - type: LLMSTxt
+        url: https://platform-docs.sarj.ai/llms.txt
+      - type: MCP
+        url: https://platform-api.sarj.ai/api/v1/mcp
+      - type: Documentation
+        url: https://platform-docs.sarj.ai
+      - type: Documentation
+        url: https://platform-docs.sarj.ai/getting-started
+      - type: Documentation
+        url: https://platform-docs.sarj.ai/webhooks
+maintainers:
+  - FN: Sarj AI Developer API
+    url: https://www.sarj.ai/en/
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 97
+  at: '2026-08-04T12:01:50.428Z'
