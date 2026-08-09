@@ -1,0 +1,58 @@
+generated: '2026-08-09'
+method: probed
+source: live probes of /.well-known/* across every apis.yml and OpenAPI servers[] host
+hosts_probed:
+  - https://platform-api.sarj.ai
+  - https://platform-docs.sarj.ai
+  - https://www.sarj.ai
+  - https://sarj.ai
+  - https://platform.sarj.ai
+documents:
+  - host: https://platform-api.sarj.ai
+    path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: sarj-ai-developer-api-oauth-authorization-server.json
+    note: >-
+      RFC 8414 authorization-server metadata backing the hosted MCP server's browser sign-in flow. Advertises dynamic
+      client registration (RFC 7591) and PKCE S256, with public clients (token_endpoint_auth_methods_supported = none).
+  - host: https://platform-docs.sarj.ai
+    path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/sarj-ai-developer-api-agent-card.json
+    note: A2A agent card. Indexed here, saved and graded under a2a/.
+  - host: https://platform-docs.sarj.ai
+    path: /.well-known/agent-skills/sarj/skill.md
+    status: 200
+    content_type: text/markdown; charset=utf-8
+    file: ../skills/sarj-ai-developer-api-sarj.md
+    note: Provider-published Agent Skill, referenced by the agent card.
+absent:
+  - path: /.well-known/security.txt
+    hosts: [platform-api.sarj.ai, platform-docs.sarj.ai, www.sarj.ai, sarj.ai, platform.sarj.ai]
+    status: 404
+  - path: /.well-known/openid-configuration
+    hosts: [platform-api.sarj.ai, www.sarj.ai, sarj.ai]
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    hosts: [platform-api.sarj.ai, platform-docs.sarj.ai, www.sarj.ai]
+    status: 404
+    note: >-
+      Absent even though the MCP endpoint answers 401 with WWW-Authenticate: Bearer. RFC 9728 protected-resource
+      metadata is the discovery hop an MCP client uses to locate the authorization server; without it a client must
+      already know to look at platform-api.sarj.ai/.well-known/oauth-authorization-server.
+  - path: /.well-known/api-catalog
+    hosts: [platform-api.sarj.ai, platform-docs.sarj.ai, www.sarj.ai]
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    hosts: [platform-api.sarj.ai, platform-docs.sarj.ai, www.sarj.ai]
+    status: 404
+false_positives_rejected:
+  - url: https://platform-docs.sarj.ai/.well-known/openid-configuration
+    status: 200
+    reason: >-
+      Returned 200 with text/html and a body byte-for-byte the size of the Mintlify SPA shell (203368 bytes). A soft
+      404, not OIDC discovery metadata. Not recorded as a hit.
+x-evidence:
+  fetched: '2026-08-09'

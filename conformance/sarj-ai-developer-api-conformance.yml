@@ -1,0 +1,128 @@
+generated: '2026-08-09'
+method: searched
+source: >-
+  openapi/*.json, https://platform-api.sarj.ai/.well-known/oauth-authorization-server,
+  https://platform-docs.sarj.ai/.well-known/agent-card.json, https://platform-docs.sarj.ai/speech-to-text,
+  https://platform-docs.sarj.ai/text-to-speech, https://www.sarj.ai/en/
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: All four harvested specs declare openapi 3.1.0.
+  - id: oauth2
+    conforms: true
+    partial: true
+    evidence: >-
+      authorization_code + PKCE, published via RFC 8414 metadata at
+      https://platform-api.sarj.ai/.well-known/oauth-authorization-server. Applies only to the MCP transport; the REST
+      APIs are bearer-API-key only.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: 200 application/json at /.well-known/oauth-authorization-server with issuer and endpoint set.
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint published at https://platform-api.sarj.ai/api/v1/oauth/register.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = ["S256"].
+  - id: rfc9728-oauth-protected-resource-metadata
+    conforms: false
+    evidence: >-
+      /.well-known/oauth-protected-resource returns 404 on every host, even though the MCP endpoint answers 401 with
+      WWW-Authenticate: Bearer. MCP clients must be told the authorization server out of band.
+  - id: oidc
+    conforms: false
+    partial: true
+    evidence: >-
+      scopes_supported includes "openid" but no /.well-known/openid-configuration is served, no id_token is
+      advertised, and response_types_supported is ["code"] only. Not an OIDC provider.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Hosted MCP server over HTTP transport at https://platform-api.sarj.ai/api/v1/mcp, documented with Claude Code
+      and Cursor install instructions. tools/list is auth-gated (401), so protocol version was not observed.
+  - id: a2a
+    conforms: true
+    grade: conformant
+    evidence: >-
+      Agent card served at https://platform-docs.sarj.ai/.well-known/agent-card.json; capabilities is an object,
+      protocolVersion is present, skills is an array. Deviations recorded in a2a/sarj-ai-developer-api-a2a.yml.
+  - id: llms-txt
+    conforms: true
+    evidence: https://platform-docs.sarj.ai/llms.txt returns 200 text/plain with Docs and OpenAPI Specs sections.
+  - id: agent-skills
+    conforms: true
+    evidence: >-
+      Provider-published skill at /.well-known/agent-skills/sarj/skill.md, advertised from the agent card.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a vendor envelope {"error": {"type", "message"}, "meta": {"request_id"}} with content-type
+      application/json, not application/problem+json. Typed and discriminated, but not the IETF shape.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on platform-api, platform-docs, www.sarj.ai, sarj.ai and platform.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation headers declared in any spec; no deprecation policy published.
+  - id: e164-phone-numbers
+    conforms: true
+    evidence: CreateCallRequest.phone_number documented and exemplified as E.164 ("+966512345678").
+  - id: openai-audio-api-compatibility
+    conforms: true
+    evidence: >-
+      Provider states both speech APIs are drop-in compatible with the OpenAI Audio Transcriptions and Speech APIs.
+      Corroborated by the harvested specs: POST /openai/v1/audio/transcriptions and POST /v1/audio/speech with
+      model/voice/input/response_format parameters.
+  - id: iso8601-timestamps
+    conforms: true
+    evidence: created_at, started_at, ended_at are ISO 8601 UTC in the spec and webhook examples.
+  - id: cursor-pagination
+    conforms: true
+    partial: true
+    evidence: >-
+      cursor + limit query parameters on list operations in the platform spec. Absent from the public developer API,
+      which exposes no list operation.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header or equivalent in any of the four specs. POST /calls is a billable, non-idempotent
+      side-effecting operation.
+regional_frameworks:
+  claimed_on: https://www.sarj.ai/en/
+  claim_text: 'SAMA-ready NCA & SDAIA frameworks with ECC & CCC audits available'
+  frameworks:
+    - id: sama
+      name: Saudi Central Bank (SAMA) framework
+      status: claimed-ready
+    - id: nca-ecc
+      name: National Cybersecurity Authority — Essential Cybersecurity Controls
+      status: audit-available
+    - id: nca-ccc
+      name: National Cybersecurity Authority — Cloud Cybersecurity Controls
+      status: audit-available
+    - id: sdaia
+      name: Saudi Data & AI Authority framework
+      status: claimed-ready
+  caveat: >-
+    These are marketing bullets on the company homepage, phrased as readiness and "audits available" rather than as
+    held certifications. No trust centre, compliance page, audit report or certificate is published — trust.sarj.ai
+    and security.sarj.ai do not resolve, and www.sarj.ai/en/security returns 404. No Compliance pointer is emitted in
+    apis.yml, because there is no published compliance programme behind the claim.
+certifications_published: []
+findings:
+  - id: strong-agent-standards-weak-web-standards
+    detail: >-
+      Sarj conforms to the newest agent-facing standards — MCP, A2A, agent skills, llms.txt — while missing older,
+      cheaper web-API hygiene: no security.txt, no RFC 9457 errors, no protected-resource metadata, no Sunset headers.
+      The agent surface is ahead of the API surface.
+x-evidence:
+  - url: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/.well-known/agent-card.json
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/llms.txt
+    http_status: 200
+  - url: https://platform-api.sarj.ai/.well-known/oauth-protected-resource
+    http_status: 404
+  - url: https://www.sarj.ai/en/security
+    http_status: 404

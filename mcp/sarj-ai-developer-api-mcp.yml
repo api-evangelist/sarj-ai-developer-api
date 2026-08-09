@@ -1,0 +1,53 @@
+generated: '2026-08-09'
+method: searched
+status: published
+source: https://platform-docs.sarj.ai/mcp-server
+server:
+  name: sarj-voice
+  transport: http
+  url: https://platform-api.sarj.ai/api/v1/mcp
+  note: >-
+    The endpoint requires the trailing slash. POST to /api/v1/mcp (no slash) answers 307 with a Location that
+    downgrades to http://; POST to /api/v1/mcp/ answers directly.
+authentication:
+  model: oauth2
+  flow: authorization_code
+  pkce: S256
+  dynamic_client_registration: true
+  authorization_server_metadata: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
+  scopes_supported:
+    - openid
+  described_as: >-
+    On first connect the MCP client opens a browser to the Sarj.ai sign-in page; an API key is minted server-side and
+    cached by the client. No manual key handling.
+introspection:
+  attempted: '2026-08-09'
+  method: tools/list
+  gated: true
+  http_status: 401
+  www_authenticate: Bearer
+  response: '{"error":{"type":"unauthorized","message":"Authentication required."}}'
+  note: >-
+    The live tool schemas require an authenticated session, so inputSchema could not be captured anonymously. The tool
+    names and purposes below are taken verbatim from the provider's published MCP Server documentation and Agent
+    Skill, not guessed. Real input contracts are inherited from the backing OpenAPI operations — see
+    mcp/sarj-ai-developer-api-tool-crosswalk.yml.
+tools:
+  - name: createCall
+    description: Place an outbound voice call.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - name: getCall
+    description: Fetch call details by call_id.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+clients_documented:
+  - name: Claude Code
+    install: claude mcp add sarj-voice --transport http https://platform-api.sarj.ai/api/v1/mcp
+  - name: Cursor
+    install: 'mcpServers entry: {"sarj-voice": {"type": "http", "url": "https://platform-api.sarj.ai/api/v1/mcp"}}'
+x-evidence:
+  - url: https://platform-docs.sarj.ai/mcp-server
+    http_status: 200
+  - url: https://platform-api.sarj.ai/api/v1/mcp/
+    http_status: 401
+  - url: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
+    http_status: 200

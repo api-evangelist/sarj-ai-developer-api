@@ -1,0 +1,21 @@
+# Sarj.ai
+
+> Voice AI platform — build production AI-powered phone calls
+
+## Docs
+
+- [Fetch Sarj.ai voice call details by call_id](https://platform-docs.sarj.ai/api-reference/calls/fetch-sarjai-voice-call-details-by-call_id.md): Fetch details of a Sarj.ai voice call by call_id: status, phone_number, scenario_id, language, direction (inbound/outbound), scenario variables, duration (seconds), recording_url (signed download link), transcript (list of spoken messages), report (post-call outcome with success-criteria results; ge…
+- [Place an outbound Sarj.ai voice call](https://platform-docs.sarj.ai/api-reference/calls/place-an-outbound-sarjai-voice-call.md): Place an outbound Sarj.ai voice call: dials the given phone_number and runs the specified scenario (with optional template variables and language). Returns a call_id that can be polled via getCall. Use this whenever the user asks to call, dial, ring, or phone someone through Sarj.ai — do not attempt…
+- [Health Check](https://platform-docs.sarj.ai/api-reference/system/health-check.md): Returns the operational status of the API. Does not require authentication.
+- [Getting Started](https://platform-docs.sarj.ai/getting-started.md): REST quickstart — API key, health check, first call.
+- [Sarj.ai Developer API](https://platform-docs.sarj.ai/index.md): REST API and MCP server for outbound voice calls.
+- [MCP Server](https://platform-docs.sarj.ai/mcp-server.md): Expose the Sarj.ai API as MCP tools for AI agents.
+- [Overview](https://platform-docs.sarj.ai/overview.md)
+- [Speech-to-Text](https://platform-docs.sarj.ai/speech-to-text.md)
+- [Text-to-Speech](https://platform-docs.sarj.ai/text-to-speech.md)
+- [Webhooks](https://platform-docs.sarj.ai/webhooks.md): Receive a POST when a call ends — completed, no answer, or failed.
+
+## OpenAPI Specs
+
+- [openapi](https://platform-docs.sarj.ai/api-reference/openapi.json)
+- [openapi-internal](https://platform-docs.sarj.ai/api-reference/openapi-internal.json)

@@ -1,0 +1,50 @@
+generated: '2026-08-09'
+method: searched
+source: https://pypi.org/pypi/sarj-platform-sdk/json
+packages:
+  - language: python
+    registry: pypi
+    name: sarj-platform-sdk
+    url: https://pypi.org/project/sarj-platform-sdk/
+    install: pip install sarj-platform-sdk
+    version: 0.2.0
+    license: Apache-2.0
+    author: Sarj.ai
+    requires_python: '>=3.10'
+    repository: https://github.com/sarj-ai/bulbul
+    official: true
+    documented_at: https://platform-docs.sarj.ai/getting-started
+    entrypoint: 'from sarj_platform_sdk import SDK; SDK(api_key_auth=...)'
+registries_probed:
+  - registry: pypi
+    result: hit
+    package: sarj-platform-sdk
+  - registry: npm
+    result: none
+    note: >-
+      No first-party JavaScript/TypeScript client. The Getting Started page shows TypeScript examples using bare
+      fetch(), not an SDK.
+  - registry: maven-central
+    result: none
+  - registry: nuget
+    result: none
+  - registry: pkg.go.dev
+    result: none
+  - registry: rubygems
+    result: none
+  - registry: packagist
+    result: none
+  - registry: crates.io
+    result: none
+github:
+  organization: https://github.com/sarj-ai
+  public_repos: 1
+  note: >-
+    The org's only public repo is `standards` (internal engineering standards for Python, TypeScript, SQL and IaC).
+    The SDK's declared repository, sarj-ai/bulbul, is not public — the Python SDK ships to PyPI without a readable
+    source repository.
+x-evidence:
+  - url: https://pypi.org/pypi/sarj-platform-sdk/json
+    http_status: 200
+  - url: https://api.github.com/orgs/sarj-ai/repos
+    http_status: 200

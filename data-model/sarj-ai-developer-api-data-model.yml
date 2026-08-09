@@ -1,0 +1,129 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  openapi/sarj-ai-developer-api-developer-openapi.json, openapi/sarj-ai-developer-api-tts-openapi.json,
+  https://platform-docs.sarj.ai/webhooks
+scope: >-
+  Derived from the public developer OpenAPI ($ref graph + id-reference fields) and the TTS spec. The 99-operation
+  platform spec and the speech APIs are separate surfaces; only entities reachable from the documented developer
+  contract and the TTS voice catalog are modelled here.
+entities:
+  - name: Call
+    schema: PublicCall
+    detail_schema: PublicCallDetail
+    id_field: id
+    id_prefix: call_
+    id_format: 'call_ + UUID v4'
+    description: A single outbound voice call placed against a scenario.
+    fields:
+      - {name: id, type: string}
+      - {name: status, type: CallStatus}
+      - {name: phone_number, type: string, format: E.164}
+      - {name: scenario_id, type: string, references: Scenario}
+      - {name: direction, type: PhoneDirection}
+      - {name: language, type: Language}
+      - {name: duration, type: integer, unit: seconds, nullable_until: call end}
+      - {name: recording_url, type: string, format: signed-url, expiring: true}
+      - {name: transcript, type: array, items: PublicTranscriptMessage}
+      - {name: report, type: PublicCallReport, async: true}
+      - {name: created_at, type: string, format: date-time}
+  - name: Scenario
+    schema: null
+    id_field: scenario_id
+    id_prefix: scn_
+    description: >-
+      The conversational script a call runs. Referenced by every call but NOT modelled as a schema in the public
+      OpenAPI and not creatable through the API — scenarios exist only in the dashboard.
+    external: true
+    managed_in: https://platform.sarj.ai/scenarios
+  - name: TranscriptMessage
+    schema: PublicTranscriptMessage
+    description: One spoken turn in the call transcript.
+    fields:
+      - {name: role, type: string, values: [user, assistant]}
+      - {name: content, type: string}
+  - name: CallReport
+    schema: PublicCallReport
+    description: >-
+      Post-call outcome assessment generated asynchronously (~2 minutes after completion). Contains the scenario's
+      success-criteria results.
+    fields:
+      - {name: outcome, type: PublicCallOutcome}
+      - {name: success_criteria_results, type: array, items: PublicSuccessCriteriaResult}
+  - name: SuccessCriteriaResult
+    schema: PublicSuccessCriteriaResult
+    description: One evaluated success criterion from the scenario definition.
+  - name: Organization
+    schema: null
+    description: >-
+      The tenant an API key is bound to. Never returned by the public API, but it is the implicit scope of every
+      call, of the single webhook URL, and of the no_organization / scenario_forbidden errors.
+    external: true
+    implicit: true
+  - name: Voice
+    schema: null
+    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    id_field: voice_id
+    description: A TTS voice. Catalogued via GET /v1/voices.
+    known_values: [ars_male, ars_fares, ars_female_expressive]
+  - name: VoiceProfile
+    schema: null
+    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    id_field: profile_id
+    description: A cloned voice created from a 6-10 second reference recording. Full CRUD under /v1/voices/profiles.
+  - name: TtsModel
+    schema: null
+    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    id_field: model_id
+    description: A speech-synthesis model. Catalogued via GET /v1/models.
+relationships:
+  - from: Call
+    to: Scenario
+    type: belongs_to
+    via: scenario_id
+    note: Required on creation; the scenario is not resolvable through the public API.
+  - from: Call
+    to: Organization
+    type: belongs_to
+    via: implicit (API key binding)
+  - from: Call
+    to: TranscriptMessage
+    type: has_many
+    via: transcript
+  - from: Call
+    to: CallReport
+    type: has_one
+    via: report
+    cardinality_note: Zero-or-one — absent until generated, and never generated for non-completed calls.
+  - from: CallReport
+    to: SuccessCriteriaResult
+    type: has_many
+    via: success_criteria_results
+  - from: VoiceProfile
+    to: Voice
+    type: belongs_to
+    via: voice_id
+    confidence: medium
+    note: Inferred from the TTS path structure (/v1/voices/profiles); not asserted by a $ref in the spec.
+envelopes:
+  - name: ApiResponse
+    variants:
+      - ApiResponse_HealthStatus_
+      - ApiResponse_PublicCall_
+      - ApiResponse_PublicCallDetail_
+    shape: '{data, meta}'
+  - name: ErrorResponse
+    shape: '{error, meta}'
+    discriminator: error.type
+    variants: 13
+    see: errors/sarj-ai-developer-api-problem-types.yml
+findings:
+  - id: scenario-is-a-hole-in-the-model
+    detail: >-
+      Scenario is the central object of the product — a call cannot be placed without one — yet it has no schema, no
+      operations and no way to be listed, created or validated through the API. An agent cannot discover which
+      scenario IDs it is allowed to use; it must be told one out of band.
+  - id: no-list-operation
+    detail: >-
+      The public developer API exposes no way to enumerate calls. Every read is by known call_id, so the only durable
+      record of what was called is the integrator's own or the dashboard's.

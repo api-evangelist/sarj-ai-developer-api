@@ -1,0 +1,193 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  mcp/sarj-ai-developer-api-mcp.yml + openapi/sarj-ai-developer-api-developer-openapi.json +
+  openapi/sarj-ai-developer-api-voice-platform-openapi.json
+surfaces:
+  openapi:
+    - file: openapi/sarj-ai-developer-api-developer-openapi.json
+      title: Sarj.ai Developer API
+      operations: 3
+      gated: false
+      note: The public, documented developer contract. This is what the MCP tools are bound to.
+    - file: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+      title: Sarj.ai Voice API
+      operations: 99
+      gated: false
+      note: >-
+        Served unauthenticated at the API host root (https://platform-api.sarj.ai/openapi.json). The full platform
+        surface — batches, SIP trunking, messaging, report templates, CRM integrations — of which the 3-operation
+        developer API is a curated subset. Not referenced from the developer documentation.
+  not_harvested:
+    - url: https://platform-docs.sarj.ai/api-reference/openapi-internal.json
+      title: Sarj.ai Internal API
+      http_status: 200
+      content_type: application/json
+      size_bytes: 706105
+      operations: 204
+      security_scheme: SarjJwtAuth
+      harvested: false
+      reason: >-
+        Publicly served and deliberately linked from the provider's own llms.txt under "## OpenAPI Specs", but it is
+        titled "Sarj.ai Internal API" and describes an internal control plane — user administration, organization
+        membership and role assignment, phone-number provisioning, SIP connection management, call flagging and
+        export, scenario insights. API Evangelist recorded its existence with evidence but deliberately did not mirror
+        it into this public repo, and wires no apis.yml pointer to it. Surfacing the exposure is useful; amplifying
+        204 internal operations is not.
+      action: Raise with the provider — see findings.internal-spec-publicly-linked below.
+  graphql: null
+  mcp:
+    url: https://platform-api.sarj.ai/api/v1/mcp
+    gated: true
+    note: tools/list returns 401 Bearer; tool names taken from published docs, input schemas inherited from REST.
+crosswalk:
+  - tool: createCall
+    category: calls
+    rest:
+      - createCall
+    binding: rest
+    confidence: high
+    note: >-
+      Documented 1:1 by the provider ("Place an outbound voice call (see POST /calls)"). Input schema is
+      CreateCallRequest — phone_number (E.164, required), scenario_id (scn_-prefixed, required), variables (object),
+      language (en|ar|ur, default ar).
+  - tool: getCall
+    category: calls
+    rest:
+      - getCall
+    binding: rest
+    confidence: high
+    note: >-
+      Documented 1:1 by the provider ("Fetch call details by call_id (see GET /calls/{call_id})"). Input is the
+      call_id path parameter; response carries status, recording_url, transcript and the async report.
+mcp_only: []
+rest_only:
+  - capability: System health
+    operations:
+      - getHealth
+    note: Unauthenticated health check; no MCP tool exposed.
+  - capability: Batch calling
+    operations:
+      - batchCreateBatch
+      - batchGenerateUploadUrl
+      - batchGetBatchDetail
+      - batchGetBatchCalls
+      - batchRetryCall
+      - batchRetryBatch
+      - batchSetBatchStatus
+      - batchUpdateBatchSettings
+      - batchExportBatchReports
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+    note: >-
+      The MCP Server docs advertise batch call automation as an agent use case, but there is no batch tool — an agent
+      must loop createCall. The batch operations exist only on the platform spec.
+  - capability: Call management beyond create/read
+    operations:
+      - callsCreateChat
+      - callsCreateClientCall
+      - callsGetTranscriptions
+      - callsRetryCallOutcome
+      - callsCountForOrg
+      - callsBlockNumber
+      - callsUnblockNumber
+      - callsListPhoneNumbers
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  - capability: Report templates
+    operations:
+      - reportTemplatesListReportTemplates
+      - reportTemplatesCreateReportTemplate
+      - reportTemplatesGetDefaultReportTemplate
+      - reportTemplatesSetDefaultReportTemplate
+      - reportTemplatesClearDefaultReportTemplate
+      - reportTemplatesUpdateReportTemplate
+      - reportTemplatesDeleteReportTemplate
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  - capability: SIP trunk administration
+    operations:
+      - organizationSipAssignOutboundTrunk
+      - organizationSipListAllOutboundTrunks
+      - organizationSipGetDefaultOutboundTrunks
+      - organizationSipSetDefaultOutboundTrunk
+      - organizationSipDeleteDefaultOutboundTrunk
+      - organizationSipUnassignOutboundTrunk
+      - organizationSipGetAvailableOutboundTrunks
+      - organizationSipListOrganizationsForTrunk
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  - capability: Messaging sessions and settings
+    operations:
+      - messagingSocialbotWebhook
+      - messagingGetSession
+      - messagingGetMessages
+      - messagingEndSession
+      - adminCreateConfig
+      - adminGetConfig
+      - adminUpdateConfig
+      - adminDeleteConfig
+      - adminGetConfigsByOrg
+      - adminListConfigs
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  - capability: CRM integrations (Zoho)
+    operations:
+      - integrationsListActiveProviders
+      - integrationsGetToken
+      - integrationsDeleteToken
+      - integrationsAddToken
+      - integrationsRefreshAll
+      - integrationsZohoAuthorize
+      - integrationsZohoWebhook
+      - integrationsGetNotifications
+      - integrationsCreateNotification
+      - integrationsRemoveNotifications
+    source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  - capability: Speech-to-Text
+    operations:
+      - groq_transcriptions_endpoint_openai_v1_audio_transcriptions_post
+    source: openapi/sarj-ai-developer-api-stt-openapi.json
+    note: >-
+      The published Agent Skill tells agents to reach for the speech APIs, but no MCP tool covers them. An agent must
+      call STT/TTS over plain REST on separate hosts.
+  - capability: Text-to-Speech and voice profiles
+    operations:
+      - create_speech_v1_audio_speech_post
+      - create_speech_clone_v1_audio_speech_clone_post
+      - list_voices_v1_voices_get
+      - create_profile_v1_voices_profiles_post
+      - get_profile_v1_voices_profiles__profile_id__get
+      - delete_profile_v1_voices_profiles__profile_id__delete
+      - update_profile_v1_voices_profiles__profile_id__patch
+      - list_models_v1_models_get
+      - get_model_v1_models__model_id__get
+      - create_script_audio_v1_audio_script_post
+    source: openapi/sarj-ai-developer-api-tts-openapi.json
+coverage:
+  tools_named: 2
+  tools_bound: 2
+  tools_unbound: 0
+  mcp_only: 0
+  rest_ops_developer_spec: 3
+  rest_ops_developer_spec_with_tool: 2
+  rest_ops_all_specs: 118
+  rest_ops_all_specs_with_tool: 2
+findings:
+  - id: agent-surface-narrower-than-rest
+    detail: >-
+      Two MCP tools against 118 published REST operations. The MCP server is a deliberate, tightly-scoped projection of
+      the 3-operation developer API, not a projection of the platform. Batch calling and the speech APIs are both named
+      as agent use cases in the provider's own Agent Skill but have no tool behind them.
+  - id: no-divergence
+    detail: >-
+      No mcp_only tools. Every tool has a public REST operation behind it, so an agent's tool contract and the
+      documented HTTP contract cannot drift apart.
+  - id: three-tier-spec-exposure
+    detail: >-
+      Sarj publishes three concentric OpenAPI documents: a curated 3-operation developer API, a 99-operation platform
+      API served unauthenticated at the API host root, and a 204-operation internal API linked from llms.txt. Only the
+      first is documented. An agent following llms.txt — which lists both openapi.json and openapi-internal.json under
+      "OpenAPI Specs" — is pointed at all of it.
+  - id: internal-spec-publicly-linked
+    detail: >-
+      https://platform-docs.sarj.ai/api-reference/openapi-internal.json returns 200 and is referenced from the
+      provider's own llms.txt. It describes user and organization administration, role assignment, phone-number
+      provisioning and SIP management under a SarjJwtAuth scheme. Whether this is intentional is the provider's call
+      to make, but it is worth putting in front of them: an llms.txt entry is an explicit invitation for agents to
+      read it.

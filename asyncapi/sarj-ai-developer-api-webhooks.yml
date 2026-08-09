@@ -1,0 +1,100 @@
+generated: '2026-08-09'
+method: searched
+source: https://platform-docs.sarj.ai/webhooks
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Sarj publishes no AsyncAPI document. Probes for /asyncapi.yaml and /asyncapi.json on every host missed, the docs
+  sitemap lists no event-catalog page, and the GitHub org holds no spec repo. The event surface below is captured from
+  the provider's prose webhook documentation — it is a faithful catalog of what they publish, not a fabricated spec.
+transport: https
+delivery: push
+direction: provider-to-consumer
+configuration:
+  where: https://platform.sarj.ai
+  granularity: one webhook URL per organization
+  per_event_filtering: false
+  note: >-
+    A single URL per organization, configured only in the dashboard. There is no API to register, list, rotate or
+    delete a webhook endpoint, and no way to subscribe to a subset of event types.
+endpoint_requirements:
+  - Reachable over HTTPS (HTTP works for staging but is not recommended)
+  - Return 2xx within 10 seconds
+  - Be idempotent — deduplicate on call_id
+envelope:
+  shape: '{"call_id": "...", "payload": {...}}'
+  discriminator: payload.type
+events:
+  - type: complete
+    summary: Call reached the customer and finished.
+    fires_when: The call reached a terminal completed state.
+    payload_fields:
+      - call_started
+      - call_data.call_id
+      - call_data.direction
+      - call_data.phone_number
+      - call_data.status
+      - call_data.total_duration
+      - call_data.enhanced_transcript.transcript.messages
+      - call_data.enhanced_transcript.errors
+      - call_data.report
+      - call_data.recording_url
+      - call_data.created_at
+      - call_data.started_at
+      - call_data.ended_at
+      - response_body
+    note: >-
+      The only variant carrying a body. Includes the full signed recording URL, transcript and report — the same data
+      getCall returns, pushed the moment it is available.
+  - type: no_answer
+    summary: Rang, no pickup.
+    payload_fields: [type]
+  - type: user_rejected
+    summary: Customer hung up or rejected the call.
+    payload_fields: [type]
+  - type: user_unavailable
+    summary: Carrier returned unavailable (phone off, out of coverage).
+    payload_fields: [type]
+  - type: automation
+    summary: Hit an IVR, voicemail or other non-human answer.
+    payload_fields: [type]
+  - type: failed
+    summary: Telephony failure with no SIP-level reason.
+    payload_fields: [type]
+retries:
+  attempts: 3
+  backoff: fixed
+  delay_seconds: 2
+  per_attempt_timeout_seconds: 10
+  triggers: [network error, timeout, non-2xx response]
+  after_exhaustion: >-
+    Delivery is marked failed and the per-call webhook state is recorded server-side. The data remains durable and
+    re-fetchable via getCall.
+security:
+  signature_verification: false
+  signature_note: >-
+    HMAC webhook signature verification is documented as "not yet shipped". The provider's own guidance is to lock the
+    endpoint down by IP allow-listing (source range from support) or by adding a hard-to-guess secret path component
+    to the URL.
+  gap: >-
+    This is the most significant security gap on the event surface. Without signatures a receiver cannot verify that a
+    completed-call payload — which carries a transcript, a signed recording URL and the outcome report — actually came
+    from Sarj. Obscurity of the URL path is the only control offered.
+testing:
+  dashboard_button: 'Send test webhook'
+  behavior: Fires a synthetic `complete` payload at the configured URL.
+  then: Place a real test call to verify end-to-end.
+findings:
+  - id: no-asyncapi
+    detail: >-
+      The event surface is real, well-documented and typed by a payload.type discriminator — it is a good candidate
+      for an AsyncAPI 3.x document. Publishing one would make the six event variants machine-readable alongside the
+      OpenAPI.
+  - id: no-webhook-management-api
+    detail: Endpoints are dashboard-only, so webhook configuration cannot be automated or managed as code.
+x-evidence:
+  - url: https://platform-docs.sarj.ai/webhooks
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/sitemap.xml
+    http_status: 200
+    note: Ten pages total; no event-catalog or AsyncAPI page.

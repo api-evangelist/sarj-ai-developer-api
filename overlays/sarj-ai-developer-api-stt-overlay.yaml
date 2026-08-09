@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Sarj STT API
+  version: 1.0.0
+extends: openapi/sarj-ai-developer-api-stt-openapi.json
+x-provenance:
+  generated: '2026-08-09'
+  method: generated
+  source: openapi/sarj-ai-developer-api-stt-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: sarj-ai-developer-api
+      x-apievangelist-reviewed: '2026-08-09'
+      x-apievangelist-docs: https://platform-docs.sarj.ai/speech-to-text
+      x-apievangelist-note: >-
+        Harvested from the API host root at https://stt-rnnt-ar.sarj.ai/openapi.json. The spec declares no servers[];
+        the production base URL documented by the provider is https://stt-rnnt-ar.sarj.ai/openai/v1.
+  - target: $.info
+    update:
+      x-apievangelist-compatibility:
+        family: OpenAI Audio Transcriptions
+        drop_in: true
+        source: https://platform-docs.sarj.ai/speech-to-text
+  - target: $.paths['/openai/v1/audio/transcriptions'].post
+    update:
+      x-apievangelist-note: >-
+        Documented parameters are file (required), model (required, use "conformer"), language (e.g. "ar") and
+        response_format (json | text | verbose_json, default json). Recommended audio is 16 kHz mono PCM WAV.
+        Real-time streaming is documented in prose but not modelled in this spec.
+      x-apievangelist-mcp-tool: null
+  - target: $.paths['/debug/decode'].post
+    update:
+      x-apievangelist-note: >-
+        A debug endpoint exposed on the public production spec and absent from the documentation. Flagged for the
+        provider rather than recommended for integrator use.

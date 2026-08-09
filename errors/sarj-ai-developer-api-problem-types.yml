@@ -1,0 +1,119 @@
+generated: '2026-08-09'
+method: derived
+source: openapi/sarj-ai-developer-api-developer-openapi.json
+docs: https://platform-docs.sarj.ai/getting-started
+format: vendor-envelope
+format_note: >-
+  Not RFC 9457. Errors are returned as application/json with a Sarj envelope, not application/problem+json, and there
+  is no `type` URI, `title`, `detail`, `instance` or `status` member. The envelope is
+  {"error": {"type", "message", ...}, "meta": {"request_id"}}. The `type` member is a stable machine-readable slug,
+  and the OpenAPI models it as a discriminated union — so the taxonomy is genuinely typed, just not the IETF shape.
+envelope:
+  error_object: error
+  discriminator: error.type
+  human_message: error.message
+  correlation: meta.request_id
+  guidance: >-
+    "Always branch on error.type — the message field is for humans only." (Getting Started)
+problems:
+  - type: validation_error
+    status: 422
+    title: Validation error
+    fields:
+      - field_violations
+    description: Request body or parameters failed validation; field_violations carries per-field detail.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: unauthorized
+    status: 401
+    title: Missing or invalid API key
+    description: No Authorization header, or the bearer API key is invalid.
+    remediation: 'Generate a key at https://platform.sarj.ai/api-keys and send it as: Authorization: Bearer <api-key>'
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall, #getCall
+  - type: no_organization
+    status: 403
+    title: API key not associated with an organization
+    description: The key authenticated but is not bound to an organization, so no call context can be resolved.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+  - type: phone_number_blocked
+    status: 403
+    title: Phone number blocked
+    fields:
+      - phone_number
+    description: The destination number is on a block list and will not be dialed.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: scenario_forbidden
+    status: 403
+    title: Scenario access denied
+    fields:
+      - scenario_id
+    description: The scenario exists but the authenticated organization may not use it.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: scenario_not_found
+    status: 404
+    title: Scenario not found
+    fields:
+      - scenario_id
+    description: No scenario matches the supplied scn_-prefixed ID.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: scenario_invalid_config
+    status: 400
+    title: Scenario configuration invalid
+    fields:
+      - scenario_id
+    description: The scenario is misconfigured and cannot be run.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: call_not_found
+    status: 404
+    title: Call not found
+    fields:
+      - call_id
+    description: No call matches the supplied call_id for this organization.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+  - type: not_found
+    status: 404
+    title: Resource not found
+    description: Generic not-found fallback.
+  - type: outbound_call_failed
+    status: 400
+    title: Outbound call failed
+    fields:
+      - reason
+    description: The call could not be placed; reason carries the telephony-level cause.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: call_limit_exceeded
+    status: 429
+    title: Call limit exceeded
+    fields:
+      - phone_number
+      - call_limit
+    description: >-
+      A per-phone-number call limit was hit. The payload returns the limit that was exceeded. This is the only
+      rate-limiting signal the API publishes — there are no X-RateLimit-* response headers and no Retry-After in the
+      spec.
+    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+  - type: oauth_invalid_redirect_uri
+    status: 400
+    title: Invalid OAuth redirect URI
+    fields:
+      - redirect_uri
+    description: >-
+      Raised by the MCP OAuth authorization flow when a dynamically registered client presents a redirect URI that
+      does not validate.
+  - type: internal_error
+    status: 500
+    title: Internal error
+    description: Unhandled server-side failure.
+findings:
+  - id: typed-discriminated-union
+    detail: >-
+      Thirteen error types modelled as a oneOf with an explicit OpenAPI discriminator on error.type, each with its own
+      payload fields. This is unusually good machine-readable error design for an API of this size — an agent can
+      branch deterministically without string-matching messages.
+  - id: not-rfc9457
+    detail: >-
+      Uses a vendor envelope rather than application/problem+json. Adopting RFC 9457 (or simply adding a `type` URI
+      and `status` member) would make the taxonomy portable to generic problem-details tooling.
+  - id: no-error-reference-page
+    detail: >-
+      The documentation has no error reference page. The full taxonomy exists only inside the OpenAPI component
+      schemas; a human reading the docs sees only the envelope shape in Getting Started.

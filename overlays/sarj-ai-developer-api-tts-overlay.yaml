@@ -1,0 +1,47 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Sarj TTS API
+  version: 1.0.0
+extends: openapi/sarj-ai-developer-api-tts-openapi.json
+x-provenance:
+  generated: '2026-08-09'
+  method: generated
+  source: openapi/sarj-ai-developer-api-tts-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: sarj-ai-developer-api
+      x-apievangelist-reviewed: '2026-08-09'
+      x-apievangelist-docs: https://platform-docs.sarj.ai/text-to-speech
+      x-apievangelist-note: >-
+        Harvested from the API host root at https://sarj-omni-tts.sarj.ai/openapi.json. The spec declares no
+        servers[]; the documented production base URL is https://sarj-omni-tts.sarj.ai/v1. info.version is 0.3.0 —
+        the least mature of the four Sarj specs.
+  - target: $.info
+    update:
+      x-apievangelist-compatibility:
+        family: OpenAI Speech
+        drop_in: true
+        source: https://platform-docs.sarj.ai/text-to-speech
+  - target: $.paths['/v1/audio/speech'].post
+    update:
+      x-apievangelist-note: >-
+        Documented parameters are model (required, "gpt-4o-mini-tts"), voice (required), input (required),
+        response_format (default wav) and num_step (default 16). Published voices are ars_male, ars_fares and
+        ars_female_expressive.
+  - target: $.paths['/v1/audio/speech/clone'].post
+    update:
+      x-apievangelist-note: >-
+        Voice cloning from a reference sample. Provider guidance is a clean 6-10 second recording with matching
+        reference text.
+      x-agentic-access:
+        action-class: acting
+        consequence: physical
+        note: >-
+          Raised above the pipeline default. Cloning a voice from a reference recording is a biometric-adjacent
+          operation with consent implications; it should not be exposed to an agent without an explicit human step.
+  - target: $.paths['/metrics'].get
+    update:
+      x-apievangelist-note: >-
+        An operational metrics endpoint present on the public production spec and absent from the documentation.
+        Flagged for the provider rather than recommended for integrator use.

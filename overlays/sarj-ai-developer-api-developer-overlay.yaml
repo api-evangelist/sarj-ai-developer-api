@@ -1,0 +1,62 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Sarj.ai Developer API
+  version: 1.0.0
+extends: openapi/sarj-ai-developer-api-developer-openapi.json
+x-provenance:
+  generated: '2026-08-09'
+  method: generated
+  source: openapi/sarj-ai-developer-api-developer-openapi.json
+  note: >-
+    Captures API Evangelist observations as an Overlay so the harvested spec is never mutated. Every statement here is
+    grounded in a probed URL or in the spec itself.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: sarj-ai-developer-api
+      x-apievangelist-reviewed: '2026-08-09'
+      x-apievangelist-surface: public-developer-api
+      x-apievangelist-note: >-
+        The documented public contract: 3 operations. A 99-operation platform spec is served unauthenticated at
+        https://platform-api.sarj.ai/openapi.json and is captured separately as
+        openapi/sarj-ai-developer-api-voice-platform-openapi.json.
+  - target: $.info
+    update:
+      x-agent-surfaces:
+        mcp: https://platform-api.sarj.ai/api/v1/mcp
+        agent_card: https://platform-docs.sarj.ai/.well-known/agent-card.json
+        agent_skill: https://platform-docs.sarj.ai/.well-known/agent-skills/sarj/skill.md
+        llms_txt: https://platform-docs.sarj.ai/llms.txt
+  - target: $.paths['/calls'].post
+    update:
+      x-apievangelist-idempotency:
+        supported: false
+        note: >-
+          No Idempotency-Key is accepted. This operation places a real, billable phone call, so a retry after a
+          timeout dials the recipient a second time. Callers must deduplicate before sending.
+      x-agentic-access:
+        action-class: acting
+        consequence: physical
+        note: >-
+          Raised above the pipeline's default classification: this operation causes a phone to ring at a real
+          person's number and incurs telephony cost. Treat as an irreversible external side effect.
+  - target: $.paths['/calls'].post
+    update:
+      x-apievangelist-mcp-tool: createCall
+  - target: $.paths['/calls/{call_id}'].get
+    update:
+      x-apievangelist-mcp-tool: getCall
+      x-apievangelist-note: >-
+        recording_url is a signed, time-limited URL; re-fetch this operation for a fresh one rather than storing it.
+        report is null until roughly two minutes after completion and may never appear for calls that did not
+        complete.
+  - target: $.components.schemas.ErrorResponse
+    update:
+      x-apievangelist-error-format:
+        rfc9457: false
+        envelope: '{"error": {"type", "message"}, "meta": {"request_id"}}'
+        discriminator: error.type
+        types: 13
+        note: >-
+          Typed, discriminated and machine-branchable, but not application/problem+json. See
+          errors/sarj-ai-developer-api-problem-types.yml.
