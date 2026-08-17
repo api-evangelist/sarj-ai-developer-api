@@ -6,7 +6,7 @@ description: >-
   call API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech with
   voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, an A2A agent card, a
   published Agent Skill, an llms.txt, webhook push notifications for call completion, and an official Python SDK.
-url: https://sarj-ai-developer-api.apievangelist.com/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/sarj-ai-developer-api/refs/heads/main/apis.yml
 image: https://www.sarj.ai/og-image.png
 created: '2026-08-04'
 modified: '2026-08-09'
