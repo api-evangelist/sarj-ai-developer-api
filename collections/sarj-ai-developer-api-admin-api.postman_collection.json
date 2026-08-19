@@ -1,0 +1,875 @@
+{
+  "item": [
+    {
+      "id": "86315133-07f2-4ccf-a381-2d339fc2b768",
+      "name": "admin",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "282a6dae-0a7a-4c71-adc0-24f2ba9838e9",
+          "name": "Create Config",
+          "request": {
+            "name": "Create Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": 7423.297783821497,\n    \"key_1\": 7342,\n    \"key_2\": 7584,\n    \"key_3\": false,\n    \"key_4\": \"string\"\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4da56285-06e0-4c61-9de2-9f2a71d3529b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": 6841.4241805834545,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"provider\": \"<string>\",\n  \"name\": \"string\",\n  \"config\": {\n    \"key_0\": 1044,\n    \"key_1\": true\n  },\n  \"has_auth_token\": true,\n  \"enabled\": true,\n  \"created_by\": \"string\",\n  \"updated_by\": \"string\",\n  \"created_at\": \"2008-11-07T10:05:03.379Z\",\n  \"updated_at\": \"1980-03-28T03:40:26.003Z\",\n  \"scenario_inbox_mappings\": [\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    },\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "790b9f99-e5d5-41b9-bf0e-cd572e637f4f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": 6841.4241805834545,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0576a788-1211-4813-9d48-e767f840ebf1",
+          "name": "Get Config",
+          "request": {
+            "name": "Get Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs",
+                ":config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "config_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7a8adab-f431-4f7f-b6d6-4f8334a6fbd8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"provider\": \"<string>\",\n  \"name\": \"string\",\n  \"config\": {\n    \"key_0\": true,\n    \"key_1\": true\n  },\n  \"has_auth_token\": true,\n  \"enabled\": false,\n  \"created_by\": \"string\",\n  \"updated_by\": \"string\",\n  \"created_at\": \"2008-07-15T22:42:33.444Z\",\n  \"updated_at\": \"2023-08-29T08:53:43.651Z\",\n  \"scenario_inbox_mappings\": [\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    },\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e3a77f3-76ee-483c-9bfe-58cf7df2dfd5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77a31fdb-a4c5-4574-8b1e-f5652648904a",
+          "name": "Update Config",
+          "request": {
+            "name": "Update Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs",
+                ":config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "config_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": false\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6332003e-ab9d-4630-b946-2a2fef76b849",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"provider\": \"<string>\",\n  \"name\": \"string\",\n  \"config\": {\n    \"key_0\": true,\n    \"key_1\": true\n  },\n  \"has_auth_token\": true,\n  \"enabled\": false,\n  \"created_by\": \"string\",\n  \"updated_by\": \"string\",\n  \"created_at\": \"2008-07-15T22:42:33.444Z\",\n  \"updated_at\": \"2023-08-29T08:53:43.651Z\",\n  \"scenario_inbox_mappings\": [\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    },\n    {\n      \"scenario_id\": \"string\",\n      \"inbox_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d584740-2623-410d-a5e7-50b20fe442a0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"name\": \"<string>\",\n  \"config\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  },\n  \"auth_token\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb57400e-e3c0-41ef-9392-62d241eb1f9f",
+          "name": "Delete Config",
+          "request": {
+            "name": "Delete Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs",
+                ":config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "config_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5cd0d04-2907-4a6b-953c-966bf0a345e0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b30ffcf-a8be-407b-b59b-e147ed1ed96c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    ":config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "config_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d9f544c-8e03-45a3-9810-ce489ec94f25",
+          "name": "Get Configs By Org",
+          "request": {
+            "name": "Get Configs By Org",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs",
+                "org",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "organization_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03c2625d-d548-4707-8ce5-9eb3e200ab42",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    "org",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"organization_id\": \"string\",\n    \"provider\": \"<string>\",\n    \"name\": \"string\",\n    \"config\": {\n      \"key_0\": 712,\n      \"key_1\": 5993.763903828932\n    },\n    \"has_auth_token\": true,\n    \"enabled\": true,\n    \"created_by\": \"string\",\n    \"updated_by\": \"string\",\n    \"created_at\": \"1961-11-15T21:56:31.901Z\",\n    \"updated_at\": \"2017-05-13T11:17:29.717Z\",\n    \"scenario_inbox_mappings\": [\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      },\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"organization_id\": \"string\",\n    \"provider\": \"<string>\",\n    \"name\": \"string\",\n    \"config\": {\n      \"key_0\": 5414,\n      \"key_1\": 4939,\n      \"key_2\": 5132.684998090572,\n      \"key_3\": 8186.993613224672,\n      \"key_4\": 5827\n    },\n    \"has_auth_token\": true,\n    \"enabled\": false,\n    \"created_by\": \"string\",\n    \"updated_by\": \"string\",\n    \"created_at\": \"2019-12-08T15:19:30.381Z\",\n    \"updated_at\": \"2009-03-17T17:49:57.210Z\",\n    \"scenario_inbox_mappings\": [\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      },\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76d607f8-13f4-4d20-a121-3f06f8b07b67",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    "org",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "267cca2b-22df-4145-80d5-7b43d801d4bb",
+          "name": "List Configs",
+          "request": {
+            "name": "List Configs",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "messaging-settings",
+                "configs",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ace94f94-2ea9-4fcf-b7de-1440e5cfd656",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"organization_id\": \"string\",\n    \"provider\": \"<string>\",\n    \"name\": \"string\",\n    \"config\": {\n      \"key_0\": \"string\"\n    },\n    \"has_auth_token\": true,\n    \"enabled\": false,\n    \"created_by\": \"string\",\n    \"updated_by\": \"string\",\n    \"created_at\": \"1959-04-14T17:49:19.145Z\",\n    \"updated_at\": \"2017-03-27T11:19:39.533Z\",\n    \"scenario_inbox_mappings\": [\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      },\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"organization_id\": \"string\",\n    \"provider\": \"<string>\",\n    \"name\": \"string\",\n    \"config\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": 3886.208267465413\n    },\n    \"has_auth_token\": false,\n    \"enabled\": true,\n    \"created_by\": \"string\",\n    \"updated_by\": \"string\",\n    \"created_at\": \"1978-12-26T21:18:58.468Z\",\n    \"updated_at\": \"2020-05-18T12:33:22.666Z\",\n    \"scenario_inbox_mappings\": [\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      },\n      {\n        \"scenario_id\": \"string\",\n        \"inbox_id\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4585f35-82cc-4997-abfa-b7230b2093c4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "messaging-settings",
+                    "configs",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<uuid>\",\n  \"provider\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fa1db89e-cb15-44e1-8e27-851f46eb8495",
+    "name": "Sarj.ai Voice Admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

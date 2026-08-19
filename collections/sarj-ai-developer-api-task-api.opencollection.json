@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Task API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "task",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start Batch Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/start-batch-calls"
+          },
+          "docs": "Start Batch Calls"
+        },
+        {
+          "info": {
+            "name": "Dispatch Outbound Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/dispatch-outbound-calls"
+          },
+          "docs": "Dispatch Outbound Calls"
+        },
+        {
+          "info": {
+            "name": "Delete Old Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/delete-old-tasks"
+          },
+          "docs": "Delete Old Tasks"
+        },
+        {
+          "info": {
+            "name": "Delete Expired Org Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/delete-expired-org-data"
+          },
+          "docs": "Delete Expired Org Data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

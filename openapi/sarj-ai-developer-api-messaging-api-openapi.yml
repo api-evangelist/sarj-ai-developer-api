@@ -1,0 +1,663 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Messaging API
+  version: 1.0.0
+tags:
+- name: messaging
+paths:
+  /api/messaging/socialbot:
+    post:
+      tags:
+      - messaging
+      summary: Socialbot Webhook
+      operationId: messagingSocialbotWebhook
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SocialbotSkipped'
+                - $ref: '#/components/schemas/SocialbotAccepted'
+                title: Response Messagingsocialbotwebhook
+                discriminator:
+                  propertyName: status
+                  mapping:
+                    skipped: '#/components/schemas/SocialbotSkipped'
+                    accepted: '#/components/schemas/SocialbotAccepted'
+  /api/messaging/sessions/{session_id}:
+    get:
+      tags:
+      - messaging
+      summary: Get Session
+      operationId: messagingGetSession
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Session Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagingSession'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/messaging/sessions/{session_id}/messages:
+    get:
+      tags:
+      - messaging
+      summary: Get Messages
+      operationId: messagingGetMessages
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Session Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 20
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessagingMessage'
+                title: Response Messaginggetmessages
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/messaging/sessions/{session_id}/end:
+    post:
+      tags:
+      - messaging
+      summary: End Session
+      operationId: messagingEndSession
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Session Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndSessionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndSessionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/messaging-settings/configs:
+    post:
+      tags:
+      - messaging
+      summary: Create Config
+      operationId: adminCreateConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMessagingProviderConfigRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagingProviderConfigPublic'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/messaging-settings/configs/{config_id}:
+    get:
+      tags:
+      - messaging
+      summary: Get Config
+      operationId: adminGetConfig
+      parameters:
+      - name: config_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Config Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagingProviderConfigPublic'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - messaging
+      summary: Update Config
+      operationId: adminUpdateConfig
+      parameters:
+      - name: config_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Config Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMessagingProviderConfigRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagingProviderConfigPublic'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - messaging
+      summary: Delete Config
+      operationId: adminDeleteConfig
+      parameters:
+      - name: config_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Config Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/messaging-settings/configs/org/{organization_id}:
+    get:
+      tags:
+      - messaging
+      summary: Get Configs By Org
+      operationId: adminGetConfigsByOrg
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessagingProviderConfigPublic'
+                title: Response Admingetconfigsbyorg
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/messaging-settings/configs/list:
+    post:
+      tags:
+      - messaging
+      summary: List Configs
+      operationId: adminListConfigs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListMessagingProviderConfigRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessagingProviderConfigPublic'
+                type: array
+                title: Response Adminlistconfigs
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    MessagingProviderConfigPublic:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        has_auth_token:
+          type: boolean
+          title: Has Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMapping'
+          type: array
+          title: Scenario Inbox Mappings
+        enabled:
+          type: boolean
+          title: Enabled
+        created_by:
+          type: string
+          title: Created By
+        updated_by:
+          type: string
+          title: Updated By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - provider
+      - name
+      - config
+      - has_auth_token
+      - enabled
+      - created_by
+      - updated_by
+      - created_at
+      - updated_at
+      title: MessagingProviderConfigPublic
+    MessageDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: MessageDirection
+    MessagingSessionStatus:
+      type: string
+      enum:
+      - active
+      - ended
+      - error
+      title: MessagingSessionStatus
+    MessagingSession:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        external_id:
+          type: string
+          title: External Id
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        status:
+          $ref: '#/components/schemas/MessagingSessionStatus'
+          default: active
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        messages:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Messages
+        started_at:
+          type: string
+          format: date-time
+          title: Started At
+        ended_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Ended At
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - organization_id
+      - provider
+      - external_id
+      title: MessagingSession
+    MessagingProvider:
+      type: string
+      enum:
+      - socialbot_whatsapp
+      title: MessagingProvider
+    EndSessionResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        session_id:
+          type: string
+          title: Session Id
+        ended_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ended At
+      type: object
+      required:
+      - status
+      - session_id
+      - ended_at
+      title: EndSessionResponse
+    SocialbotAccepted:
+      properties:
+        status:
+          type: string
+          const: accepted
+          title: Status
+        organization_id:
+          type: string
+          title: Organization Id
+        task_id:
+          type: string
+          title: Task Id
+      type: object
+      required:
+      - status
+      - organization_id
+      - task_id
+      title: SocialbotAccepted
+    MessagingMessage:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        session_id:
+          type: string
+          format: uuid
+          title: Session Id
+        direction:
+          $ref: '#/components/schemas/MessageDirection'
+        content:
+          type: string
+          title: Content
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - session_id
+      - direction
+      - content
+      title: MessagingMessage
+    CreateMessagingProviderConfigRequest:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        auth_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
+          type: array
+          title: Scenario Inbox Mappings
+          default: []
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      type: object
+      required:
+      - organization_id
+      - provider
+      - name
+      - config
+      title: CreateMessagingProviderConfigRequest
+    ScenarioInboxMappingRequest:
+      properties:
+        scenario_id:
+          type: string
+          format: uuid
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMappingRequest
+    SocialbotSkipped:
+      properties:
+        status:
+          type: string
+          const: skipped
+          title: Status
+        reason:
+          type: string
+          title: Reason
+      type: object
+      required:
+      - status
+      - reason
+      title: SocialbotSkipped
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ScenarioInboxMapping:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMapping
+    UpdateMessagingProviderConfigRequest:
+      properties:
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        auth_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
+          type: array
+          title: Scenario Inbox Mappings
+          default: []
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      type: object
+      required:
+      - provider
+      - name
+      - config
+      title: UpdateMessagingProviderConfigRequest
+    ListMessagingProviderConfigRequest:
+      properties:
+        organization_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Organization Id
+        provider:
+          anyOf:
+          - $ref: '#/components/schemas/MessagingProvider'
+          - type: 'null'
+        enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+      type: object
+      title: ListMessagingProviderConfigRequest
+    EndSessionRequest:
+      properties:
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      title: EndSessionRequest

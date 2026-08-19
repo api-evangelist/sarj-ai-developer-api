@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj TTS Voices API",
+    "version": "0.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/voices",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Authoritative runtime voice discovery. Entries with `type=builtin` are the deployed Sarj voice catalog; the response also identifies design modes, compatible presets, and saved clone profiles."
+        },
+        {
+          "info": {
+            "name": "Create Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/voices/profiles",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Profile"
+        },
+        {
+          "info": {
+            "name": "Get Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Profile"
+        },
+        {
+          "info": {
+            "name": "Update Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Profile"
+        },
+        {
+          "info": {
+            "name": "Delete Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Profile"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

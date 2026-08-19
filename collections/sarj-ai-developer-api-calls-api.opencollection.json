@@ -1,0 +1,259 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj Ai Developer Calls API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Place an outbound Sarj.ai voice call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/calls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Place an outbound Sarj.ai voice call: dials the given phone_number and runs the specified scenario (with optional template variables and language). Returns a call_id that can be polled via getCall. Use this whenever the user asks to call, dial, ring, or phone someone through Sarj.ai — do not attempt to start calls by writing to the database or invoking telephony providers directly."
+        },
+        {
+          "info": {
+            "name": "Fetch Sarj.ai voice call details by call_id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform-api.sarj.ai/api/v1/calls/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch details of a Sarj.ai voice call by call_id: status, phone_number, scenario_id, language, direction (inbound/outbound), scenario variables, duration (seconds), recording_url (signed download link), transcript (list of spoken messages), report (post-call outcome with success-criteria results; generated asynchronously shortly after completed calls, null otherwise), and timestamps (created_at, updated_at, started_at, ended_at). Use this whenever the user asks about a specific call, phone conve"
+        },
+        {
+          "info": {
+            "name": "Outbound Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/outbound",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Outbound Call"
+        },
+        {
+          "info": {
+            "name": "Create Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/chat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Chat"
+        },
+        {
+          "info": {
+            "name": "Create Client Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/client",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Client Call"
+        },
+        {
+          "info": {
+            "name": "Get Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/detail/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Detail"
+        },
+        {
+          "info": {
+            "name": "Get Transcriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/:call_id/transcriptions",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Transcriptions"
+        },
+        {
+          "info": {
+            "name": "Retry Call Outcome",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/:call_id/retry-outcome",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Call Outcome"
+        },
+        {
+          "info": {
+            "name": "Count For Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/count-for-org",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Count For Org"
+        },
+        {
+          "info": {
+            "name": "Block Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/blocked-numbers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Block Number"
+        },
+        {
+          "info": {
+            "name": "Unblock Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/blocked-numbers/:phone_number",
+            "params": [
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unblock Number"
+        },
+        {
+          "info": {
+            "name": "List Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform-api.sarj.ai/api/v1/v1/beta/calls/phone-numbers",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Phone Numbers"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

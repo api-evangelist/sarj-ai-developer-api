@@ -1,0 +1,1351 @@
+{
+  "item": [
+    {
+      "id": "e007f7a2-7d73-4797-9677-8703f4d2dd4f",
+      "name": "zoho",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "03ab2cd0-3049-4ff8-8786-8deb73256c19",
+          "name": "Zoho Authorize",
+          "request": {
+            "name": "Zoho Authorize",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "return_to",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a01fdb5b-a171-4f1a-9fd1-4c2338d36069",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"authorize_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac3787e5-aa60-4441-8819-6c1176acca1d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_to",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "790b692d-6a4d-44be-80a3-dff0133e2fc9",
+          "name": "Zoho Webhook",
+          "request": {
+            "name": "Zoho Webhook",
+            "description": {
+              "content": "Public webhook API where ZohoCRM dumps its webhook data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "extra_conditions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "scenario_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "user_email",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "trunk_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"server_time\": \"<integer>\",\n  \"affected_values\": [\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": true,\n        \"key_1\": 6127\n      }\n    }\n  ],\n  \"query_params\": {\n    \"key_0\": 5479,\n    \"key_1\": \"string\",\n    \"key_2\": 3250\n  },\n  \"module\": \"<string>\",\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"operation\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4bc17115-c719-4ec7-b9be-7e6289ae11f7",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "extra_conditions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scenario_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trunk_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"server_time\": \"<integer>\",\n  \"affected_values\": [\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": false\n      }\n    },\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": 2344,\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"query_params\": {\n    \"key_0\": true,\n    \"key_1\": 2893.6031414418762\n  },\n  \"module\": \"<string>\",\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"operation\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c09e0dd-a451-4207-81a4-b8e6ca596e43",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "extra_conditions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scenario_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trunk_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"server_time\": \"<integer>\",\n  \"affected_values\": [\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": false\n      }\n    },\n    {\n      \"record_id\": \"<string>\",\n      \"values\": {\n        \"key_0\": 2344,\n        \"key_1\": \"string\"\n      }\n    }\n  ],\n  \"query_params\": {\n    \"key_0\": true,\n    \"key_1\": 2893.6031414418762\n  },\n  \"module\": \"<string>\",\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"operation\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e71c1f26-a200-43ee-a1bc-dd5428302dc1",
+          "name": "Get Notifications",
+          "request": {
+            "name": "Get Notifications",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "list-webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ced69b90-db9e-4b65-b259-801c9cc67c9a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "list-webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"watch\": [\n    {\n      \"channel_expiry\": \"2001-08-01T13:16:16.014Z\",\n      \"resource_name\": \"string\",\n      \"channel_id\": \"string\",\n      \"events\": [\n        \"Leads.create\",\n        \"Leads.edit\"\n      ],\n      \"notify_url\": \"string\",\n      \"token\": \"string\",\n      \"query_strings\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"channel_expiry\": \"2005-02-07T09:52:06.436Z\",\n      \"resource_name\": \"string\",\n      \"channel_id\": \"string\",\n      \"events\": [\n        \"Leads.create\",\n        \"Leads.edit\"\n      ],\n      \"notify_url\": \"string\",\n      \"token\": \"string\",\n      \"query_strings\": {\n        \"key_0\": [\n          \"string\",\n          \"string\"\n        ],\n        \"key_1\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a4a426f-5410-4765-b129-478b9a063e0d",
+          "name": "Create Notification",
+          "request": {
+            "name": "Create Notification",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "create-webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"query_params\": {\n    \"scenario_id\": \"<string>\",\n    \"user_email\": \"<string>\",\n    \"user_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"trunk_id\": \"<string>\",\n    \"language\": \"<string>\"\n  },\n  \"extra_conditions\": {\n    \"module_type\": \"<string>\",\n    \"conditions\": [\n      {\n        \"evaluated_field_name\": \"<string>\",\n        \"expected_field_value\": \"<string>\",\n        \"condition_type\": \"equality\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "68dcb947-f539-408a-833b-84dcbd49fdec",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "create-webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"query_params\": {\n    \"scenario_id\": \"<string>\",\n    \"user_email\": \"<string>\",\n    \"user_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"trunk_id\": \"<string>\",\n    \"language\": \"<string>\"\n  },\n  \"extra_conditions\": {\n    \"module_type\": \"<string>\",\n    \"conditions\": [\n      {\n        \"evaluated_field_name\": \"<string>\",\n        \"expected_field_value\": \"<string>\",\n        \"condition_type\": \"equality\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"watch\": [\n    {\n      \"code\": \"string\",\n      \"details\": {\n        \"events\": [\n          {\n            \"channel_expiry\": \"1968-02-20T22:36:55.809Z\",\n            \"resource_uri\": \"string\",\n            \"resource_id\": \"string\",\n            \"resource_name\": \"string\",\n            \"channel_id\": \"string\"\n          },\n          {\n            \"channel_expiry\": \"1955-01-28T11:07:04.596Z\",\n            \"resource_uri\": \"string\",\n            \"resource_id\": \"string\",\n            \"resource_name\": \"string\",\n            \"channel_id\": \"string\"\n          }\n        ]\n      },\n      \"message\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"details\": {\n        \"events\": [\n          {\n            \"channel_expiry\": \"1950-06-02T00:45:30.824Z\",\n            \"resource_uri\": \"string\",\n            \"resource_id\": \"string\",\n            \"resource_name\": \"string\",\n            \"channel_id\": \"string\"\n          },\n          {\n            \"channel_expiry\": \"1978-04-04T02:09:05.193Z\",\n            \"resource_uri\": \"string\",\n            \"resource_id\": \"string\",\n            \"resource_name\": \"string\",\n            \"channel_id\": \"string\"\n          }\n        ]\n      },\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df62d750-f117-4d2b-b07f-cfeb4133fc1b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "create-webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"query_params\": {\n    \"scenario_id\": \"<string>\",\n    \"user_email\": \"<string>\",\n    \"user_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"trunk_id\": \"<string>\",\n    \"language\": \"<string>\"\n  },\n  \"extra_conditions\": {\n    \"module_type\": \"<string>\",\n    \"conditions\": [\n      {\n        \"evaluated_field_name\": \"<string>\",\n        \"expected_field_value\": \"<string>\",\n        \"condition_type\": \"equality\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "134f2478-0c75-4727-946a-a751bcad73bc",
+          "name": "Remove Notifications",
+          "request": {
+            "name": "Remove Notifications",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "disable-webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "channel_ids",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of channel IDs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b061869e-4189-42cd-85e8-94c851b155c6",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "disable-webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"watch\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"channel_id\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"channel_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e511374d-1850-4a94-8693-202abd2c3db8",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "disable-webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel_ids",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e34c47c1-2ee2-4fbd-9883-79b66e574c7f",
+          "name": "Get Available Events",
+          "request": {
+            "name": "Get Available Events",
+            "description": {
+              "content": "Return available Zoho CRM events that can be used for webhooks.\n\nReturns:\n    The subscribable notification events grouped by CRM module.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "available-events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94002ee8-9968-4807-9104-2c9d0e1d9df2",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "available-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events_by_module\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7298cb77-8a8e-426a-8ae3-b7021ef74359",
+          "name": "Get Field Settings",
+          "request": {
+            "name": "Get Field Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "field-settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "crm_module",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "editable_fields_only",
+                  "value": "true"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d5807ed-cb50-418e-b820-d00a436646b8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "field-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crm_module",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editable_fields_only",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"api_name\": \"string\",\n    \"display_label\": \"string\",\n    \"read_only\": false,\n    \"operation_type\": {\n      \"web_update\": true,\n      \"api_create\": true,\n      \"web_create\": false,\n      \"api_update\": true\n    },\n    \"json_type\": \"boolean\",\n    \"tooltip\": {\n      \"key_0\": \"string\",\n      \"key_1\": 1619.9278208630242,\n      \"key_2\": 7415.921494029134\n    },\n    \"pick_list_values\": [\n      {\n        \"display_value\": \"string\",\n        \"id\": \"string\"\n      },\n      {\n        \"display_value\": \"string\",\n        \"id\": \"string\"\n      }\n    ],\n    \"length\": 7247,\n    \"data_type\": \"string\",\n    \"system_mandatory\": false\n  },\n  {\n    \"api_name\": \"string\",\n    \"display_label\": \"string\",\n    \"read_only\": false,\n    \"operation_type\": {\n      \"web_update\": false,\n      \"api_create\": true,\n      \"web_create\": true,\n      \"api_update\": true\n    },\n    \"json_type\": \"boolean\",\n    \"tooltip\": {\n      \"key_0\": false,\n      \"key_1\": 3261.856005975904,\n      \"key_2\": \"string\"\n    },\n    \"pick_list_values\": [\n      {\n        \"display_value\": \"string\",\n        \"id\": \"string\"\n      },\n      {\n        \"display_value\": \"string\",\n        \"id\": \"string\"\n      }\n    ],\n    \"length\": 1335,\n    \"data_type\": \"string\",\n    \"system_mandatory\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b1d255f-7159-4dea-aec0-5654182d5347",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "field-settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "crm_module",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "editable_fields_only",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4889eeda-60b0-4e51-a08d-8905a6fc2445",
+          "name": "Get Record",
+          "request": {
+            "name": "Get Record",
+            "description": {
+              "content": "Read a CRM record back over HTTP so the canary can verify its lead update landed.\n\nReturns:\n    The CRM record with its callable fields.\n\nRaises:\n    HTTPException: 404 if no record exists with `record_id` in `module`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "record"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "record_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "module",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb6e01b9-d100-4ebb-8bc3-708a8c23819a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "record"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "record_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "module",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5459,\n  \"First_Name\": \"string\",\n  \"Last_Name\": \"string\",\n  \"Full_Name\": \"string\",\n  \"Phone\": \"string\",\n  \"Mobile\": \"string\",\n  \"Email\": \"string\",\n  \"key_0\": 4305,\n  \"key_1\": 9262.911466084108\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ee9594c-f561-4bf1-8392-ca4a7e56f02e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "record"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "record_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "module",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9e68562-a692-4df1-9a1b-a57e77ae0fd4",
+          "name": "Revalidate All Notifications",
+          "request": {
+            "name": "Revalidate All Notifications",
+            "description": {
+              "content": "Revalidate notifications for all organizations with Zoho tokens.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "revalidate-all-webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "918e7125-79de-4e7f-a20a-c33dd16f1d67",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "revalidate-all-webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "660582f7-7ff1-4b3b-a465-05b791794102",
+          "name": "Create Ticket",
+          "request": {
+            "name": "Create Ticket",
+            "description": {
+              "content": "Create a ticket in Zoho Desk for the specified organization.\n\nReturns:\n    The ticket as created in Zoho Desk.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "zoho",
+                "desk",
+                "create-ticket"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"language\": \"English\",\n  \"department_id\": \"<string>\",\n  \"priority\": \"<string>\",\n  \"status\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1042cdd4-aad5-48b1-93ea-d6a1508fb9f1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "desk",
+                    "create-ticket"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"language\": \"English\",\n  \"department_id\": \"<string>\",\n  \"priority\": \"<string>\",\n  \"status\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject\": \"string\",\n  \"description\": \"string\",\n  \"language\": \"string\",\n  \"id\": \"string\",\n  \"ticketNumber\": \"string\",\n  \"contactId\": \"string\",\n  \"phone\": \"string\",\n  \"departmentId\": \"string\",\n  \"priority\": \"<string>\",\n  \"status\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"category\": \"string\",\n  \"subCategory\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c672ef7-3d33-4ab0-892f-6536419f5ea1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "zoho",
+                    "desk",
+                    "create-ticket"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"language\": \"English\",\n  \"department_id\": \"<string>\",\n  \"priority\": \"<string>\",\n  \"status\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5f38504b-510a-4221-8e44-5795f2615239",
+    "name": "Sarj.ai Voice Zoho API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

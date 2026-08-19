@@ -1,0 +1,123 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Salesforce API
+  version: 1.0.0
+tags:
+- name: salesforce
+paths:
+  /v1/beta/integrations/salesforce/authorize:
+    get:
+      tags:
+      - salesforce
+      summary: Authorize
+      description: "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled\
+        \ server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's\
+        \ organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user\
+        \ to."
+      operationId: integrationsAuthorize
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceAuthorizationUrl'
+  /v1/beta/integrations/salesforce/callback:
+    get:
+      tags:
+      - salesforce
+      summary: Salesforce Callback
+      description: "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied\
+        \ consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error\
+        \ path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or\
+        \ error outcome."
+      operationId: integrationsSalesforceCallback
+      parameters:
+      - name: state
+        in: query
+        required: true
+        schema:
+          type: string
+          title: State
+      - name: code
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+      - name: error
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+      - name: error_description
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Description
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    SalesforceAuthorizationUrl:
+      properties:
+        authorization_url:
+          type: string
+          title: Authorization Url
+      type: object
+      required:
+      - authorization_url
+      title: SalesforceAuthorizationUrl
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError

@@ -1,0 +1,289 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Organization Variables API
+  version: 1.0.0
+tags:
+- name: organization-variables
+paths:
+  /v1/organization-variables/list:
+    get:
+      tags:
+      - organization-variables
+      summary: List Variables
+      operationId: organizationVariablesListVariables
+      parameters:
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 50
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationVariablesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/organization-variables/:
+    post:
+      tags:
+      - organization-variables
+      summary: Create Variable
+      operationId: organizationVariablesCreateVariable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationVariableRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaintextOrganizationVariable'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/organization-variables/{variable_id}:
+    get:
+      tags:
+      - organization-variables
+      summary: Get Variable
+      operationId: organizationVariablesGetVariable
+      parameters:
+      - name: variable_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Variable Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaintextOrganizationVariable'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - organization-variables
+      summary: Update Variable
+      operationId: organizationVariablesUpdateVariable
+      parameters:
+      - name: variable_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Variable Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationVariableRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaintextOrganizationVariable'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - organization-variables
+      summary: Delete Variable
+      operationId: organizationVariablesDeleteVariable
+      parameters:
+      - name: variable_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Variable Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CreateOrganizationVariableRequest:
+      properties:
+        key:
+          type: string
+          title: Key
+        value:
+          type: string
+          title: Value
+        is_secret:
+          type: boolean
+          title: Is Secret
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - key
+      - value
+      - is_secret
+      title: CreateOrganizationVariableRequest
+    UpdateOrganizationVariableRequest:
+      properties:
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      title: UpdateOrganizationVariableRequest
+    PlaintextOrganizationVariable:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        key:
+          type: string
+          title: Key
+        value:
+          type: string
+          title: Value
+          description: Plaintext unencrypted value to be inserted to the database.
+        is_secret:
+          type: boolean
+          title: Is Secret
+          description: A flag deciding if the value should be encrypted in the database and write-only
+            by clients (no read).
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_by:
+          type: string
+          title: Created By
+        updated_by:
+          type: string
+          title: Updated By
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - organization_id
+      - key
+      - value
+      - is_secret
+      - created_by
+      - updated_by
+      - id
+      - created_at
+      - updated_at
+      title: PlaintextOrganizationVariable
+    ListOrganizationVariablesResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PlaintextOrganizationVariable'
+          type: array
+          title: Items
+        next_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Next Cursor
+      type: object
+      required:
+      - items
+      title: ListOrganizationVariablesResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError

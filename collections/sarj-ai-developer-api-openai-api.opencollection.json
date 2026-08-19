@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj STT Openai API",
+    "version": "1.0.2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Openai",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Groq Transcriptions Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/openai/v1/audio/transcriptions",
+            "headers": [
+              {
+                "name": "accept",
+                "value": ""
+              },
+              {
+                "name": "x-session-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Transcribes an audio file. This endpoint is now a thin wrapper that\ncalls the business logic in the ASR model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

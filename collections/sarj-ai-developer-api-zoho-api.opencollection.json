@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Zoho API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "zoho",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Zoho Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/authorize",
+            "params": [
+              {
+                "name": "return_to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Zoho Authorize"
+        },
+        {
+          "info": {
+            "name": "Zoho Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/webhook",
+            "params": [
+              {
+                "name": "extra_conditions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Public webhook API where ZohoCRM dumps its webhook data."
+        },
+        {
+          "info": {
+            "name": "Get Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/list-webhooks"
+          },
+          "docs": "Get Notifications"
+        },
+        {
+          "info": {
+            "name": "Create Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/create-webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Notification"
+        },
+        {
+          "info": {
+            "name": "Remove Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/disable-webhooks",
+            "params": [
+              {
+                "name": "channel_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of channel IDs"
+              }
+            ]
+          },
+          "docs": "Remove Notifications"
+        },
+        {
+          "info": {
+            "name": "Get Available Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/available-events"
+          },
+          "docs": "Return available Zoho CRM events that can be used for webhooks.\n\nReturns:\n    The subscribable notification events grouped by CRM module."
+        },
+        {
+          "info": {
+            "name": "Get Field Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/field-settings",
+            "params": [
+              {
+                "name": "crm_module",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "editable_fields_only",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Field Settings"
+        },
+        {
+          "info": {
+            "name": "Get Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/record",
+            "params": [
+              {
+                "name": "record_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "module",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Read a CRM record back over HTTP so the canary can verify its lead update landed.\n\nReturns:\n    The CRM record with its callable fields.\n\nRaises:\n    HTTPException: 404 if no record exists with `record_id` in `module`."
+        },
+        {
+          "info": {
+            "name": "Revalidate All Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/revalidate-all-webhooks"
+          },
+          "docs": "Revalidate notifications for all organizations with Zoho tokens."
+        },
+        {
+          "info": {
+            "name": "Create Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/desk/create-ticket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ticket in Zoho Desk for the specified organization.\n\nReturns:\n    The ticket as created in Zoho Desk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

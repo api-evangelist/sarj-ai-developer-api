@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj TTS Models API",
+    "version": "0.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sarj TTS models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/models"
+          },
+          "docs": "Return the single model served by this API."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sarj TTS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve canonical metadata for `sarj-tts` or a historical request alias."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

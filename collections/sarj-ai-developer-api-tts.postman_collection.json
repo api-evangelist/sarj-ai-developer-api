@@ -1,0 +1,2226 @@
+{
+  "item": [
+    {
+      "id": "e59fa9c8-5862-4942-bee9-12c60ed4f2bc",
+      "name": "Create Speech",
+      "request": {
+        "name": "Create Speech",
+        "description": {
+          "content": "Generate speech from text.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "audio",
+            "speech"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "d980d722-306b-488e-9da8-1d9103227961",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "e0002ad0-896b-4c26-b47d-bed88974c38e",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "be9fe849-1d25-45b6-bf20-23e3b9cc4d9f",
+      "name": "Create Speech Clone",
+      "request": {
+        "name": "Create Speech Clone",
+        "description": {
+          "content": "One-shot voice cloning. Upload reference audio + text to synthesize.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "audio",
+            "speech",
+            "clone"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "text",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) "
+            },
+            {
+              "key": "ref_audio",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) "
+            },
+            {
+              "key": "ref_text",
+              "value": "<string>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "response_format",
+              "value": "wav",
+              "type": "text",
+              "description": " (This can only be one of mp3,opus,aac,flac,wav,pcm)"
+            },
+            {
+              "key": "stream",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "speed",
+              "value": "1",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "num_step",
+              "value": "<integer>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "guidance_scale",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "denoise",
+              "value": "<boolean>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "t_shift",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "position_temperature",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "class_temperature",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "duration",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "language",
+              "value": "<string>",
+              "type": "text",
+              "description": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation"
+            },
+            {
+              "key": "layer_penalty_factor",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "preprocess_prompt",
+              "value": "<boolean>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "postprocess_output",
+              "value": "<boolean>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "audio_chunk_duration",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "audio_chunk_threshold",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "request_timeout_s",
+              "value": "<integer>",
+              "type": "text",
+              "description": ""
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "d6f57c11-66a5-4573-9336-9dbce7967abb",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech",
+                "clone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": " (This can only be one of mp3,opus,aac,flac,wav,pcm)",
+                    "type": "text/plain"
+                  },
+                  "key": "response_format",
+                  "value": "wav",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "stream",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "speed",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "num_step",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "guidance_scale",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "denoise",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "t_shift",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "position_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "class_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "duration",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation",
+                    "type": "text/plain"
+                  },
+                  "key": "language",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "layer_penalty_factor",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "preprocess_prompt",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "postprocess_output",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "audio_chunk_duration",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "audio_chunk_threshold",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "request_timeout_s",
+                  "value": "<integer>",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "54a7390a-5921-41e9-b8cd-54fc9679012f",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech",
+                "clone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": " (This can only be one of mp3,opus,aac,flac,wav,pcm)",
+                    "type": "text/plain"
+                  },
+                  "key": "response_format",
+                  "value": "wav",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "stream",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "speed",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "num_step",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "guidance_scale",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "denoise",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "t_shift",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "position_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "class_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "duration",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation",
+                    "type": "text/plain"
+                  },
+                  "key": "language",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "layer_penalty_factor",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "preprocess_prompt",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "postprocess_output",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "audio_chunk_duration",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "audio_chunk_threshold",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "request_timeout_s",
+                  "value": "<integer>",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c154e942-d5b1-4235-8d32-49470898af77",
+      "name": "List available voices",
+      "request": {
+        "name": "List available voices",
+        "description": {
+          "content": "Authoritative runtime voice discovery. Entries with `type=builtin` are the deployed Sarj voice catalog; the response also identifies design modes, compatible presets, and saved clone profiles.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "voices"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "c0dbf9c6-65b1-4bc6-a45c-4a2fcf00c04c",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"voices\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"language\": \"string\",\n      \"language_name\": \"string\",\n      \"dialect\": \"string\",\n      \"gender\": \"string\",\n      \"profile_id\": \"string\",\n      \"created_at\": \"string\",\n      \"ref_text\": \"string\",\n      \"generation_defaults\": {\n        \"key_0\": false,\n        \"key_1\": false,\n        \"key_2\": false\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"language\": \"string\",\n      \"language_name\": \"string\",\n      \"dialect\": \"string\",\n      \"gender\": \"string\",\n      \"profile_id\": \"string\",\n      \"created_at\": \"string\",\n      \"ref_text\": \"string\",\n      \"generation_defaults\": {\n        \"key_0\": true,\n        \"key_1\": 9438.585350798145\n      }\n    }\n  ],\n  \"design_attributes\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"languages\": {\n    \"key_0\": \"string\"\n  },\n  \"total\": 8214\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ab5266c1-f765-4cb1-ab4e-42398c3faa7f",
+      "name": "Create Profile",
+      "request": {
+        "name": "Create Profile",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "voices",
+            "profiles"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "profile_id",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) Unique identifier. Alphanumeric, dashes, underscores only."
+            },
+            {
+              "key": "ref_audio",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) "
+            },
+            {
+              "key": "ref_text",
+              "value": "<string>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "overwrite",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "5669fada-c7bc-4031-8257-52ad1fedc30f",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) Unique identifier. Alphanumeric, dashes, underscores only.",
+                    "type": "text/plain"
+                  },
+                  "key": "profile_id",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "overwrite",
+                  "value": "false",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"profile_id\": \"pX4a5L2O4zmPohMfoq_KKnw8\",\n  \"name\": \"stri\",\n  \"created_at\": \"string\",\n  \"ref_text\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "e6a2c20a-8a9c-492d-8c66-c2f016a45a2b",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) Unique identifier. Alphanumeric, dashes, underscores only.",
+                    "type": "text/plain"
+                  },
+                  "key": "profile_id",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "overwrite",
+                  "value": "false",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "b0f8312f-2465-405b-ae05-9e73a1f8b669",
+      "name": "Get Profile",
+      "request": {
+        "name": "Get Profile",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "voices",
+            "profiles",
+            ":profile_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "profile_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "a9f6e0c4-0006-4b9b-95e8-89776b81a834",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"profile_id\": \"pX4a5L2O4zmPohMfoq_KKnw8\",\n  \"name\": \"stri\",\n  \"created_at\": \"string\",\n  \"ref_text\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "219454dc-a0b0-4496-a24f-497d75153f8e",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "72cfaf81-7558-4b11-82f0-f4ca148e75df",
+      "name": "Delete Profile",
+      "request": {
+        "name": "Delete Profile",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "voices",
+            "profiles",
+            ":profile_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "profile_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "eb6d9ed9-df21-4d07-bafa-cad2eefbe361",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "d03f3791-5e9c-40f3-9e0a-7765b7cab57e",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "3d28549b-0a1d-4b55-bd55-759c08062c9a",
+      "name": "Update Profile",
+      "request": {
+        "name": "Update Profile",
+        "description": {},
+        "url": {
+          "path": [
+            "v1",
+            "voices",
+            "profiles",
+            ":profile_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "profile_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PATCH",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "ref_audio",
+              "value": "<string>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ref_text",
+              "value": "<string>",
+              "type": "text",
+              "description": ""
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "8dce7e09-a1b1-49f2-9f83-c6f40b257185",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"profile_id\": \"pX4a5L2O4zmPohMfoq_KKnw8\",\n  \"name\": \"stri\",\n  \"created_at\": \"string\",\n  \"ref_text\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "13f33a75-1bda-4a24-b7e6-e5adc11d81ce",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "voices",
+                "profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "344dde93-fdc1-47bc-a5d7-68c5ed8acf23",
+      "name": "List Sarj TTS models",
+      "request": {
+        "name": "List Sarj TTS models",
+        "description": {
+          "content": "Return the single model served by this API.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "models"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "29b6a6e6-dac3-4cfc-b7b2-7d8da3b94e3a",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"sarj-tts\",\n      \"object\": \"model\",\n      \"created\": 1786214180,\n      \"owned_by\": \"sarj-ai\",\n      \"permission\": [\n        {\n          \"key_0\": true\n        },\n        {\n          \"key_0\": 2026,\n          \"key_1\": true\n        }\n      ],\n      \"root\": \"sarj-tts\",\n      \"parent\": null\n    },\n    {\n      \"id\": \"sarj-tts\",\n      \"object\": \"model\",\n      \"created\": 1786214180,\n      \"owned_by\": \"sarj-ai\",\n      \"permission\": [\n        {\n          \"key_0\": false,\n          \"key_1\": 3332\n        },\n        {\n          \"key_0\": \"string\",\n          \"key_1\": 8174,\n          \"key_2\": \"string\"\n        }\n      ],\n      \"root\": \"sarj-tts\",\n      \"parent\": null\n    }\n  ],\n  \"object\": \"list\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "45a1fa1a-2cba-46e8-be97-6f470021325c",
+      "name": "Retrieve Sarj TTS",
+      "request": {
+        "name": "Retrieve Sarj TTS",
+        "description": {
+          "content": "Retrieve canonical metadata for `sarj-tts` or a historical request alias.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "models",
+            ":model_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "model_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "d8437fad-014e-4f1c-8516-7432087e8364",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "models",
+                ":model_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"sarj-tts\",\n  \"object\": \"model\",\n  \"created\": 1786214180,\n  \"owned_by\": \"sarj-ai\",\n  \"permission\": [\n    {\n      \"key_0\": 1719.4289651534655,\n      \"key_1\": \"string\"\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 9757.55672756258,\n      \"key_2\": false,\n      \"key_3\": 5785.406534355941\n    }\n  ],\n  \"root\": \"sarj-tts\",\n  \"parent\": null\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "394cb768-5691-458f-bbd5-70e7e90ec8ed",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "models",
+                ":model_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "68ea39c2-483c-4c3b-b88c-cc8eeba65084",
+      "name": "Create Script Audio",
+      "request": {
+        "name": "Create Script Audio",
+        "description": {
+          "content": "Synthesize multi-speaker script with voice resolution and mixing.\n\nReturns either:\n- single_track: Binary audio with metadata headers\n- multi_track: JSON with per-speaker tracks and segment timestamps",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "v1",
+            "audio",
+            "script"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"<string>\",\n      \"text\": \"<string>\",\n      \"voice\": \"<string>\",\n      \"speed\": \"<number>\"\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "db45da4f-c942-4b8b-ae22-6a37ee51e54a",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "script"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"string\",\n      \"text\": \"string\",\n      \"voice\": \"string\",\n      \"speed\": 3.2674261029172387\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c6ab2544-fe98-4fa0-9242-d13aec1b7ea7",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "script"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"string\",\n      \"text\": \"string\",\n      \"voice\": \"string\",\n      \"speed\": 3.2674261029172387\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "dc00bb9b-4e8e-4db0-97da-8e976c94c307",
+      "name": "Health",
+      "request": {
+        "name": "Health",
+        "description": {
+          "content": "Readiness check. Returns 503 while model is loading, 200 when ready.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "health"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "d697d06c-659a-41a4-a50f-cde314a0e068",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "93614420-e0b9-4750-a50c-ec20e4d3db86",
+      "name": "Metrics",
+      "request": {
+        "name": "Metrics",
+        "description": {
+          "content": "Request metrics and current memory usage.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "metrics"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "bdb9277b-f0b4-4793-9d1d-bbcf944e7786",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "25a308f5-2f3d-435b-8c7c-74ea353d3784",
+    "name": "Sarj TTS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint uses an OpenAI SDK-compatible request and response shape.",
+      "type": "text/plain"
+    }
+  }
+}

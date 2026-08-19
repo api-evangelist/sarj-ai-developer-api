@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Settings API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "settings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/voices",
+            "params": [
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Language code (en or ar)"
+              }
+            ]
+          },
+          "docs": "Get Voices"
+        },
+        {
+          "info": {
+            "name": "Create Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Voice"
+        },
+        {
+          "info": {
+            "name": "List Voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Voices"
+        },
+        {
+          "info": {
+            "name": "Get Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Voice"
+        },
+        {
+          "info": {
+            "name": "Update Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Voice"
+        },
+        {
+          "info": {
+            "name": "Preview Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id/preview",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Preview Voice"
+        },
+        {
+          "info": {
+            "name": "Get Global Prompt Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/global-prompt/config"
+          },
+          "docs": "Get Global Prompt Config"
+        },
+        {
+          "info": {
+            "name": "Save Global Prompt Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/global-prompt/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save Global Prompt Config"
+        },
+        {
+          "info": {
+            "name": "Get Global Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/global"
+          },
+          "docs": "Get Global Settings"
+        },
+        {
+          "info": {
+            "name": "Update Global Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/global",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Global Settings"
+        },
+        {
+          "info": {
+            "name": "Get Scenario Generation Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/scenario-generation/models"
+          },
+          "docs": "Get Scenario Generation Models"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

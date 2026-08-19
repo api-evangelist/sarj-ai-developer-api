@@ -1,0 +1,370 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Integrations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Active Providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/active-providers"
+          },
+          "docs": "List Active Providers"
+        },
+        {
+          "info": {
+            "name": "Get Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Token"
+        },
+        {
+          "info": {
+            "name": "Delete Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Token"
+        },
+        {
+          "info": {
+            "name": "Add Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Token"
+        },
+        {
+          "info": {
+            "name": "Refresh All",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/refresh-all"
+          },
+          "docs": "Refresh only OAuth tokens; providers without a token refresher count as failures.\n\nReturns:\n    Per-provider and total success/failure counts for the refresh sweep."
+        },
+        {
+          "info": {
+            "name": "Zoho Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/authorize",
+            "params": [
+              {
+                "name": "return_to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Zoho Authorize"
+        },
+        {
+          "info": {
+            "name": "Zoho Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/webhook",
+            "params": [
+              {
+                "name": "extra_conditions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Public webhook API where ZohoCRM dumps its webhook data."
+        },
+        {
+          "info": {
+            "name": "Get Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/list-webhooks"
+          },
+          "docs": "Get Notifications"
+        },
+        {
+          "info": {
+            "name": "Create Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/create-webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Notification"
+        },
+        {
+          "info": {
+            "name": "Remove Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/disable-webhooks",
+            "params": [
+              {
+                "name": "channel_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of channel IDs"
+              }
+            ]
+          },
+          "docs": "Remove Notifications"
+        },
+        {
+          "info": {
+            "name": "Get Available Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/available-events"
+          },
+          "docs": "Return available Zoho CRM events that can be used for webhooks.\n\nReturns:\n    The subscribable notification events grouped by CRM module."
+        },
+        {
+          "info": {
+            "name": "Get Field Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/field-settings",
+            "params": [
+              {
+                "name": "crm_module",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "editable_fields_only",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Field Settings"
+        },
+        {
+          "info": {
+            "name": "Get Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/record",
+            "params": [
+              {
+                "name": "record_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "module",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Read a CRM record back over HTTP so the canary can verify its lead update landed.\n\nReturns:\n    The CRM record with its callable fields.\n\nRaises:\n    HTTPException: 404 if no record exists with `record_id` in `module`."
+        },
+        {
+          "info": {
+            "name": "Revalidate All Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/revalidate-all-webhooks"
+          },
+          "docs": "Revalidate notifications for all organizations with Zoho tokens."
+        },
+        {
+          "info": {
+            "name": "Create Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/desk/create-ticket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ticket in Zoho Desk for the specified organization.\n\nReturns:\n    The ticket as created in Zoho Desk."
+        },
+        {
+          "info": {
+            "name": "Salla Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Salla Webhook"
+        },
+        {
+          "info": {
+            "name": "Get Salla App Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/app-url"
+          },
+          "docs": "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The apps.salla.sa install URL for the configured Salla app id."
+        },
+        {
+          "info": {
+            "name": "Get Salla Integration Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/me"
+          },
+          "docs": "Get Salla Integration Details"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/authorize"
+          },
+          "docs": "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user to."
+        },
+        {
+          "info": {
+            "name": "Salesforce Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/callback",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error_description",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or error outcome."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

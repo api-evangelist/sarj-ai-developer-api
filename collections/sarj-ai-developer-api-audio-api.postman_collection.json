@@ -1,0 +1,995 @@
+{
+  "item": [
+    {
+      "id": "97047d37-0bb9-40b8-8b8d-99908d45ae2c",
+      "name": "Audio",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87c42f43-d39d-44e0-9a58-4933ea3d3b62",
+          "name": "Create Speech",
+          "request": {
+            "name": "Create Speech",
+            "description": {
+              "content": "Generate speech from text.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98432bf6-cc3e-40a4-a82e-fa79630739f3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "335e65ef-d2b9-40ff-9487-c8d3a5ac9681",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"<string>\",\n  \"model\": \"sarj-tts\",\n  \"voice\": \"<string>\",\n  \"speaker\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"response_format\": \"mp3\",\n  \"speed\": 1,\n  \"stream_format\": \"<string>\",\n  \"stream\": false,\n  \"num_step\": \"<integer>\",\n  \"guidance_scale\": \"<number>\",\n  \"denoise\": \"<boolean>\",\n  \"t_shift\": \"<number>\",\n  \"position_temperature\": \"<number>\",\n  \"class_temperature\": \"<number>\",\n  \"duration\": \"<number>\",\n  \"language\": \"<string>\",\n  \"layer_penalty_factor\": \"<number>\",\n  \"preprocess_prompt\": \"<boolean>\",\n  \"postprocess_output\": \"<boolean>\",\n  \"audio_chunk_duration\": \"<number>\",\n  \"audio_chunk_threshold\": \"<number>\",\n  \"request_timeout_s\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "786508ea-45b7-4dbd-b7fa-7af551bd4b8c",
+          "name": "Create Speech Clone",
+          "request": {
+            "name": "Create Speech Clone",
+            "description": {
+              "content": "One-shot voice cloning. Upload reference audio + text to synthesize.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "speech",
+                "clone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "text",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "ref_audio",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "ref_text",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "response_format",
+                  "value": "wav",
+                  "type": "text",
+                  "description": " (This can only be one of mp3,opus,aac,flac,wav,pcm)"
+                },
+                {
+                  "key": "stream",
+                  "value": "false",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "speed",
+                  "value": "1",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "num_step",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "guidance_scale",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "denoise",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "t_shift",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "position_temperature",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "class_temperature",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "duration",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "language",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation"
+                },
+                {
+                  "key": "layer_penalty_factor",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "preprocess_prompt",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "postprocess_output",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "audio_chunk_duration",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "audio_chunk_threshold",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "request_timeout_s",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a3aaeba4-23f3-4431-aa6e-4df11e61a08b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "speech",
+                    "clone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ref_audio",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ref_text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of mp3,opus,aac,flac,wav,pcm)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "wav",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "stream",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "speed",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "num_step",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "guidance_scale",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "denoise",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "t_shift",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "position_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "class_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "duration",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "layer_penalty_factor",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "preprocess_prompt",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "postprocess_output",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_chunk_duration",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_chunk_threshold",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "request_timeout_s",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c9aa0c1-7d75-4ba9-922f-34705e997087",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "speech",
+                    "clone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "ref_audio",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ref_text",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of mp3,opus,aac,flac,wav,pcm)",
+                        "type": "text/plain"
+                      },
+                      "key": "response_format",
+                      "value": "wav",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "stream",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "speed",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "num_step",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "guidance_scale",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "denoise",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "t_shift",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "position_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "class_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "duration",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation",
+                        "type": "text/plain"
+                      },
+                      "key": "language",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "layer_penalty_factor",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "preprocess_prompt",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "postprocess_output",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_chunk_duration",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "audio_chunk_threshold",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "request_timeout_s",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e255617-14dc-482a-83c3-e365c58336d1",
+          "name": "Create Script Audio",
+          "request": {
+            "name": "Create Script Audio",
+            "description": {
+              "content": "Synthesize multi-speaker script with voice resolution and mixing.\n\nReturns either:\n- single_track: Binary audio with metadata headers\n- multi_track: JSON with per-speaker tracks and segment timestamps",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "script"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"<string>\",\n      \"text\": \"<string>\",\n      \"voice\": \"<string>\",\n      \"speed\": \"<number>\"\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9527a65e-bbb3-46b6-a51d-a9cbeebfdce8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "script"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"<string>\",\n      \"text\": \"<string>\",\n      \"voice\": \"<string>\",\n      \"speed\": \"<number>\"\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1416e539-ab5f-4571-b3dd-1197136c44a7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "script"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"script\": [\n    {\n      \"speaker\": \"<string>\",\n      \"text\": \"<string>\",\n      \"voice\": \"<string>\",\n      \"speed\": \"<number>\"\n    }\n  ],\n  \"default_voice\": \"<string>\",\n  \"speed\": 1,\n  \"response_format\": \"wav\",\n  \"output_format\": \"single_track\",\n  \"pause_between_speakers\": 0.5,\n  \"on_error\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b3c7977e-ea8c-4205-a30f-6f373e676531",
+    "name": "Sarj TTS Audio API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint uses an OpenAI SDK-compatible request and response shape.",
+      "type": "text/plain"
+    }
+  }
+}

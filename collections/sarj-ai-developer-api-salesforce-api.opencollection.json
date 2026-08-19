@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Salesforce API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "salesforce",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/authorize"
+          },
+          "docs": "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user to."
+        },
+        {
+          "info": {
+            "name": "Salesforce Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/callback",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error_description",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or error outcome."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

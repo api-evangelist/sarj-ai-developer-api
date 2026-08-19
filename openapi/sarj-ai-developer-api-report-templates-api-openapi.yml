@@ -1,0 +1,409 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Report Templates API
+  version: 1.0.0
+tags:
+- name: report-templates
+paths:
+  /v1/beta/report-templates:
+    get:
+      tags:
+      - report-templates
+      summary: List Report Templates
+      operationId: reportTemplatesListReportTemplates
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReportTemplate'
+                type: array
+                title: Response Reporttemplateslistreporttemplates
+    post:
+      tags:
+      - report-templates
+      summary: Create Report Template
+      operationId: reportTemplatesCreateReportTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportTemplateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '409':
+          description: ERROR_DUPLICATE_TEMPLATE_NAME
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/report-templates/default:
+    get:
+      tags:
+      - report-templates
+      summary: Get Default Report Template
+      operationId: reportTemplatesGetDefaultReportTemplate
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ReportTemplate'
+                - type: 'null'
+                title: Response Reporttemplatesgetdefaultreporttemplate
+    put:
+      tags:
+      - report-templates
+      summary: Set Default Report Template
+      operationId: reportTemplatesSetDefaultReportTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDefaultReportTemplateRequest'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '404':
+          description: ERROR_REPORT_TEMPLATE_NOT_FOUND
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - report-templates
+      summary: Clear Default Report Template
+      operationId: reportTemplatesClearDefaultReportTemplate
+      responses:
+        '204':
+          description: Successful Response
+  /v1/beta/report-templates/{template_id}:
+    patch:
+      tags:
+      - report-templates
+      summary: Update Report Template
+      operationId: reportTemplatesUpdateReportTemplate
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Template Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReportTemplateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportTemplate'
+        '409':
+          description: ERROR_DUPLICATE_TEMPLATE_NAME
+        '404':
+          description: ERROR_REPORT_TEMPLATE_NOT_FOUND
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - report-templates
+      summary: Delete Report Template
+      operationId: reportTemplatesDeleteReportTemplate
+      parameters:
+      - name: template_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Template Id
+      responses:
+        '204':
+          description: Successful Response
+        '404':
+          description: ERROR_REPORT_TEMPLATE_NOT_FOUND
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    StandardColumn:
+      type: string
+      enum:
+      - call_id
+      - phone_number
+      - name
+      - time
+      - status
+      - outcome
+      - duration
+      - transcript
+      title: StandardColumn
+    ReportTemplate:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        name:
+          type: string
+          title: Name
+        columns:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/StandardReportColumn'
+            - $ref: '#/components/schemas/VariableReportColumn'
+            - $ref: '#/components/schemas/CollectedDataReportColumn'
+            discriminator:
+              propertyName: source
+              mapping:
+                collected_data: '#/components/schemas/CollectedDataReportColumn'
+                standard: '#/components/schemas/StandardReportColumn'
+                variable: '#/components/schemas/VariableReportColumn'
+          type: array
+          title: Columns
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - name
+      - columns
+      - created_at
+      - updated_at
+      title: ReportTemplate
+    CollectedDataReportColumn:
+      properties:
+        source:
+          type: string
+          const: collected_data
+          title: Source
+          default: collected_data
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      type: object
+      required:
+      - key
+      title: CollectedDataReportColumn
+    VariableReportColumn:
+      properties:
+        source:
+          type: string
+          const: variable
+          title: Source
+          default: variable
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      type: object
+      required:
+      - key
+      title: VariableReportColumn
+    StandardReportColumnRequest:
+      properties:
+        source:
+          type: string
+          const: standard
+          title: Source
+          default: standard
+        key:
+          $ref: '#/components/schemas/StandardColumn'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: StandardReportColumnRequest
+    CreateReportTemplateRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: Name
+        columns:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/StandardReportColumnRequest'
+            - $ref: '#/components/schemas/VariableReportColumnRequest'
+            - $ref: '#/components/schemas/CollectedDataReportColumnRequest'
+            discriminator:
+              propertyName: source
+              mapping:
+                collected_data: '#/components/schemas/CollectedDataReportColumnRequest'
+                standard: '#/components/schemas/StandardReportColumnRequest'
+                variable: '#/components/schemas/VariableReportColumnRequest'
+          type: array
+          maxItems: 256
+          minItems: 1
+          title: Columns
+      type: object
+      required:
+      - name
+      - columns
+      title: CreateReportTemplateRequest
+    SetDefaultReportTemplateRequest:
+      properties:
+        template_id:
+          type: string
+          title: Template Id
+      type: object
+      required:
+      - template_id
+      title: SetDefaultReportTemplateRequest
+    VariableReportColumnRequest:
+      properties:
+        source:
+          type: string
+          const: variable
+          title: Source
+          default: variable
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: VariableReportColumnRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UpdateReportTemplateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+          - type: 'null'
+          title: Name
+        columns:
+          anyOf:
+          - items:
+              oneOf:
+              - $ref: '#/components/schemas/StandardReportColumnRequest'
+              - $ref: '#/components/schemas/VariableReportColumnRequest'
+              - $ref: '#/components/schemas/CollectedDataReportColumnRequest'
+              discriminator:
+                propertyName: source
+                mapping:
+                  collected_data: '#/components/schemas/CollectedDataReportColumnRequest'
+                  standard: '#/components/schemas/StandardReportColumnRequest'
+                  variable: '#/components/schemas/VariableReportColumnRequest'
+            type: array
+            maxItems: 256
+            minItems: 1
+          - type: 'null'
+          title: Columns
+      type: object
+      title: UpdateReportTemplateRequest
+    StandardReportColumn:
+      properties:
+        source:
+          type: string
+          const: standard
+          title: Source
+          default: standard
+        key:
+          $ref: '#/components/schemas/StandardColumn'
+      type: object
+      required:
+      - key
+      title: StandardReportColumn
+    CollectedDataReportColumnRequest:
+      properties:
+        source:
+          type: string
+          const: collected_data
+          title: Source
+          default: collected_data
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: CollectedDataReportColumnRequest

@@ -1,0 +1,2976 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Batch API
+  version: 1.0.0
+tags:
+- name: batch
+paths:
+  /v1/beta/calls/batch:
+    post:
+      tags:
+      - batch
+      summary: Create Batch
+      operationId: batchCreateBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBatchInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/upload-url:
+    post:
+      tags:
+      - batch
+      summary: Generate Upload Url
+      operationId: batchGenerateUploadUrl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreSignedUrlRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreSignedUrlResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}:
+    get:
+      tags:
+      - batch
+      summary: Get Batch Detail
+      operationId: batchGetBatchDetail
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}/calls:
+    get:
+      tags:
+      - batch
+      summary: Get Batch Calls
+      operationId: batchGetBatchCalls
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 10
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBatchCallsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch-call/{batch_call_id}/retry:
+    get:
+      tags:
+      - batch
+      summary: Retry Call
+      operationId: batchRetryCall
+      parameters:
+      - name: batch_call_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Call Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}/retry:
+    post:
+      tags:
+      - batch
+      summary: Retry Batch
+      operationId: batchRetryBatch
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}/status:
+    put:
+      tags:
+      - batch
+      summary: Set Batch Status
+      operationId: batchSetBatchStatus
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetBatchStatusInput'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}/settings:
+    patch:
+      tags:
+      - batch
+      summary: Update Batch Settings
+      operationId: batchUpdateBatchSettings
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBatchSettingsInput'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Batch'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/calls/batch/{batch_id}/export-reports:
+    post:
+      tags:
+      - batch
+      summary: Export Batch Reports
+      operationId: batchExportBatchReports
+      parameters:
+      - name: batch_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Batch Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/ExportBatchReportsInput'
+              - type: 'null'
+              title: Body
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    OpenAITTSModels:
+      type: string
+      enum:
+      - gpt-4o-mini-tts
+      - tts-1
+      - tts-1-hd
+      title: OpenAITTSModels
+    HamsaTTSDialect:
+      type: string
+      enum:
+      - pls
+      - egy
+      - syr
+      - irq
+      - jor
+      - leb
+      - ksa
+      - uae
+      - bah
+      - qat
+      - msa
+      title: HamsaTTSDialect
+    ModelConfig:
+      properties:
+        stt:
+          anyOf:
+          - $ref: '#/components/schemas/GoogleSTTSettings'
+          - $ref: '#/components/schemas/AzureSTTSettings'
+          - $ref: '#/components/schemas/AWSSTTSettings'
+          - $ref: '#/components/schemas/GroqSTTSettings'
+          - $ref: '#/components/schemas/OpenAISTTSettings'
+          - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+          - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+          - $ref: '#/components/schemas/HamsaSTTSettings'
+          - $ref: '#/components/schemas/SarjGroqSTTSettings'
+          - $ref: '#/components/schemas/SarjCustomSTTSettings'
+          - $ref: '#/components/schemas/DeepgramSTTSettings'
+          title: Stt
+        tts:
+          anyOf:
+          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
+          - $ref: '#/components/schemas/AzureTTSSettings'
+          - $ref: '#/components/schemas/OpenAITTSSettings'
+          - $ref: '#/components/schemas/AWSTTSSettings'
+          - $ref: '#/components/schemas/GroqTTSSettings'
+          - $ref: '#/components/schemas/HamsaTTSSettings'
+          - $ref: '#/components/schemas/CartesiaTTSSettings'
+          - $ref: '#/components/schemas/DeepgramTTSSettings'
+          - $ref: '#/components/schemas/SarjF5TTSSettings'
+          - $ref: '#/components/schemas/SarjOmniTTSSettings'
+          title: Tts
+        llm:
+          anyOf:
+          - $ref: '#/components/schemas/OpenAILLMSettings'
+          - $ref: '#/components/schemas/GeminiLLMSettings'
+          - $ref: '#/components/schemas/GroqLLMSettings'
+          - $ref: '#/components/schemas/AzureOpenAILLMSettings'
+          - $ref: '#/components/schemas/CerebrasLLMSettings'
+          title: Llm
+        voice_details:
+          anyOf:
+          - $ref: '#/components/schemas/TTSVoice'
+          - type: 'null'
+        voice_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Voice Id
+      type: object
+      required:
+      - stt
+      - tts
+      - llm
+      - voice_details
+      title: ModelConfig
+    EnhancedTranscriptionMessage:
+      properties:
+        type:
+          type: string
+          const: enhanced_transcription
+          title: Type
+          default: enhanced_transcription
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: EnhancedTranscriptionMessage
+    SarjF5TTSSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_f5
+          title: Provider
+        voice:
+          $ref: '#/components/schemas/SarjF5TTSVoice'
+          default: Male
+      type: object
+      required:
+      - provider
+      title: SarjF5TTSSettings
+    DisableSTTFallback:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableSTTFallback
+    DeleteOldTasksTickMessage:
+      properties:
+        type:
+          type: string
+          const: delete_old_tasks_tick
+          title: Type
+          default: delete_old_tasks_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: DeleteOldTasksTickMessage
+    ZohoCallActivityMessage:
+      properties:
+        type:
+          type: string
+          const: zoho_call_activity
+          title: Type
+          default: zoho_call_activity
+        call_id:
+          type: string
+          title: Call Id
+        record_id:
+          type: string
+          title: Record Id
+        module:
+          $ref: '#/components/schemas/ZohoCRMModules'
+          default: Leads
+      type: object
+      required:
+      - call_id
+      - record_id
+      title: ZohoCallActivityMessage
+    CallCreationSettings:
+      properties:
+        identity:
+          type: string
+          title: Identity
+        language:
+          $ref: '#/components/schemas/Language'
+        scenario:
+          $ref: '#/components/schemas/CustomScenario'
+        callee:
+          anyOf:
+          - $ref: '#/components/schemas/CallSubject'
+          - type: 'null'
+        call_id:
+          type: string
+          title: Call Id
+        origin:
+          anyOf:
+          - $ref: '#/components/schemas/ApiCall'
+          - $ref: '#/components/schemas/SipCall'
+          - type: 'null'
+          title: Origin
+        scenario_config:
+          $ref: '#/components/schemas/Custom'
+        interaction_type:
+          $ref: '#/components/schemas/InteractionType'
+          default: voice
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        app_settings:
+          anyOf:
+          - $ref: '#/components/schemas/GlobalOverriddenSettings'
+          - $ref: '#/components/schemas/GlobalDefaultSettings'
+          title: App Settings
+        organization_id:
+          type: string
+          title: Organization Id
+        sip_account_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sip Account Id
+      type: object
+      required:
+      - identity
+      - language
+      - scenario
+      - call_id
+      - scenario_config
+      - app_settings
+      - organization_id
+      title: CallCreationSettings
+    BackChannelConfig:
+      properties:
+        type:
+          type: string
+          const: freq
+          title: Type
+          default: freq
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelConfig
+    Custom:
+      properties:
+        type:
+          type: string
+          const: custom
+          title: Type
+          default: custom
+        scenario:
+          $ref: '#/components/schemas/CustomScenario'
+      type: object
+      required:
+      - scenario
+      title: Custom
+    Task:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Id
+        batch_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Batch Id
+        type:
+          $ref: '#/components/schemas/TaskType'
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        status_changed_at:
+          type: string
+          format: date-time
+          title: Status Changed At
+        message:
+          oneOf:
+          - $ref: '#/components/schemas/EnhancedTranscriptionMessage'
+          - $ref: '#/components/schemas/CallOutcomeMessage'
+          - $ref: '#/components/schemas/ScenarioInsightAnalysisMessage'
+          - $ref: '#/components/schemas/BatchReportGenerationMessage'
+          - $ref: '#/components/schemas/CreateBatchCallsMessage'
+          - $ref: '#/components/schemas/BatchCallsRetryMessage'
+          - $ref: '#/components/schemas/StartBatchCallsTickMessage'
+          - $ref: '#/components/schemas/DeleteOldTasksTickMessage'
+          - $ref: '#/components/schemas/OutboundDispatchTickMessage'
+          - $ref: '#/components/schemas/DeleteExpiredOrgDataTickMessage'
+          - $ref: '#/components/schemas/WebhookNotificationMessage'
+          - $ref: '#/components/schemas/ZohoCRMRecordUpdateMessage'
+          - $ref: '#/components/schemas/ZohoCallActivityMessage'
+          - $ref: '#/components/schemas/StaleCallCleanupMessage'
+          - $ref: '#/components/schemas/CallQueuedHealthCheckMessage'
+          - $ref: '#/components/schemas/CallInProgressHealthCheckMessage'
+          - $ref: '#/components/schemas/CallRetryMessage'
+          - $ref: '#/components/schemas/VoiceMigrationMessage'
+          - $ref: '#/components/schemas/CallReportsEnqueueMessage'
+          - $ref: '#/components/schemas/ScenarioGenerationMessage'
+          - $ref: '#/components/schemas/ProcessMessagingMessage'
+          - $ref: '#/components/schemas/CreateDefaultAgentsMessage'
+          - $ref: '#/components/schemas/UpdateScenarioAgentMessage'
+          - $ref: '#/components/schemas/SlackAlertMessage'
+          - $ref: '#/components/schemas/ConversationExportMessage'
+          - $ref: '#/components/schemas/DispatchOutboundCallMessage'
+          - $ref: '#/components/schemas/NoOpMessage'
+          title: Message
+          discriminator:
+            propertyName: type
+            mapping:
+              batch_calls_retry: '#/components/schemas/BatchCallsRetryMessage'
+              batch_report_generation: '#/components/schemas/BatchReportGenerationMessage'
+              call_in_progress_health_check: '#/components/schemas/CallInProgressHealthCheckMessage'
+              call_outcome: '#/components/schemas/CallOutcomeMessage'
+              call_queued_health_check: '#/components/schemas/CallQueuedHealthCheckMessage'
+              call_reports_enqueue: '#/components/schemas/CallReportsEnqueueMessage'
+              call_retry: '#/components/schemas/CallRetryMessage'
+              conversation_export: '#/components/schemas/ConversationExportMessage'
+              create_batch_calls: '#/components/schemas/CreateBatchCallsMessage'
+              create_default_agents: '#/components/schemas/CreateDefaultAgentsMessage'
+              delete_expired_org_data_tick: '#/components/schemas/DeleteExpiredOrgDataTickMessage'
+              delete_old_tasks_tick: '#/components/schemas/DeleteOldTasksTickMessage'
+              dispatch_outbound_call: '#/components/schemas/DispatchOutboundCallMessage'
+              enhanced_transcription: '#/components/schemas/EnhancedTranscriptionMessage'
+              no_op: '#/components/schemas/NoOpMessage'
+              outbound_dispatch_tick: '#/components/schemas/OutboundDispatchTickMessage'
+              process_messaging_message: '#/components/schemas/ProcessMessagingMessage'
+              scenario_generation: '#/components/schemas/ScenarioGenerationMessage'
+              scenario_insight_analysis: '#/components/schemas/ScenarioInsightAnalysisMessage'
+              slack_alert: '#/components/schemas/SlackAlertMessage'
+              stale_call_cleanup: '#/components/schemas/StaleCallCleanupMessage'
+              start_batch_calls_tick: '#/components/schemas/StartBatchCallsTickMessage'
+              update_scenario_agent: '#/components/schemas/UpdateScenarioAgentMessage'
+              voice_migration: '#/components/schemas/VoiceMigrationMessage'
+              webhook_notification: '#/components/schemas/WebhookNotificationMessage'
+              zoho_call_activity: '#/components/schemas/ZohoCallActivityMessage'
+              zoho_crm_record_update: '#/components/schemas/ZohoCRMRecordUpdateMessage'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - type
+      - status
+      - status_changed_at
+      - message
+      - created_at
+      - updated_at
+      title: Task
+    SlackAlertMessage:
+      properties:
+        type:
+          type: string
+          const: slack_alert
+          title: Type
+          default: slack_alert
+        payload:
+          $ref: '#/components/schemas/GenericSlackAlert'
+      type: object
+      required:
+      - payload
+      title: SlackAlertMessage
+    NoOpMessage:
+      properties:
+        type:
+          type: string
+          const: no_op
+          title: Type
+          default: no_op
+      type: object
+      title: NoOpMessage
+    SarjCustomSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_custom
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjCustomSTTSettings
+    AWSTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSTTSSettings
+    SarjEouTurnDetection:
+      properties:
+        type:
+          type: string
+          const: sarj_eou
+          title: Type
+          default: sarj_eou
+        threshold:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Threshold
+          default: 0.5
+        prediction_timeout:
+          type: string
+          format: duration
+          title: Prediction Timeout
+          default: PT0.5S
+        min_endpointing_delay:
+          type: string
+          format: duration
+          title: Min Endpointing Delay
+          default: PT0.5S
+        max_endpointing_delay:
+          type: string
+          format: duration
+          title: Max Endpointing Delay
+          default: PT3S
+        targeted_stt_providers:
+          items:
+            $ref: '#/components/schemas/STTProvider'
+          type: array
+          title: Targeted Stt Providers
+      type: object
+      title: SarjEouTurnDetection
+    GlobalOverriddenSettings:
+      properties:
+        type:
+          type: string
+          const: override
+          title: Type
+          default: override
+        settings:
+          additionalProperties:
+            $ref: '#/components/schemas/GlobalSettings'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Settings
+      type: object
+      required:
+      - settings
+      title: GlobalOverriddenSettings
+    BatchStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - stopped
+      - done
+      title: BatchStatus
+    TTSVoice:
+      properties:
+        id:
+          type: string
+          title: Id
+        display_name:
+          type: string
+          title: Display Name
+        provider:
+          type: string
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+        gender:
+          $ref: '#/components/schemas/Gender'
+        tts_settings:
+          anyOf:
+          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
+          - $ref: '#/components/schemas/AzureTTSSettings'
+          - $ref: '#/components/schemas/OpenAITTSSettings'
+          - $ref: '#/components/schemas/AWSTTSSettings'
+          - $ref: '#/components/schemas/GroqTTSSettings'
+          - $ref: '#/components/schemas/HamsaTTSSettings'
+          - $ref: '#/components/schemas/CartesiaTTSSettings'
+          - $ref: '#/components/schemas/DeepgramTTSSettings'
+          - $ref: '#/components/schemas/SarjF5TTSSettings'
+          - $ref: '#/components/schemas/SarjOmniTTSSettings'
+          title: Tts Settings
+        is_active:
+          type: boolean
+          title: Is Active
+          default: true
+        vibe:
+          type: string
+          title: Vibe
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - display_name
+      - provider
+      - language
+      - gender
+      - tts_settings
+      - vibe
+      - created_at
+      - updated_at
+      title: TTSVoice
+    StaleCallCleanupMessage:
+      properties:
+        type:
+          type: string
+          const: stale_call_cleanup
+          title: Type
+          default: stale_call_cleanup
+      type: object
+      title: StaleCallCleanupMessage
+    OpenAILLMSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        region:
+          type: string
+          const: default
+          title: Region
+          default: default
+        model:
+          $ref: '#/components/schemas/OpenAIModel'
+      type: object
+      required:
+      - provider
+      - model
+      title: OpenAILLMSettings
+    ApiCall:
+      properties:
+        type:
+          type: string
+          const: api
+          title: Type
+          default: api
+        call_id:
+          type: string
+          title: Call Id
+        identity:
+          type: string
+          title: Identity
+      type: object
+      required:
+      - call_id
+      - identity
+      title: ApiCall
+    CallReportsEnqueueMessage:
+      properties:
+        type:
+          type: string
+          const: call_reports_enqueue
+          title: Type
+          default: call_reports_enqueue
+      type: object
+      title: CallReportsEnqueueMessage
+    CallInProgressHealthCheckMessage:
+      properties:
+        type:
+          type: string
+          const: call_in_progress_health_check
+          title: Type
+          default: call_in_progress_health_check
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: CallInProgressHealthCheckMessage
+    BackChannelMixConfig:
+      properties:
+        type:
+          type: string
+          const: mix
+          title: Type
+          default: mix
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        word_probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Word Probability
+          default: 0.7
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelMixConfig
+    GeminiLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: gemini
+          title: Provider
+        region:
+          type: string
+          enum:
+          - us-central1
+          - me-central2
+          - us-east1
+          - europe-west1
+          - europe-west3
+          title: Region
+          default: europe-west3
+        model:
+          type: string
+          enum:
+          - flash
+          - pro
+          - flash-lite-3.1
+          title: Model
+          default: flash
+      type: object
+      required:
+      - provider
+      title: GeminiLLMSettings
+    GroqSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+        model:
+          $ref: '#/components/schemas/GroqSTTModels'
+      type: object
+      required:
+      - provider
+      - model
+      title: GroqSTTSettings
+    OpenAISTTSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        model:
+          type: string
+          enum:
+          - gpt-4o-transcribe
+          - gpt-4o-mini-transcribe
+          title: Model
+        region:
+          type: string
+          const: default
+          title: Region
+          default: default
+      type: object
+      required:
+      - provider
+      - model
+      title: OpenAISTTSettings
+    CallOutcomeMessage:
+      properties:
+        type:
+          type: string
+          const: call_outcome
+          title: Type
+          default: call_outcome
+        call_id:
+          type: string
+          title: Call Id
+        is_retry:
+          type: boolean
+          title: Is Retry
+          default: false
+      type: object
+      required:
+      - call_id
+      title: CallOutcomeMessage
+    CustomScenario:
+      properties:
+        type:
+          type: string
+          const: custom
+          title: Type
+        id:
+          type: string
+          title: Id
+        variables:
+          additionalProperties: true
+          type: object
+          title: Variables
+          default: {}
+        scenario_settings_override:
+          anyOf:
+          - $ref: '#/components/schemas/ScenarioSettingsOverride'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      - id
+      title: CustomScenario
+    ElevenLabsSTTModel:
+      type: string
+      enum:
+      - scribe_v1
+      - scribe_v2
+      - scribe_v2_realtime
+      title: ElevenLabsSTTModel
+    BatchCall:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        batch_id:
+          type: string
+          title: Batch Id
+        latest_call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Call Id
+        phone_number:
+          type: string
+          title: Phone Number
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        scenario_data:
+          additionalProperties:
+            type: string
+          type: object
+          title: Scenario Data
+        attempt_number:
+          type: integer
+          minimum: 0.0
+          title: Attempt Number
+          default: 0
+        status:
+          $ref: '#/components/schemas/CallStatus'
+        retry_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Retry At
+        start_at:
+          type: string
+          format: date-time
+          title: Start At
+        settings:
+          anyOf:
+          - $ref: '#/components/schemas/BatchCallSettings'
+          - type: 'null'
+      type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - batch_id
+      - phone_number
+      - status
+      - start_at
+      title: BatchCall
+    AWSSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSSTTSettings
+    AzureSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: azure
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+      type: object
+      required:
+      - provider
+      title: AzureSTTSettings
+    InteractionType:
+      type: string
+      enum:
+      - voice
+      - chat
+      title: InteractionType
+    RetrySettings:
+      properties:
+        retry_interval_seconds:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Retry Interval Seconds
+        max_retry_attempts:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Max Retry Attempts
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+      type: object
+      required:
+      - retry_interval_seconds
+      - max_retry_attempts
+      title: RetrySettings
+    PreSignedUrlResponse:
+      properties:
+        upload_url:
+          type: string
+          title: Upload Url
+        file_key:
+          type: string
+          title: File Key
+      type: object
+      required:
+      - upload_url
+      - file_key
+      title: PreSignedUrlResponse
+    PhoneDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: PhoneDirection
+    CerebrasLLMModel:
+      type: string
+      enum:
+      - llama-3.1-8b-instruct
+      title: CerebrasLLMModel
+    ZohoCRMRecordUpdateMessage:
+      properties:
+        type:
+          type: string
+          const: zoho_crm_record_update
+          title: Type
+          default: zoho_crm_record_update
+        call_id:
+          type: string
+          title: Call Id
+        record_id:
+          type: string
+          title: Record Id
+        module:
+          $ref: '#/components/schemas/ZohoCRMModules'
+          default: Leads
+      type: object
+      required:
+      - call_id
+      - record_id
+      title: ZohoCRMRecordUpdateMessage
+    BackChannelWordConfig:
+      properties:
+        type:
+          type: string
+          const: word
+          title: Type
+          default: word
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelWordConfig
+    OpenAITTSVoices:
+      type: string
+      enum:
+      - alloy
+      - ash
+      - ballad
+      - coral
+      - echo
+      - fable
+      - onyx
+      - nova
+      - sage
+      - shimmer
+      title: OpenAITTSVoices
+    VoiceMigrationMessage:
+      properties:
+        type:
+          type: string
+          const: voice_migration
+          title: Type
+          default: voice_migration
+      type: object
+      title: VoiceMigrationMessage
+    OpenAITTSSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        model:
+          $ref: '#/components/schemas/OpenAITTSModels'
+          default: gpt-4o-mini-tts
+        voice:
+          $ref: '#/components/schemas/OpenAITTSVoices'
+          default: ash
+        speed:
+          type: number
+          maximum: 4.0
+          minimum: 0.2
+          title: Speed
+          description: Speech speed (0.2-4.0)
+          default: 1.0
+        instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Instructions
+      type: object
+      required:
+      - provider
+      title: OpenAITTSSettings
+    DeepgramTTSModel:
+      type: string
+      enum:
+      - aura-2
+      title: DeepgramTTSModel
+    GroqLLMModel:
+      type: string
+      enum:
+      - llama-3.1-405b-reasoning
+      - llama-3.1-8b-instant
+      - llama-3.3-70b-versatile
+      - llama3-groq-70b-8192-tool-use-preview
+      - llama3-groq-8b-8192-tool-use-preview
+      - llama-guard-3-8b
+      - llama3-70b-8192
+      - llama3-8b-8192
+      - mixtral-8x7b-32768
+      - gemma-7b-it
+      - gemma2-9b-it
+      - meta-llama/llama-4-scout-17b-16e-instruct
+      - meta-llama/llama-4-maverick-17b-128e-instruct
+      - openai/gpt-oss-20b
+      - openai/gpt-oss-120b
+      - qwen/qwen3-32b
+      title: GroqLLMModel
+    ScenarioInsightAnalysisMessage:
+      properties:
+        type:
+          type: string
+          const: scenario_insight_analysis
+          title: Type
+          default: scenario_insight_analysis
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: ScenarioInsightAnalysisMessage
+    CartesiaTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: cartesia
+          title: Provider
+        model:
+          $ref: '#/components/schemas/CartesiaModels'
+          default: sonic-3
+        voice:
+          type: string
+          title: Voice
+          default: f257d7af-eb60-4ef0-8815-b78701006c2c
+        speed:
+          type: number
+          maximum: 1.5
+          minimum: 0.6
+          title: Speed
+          description: Speech speed (0.6-1.5)
+          default: 1.0
+        emotion:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emotion
+      type: object
+      required:
+      - provider
+      title: CartesiaTTSSettings
+    DisableBackChanneling:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackChanneling
+    DispatchOutboundCallMessage:
+      properties:
+        type:
+          type: string
+          const: dispatch_outbound_call
+          title: Type
+          default: dispatch_outbound_call
+        call_id:
+          type: string
+          title: Call Id
+        call_creation_settings:
+          $ref: '#/components/schemas/CallCreationSettings'
+        priority:
+          $ref: '#/components/schemas/CallDispatchPriority'
+          default: normal
+      type: object
+      required:
+      - call_id
+      - call_creation_settings
+      title: DispatchOutboundCallMessage
+    UpdateBatchSettingsInput:
+      properties:
+        calling_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettingsInput'
+          - type: 'null'
+      type: object
+      title: UpdateBatchSettingsInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HamsaTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: hamsa
+          title: Provider
+        speaker:
+          $ref: '#/components/schemas/HamsaTTSSpeaker'
+          default: Hiba
+        dialect:
+          $ref: '#/components/schemas/HamsaTTSDialect'
+          default: ksa
+      type: object
+      required:
+      - provider
+      title: HamsaTTSSettings
+    BatchReportGenerationMessage:
+      properties:
+        type:
+          type: string
+          const: batch_report_generation
+          title: Type
+          default: batch_report_generation
+        batch_id:
+          type: string
+          title: Batch Id
+        custom_columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Custom Columns
+        columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Columns
+        file_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Key
+        batch_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Batch Name
+      type: object
+      required:
+      - batch_id
+      title: BatchReportGenerationMessage
+    LiveKitTurnDetection:
+      properties:
+        type:
+          type: string
+          const: livekit_v1_mini
+          title: Type
+          default: livekit_v1_mini
+        unlikely_threshold:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.0
+          - type: 'null'
+          title: Unlikely Threshold
+        min_endpointing_delay:
+          type: string
+          format: duration
+          title: Min Endpointing Delay
+          default: PT0.3S
+        max_endpointing_delay:
+          type: string
+          format: duration
+          title: Max Endpointing Delay
+          default: PT2.5S
+      type: object
+      title: LiveKitTurnDetection
+    GoogleSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: google
+          title: Provider
+        model:
+          type: string
+          enum:
+          - long
+          - short
+          - telephony
+          - chirp_2
+          - chirp_3
+          title: Model
+        region:
+          type: string
+          enum:
+          - us
+          - eu
+          title: Region
+      type: object
+      required:
+      - provider
+      - model
+      - region
+      title: GoogleSTTSettings
+    OrpheusArabicVoice:
+      type: string
+      enum:
+      - fahad
+      - sultan
+      - lulwa
+      - noura
+      - aisha
+      - abdullah
+      title: OrpheusArabicVoice
+    ZohoCRMModules:
+      type: string
+      enum:
+      - Leads
+      - Contacts
+      - Calls
+      title: ZohoCRMModules
+    GlobalDefaultSettings:
+      properties:
+        type:
+          type: string
+          const: default
+          title: Type
+          default: default
+      type: object
+      title: GlobalDefaultSettings
+    STTFallbackConfig:
+      properties:
+        type:
+          type: string
+          const: enable
+          title: Type
+          default: enable
+        models:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GoogleSTTSettings'
+            - $ref: '#/components/schemas/AzureSTTSettings'
+            - $ref: '#/components/schemas/AWSSTTSettings'
+            - $ref: '#/components/schemas/GroqSTTSettings'
+            - $ref: '#/components/schemas/OpenAISTTSettings'
+            - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+            - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+            - $ref: '#/components/schemas/DeepgramSTTSettings'
+          type: array
+          maxItems: 2
+          title: Models
+      type: object
+      title: STTFallbackConfig
+    CerebrasLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: cerebras
+          title: Provider
+          default: cerebras
+        model:
+          $ref: '#/components/schemas/CerebrasLLMModel'
+      type: object
+      required:
+      - model
+      title: CerebrasLLMSettings
+    ElevenLabsSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: elevenlabs
+          title: Provider
+        model:
+          $ref: '#/components/schemas/ElevenLabsSTTModel'
+          default: scribe_v1
+        region:
+          $ref: '#/components/schemas/ElevenLabsRegion'
+          default: eu
+      type: object
+      required:
+      - provider
+      title: ElevenLabsSTTSettings
+    DeprecatedBatchSettings:
+      properties:
+        voices:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TTSVoice'
+            type: array
+          - type: 'null'
+          title: Voices
+        voice_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Voice Ids
+        language:
+          $ref: '#/components/schemas/Language'
+        models:
+          $ref: '#/components/schemas/ModelConfig'
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/CustomScenario'
+          - $ref: '#/components/schemas/LegacyScenario'
+          title: Scenario
+        start_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start At
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettings'
+          - type: 'null'
+      type: object
+      required:
+      - language
+      - models
+      - scenario
+      title: DeprecatedBatchSettings
+    DeleteExpiredOrgDataTickMessage:
+      properties:
+        type:
+          type: string
+          const: delete_expired_org_data_tick
+          title: Type
+          default: delete_expired_org_data_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: DeleteExpiredOrgDataTickMessage
+    BatchCallSettings:
+      properties:
+        voice:
+          $ref: '#/components/schemas/TTSVoice'
+        voice_id:
+          type: string
+          title: Voice Id
+      type: object
+      required:
+      - voice
+      - voice_id
+      title: BatchCallSettings
+    ElevenLabsModels:
+      type: string
+      enum:
+      - eleven_multilingual_v2
+      - eleven_flash_v2_5
+      - eleven_turbo_v2_5
+      title: ElevenLabsModels
+    UpdateScenarioAgentMessage:
+      properties:
+        type:
+          type: string
+          const: update_scenario_agent
+          title: Type
+          default: update_scenario_agent
+        organization_id:
+          type: string
+          title: Organization Id
+        deleted_agent_id:
+          type: string
+          title: Deleted Agent Id
+        language:
+          type: string
+          title: Language
+      type: object
+      required:
+      - organization_id
+      - deleted_agent_id
+      - language
+      title: UpdateScenarioAgentMessage
+    SarjF5TTSVoice:
+      type: string
+      enum:
+      - Male
+      - Female
+      title: SarjF5TTSVoice
+    ActiveBatchSettings:
+      properties:
+        voices:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TTSVoice'
+            type: array
+          - type: 'null'
+          title: Voices
+        voice_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Voice Ids
+        app_settings:
+          anyOf:
+          - $ref: '#/components/schemas/GlobalOverriddenSettings'
+          - $ref: '#/components/schemas/GlobalDefaultSettings'
+          title: App Settings
+        language:
+          $ref: '#/components/schemas/Language'
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/CustomScenario'
+          - $ref: '#/components/schemas/LegacyScenario'
+          title: Scenario
+        start_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start At
+        calling_window:
+          $ref: '#/components/schemas/TimeWindow'
+          default:
+            start_edge:
+              hour: 9
+              minute: 0
+            end_edge:
+              hour: 22
+              minute: 0
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettings'
+          - type: 'null'
+        sip_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sip Trunk Id
+        trunk_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Phone Number
+      type: object
+      required:
+      - language
+      - scenario
+      title: ActiveBatchSettings
+    SarjGroqSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_groq
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjGroqSTTSettings
+    GenericSlackAlert:
+      properties:
+        alert_type:
+          type: string
+          const: generic
+          title: Alert Type
+          default: generic
+        title:
+          type: string
+          title: Title
+        body:
+          type: string
+          title: Body
+      type: object
+      required:
+      - title
+      - body
+      title: GenericSlackAlert
+    SarjOmniTTSVoice:
+      type: string
+      enum:
+      - ars_male
+      - ars_fares
+      - ars_female_expressive
+      title: SarjOmniTTSVoice
+    BackchannelAudioConfig:
+      properties:
+        sound_id:
+          $ref: '#/components/schemas/SoundId'
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 1.0
+        probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Probability
+          default: 1.0
+      type: object
+      required:
+      - sound_id
+      title: BackchannelAudioConfig
+    ElevenLabsRegion:
+      type: string
+      enum:
+      - us
+      - eu
+      title: ElevenLabsRegion
+    TimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: enabled
+          title: Type
+          default: enabled
+        duration:
+          anyOf:
+          - type: string
+            format: duration
+          - type: integer
+          title: Duration
+          default: 15
+        max_retries:
+          type: integer
+          title: Max Retries
+          default: 5
+      type: object
+      title: TimeoutSettings
+    GlobalSettings:
+      properties:
+        models:
+          $ref: '#/components/schemas/GlobalModelConfig'
+        back_channel:
+          anyOf:
+          - $ref: '#/components/schemas/BackChannelConfig'
+          - $ref: '#/components/schemas/BackChannelWordConfig'
+          - $ref: '#/components/schemas/BackChannelSoundConfig'
+          - $ref: '#/components/schemas/BackChannelMixConfig'
+          - $ref: '#/components/schemas/DisableBackChanneling'
+          title: Back Channel
+        allow_interruptions:
+          type: boolean
+          title: Allow Interruptions
+        timeout:
+          anyOf:
+          - $ref: '#/components/schemas/TimeoutSettings'
+          - $ref: '#/components/schemas/DisableTimeoutSettings'
+          title: Timeout
+        agent_name:
+          type: string
+          title: Agent Name
+          default: ''
+        turn_detection:
+          anyOf:
+          - $ref: '#/components/schemas/DisableTurnDetection'
+          - $ref: '#/components/schemas/SarjEouTurnDetection'
+          - $ref: '#/components/schemas/LiveKitTurnDetection'
+          title: Turn Detection
+        max_duration_end_call_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Max Duration End Call Message
+      type: object
+      required:
+      - models
+      - back_channel
+      - allow_interruptions
+      - timeout
+      title: GlobalSettings
+    SoundId:
+      type: string
+      enum:
+      - keyboard_typing
+      title: SoundId
+    DeepgramTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: deepgram
+          title: Provider
+        model:
+          $ref: '#/components/schemas/DeepgramTTSModel'
+          default: aura-2
+        voice:
+          type: string
+          title: Voice
+      type: object
+      required:
+      - provider
+      - voice
+      title: DeepgramTTSSettings
+    AzureOpenAIModel:
+      type: string
+      enum:
+      - gpt-4.1
+      title: AzureOpenAIModel
+    TimeEdge:
+      properties:
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
+      type: object
+      required:
+      - hour
+      - minute
+      title: TimeEdge
+    CartesiaModels:
+      type: string
+      enum:
+      - sonic-3
+      - sonic-2
+      - sonic
+      title: CartesiaModels
+    CreateBatchInput:
+      properties:
+        app_settings:
+          anyOf:
+          - $ref: '#/components/schemas/GlobalOverriddenSettings'
+          - $ref: '#/components/schemas/GlobalDefaultSettings'
+          title: App Settings
+        calling_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        file:
+          $ref: '#/components/schemas/UploadedFile'
+        name:
+          type: string
+          title: Name
+        language:
+          $ref: '#/components/schemas/Language'
+        scenario:
+          $ref: '#/components/schemas/CustomScenario'
+        start_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start At
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettingsInput'
+          - type: 'null'
+        voices:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TTSVoice'
+            type: array
+          - type: 'null'
+          title: Voices
+        sip_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sip Trunk Id
+        trunk_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Phone Number
+        display_time_zone:
+          type: string
+          title: Display Time Zone
+      type: object
+      required:
+      - file
+      - name
+      - language
+      - scenario
+      - display_time_zone
+      title: CreateBatchInput
+    HamsaTTSSpeaker:
+      type: string
+      enum:
+      - Hiba
+      - Khadija
+      - Jasem
+      - Fahd
+      - Salma
+      - Noor
+      - Lana
+      - Fatma
+      - Mariam
+      - Nada
+      - Samir
+      - Dalal
+      - Mais
+      - Alia
+      - Faiza
+      - Dima
+      - Lyali
+      - Carla
+      - Hind
+      - Safa
+      - Somaya
+      - Ali
+      - Ahmed
+      - Mazen
+      - Majd
+      - Amjad
+      - Layan
+      - Talin
+      - Rema
+      - Rami
+      - Hamdan
+      - Maher
+      - Majid
+      - Mansour
+      - Hasan
+      - Sayed
+      title: HamsaTTSSpeaker
+    TimeWindow:
+      properties:
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
+      type: object
+      required:
+      - start_edge
+      - end_edge
+      title: TimeWindow
+    ExportBatchReportsInput:
+      properties:
+        custom_columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Custom Columns
+        columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Columns
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+      type: object
+      title: ExportBatchReportsInput
+    CallQueuedHealthCheckMessage:
+      properties:
+        type:
+          type: string
+          const: call_queued_health_check
+          title: Type
+          default: call_queued_health_check
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: CallQueuedHealthCheckMessage
+    DeprecatedBatchSettingsV2:
+      properties:
+        voices:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TTSVoice'
+            type: array
+          - type: 'null'
+          title: Voices
+        voice_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Voice Ids
+        language:
+          $ref: '#/components/schemas/Language'
+        models:
+          $ref: '#/components/schemas/ModelConfig'
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/CustomScenario'
+          - $ref: '#/components/schemas/LegacyScenario'
+          title: Scenario
+        start_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start At
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettings'
+          - type: 'null'
+      type: object
+      required:
+      - language
+      - models
+      - scenario
+      title: DeprecatedBatchSettingsV2
+    GlobalModelConfig:
+      properties:
+        stt:
+          anyOf:
+          - $ref: '#/components/schemas/GoogleSTTSettings'
+          - $ref: '#/components/schemas/AzureSTTSettings'
+          - $ref: '#/components/schemas/AWSSTTSettings'
+          - $ref: '#/components/schemas/GroqSTTSettings'
+          - $ref: '#/components/schemas/OpenAISTTSettings'
+          - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+          - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+          - $ref: '#/components/schemas/HamsaSTTSettings'
+          - $ref: '#/components/schemas/SarjGroqSTTSettings'
+          - $ref: '#/components/schemas/SarjCustomSTTSettings'
+          - $ref: '#/components/schemas/DeepgramSTTSettings'
+          title: Stt
+        stt_fallback:
+          anyOf:
+          - $ref: '#/components/schemas/DisableSTTFallback'
+          - $ref: '#/components/schemas/STTFallbackConfig'
+          title: Stt Fallback
+        tts:
+          anyOf:
+          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
+          - $ref: '#/components/schemas/AzureTTSSettings'
+          - $ref: '#/components/schemas/OpenAITTSSettings'
+          - $ref: '#/components/schemas/AWSTTSSettings'
+          - $ref: '#/components/schemas/GroqTTSSettings'
+          - $ref: '#/components/schemas/HamsaTTSSettings'
+          - $ref: '#/components/schemas/CartesiaTTSSettings'
+          - $ref: '#/components/schemas/DeepgramTTSSettings'
+          - $ref: '#/components/schemas/SarjF5TTSSettings'
+          - $ref: '#/components/schemas/SarjOmniTTSSettings'
+          title: Tts
+        llm:
+          anyOf:
+          - $ref: '#/components/schemas/OpenAILLMSettings'
+          - $ref: '#/components/schemas/GeminiLLMSettings'
+          - $ref: '#/components/schemas/GroqLLMSettings'
+          - $ref: '#/components/schemas/AzureOpenAILLMSettings'
+          - $ref: '#/components/schemas/CerebrasLLMSettings'
+          title: Llm
+        voice_details:
+          $ref: '#/components/schemas/TTSVoice'
+        voice_id:
+          type: string
+          title: Voice Id
+      type: object
+      required:
+      - stt
+      - tts
+      - llm
+      - voice_details
+      - voice_id
+      title: GlobalModelConfig
+    STTProvider:
+      type: string
+      enum:
+      - google
+      - azure
+      - aws
+      - openai
+      - elevenlabs
+      - groq
+      - speechmatics
+      - hamsa
+      - sarj_groq
+      - sarj_custom
+      - deepgram
+      title: STTProvider
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    SupportedContentType:
+      type: string
+      enum:
+      - application/json
+      - text/csv
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      - application/vnd.ms-excel
+      title: SupportedContentType
+    SetBatchStatusInput:
+      properties:
+        status:
+          $ref: '#/components/schemas/BatchStatus'
+      type: object
+      required:
+      - status
+      title: SetBatchStatusInput
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      title: Gender
+    OrpheusEnglishVoice:
+      type: string
+      enum:
+      - autumn
+      - diana
+      - hannah
+      - austin
+      - daniel
+      - troy
+      title: OrpheusEnglishVoice
+    ProcessMessagingMessage:
+      properties:
+        type:
+          type: string
+          const: process_messaging_message
+          title: Type
+          default: process_messaging_message
+        provider:
+          type: string
+          title: Provider
+        payload:
+          additionalProperties: true
+          type: object
+          title: Payload
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+      type: object
+      required:
+      - provider
+      - payload
+      - organization_id
+      title: ProcessMessagingMessage
+    ListCallsInput:
+      properties:
+        call_outcome:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Outcome
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        date_from:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Date From
+        date_to:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Date To
+        direction:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneDirection'
+          - type: 'null'
+        duration_max:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Max
+        duration_min:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Min
+        limit:
+          type: integer
+          title: Limit
+          default: 10
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        status:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CallStatus'
+            type: array
+          - type: 'null'
+          title: Status
+        report:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CallOutcomeStatus'
+            type: array
+          - type: 'null'
+          title: Report
+        scenario:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scenario
+      type: object
+      title: ListCallsInput
+    NumberFormat:
+      type: string
+      enum:
+      - e164
+      - no_plus
+      title: NumberFormat
+    HamsaSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: hamsa
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+      type: object
+      required:
+      - provider
+      title: HamsaSTTSettings
+    SpeechmaticsSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: speechmatics
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+          default: en
+        operating_point:
+          type: string
+          title: Operating Point
+          default: enhanced
+      type: object
+      required:
+      - provider
+      title: SpeechmaticsSTTSettings
+    CallRetryMessage:
+      properties:
+        type:
+          type: string
+          const: call_retry
+          title: Type
+          default: call_retry
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: CallRetryMessage
+    ElevenLabsTTSSettings:
+      properties:
+        model:
+          $ref: '#/components/schemas/ElevenLabsModels'
+        provider:
+          type: string
+          const: 11labs
+          title: Provider
+        arabic_voice_id:
+          type: string
+          title: Arabic Voice Id
+        english_voice_id:
+          type: string
+          title: English Voice Id
+          default: 21m00Tcm4TlvDq8ikWAM
+        urdu_voice_id:
+          type: string
+          title: Urdu Voice Id
+          default: 9cI5mhBtM4WtQ9Fo6jWQ
+        region:
+          $ref: '#/components/schemas/ElevenLabsRegion'
+          default: eu
+        speed:
+          type: number
+          maximum: 1.2
+          minimum: 0.7
+          title: Speed
+          description: Speech speed (0.7-1.2)
+          default: 1.0
+      type: object
+      required:
+      - model
+      - provider
+      - arabic_voice_id
+      title: ElevenLabsTTSSettings
+    GroqTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+        voice:
+          anyOf:
+          - $ref: '#/components/schemas/OrpheusArabicVoice'
+          - $ref: '#/components/schemas/OrpheusEnglishVoice'
+          title: Voice
+      type: object
+      required:
+      - provider
+      - voice
+      title: GroqTTSSettings
+    SarjOmniTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_omni
+          title: Provider
+        voice:
+          $ref: '#/components/schemas/SarjOmniTTSVoice'
+          default: ars_male
+        speed:
+          type: number
+          maximum: 1.2
+          minimum: 0.8
+          title: Speed
+          description: Speech speed (0.8-1.2)
+          default: 1.0
+      type: object
+      required:
+      - provider
+      title: SarjOmniTTSSettings
+    ConversationExportMessage:
+      properties:
+        type:
+          type: string
+          const: conversation_export
+          title: Type
+          default: conversation_export
+        filters:
+          $ref: '#/components/schemas/ListCallsInput'
+        custom_columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Custom Columns
+        columns:
+          items:
+            $ref: '#/components/schemas/ReportColumn'
+          type: array
+          maxItems: 256
+          title: Columns
+        file_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Key
+        row_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Row Count
+      type: object
+      required:
+      - filters
+      title: ConversationExportMessage
+    PreSignedUrlRequest:
+      properties:
+        content_type:
+          $ref: '#/components/schemas/SupportedContentType'
+      type: object
+      required:
+      - content_type
+      title: PreSignedUrlRequest
+    CallDispatchPriority:
+      type: string
+      enum:
+      - normal
+      title: CallDispatchPriority
+    ScenarioGenerationMessage:
+      properties:
+        type:
+          type: string
+          const: scenario_generation
+          title: Type
+          default: scenario_generation
+        generation_log_id:
+          type: string
+          title: Generation Log Id
+      type: object
+      required:
+      - generation_log_id
+      title: ScenarioGenerationMessage
+    BatchCallsRetryMessage:
+      properties:
+        type:
+          type: string
+          const: batch_calls_retry
+          title: Type
+          default: batch_calls_retry
+        batch_id:
+          type: string
+          title: Batch Id
+      type: object
+      required:
+      - batch_id
+      title: BatchCallsRetryMessage
+    AzureOpenAILLMSettings:
+      properties:
+        provider:
+          type: string
+          const: azure_openai
+          title: Provider
+        model:
+          $ref: '#/components/schemas/AzureOpenAIModel'
+      type: object
+      required:
+      - provider
+      - model
+      title: AzureOpenAILLMSettings
+    DeepgramSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: deepgram
+          title: Provider
+        model:
+          $ref: '#/components/schemas/DeepgramSTTModel'
+          default: nova-3
+        endpointing_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Endpointing Ms
+        eot_timeout_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Eot Timeout Ms
+        eot_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Eot Threshold
+        eager_eot_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Eager Eot Threshold
+      type: object
+      required:
+      - provider
+      title: DeepgramSTTSettings
+    StartBatchCallsTickMessage:
+      properties:
+        type:
+          type: string
+          const: start_batch_calls_tick
+          title: Type
+          default: start_batch_calls_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: StartBatchCallsTickMessage
+    GroqLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+          default: groq
+        model:
+          $ref: '#/components/schemas/GroqLLMModel'
+      type: object
+      required:
+      - model
+      title: GroqLLMSettings
+    CallOutcomeStatus:
+      type: string
+      enum:
+      - success
+      - failure
+      - error
+      title: CallOutcomeStatus
+    BackChannelSoundConfig:
+      properties:
+        type:
+          type: string
+          const: sound
+          title: Type
+          default: sound
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelSoundConfig
+    TaskStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - completed
+      - failed
+      - cancelled
+      title: TaskStatus
+    DeepgramSTTModel:
+      type: string
+      enum:
+      - nova-3
+      - nova-2
+      - flux
+      title: DeepgramSTTModel
+    DisableTurnDetection:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTurnDetection
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroqSTTModels:
+      type: string
+      enum:
+      - whisper-large-v3
+      - whisper-large-v3-turbo
+      - distil-whisper-large-v3-en
+      title: GroqSTTModels
+    ListBatchCallsResponse:
+      properties:
+        batch_calls:
+          items:
+            $ref: '#/components/schemas/BatchCall'
+          type: array
+          title: Batch Calls
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - batch_calls
+      title: ListBatchCallsResponse
+    SipCall:
+      properties:
+        type:
+          type: string
+          const: sip
+          title: Type
+          default: sip
+      type: object
+      title: SipCall
+    CallStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - transferring
+      - transferred
+      - completed
+      - timeout
+      - user_rejected
+      - max_duration_reached
+      - failed
+      - ringing
+      - voicemail
+      - dialing
+      - cancelled
+      - expired
+      title: CallStatus
+    ReportColumn:
+      properties:
+        source:
+          type: string
+          enum:
+          - standard
+          - variable
+          - collected_data
+          title: Source
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - source
+      - key
+      title: ReportColumn
+    DisableTimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTimeoutSettings
+    ScenarioSettingsOverride:
+      properties:
+        agent_profile_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Profile Id
+      type: object
+      title: ScenarioSettingsOverride
+    Batch:
+      properties:
+        id:
+          type: string
+          title: Id
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        name:
+          type: string
+          title: Name
+        display_time_zone:
+          type: string
+          title: Display Time Zone
+          default: Asia/Riyadh
+        custom_scenario_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Scenario Id
+        settings:
+          anyOf:
+          - $ref: '#/components/schemas/ActiveBatchSettings'
+          - $ref: '#/components/schemas/DeprecatedBatchSettings'
+          - $ref: '#/components/schemas/DeprecatedBatchSettingsV2'
+          title: Settings
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        total_calls:
+          type: integer
+          minimum: 0.0
+          title: Total Calls
+        successful_calls:
+          type: integer
+          minimum: 0.0
+          title: Successful Calls
+        completed_calls:
+          type: integer
+          minimum: 0.0
+          title: Completed Calls
+        settled_calls:
+          type: integer
+          minimum: 0.0
+          title: Settled Calls
+        status:
+          $ref: '#/components/schemas/BatchStatus'
+        report_file_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Report File Key
+        signed_report_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Signed Report Url
+        file_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Key
+      type: object
+      required:
+      - id
+      - user_id
+      - organization_id
+      - name
+      - settings
+      - created_at
+      - updated_at
+      - total_calls
+      - successful_calls
+      - completed_calls
+      - settled_calls
+      - status
+      title: Batch
+    UploadedFile:
+      properties:
+        key:
+          type: string
+          title: Key
+      type: object
+      required:
+      - key
+      title: UploadedFile
+    CreateBatchCallsMessage:
+      properties:
+        type:
+          type: string
+          const: create_batch_calls
+          title: Type
+          default: create_batch_calls
+        batch_id:
+          type: string
+          title: Batch Id
+      type: object
+      required:
+      - batch_id
+      title: CreateBatchCallsMessage
+    RetrySettingsInput:
+      properties:
+        retry_interval_seconds:
+          type: integer
+          maximum: 86400.0
+          minimum: 300.0
+          title: Retry Interval Seconds
+        max_retry_attempts:
+          type: integer
+          maximum: 5.0
+          minimum: 1.0
+          title: Max Retry Attempts
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+      type: object
+      required:
+      - retry_interval_seconds
+      - max_retry_attempts
+      title: RetrySettingsInput
+    TaskType:
+      type: string
+      enum:
+      - enhanced_transcription
+      - call_outcome
+      - scenario_insight_analysis
+      - batch_report_generation
+      - create_batch_calls
+      - batch_calls_retry
+      - start_batch_calls_tick
+      - delete_old_tasks_tick
+      - webhook_notification
+      - zoho_crm_record_update
+      - zoho_call_activity
+      - stale_call_cleanup
+      - call_queued_health_check
+      - call_in_progress_health_check
+      - call_retry
+      - call_reports_enqueue
+      - voice_migration
+      - scenario_generation
+      - process_messaging_message
+      - create_default_agents
+      - update_scenario_agent
+      - slack_alert
+      - conversation_export
+      - dispatch_outbound_call
+      - outbound_dispatch_tick
+      - delete_expired_org_data_tick
+      - no_op
+      title: TaskType
+    CallSubject:
+      properties:
+        phone_number:
+          type: string
+          title: Phone Number
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        trunk_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Phone Number
+        number_format:
+          anyOf:
+          - $ref: '#/components/schemas/NumberFormat'
+          - type: 'null'
+      type: object
+      required:
+      - phone_number
+      - sip_trunk_id
+      title: CallSubject
+    LegacyScenario:
+      properties:
+        type:
+          type: string
+          title: Type
+      type: object
+      required:
+      - type
+      title: LegacyScenario
+    AzureTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: azure
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+        voice:
+          type: string
+          title: Voice
+          default: en-US-JennyNeural
+      type: object
+      required:
+      - provider
+      title: AzureTTSSettings
+    OpenAIModel:
+      type: string
+      enum:
+      - gpt-5.5
+      - gpt-5.4
+      - gpt-5.4-mini
+      - gpt-5.4-nano
+      - gpt-5.2
+      - gpt-5.1
+      - gpt-5
+      - gpt-5-mini
+      - gpt-5-nano
+      - gpt-4.1
+      - gpt-4.1-nano
+      - gpt-4o
+      - gpt-4o-mini
+      - o3
+      - o3-mini
+      - o4-mini
+      title: OpenAIModel
+    OutboundDispatchTickMessage:
+      properties:
+        type:
+          type: string
+          const: outbound_dispatch_tick
+          title: Type
+          default: outbound_dispatch_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: OutboundDispatchTickMessage
+    CreateDefaultAgentsMessage:
+      properties:
+        type:
+          type: string
+          const: create_default_agents
+          title: Type
+          default: create_default_agents
+      type: object
+      title: CreateDefaultAgentsMessage
+    WebhookNotificationMessage:
+      properties:
+        type:
+          type: string
+          const: webhook_notification
+          title: Type
+          default: webhook_notification
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: WebhookNotificationMessage

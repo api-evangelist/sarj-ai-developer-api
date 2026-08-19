@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Report Templates API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "report-templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Report Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/report-templates"
+          },
+          "docs": "List Report Templates"
+        },
+        {
+          "info": {
+            "name": "Create Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/report-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Report Template"
+        },
+        {
+          "info": {
+            "name": "Get Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default"
+          },
+          "docs": "Get Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Set Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Clear Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default"
+          },
+          "docs": "Clear Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Update Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/beta/report-templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Report Template"
+        },
+        {
+          "info": {
+            "name": "Delete Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/report-templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Report Template"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "bafb8231-5667-4fd9-a42d-fe7a2871393f",
+      "name": "Models",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a206459f-20f3-4a78-a9c7-bcffc3248a28",
+          "name": "List Sarj TTS models",
+          "request": {
+            "name": "List Sarj TTS models",
+            "description": {
+              "content": "Return the single model served by this API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdaf7d63-beec-450a-b6e9-d412ee63c05f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"sarj-tts\",\n      \"object\": \"model\",\n      \"created\": 1786214180,\n      \"owned_by\": \"sarj-ai\",\n      \"permission\": [\n        {\n          \"key_0\": 1077.1329560716613,\n          \"key_1\": 9375,\n          \"key_2\": true\n        },\n        {\n          \"key_0\": true,\n          \"key_1\": 8898.95771941725\n        }\n      ],\n      \"root\": \"sarj-tts\",\n      \"parent\": null\n    },\n    {\n      \"id\": \"sarj-tts\",\n      \"object\": \"model\",\n      \"created\": 1786214180,\n      \"owned_by\": \"sarj-ai\",\n      \"permission\": [\n        {\n          \"key_0\": false\n        },\n        {\n          \"key_0\": false\n        }\n      ],\n      \"root\": \"sarj-tts\",\n      \"parent\": null\n    }\n  ],\n  \"object\": \"list\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed86d432-3762-4c8e-9d24-ea7f07df4bdc",
+          "name": "Retrieve Sarj TTS",
+          "request": {
+            "name": "Retrieve Sarj TTS",
+            "description": {
+              "content": "Retrieve canonical metadata for `sarj-tts` or a historical request alias.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "models",
+                ":model_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "951d231a-195d-4e59-916c-d28d6dab683c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"sarj-tts\",\n  \"object\": \"model\",\n  \"created\": 1786214180,\n  \"owned_by\": \"sarj-ai\",\n  \"permission\": [\n    {\n      \"key_0\": false,\n      \"key_1\": 9455\n    },\n    {\n      \"key_0\": 2448.5896536023943\n    }\n  ],\n  \"root\": \"sarj-tts\",\n  \"parent\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91498257-34c0-421f-a7b3-48c0a1150890",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "models",
+                    ":model_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16487f72-c672-40f2-878c-10933e77d847",
+    "name": "Sarj TTS Models API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint uses an OpenAI SDK-compatible request and response shape.",
+      "type": "text/plain"
+    }
+  }
+}

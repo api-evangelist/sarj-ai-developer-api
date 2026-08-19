@@ -1,0 +1,1388 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sarj.ai Developer API",
+    "description": "Public API for programmatic access to the **Sarj.ai voice platform**.\n\n> [!TIP]\n> **New here?** Start with the [Getting Started guide](https://platform-docs.sarj.ai/getting-started)\n> to go from API key to first call in under 5 minutes.\n>\n> **Building with AI agents?** See the [MCP Server guide](https://platform-docs.sarj.ai/mcp-server)\n> to connect Claude Code, Cursor, or any MCP-compatible agent.\n\n---\n\n## Authentication\n\nAll authenticated endpoints require a **Bearer token** in the `Authorization`\nheader:\n\n```\nAuthorization: Bearer <your-api-key>\n```\n\nGenerate an API key from [platform.sarj.ai/api-keys](https://platform.sarj.ai/api-keys).\n\n> [!WARNING]\n> If you receive a `401 Unauthorized` response, your key may be invalid,\n> expired, or missing. Check the `error.type` field in the response body.\n\n---\n\n## Response Format\n\n**Success**\n\n```json\n{\n  \"data\": { ... },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\n**Error**\n\n```json\n{\n  \"error\": {\n    \"type\": \"unauthorized\",\n    \"message\": \"Authentication required.\"\n  },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\nAlways branch on `error.type` — the `message` field is for humans only.\n\n---\n\n## Support\n\nInclude `meta.request_id` in all support tickets for faster resolution.\n",
+    "license": {
+      "name": "Apache 2.0",
+      "identifier": "Apache-2.0"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://platform-api.sarj.ai/api/v1",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Health Check",
+        "description": "Returns the operational status of the API. Does not require authentication.",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_HealthStatus_"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "x-codeSamples": [
+          {
+            "label": "Python (SDK)",
+            "lang": "Python",
+            "source": "import os\nfrom sarj_platform_sdk import SDK\n\nsdk = SDK(api_key_auth=os.environ.get(\"SARJ_API_KEY\", \"\"))\nprint(sdk.system.get_health().data.status)  # \"ok\""
+          },
+          {
+            "label": "Python (requests)",
+            "lang": "Python",
+            "source": "import requests\n\nresponse = requests.get(\n    \"https://platform-api.sarj.ai/api/v1/health\"\n)\nprint(response.json())"
+          },
+          {
+            "label": "TypeScript",
+            "lang": "TypeScript",
+            "source": "const response = await fetch(\n  \"https://platform-api.sarj.ai/api/v1/health\"\n);\nconst data = await response.json();\nconsole.log(data);"
+          }
+        ]
+      }
+    },
+    "/calls": {
+      "post": {
+        "tags": [
+          "Calls"
+        ],
+        "summary": "Place an outbound Sarj.ai voice call",
+        "description": "Place an outbound Sarj.ai voice call: dials the given phone_number and runs the specified scenario (with optional template variables and language). Returns a call_id that can be polled via getCall. Use this whenever the user asks to call, dial, ring, or phone someone through Sarj.ai — do not attempt to start calls by writing to the database or invoking telephony providers directly.",
+        "operationId": "createCall",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCallRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_PublicCall_"
+                },
+                "example": {
+                  "data": {
+                    "id": "call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b",
+                    "status": "queued",
+                    "phone_number": "+966512345678",
+                    "scenario_id": "scn_abc123",
+                    "created_at": "2026-04-12T10:30:00Z"
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Outbound call failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "type": "outbound_call_failed",
+                    "message": "Outbound call could not be initiated.",
+                    "reason": "telephony_provider_unavailable"
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "type": "unauthorized",
+                    "message": "Authentication required."
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — phone number blocked or scenario access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "phone_number_blocked": {
+                    "summary": "Phone number is blocked",
+                    "value": {
+                      "error": {
+                        "type": "phone_number_blocked",
+                        "message": "Phone number +966512345678 is blocked.",
+                        "phone_number": "+966512345678"
+                      },
+                      "meta": {
+                        "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                      }
+                    }
+                  },
+                  "scenario_forbidden": {
+                    "summary": "Scenario belongs to a different organization",
+                    "value": {
+                      "error": {
+                        "type": "scenario_forbidden",
+                        "message": "Access denied to scenario scn_abc123.",
+                        "scenario_id": "scn_abc123"
+                      },
+                      "meta": {
+                        "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scenario not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "type": "scenario_not_found",
+                    "message": "Scenario scn_abc123 was not found.",
+                    "scenario_id": "scn_abc123"
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "type": "validation_error",
+                    "message": "Request validation failed.",
+                    "field_violations": [
+                      {
+                        "field": "body.phone_number",
+                        "message": "value is not a valid phone number"
+                      }
+                    ]
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Call limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "type": "call_limit_exceeded",
+                    "message": "Call limit of 10 reached for phone number +966512345678.",
+                    "phone_number": "+966512345678",
+                    "call_limit": 10
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "label": "Python (SDK)",
+            "lang": "Python",
+            "source": "import os\nfrom sarj_platform_sdk import SDK\n\nsdk = SDK(api_key_auth=os.environ[\"SARJ_API_KEY\"])\nres = sdk.calls.create_call(\n    phone_number=\"+966512345678\",\n    scenario_id=\"scn_abc123\",\n    language=\"ar\",\n)\nprint(f\"Call queued: {res.data.id}\")"
+          },
+          {
+            "label": "curl",
+            "lang": "bash",
+            "source": "curl -X POST https://platform-api.sarj.ai/api/v1/calls \\\n  -H \"Authorization: Bearer $SARJ_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"phone_number\": \"+966512345678\",\n    \"scenario_id\": \"scn_abc123\",\n    \"language\": \"ar\"\n  }'"
+          },
+          {
+            "label": "Python (requests)",
+            "lang": "Python",
+            "source": "import os\nimport requests\n\nresponse = requests.post(\n    \"https://platform-api.sarj.ai/api/v1/calls\",\n    headers={\n        \"Authorization\": f\"Bearer {os.environ['SARJ_API_KEY']}\",\n    },\n    json={\n        \"phone_number\": \"+966512345678\",\n        \"scenario_id\": \"scn_abc123\",\n        \"language\": \"ar\",\n    },\n)\nresponse.raise_for_status()\ncall = response.json()[\"data\"]\nprint(f\"Call queued: {call['id']}\")"
+          },
+          {
+            "label": "TypeScript",
+            "lang": "TypeScript",
+            "source": "const response = await fetch(\"https://platform-api.sarj.ai/api/v1/calls\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${process.env.SARJ_API_KEY}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    phone_number: \"+966512345678\",\n    scenario_id: \"scn_abc123\",\n    language: \"ar\",\n  }),\n});\n\nif (!response.ok) throw new Error(`HTTP ${response.status}`);\nconst { data: call } = await response.json();\nconsole.log(`Call queued: ${call.id}`);"
+          }
+        ]
+      }
+    },
+    "/calls/{call_id}": {
+      "get": {
+        "tags": [
+          "Calls"
+        ],
+        "summary": "Fetch Sarj.ai voice call details by call_id",
+        "description": "Fetch details of a Sarj.ai voice call by call_id: status, phone_number, scenario_id, language, direction (inbound/outbound), scenario variables, duration (seconds), recording_url (signed download link), transcript (list of spoken messages), report (post-call outcome with success-criteria results; generated asynchronously shortly after completed calls, null otherwise), and timestamps (created_at, updated_at, started_at, ended_at). Use this whenever the user asks about a specific call, phone conversation, or voice interaction by its call_id — do not query other tools.",
+        "operationId": "getCall",
+        "parameters": [
+          {
+            "name": "call_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Call Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_PublicCallDetail_"
+                },
+                "example": {
+                  "data": {
+                    "id": "call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b",
+                    "status": "completed",
+                    "phone_number": "+966512345678",
+                    "scenario_id": "550e8400-e29b-41d4-a716-446655440000",
+                    "language": "ar",
+                    "direction": "outbound",
+                    "variables": {
+                      "customer_name": "Ahmad",
+                      "order_id": "ORD-123"
+                    },
+                    "duration": 142,
+                    "recording_url": "https://storage.googleapis.com/sarj-recordings/calls/8f9b2c1e.mp4?X-Goog-Signature=...",
+                    "transcript": [
+                      {
+                        "role": "assistant",
+                        "content": "Hello Ahmad, calling about order ORD-123."
+                      },
+                      {
+                        "role": "user",
+                        "content": "Yes, hi."
+                      },
+                      {
+                        "role": "assistant",
+                        "content": "Your order is ready for delivery tomorrow."
+                      }
+                    ],
+                    "report": {
+                      "generated_at": "2026-04-12T10:33:41Z",
+                      "outcome": {
+                        "status": "success",
+                        "reason": "The customer confirmed the delivery appointment for tomorrow.",
+                        "success_criteria": [
+                          {
+                            "text": "Customer confirms the delivery slot",
+                            "achieved": true,
+                            "is_primary": true
+                          }
+                        ]
+                      }
+                    },
+                    "created_at": "2026-04-12T10:30:00Z",
+                    "updated_at": "2026-04-12T10:32:22Z",
+                    "started_at": "2026-04-12T10:30:05Z",
+                    "ended_at": "2026-04-12T10:32:22Z"
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "type": "unauthorized",
+                    "message": "Authentication required."
+                  },
+                  "meta": {}
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "API key not associated with an organization.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "type": "no_organization",
+                    "message": "API key is not associated with an organization."
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Call not found.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "type": "call_not_found",
+                    "message": "Call call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b was not found.",
+                    "call_id": "call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b"
+                  },
+                  "meta": {
+                    "request_id": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "label": "Python (SDK)",
+            "lang": "Python",
+            "source": "import os\nfrom sarj_platform_sdk import SDK\n\nsdk = SDK(api_key_auth=os.environ[\"SARJ_API_KEY\"])\nres = sdk.calls.get_call(call_id=\"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\")\ncall = res.data\nprint(f\"Status: {call.status}, duration: {call.duration}\")"
+          },
+          {
+            "label": "curl",
+            "lang": "bash",
+            "source": "curl https://platform-api.sarj.ai/api/v1/calls/call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b \\\n  -H \"Authorization: Bearer $SARJ_API_KEY\""
+          },
+          {
+            "label": "Python (requests)",
+            "lang": "Python",
+            "source": "import os\nimport requests\n\ncall_id = \"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\"\nresponse = requests.get(\n    f\"https://platform-api.sarj.ai/api/v1/calls/{call_id}\",\n    headers={\n        \"Authorization\": f\"Bearer {os.environ['SARJ_API_KEY']}\",\n    },\n)\nresponse.raise_for_status()\ncall = response.json()[\"data\"]\nprint(f\"Status: {call['status']}, duration: {call['duration']}\")"
+          },
+          {
+            "label": "TypeScript",
+            "lang": "TypeScript",
+            "source": "const callId = \"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\";\nconst response = await fetch(\n  `https://platform-api.sarj.ai/api/v1/calls/${callId}`,\n  {\n    headers: {\n      \"Authorization\": `Bearer ${process.env.SARJ_API_KEY}`,\n    },\n  },\n);\n\nif (!response.ok) throw new Error(`HTTP ${response.status}`);\nconst { data: call } = await response.json();\nconsole.log(`Status: ${call.status}, duration: ${call.duration}`);"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse_HealthStatus_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/HealthStatus"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "ApiResponse[HealthStatus]"
+      },
+      "ApiResponse_PublicCallDetail_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PublicCallDetail"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "ApiResponse[PublicCallDetail]"
+      },
+      "ApiResponse_PublicCall_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PublicCall"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "ApiResponse[PublicCall]"
+      },
+      "CallLimitExceededPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "call_limit_exceeded",
+            "title": "Type",
+            "default": "call_limit_exceeded"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "The phone number that hit the limit."
+          },
+          "call_limit": {
+            "type": "integer",
+            "title": "Call Limit",
+            "description": "The per-number call limit that was reached."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "phone_number",
+          "call_limit"
+        ],
+        "title": "CallLimitExceededPayload"
+      },
+      "CallNotFoundPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "call_not_found",
+            "title": "Type",
+            "default": "call_not_found"
+          },
+          "call_id": {
+            "type": "string",
+            "title": "Call Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "call_id"
+        ],
+        "title": "CallNotFoundPayload"
+      },
+      "CallStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "in_progress",
+          "transferring",
+          "transferred",
+          "completed",
+          "timeout",
+          "user_rejected",
+          "max_duration_reached",
+          "failed",
+          "ringing",
+          "voicemail",
+          "dialing",
+          "cancelled",
+          "expired"
+        ],
+        "title": "CallStatus"
+      },
+      "CreateCallRequest": {
+        "properties": {
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "Phone number to call in E.164 format.",
+            "examples": [
+              "+966512345678"
+            ]
+          },
+          "scenario_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Scenario Id",
+            "description": "ID of the scenario to use for this call."
+          },
+          "variables": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Variables",
+            "description": "Template variables to inject into the scenario."
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language",
+            "description": "Language for the call. Defaults to Arabic (ar) if not specified.",
+            "default": "ar"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "phone_number",
+          "scenario_id"
+        ],
+        "title": "CreateCallRequest"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ValidationErrorPayload"
+              },
+              {
+                "$ref": "#/components/schemas/UnauthorizedPayload"
+              },
+              {
+                "$ref": "#/components/schemas/NotFoundPayload"
+              },
+              {
+                "$ref": "#/components/schemas/InternalErrorPayload"
+              },
+              {
+                "$ref": "#/components/schemas/PhoneNumberBlockedPayload"
+              },
+              {
+                "$ref": "#/components/schemas/CallLimitExceededPayload"
+              },
+              {
+                "$ref": "#/components/schemas/OutboundCallFailedPayload"
+              },
+              {
+                "$ref": "#/components/schemas/ScenarioNotFoundPayload"
+              },
+              {
+                "$ref": "#/components/schemas/ScenarioForbiddenPayload"
+              },
+              {
+                "$ref": "#/components/schemas/ScenarioInvalidConfigPayload"
+              },
+              {
+                "$ref": "#/components/schemas/NoOrganizationPayload"
+              },
+              {
+                "$ref": "#/components/schemas/CallNotFoundPayload"
+              },
+              {
+                "$ref": "#/components/schemas/OauthInvalidRedirectUriPayload"
+              }
+            ],
+            "title": "Error",
+            "discriminator": {
+              "propertyName": "type",
+              "mapping": {
+                "call_limit_exceeded": "#/components/schemas/CallLimitExceededPayload",
+                "call_not_found": "#/components/schemas/CallNotFoundPayload",
+                "internal_error": "#/components/schemas/InternalErrorPayload",
+                "no_organization": "#/components/schemas/NoOrganizationPayload",
+                "not_found": "#/components/schemas/NotFoundPayload",
+                "oauth_invalid_redirect_uri": "#/components/schemas/OauthInvalidRedirectUriPayload",
+                "outbound_call_failed": "#/components/schemas/OutboundCallFailedPayload",
+                "phone_number_blocked": "#/components/schemas/PhoneNumberBlockedPayload",
+                "scenario_forbidden": "#/components/schemas/ScenarioForbiddenPayload",
+                "scenario_invalid_config": "#/components/schemas/ScenarioInvalidConfigPayload",
+                "scenario_not_found": "#/components/schemas/ScenarioNotFoundPayload",
+                "unauthorized": "#/components/schemas/UnauthorizedPayload",
+                "validation_error": "#/components/schemas/ValidationErrorPayload"
+              }
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ResponseMeta"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "description": "Standard envelope for all public API error responses.\n\n`error` is a discriminated union — branch on `error.type` to access\nvariant-specific fields. Clients MUST treat unknown `type` values as\nretryable internal errors to preserve forward compatibility."
+      },
+      "FieldViolation": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field",
+            "description": "Dot-separated path to the invalid field (e.g. `phone_number.country_code`).",
+            "examples": [
+              "phone_number.country_code"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable description of the violation.",
+            "examples": [
+              "Must start with +"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "message"
+        ],
+        "title": "FieldViolation"
+      },
+      "HealthStatus": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status",
+            "description": "Health status of the API. Always `ok` when this endpoint responds successfully.",
+            "examples": [
+              "ok"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "HealthStatus",
+        "description": "Represents the operational status of the API."
+      },
+      "InternalErrorPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "internal_error",
+            "title": "Type",
+            "default": "internal_error"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "InternalErrorPayload"
+      },
+      "Language": {
+        "type": "string",
+        "enum": [
+          "en",
+          "ar",
+          "ur"
+        ],
+        "title": "Language",
+        "description": "Language codes in ISO 639-1"
+      },
+      "NoOrganizationPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "no_organization",
+            "title": "Type",
+            "default": "no_organization"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "NoOrganizationPayload"
+      },
+      "NotFoundPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "not_found",
+            "title": "Type",
+            "default": "not_found"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "NotFoundPayload"
+      },
+      "OauthInvalidRedirectUriPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "oauth_invalid_redirect_uri",
+            "title": "Type",
+            "default": "oauth_invalid_redirect_uri"
+          },
+          "redirect_uri": {
+            "type": "string",
+            "title": "Redirect Uri"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "redirect_uri"
+        ],
+        "title": "OauthInvalidRedirectUriPayload"
+      },
+      "OutboundCallFailedPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "outbound_call_failed",
+            "title": "Type",
+            "default": "outbound_call_failed"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "Stable-ish reason string from the call service."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "reason"
+        ],
+        "title": "OutboundCallFailedPayload"
+      },
+      "PhoneDirection": {
+        "type": "string",
+        "enum": [
+          "inbound",
+          "outbound"
+        ],
+        "title": "PhoneDirection"
+      },
+      "PhoneNumberBlockedPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "phone_number_blocked",
+            "title": "Type",
+            "default": "phone_number_blocked"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "The phone number that is blocked."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "phone_number"
+        ],
+        "title": "PhoneNumberBlockedPayload"
+      },
+      "PublicCall": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Unique call identifier.",
+            "examples": [
+              "call_550e8400-e29b-41d4-a716-446655440000"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/CallStatus",
+            "description": "Current call status.",
+            "examples": [
+              "queued"
+            ]
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "Destination phone number."
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id",
+            "description": "Scenario used for this call."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the call was created."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "phone_number",
+          "scenario_id",
+          "created_at"
+        ],
+        "title": "PublicCall"
+      },
+      "PublicCallDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Unique call identifier.",
+            "examples": [
+              "call_550e8400-e29b-41d4-a716-446655440000"
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CallStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Current call status.",
+            "examples": [
+              "in_progress"
+            ]
+          },
+          "phone_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone Number",
+            "description": "Destination phone number."
+          },
+          "scenario_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scenario Id",
+            "description": "Scenario used for this call."
+          },
+          "language": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Language"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Language the call was conducted in."
+          },
+          "direction": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PhoneDirection"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Call direction (inbound or outbound)."
+          },
+          "variables": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Variables",
+            "description": "Template variables that were injected into the scenario. Defaults to an empty object for non-custom scenarios."
+          },
+          "duration": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration",
+            "description": "Total call duration in seconds. Null until the call ends."
+          },
+          "recording_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recording Url",
+            "description": "Signed, time-limited URL to download the call recording. Null when the call has not ended or no recording exists."
+          },
+          "transcript": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PublicTranscriptMessage"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transcript",
+            "description": "Conversation transcript as an ordered list of spoken messages. Null until the call ends."
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicCallReport"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Post-call outcome report with success-criteria results. Generated asynchronously, typically within a couple of minutes after the call ends, so it is null immediately after completion — poll again or use the call-completed webhook. Only calls that end with status 'completed' or 'max_duration_reached' receive a report; for every other terminal status this stays null. In rare failure cases a completed call never receives a report — treat the webhook as authoritative and bound your polling."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the call was created."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Timestamp of the most recent update to the call."
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At",
+            "description": "Timestamp when the call was answered."
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At",
+            "description": "Timestamp when the call ended."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "PublicCallDetail"
+      },
+      "PublicCallOutcome": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failure",
+              "error"
+            ],
+            "title": "Status",
+            "description": "Overall call outcome assessed from the transcript: 'success' or 'failure' against the scenario's success criteria, 'error' when the call could not be assessed.",
+            "examples": [
+              "success"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "Explanation of why the call received this outcome."
+          },
+          "success_criteria": {
+            "items": {
+              "$ref": "#/components/schemas/PublicSuccessCriteriaResult"
+            },
+            "type": "array",
+            "title": "Success Criteria",
+            "description": "Result for each success criterion configured on the scenario."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "reason",
+          "success_criteria"
+        ],
+        "title": "PublicCallOutcome"
+      },
+      "PublicCallReport": {
+        "properties": {
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At",
+            "description": "Timestamp when the report was generated."
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/PublicCallOutcome",
+            "description": "Outcome assessment of the call."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "generated_at",
+          "outcome"
+        ],
+        "title": "PublicCallReport"
+      },
+      "PublicSuccessCriteriaResult": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "description": "The success criterion, as configured on the scenario."
+          },
+          "achieved": {
+            "type": "boolean",
+            "title": "Achieved",
+            "description": "Whether the call met this criterion."
+          },
+          "is_primary": {
+            "type": "boolean",
+            "title": "Is Primary",
+            "description": "Whether this is the scenario's primary success criterion."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text",
+          "achieved",
+          "is_primary"
+        ],
+        "title": "PublicSuccessCriteriaResult"
+      },
+      "PublicTranscriptMessage": {
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role",
+            "description": "Speaker role: 'user' for the called party, 'assistant' for the AI agent."
+          },
+          "content": {
+            "type": "string",
+            "title": "Content",
+            "description": "Text of the spoken message."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "title": "PublicTranscriptMessage"
+      },
+      "ResponseMeta": {
+        "properties": {
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id",
+            "description": "Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.",
+            "examples": [
+              "550e8400-e29b-41d4-a716-446655440000"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ResponseMeta",
+        "description": "Contains request-level metadata included with every public API response."
+      },
+      "ScenarioForbiddenPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "scenario_forbidden",
+            "title": "Type",
+            "default": "scenario_forbidden"
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "scenario_id"
+        ],
+        "title": "ScenarioForbiddenPayload"
+      },
+      "ScenarioInvalidConfigPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "scenario_invalid_config",
+            "title": "Type",
+            "default": "scenario_invalid_config"
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "scenario_id"
+        ],
+        "title": "ScenarioInvalidConfigPayload"
+      },
+      "ScenarioNotFoundPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "scenario_not_found",
+            "title": "Type",
+            "default": "scenario_not_found"
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "scenario_id"
+        ],
+        "title": "ScenarioNotFoundPayload"
+      },
+      "UnauthorizedPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "unauthorized",
+            "title": "Type",
+            "default": "unauthorized"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "UnauthorizedPayload"
+      },
+      "ValidationErrorPayload": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable summary. Do not parse programmatically — branch on `type`."
+          },
+          "type": {
+            "type": "string",
+            "const": "validation_error",
+            "title": "Type",
+            "default": "validation_error"
+          },
+          "field_violations": {
+            "items": {
+              "$ref": "#/components/schemas/FieldViolation"
+            },
+            "type": "array",
+            "title": "Field Violations",
+            "description": "Per-field validation details."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message",
+          "field_violations"
+        ],
+        "title": "ValidationErrorPayload"
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "API key from your Sarj.ai dashboard. Pass as: Authorization: Bearer <api-key>"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "System",
+      "description": "Service health and status."
+    },
+    {
+      "name": "Calls",
+      "description": "Create outbound voice calls and retrieve call details and transcripts."
+    }
+  ],
+  "externalDocs": {
+    "description": "Sarj.ai Documentation",
+    "url": "https://platform-docs.sarj.ai"
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

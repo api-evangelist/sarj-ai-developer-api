@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj TTS API",
+    "version": "0.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Create Speech",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/v1/audio/speech",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Generate speech from text."
+    },
+    {
+      "info": {
+        "name": "Create Speech Clone",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/v1/audio/speech/clone",
+        "body": {
+          "type": "multipart-form",
+          "data": []
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "One-shot voice cloning. Upload reference audio + text to synthesize."
+    },
+    {
+      "info": {
+        "name": "List available voices",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/voices",
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Authoritative runtime voice discovery. Entries with `type=builtin` are the deployed Sarj voice catalog; the response also identifies design modes, compatible presets, and saved clone profiles."
+    },
+    {
+      "info": {
+        "name": "Create Profile",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/v1/voices/profiles",
+        "body": {
+          "type": "multipart-form",
+          "data": []
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Create Profile"
+    },
+    {
+      "info": {
+        "name": "Get Profile",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+        "params": [
+          {
+            "name": "profile_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Get Profile"
+    },
+    {
+      "info": {
+        "name": "Update Profile",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+        "params": [
+          {
+            "name": "profile_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "body": {
+          "type": "multipart-form",
+          "data": []
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Update Profile"
+    },
+    {
+      "info": {
+        "name": "Delete Profile",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/v1/voices/profiles/:profile_id",
+        "params": [
+          {
+            "name": "profile_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Delete Profile"
+    },
+    {
+      "info": {
+        "name": "List Sarj TTS models",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/models"
+      },
+      "docs": "Return the single model served by this API."
+    },
+    {
+      "info": {
+        "name": "Retrieve Sarj TTS",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/models/:model_id",
+        "params": [
+          {
+            "name": "model_id",
+            "value": "",
+            "type": "path"
+          }
+        ],
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Retrieve canonical metadata for `sarj-tts` or a historical request alias."
+    },
+    {
+      "info": {
+        "name": "Create Script Audio",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/v1/audio/script",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Synthesize multi-speaker script with voice resolution and mixing.\n\nReturns either:\n- single_track: Binary audio with metadata headers\n- multi_track: JSON with per-speaker tracks and segment timestamps"
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      },
+      "docs": "Readiness check. Returns 503 while model is loading, 200 when ready."
+    },
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/metrics"
+      },
+      "docs": "Request metrics and current memory usage."
+    }
+  ],
+  "bundled": true
+}

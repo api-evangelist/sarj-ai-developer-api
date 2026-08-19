@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj Ai Developer Health API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          },
+          "docs": "Performs a health check on the ASR service."
+        },
+        {
+          "info": {
+            "name": "Liveness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/liveness"
+          },
+          "docs": "Check liveness - the service process is running\n\nReturns:\n    healthy=True whenever the process can serve the request"
+        },
+        {
+          "info": {
+            "name": "Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/readiness"
+          },
+          "docs": "Readiness check - can connect to database\n\nReturns:\n    healthy=True, or a 503 JSON payload when the database is unreachable"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

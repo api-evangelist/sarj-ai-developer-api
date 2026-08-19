@@ -1,0 +1,99 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Developer System API
+  description: "Public API for programmatic access to the **Sarj.ai voice platform**.\n\n> [!TIP]\n> **New here?** Start with the [Getting Started guide](https://platform-docs.sarj.ai/getting-started)\n> to go from API key to first call in under 5 minutes.\n>\n> **Building with AI agents?** See the [MCP Server guide](https://platform-docs.sarj.ai/mcp-server)\n> to connect Claude Code, Cursor, or any MCP-compatible agent.\n\n---\n\n## Authentication\n\nAll authenticated endpoints require a **Bearer token** in the `Authorization`\nheader:\n\n```\nAuthorization: Bearer <your-api-key>\n```\n\nGenerate an API key from [platform.sarj.ai/api-keys](https://platform.sarj.ai/api-keys).\n\n> [!WARNING]\n> If you receive a `401 Unauthorized` response, your key may be invalid,\n> expired, or missing. Check the `error.type` field in the response body.\n\n---\n\n## Response Format\n\n**Success**\n\n```json\n{\n  \"data\": { ... },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\n**Error**\n\n```json\n{\n  \"error\": {\n    \"type\": \"unauthorized\",\n    \"message\": \"Authentication required.\"\n  },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\nAlways branch on `error.type` — the `message` field is for humans only.\n\n---\n\n## Support\n\nInclude `meta.request_id` in all support tickets for faster resolution.\n"
+  license:
+    name: Apache 2.0
+    identifier: Apache-2.0
+  version: 1.0.0
+servers:
+- url: https://platform-api.sarj.ai/api/v1
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: System
+  description: Service health and status.
+paths:
+  /health:
+    get:
+      tags:
+      - System
+      summary: Health Check
+      description: Returns the operational status of the API. Does not require authentication.
+      operationId: getHealth
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse_HealthStatus_'
+      security: []
+      x-codeSamples:
+      - label: Python (SDK)
+        lang: Python
+        source: 'import os
+
+          from sarj_platform_sdk import SDK
+
+
+          sdk = SDK(api_key_auth=os.environ.get("SARJ_API_KEY", ""))
+
+          print(sdk.system.get_health().data.status)  # "ok"'
+      - label: Python (requests)
+        lang: Python
+        source: "import requests\n\nresponse = requests.get(\n    \"https://platform-api.sarj.ai/api/v1/health\"\n)\nprint(response.json())"
+      - label: TypeScript
+        lang: TypeScript
+        source: "const response = await fetch(\n  \"https://platform-api.sarj.ai/api/v1/health\"\n);\nconst data = await response.json();\nconsole.log(data);"
+components:
+  schemas:
+    HealthStatus:
+      properties:
+        status:
+          type: string
+          const: ok
+          title: Status
+          description: Health status of the API. Always `ok` when this endpoint responds successfully.
+          examples:
+          - ok
+      additionalProperties: false
+      type: object
+      required:
+      - status
+      title: HealthStatus
+      description: Represents the operational status of the API.
+    ApiResponse_HealthStatus_:
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      title: ApiResponse[HealthStatus]
+    ResponseMeta:
+      properties:
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
+          examples:
+          - 550e8400-e29b-41d4-a716-446655440000
+      additionalProperties: false
+      type: object
+      title: ResponseMeta
+      description: Contains request-level metadata included with every public API response.
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      description: 'API key from your Sarj.ai dashboard. Pass as: Authorization: Bearer <api-key>'
+externalDocs:
+  description: Sarj.ai Documentation
+  url: https://platform-docs.sarj.ai

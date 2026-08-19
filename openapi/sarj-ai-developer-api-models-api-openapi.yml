@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  title: Sarj TTS Models API
+  description: Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint
+    uses an OpenAI SDK-compatible request and response shape.
+  version: 0.3.0
+tags:
+- name: Models
+paths:
+  /v1/models:
+    get:
+      summary: List Sarj TTS models
+      description: Return the single model served by this API.
+      operationId: list_models_v1_models_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelListResponse'
+      tags:
+      - Models
+  /v1/models/{model_id}:
+    get:
+      summary: Retrieve Sarj TTS
+      description: Retrieve canonical metadata for `sarj-tts` or a historical request alias.
+      operationId: get_model_v1_models__model_id__get
+      parameters:
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelObject'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Models
+components:
+  schemas:
+    ModelListResponse:
+      properties:
+        object:
+          type: string
+          const: list
+          title: Object
+          default: list
+        data:
+          items:
+            $ref: '#/components/schemas/ModelObject'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: ModelListResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ModelObject:
+      properties:
+        id:
+          type: string
+          const: sarj-tts
+          title: Id
+          default: sarj-tts
+        object:
+          type: string
+          const: model
+          title: Object
+          default: model
+        created:
+          type: integer
+          minimum: 0.0
+          title: Created
+          default: 1786214180
+        owned_by:
+          type: string
+          const: sarj-ai
+          title: Owned By
+          default: sarj-ai
+        permission:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Permission
+        root:
+          type: string
+          const: sarj-tts
+          title: Root
+          default: sarj-tts
+        parent:
+          type: 'null'
+          title: Parent
+      type: object
+      title: ModelObject
+      description: Stable model metadata returned by the discovery endpoints.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

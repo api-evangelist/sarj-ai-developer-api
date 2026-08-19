@@ -1,0 +1,1287 @@
+{
+  "item": [
+    {
+      "id": "f6b40904-d273-4f73-a616-58be99550ce4",
+      "name": "Health Check",
+      "request": {
+        "name": "Health Check",
+        "description": {
+          "content": "Performs a health check on the ASR service.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "health"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "41b34633-ac6a-4b58-a730-037ac52f3f61",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\",\n  \"status\": \"ok\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "5cd947f6-2e8f-48d8-8b32-c109be61982d",
+      "name": "Groq Transcriptions Endpoint",
+      "request": {
+        "name": "Groq Transcriptions Endpoint",
+        "description": {
+          "content": "Transcribes an audio file. This endpoint is now a thin wrapper that\ncalls the business logic in the ASR model.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "openai",
+            "v1",
+            "audio",
+            "transcriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Optional session id to persist restaurant mode.",
+            "key": "x-session-id",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) The audio file to transcribe."
+            },
+            {
+              "key": "model",
+              "value": "sarj-stt",
+              "type": "text",
+              "description": "Sarj STT model identifier. This API serves only `sarj-stt`. (This can only be one of sarj-stt)"
+            },
+            {
+              "key": "stream",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "response_format",
+              "value": "json",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "language",
+              "value": "ar",
+              "type": "text",
+              "description": ""
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "15187354-924b-4994-8643-2d8591ce51d6",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "transcriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "Used to detect SSE stream requests.",
+                "key": "accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "Optional session id to persist restaurant mode.",
+                "key": "x-session-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) The audio file to transcribe.",
+                    "type": "text/plain"
+                  },
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "Sarj STT model identifier. This API serves only `sarj-stt`. (This can only be one of sarj-stt)",
+                    "type": "text/plain"
+                  },
+                  "key": "model",
+                  "value": "sarj-stt",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "stream",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "response_format",
+                  "value": "json",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "language",
+                  "value": "ar",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0a549a69-4b4d-49b8-a1f3-480ee05f5a05",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "openai",
+                "v1",
+                "audio",
+                "transcriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "disabled": false,
+                "description": "Used to detect SSE stream requests.",
+                "key": "accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "Optional session id to persist restaurant mode.",
+                "key": "x-session-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) The audio file to transcribe.",
+                    "type": "text/plain"
+                  },
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "Sarj STT model identifier. This API serves only `sarj-stt`. (This can only be one of sarj-stt)",
+                    "type": "text/plain"
+                  },
+                  "key": "model",
+                  "value": "sarj-stt",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "stream",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "response_format",
+                  "value": "json",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "language",
+                  "value": "ar",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "7bb4e66f-955f-4e0c-a2b4-c453736422b9",
+      "name": "Debug Decode Endpoint",
+      "request": {
+        "name": "Debug Decode Endpoint",
+        "description": {
+          "content": "Debug endpoint to compare decoding modes and parameters without affecting production flow.\nReturns RNNT/CTC outputs and scores per segment.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "debug",
+            "decode"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{bearerToken}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "value": "<string>",
+              "type": "text",
+              "description": "(Required) Audio file to decode."
+            },
+            {
+              "key": "mode",
+              "value": "hybrid",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "temperature",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "max_symbols_per_step",
+              "value": "<integer>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "beam_enabled",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "beam_size",
+              "value": "<integer>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "beam_length_penalty",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "beam_temperature",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "loop_labels",
+              "value": "<boolean>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "use_cuda_graph_decoder",
+              "value": "<boolean>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "acoustic_scale",
+              "value": "<number>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_weight",
+              "value": "0",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_enabled",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_context",
+              "value": "<string>",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_apply",
+              "value": "false",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_beam_threshold",
+              "value": "7",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_context_score",
+              "value": "3",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_ali_token_weight",
+              "value": "0.5",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_intersection_threshold",
+              "value": "30",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_keyword_threshold",
+              "value": "-5",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_blank_threshold",
+              "value": "0.8",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "ctc_ws_non_blank_threshold",
+              "value": "0.001",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "max_chunk_seconds",
+              "value": "15",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "vad_threshold",
+              "value": "0.4",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "vad_min_speech_ms",
+              "value": "100",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "vad_max_speech_s",
+              "value": "20",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "vad_min_silence_ms",
+              "value": "200",
+              "type": "text",
+              "description": ""
+            },
+            {
+              "key": "vad_pad_ms",
+              "value": "30",
+              "type": "text",
+              "description": ""
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "5e0b7b1c-72a7-4890-ad8a-3002a339df0a",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "debug",
+                "decode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) Audio file to decode.",
+                    "type": "text/plain"
+                  },
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "mode",
+                  "value": "hybrid",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "max_symbols_per_step",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_enabled",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_size",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_length_penalty",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "loop_labels",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "use_cuda_graph_decoder",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "acoustic_scale",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_weight",
+                  "value": "0",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_enabled",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_context",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_apply",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_beam_threshold",
+                  "value": "7",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_context_score",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_ali_token_weight",
+                  "value": "0.5",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_intersection_threshold",
+                  "value": "30",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_keyword_threshold",
+                  "value": "-5",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_blank_threshold",
+                  "value": "0.8",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_non_blank_threshold",
+                  "value": "0.001",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "max_chunk_seconds",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_threshold",
+                  "value": "0.4",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_min_speech_ms",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_max_speech_s",
+                  "value": "20",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_min_silence_ms",
+                  "value": "200",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_pad_ms",
+                  "value": "30",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "aa764387-1ff8-4ef2-8d97-4868fa51d004",
+          "name": "Validation Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "debug",
+                "decode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "description": {
+                    "content": "(Required) Audio file to decode.",
+                    "type": "text/plain"
+                  },
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "mode",
+                  "value": "hybrid",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "max_symbols_per_step",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_enabled",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_size",
+                  "value": "<integer>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_length_penalty",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "beam_temperature",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "loop_labels",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "use_cuda_graph_decoder",
+                  "value": "<boolean>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "acoustic_scale",
+                  "value": "<number>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_weight",
+                  "value": "0",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_enabled",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_context",
+                  "value": "<string>",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_apply",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_beam_threshold",
+                  "value": "7",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_context_score",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_ali_token_weight",
+                  "value": "0.5",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_intersection_threshold",
+                  "value": "30",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_keyword_threshold",
+                  "value": "-5",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_blank_threshold",
+                  "value": "0.8",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "ctc_ws_non_blank_threshold",
+                  "value": "0.001",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "max_chunk_seconds",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_threshold",
+                  "value": "0.4",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_min_speech_ms",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_max_speech_s",
+                  "value": "20",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_min_silence_ms",
+                  "value": "200",
+                  "type": "text"
+                },
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "vad_pad_ms",
+                  "value": "30",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d654fadc-9bac-4b0f-a410-ff9fbf7ee518",
+      "name": "Interface",
+      "request": {
+        "name": "Interface",
+        "description": {
+          "content": "Serves a simple web interface for demonstrating the ASR API.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ""
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/html"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "2e1fd066-1bbe-4d37-958d-eddc853ba30b",
+          "name": "Successful Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/html"
+            }
+          ],
+          "body": "string",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5016695e-c2a3-442b-8884-6e98e9694663",
+    "name": "Sarj STT API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.",
+      "type": "text/plain"
+    }
+  }
+}

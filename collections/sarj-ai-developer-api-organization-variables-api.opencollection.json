@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Organization Variables API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "organization-variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/organization-variables/list",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Variables"
+        },
+        {
+          "info": {
+            "name": "Create Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/organization-variables/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Variable"
+        },
+        {
+          "info": {
+            "name": "Get Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Variable"
+        },
+        {
+          "info": {
+            "name": "Update Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Variable"
+        },
+        {
+          "info": {
+            "name": "Delete Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Variable"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

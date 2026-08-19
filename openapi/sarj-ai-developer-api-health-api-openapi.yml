@@ -1,0 +1,88 @@
+openapi: 3.2.0
+info:
+  title: Sarj Ai Developer Health API
+  version: '1.0'
+  description: 'Operations tagged Health across 3 of this provider''s published API definitions: sarj-ai-developer-api-stt-openapi.json,
+    sarj-ai-developer-api-tts-openapi.json, sarj-ai-developer-api-voice-platform-openapi.json. Each path
+    carries the servers of the definition it was published in.'
+tags:
+- name: Health
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Performs a health check on the ASR service.
+      operationId: health_check_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+      tags:
+      - Health
+  /health/liveness:
+    get:
+      tags:
+      - Health
+      summary: Liveness
+      description: "Check liveness - the service process is running\n\nReturns:\n    healthy=True whenever\
+        \ the process can serve the request"
+      operationId: healthLiveness
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /health/readiness:
+    get:
+      tags:
+      - Health
+      summary: Readiness
+      description: "Readiness check - can connect to database\n\nReturns:\n    healthy=True, or a 503\
+        \ JSON payload when the database is unreachable"
+      operationId: healthReadiness
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+components:
+  schemas:
+    HealthCheckResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          default: ok
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - message
+      title: HealthCheckResponse
+      description: Response model for the health check endpoint.
+    HealthResponse:
+      properties:
+        healthy:
+          type: boolean
+          title: Healthy
+      type: object
+      required:
+      - healthy
+      title: HealthResponse
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key
+x-refined-from:
+- sarj-ai-developer-api-stt-openapi.json
+- sarj-ai-developer-api-tts-openapi.json
+- sarj-ai-developer-api-voice-platform-openapi.json

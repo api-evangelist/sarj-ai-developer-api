@@ -1,0 +1,853 @@
+{
+  "item": [
+    {
+      "id": "c26469ff-ef36-4526-8610-dfa866fc40cb",
+      "name": "Debug",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c2c1909-601d-4512-abca-7941e6ac30a4",
+          "name": "Debug Decode Endpoint",
+          "request": {
+            "name": "Debug Decode Endpoint",
+            "description": {
+              "content": "Debug endpoint to compare decoding modes and parameters without affecting production flow.\nReturns RNNT/CTC outputs and scores per segment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "debug",
+                "decode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Audio file to decode."
+                },
+                {
+                  "key": "mode",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "temperature",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "max_symbols_per_step",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "beam_enabled",
+                  "value": "false",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "beam_size",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "beam_length_penalty",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "beam_temperature",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "loop_labels",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "use_cuda_graph_decoder",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "acoustic_scale",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_weight",
+                  "value": "0",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_enabled",
+                  "value": "false",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_context",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_apply",
+                  "value": "false",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_beam_threshold",
+                  "value": "7",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_context_score",
+                  "value": "3",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_ali_token_weight",
+                  "value": "0.5",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_intersection_threshold",
+                  "value": "30",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_keyword_threshold",
+                  "value": "-5",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_blank_threshold",
+                  "value": "0.8",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "ctc_ws_non_blank_threshold",
+                  "value": "0.001",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "max_chunk_seconds",
+                  "value": "15",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "vad_threshold",
+                  "value": "0.4",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "vad_min_speech_ms",
+                  "value": "100",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "vad_max_speech_s",
+                  "value": "20",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "vad_min_silence_ms",
+                  "value": "200",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "vad_pad_ms",
+                  "value": "30",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "02595775-e6e9-4b32-a10f-94791883d44c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "decode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file to decode.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "mode",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "max_symbols_per_step",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_enabled",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_size",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_length_penalty",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "loop_labels",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "use_cuda_graph_decoder",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "acoustic_scale",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_weight",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_enabled",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_context",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_apply",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_beam_threshold",
+                      "value": "7",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_context_score",
+                      "value": "3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_ali_token_weight",
+                      "value": "0.5",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_intersection_threshold",
+                      "value": "30",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_keyword_threshold",
+                      "value": "-5",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_blank_threshold",
+                      "value": "0.8",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_non_blank_threshold",
+                      "value": "0.001",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "max_chunk_seconds",
+                      "value": "15",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_threshold",
+                      "value": "0.4",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_min_speech_ms",
+                      "value": "100",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_max_speech_s",
+                      "value": "20",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_min_silence_ms",
+                      "value": "200",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_pad_ms",
+                      "value": "30",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fcd2049-8ed5-48b1-ac47-16b94654245a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "debug",
+                    "decode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Audio file to decode.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "mode",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "max_symbols_per_step",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_enabled",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_size",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_length_penalty",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "beam_temperature",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "loop_labels",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "use_cuda_graph_decoder",
+                      "value": "<boolean>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "acoustic_scale",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_weight",
+                      "value": "0",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_enabled",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_context",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_apply",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_beam_threshold",
+                      "value": "7",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_context_score",
+                      "value": "3",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_ali_token_weight",
+                      "value": "0.5",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_intersection_threshold",
+                      "value": "30",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_keyword_threshold",
+                      "value": "-5",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_blank_threshold",
+                      "value": "0.8",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "ctc_ws_non_blank_threshold",
+                      "value": "0.001",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "max_chunk_seconds",
+                      "value": "15",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_threshold",
+                      "value": "0.4",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_min_speech_ms",
+                      "value": "100",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_max_speech_s",
+                      "value": "20",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_min_silence_ms",
+                      "value": "200",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "vad_pad_ms",
+                      "value": "30",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7280b0e8-1586-4428-a5e8-15769a1dae51",
+    "name": "Sarj STT Debug API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.",
+      "type": "text/plain"
+    }
+  }
+}

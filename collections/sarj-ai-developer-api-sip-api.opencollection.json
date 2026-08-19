@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Sip API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sip",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assign Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/assign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "List All Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/all"
+          },
+          "docs": "List All Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "Get Default Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default"
+          },
+          "docs": "Get Default Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "Set Default Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Default Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Delete Default Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default/:trunk_id",
+            "params": [
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Default Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Unassign Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/:organization_id/:trunk_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unassign Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Get Available Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Available Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "List Organizations For Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/trunk/:trunk_id",
+            "params": [
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Organizations For Trunk"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

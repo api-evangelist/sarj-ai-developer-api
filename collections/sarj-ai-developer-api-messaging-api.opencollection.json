@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Messaging API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Socialbot Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/messaging/socialbot"
+          },
+          "docs": "Socialbot Webhook"
+        },
+        {
+          "info": {
+            "name": "Get Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Session"
+        },
+        {
+          "info": {
+            "name": "Get Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id/messages",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Messages"
+        },
+        {
+          "info": {
+            "name": "End Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id/end",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "End Session"
+        },
+        {
+          "info": {
+            "name": "Create Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Config"
+        },
+        {
+          "info": {
+            "name": "Get Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Config"
+        },
+        {
+          "info": {
+            "name": "Update Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Config"
+        },
+        {
+          "info": {
+            "name": "Delete Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Config"
+        },
+        {
+          "info": {
+            "name": "Get Configs By Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/org/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Configs By Org"
+        },
+        {
+          "info": {
+            "name": "List Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Configs"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

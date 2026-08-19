@@ -1,0 +1,783 @@
+{
+  "item": [
+    {
+      "id": "d35f4be6-c70b-4d90-9b35-f0af5fad1f20",
+      "name": "task-management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ea24604-c0f6-4a99-abe7-d641e6ac1069",
+          "name": "Create Task",
+          "request": {
+            "name": "Create Task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "task-management",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": {\n    \"call_id\": \"<string>\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"organization_id\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"call_id\": \"<string>\",\n  \"batch_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a8c702d-b610-429c-89db-68ac23fb295e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": {\n    \"call_id\": \"<string>\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"organization_id\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"call_id\": \"<string>\",\n  \"batch_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"delete_expired_org_data_tick\",\n  \"status\": \"cancelled\",\n  \"status_changed_at\": \"1996-11-08T07:43:53.089Z\",\n  \"message\": {\n    \"call_id\": \"<string>\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"created_at\": \"2014-05-29T21:46:49.221Z\",\n  \"updated_at\": \"2002-09-18T20:36:31.865Z\",\n  \"organization_id\": \"string\",\n  \"user_id\": \"string\",\n  \"call_id\": \"string\",\n  \"batch_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e42d391-2956-455f-940e-a303e6e09dbe",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": {\n    \"call_id\": \"<string>\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"organization_id\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"call_id\": \"<string>\",\n  \"batch_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4751a02-e69b-4aa8-8e97-d44bce877e96",
+          "name": "Get Task",
+          "request": {
+            "name": "Get Task",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "task-management",
+                ":task_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "task_id",
+                  "description": "(Required) Task ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ade61a8-c266-442d-b4d0-b1e1d3354ca0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) Task ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"delete_expired_org_data_tick\",\n  \"status\": \"cancelled\",\n  \"status_changed_at\": \"1996-11-08T07:43:53.089Z\",\n  \"message\": {\n    \"call_id\": \"<string>\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"created_at\": \"2014-05-29T21:46:49.221Z\",\n  \"updated_at\": \"2002-09-18T20:36:31.865Z\",\n  \"organization_id\": \"string\",\n  \"user_id\": \"string\",\n  \"call_id\": \"string\",\n  \"batch_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0135f73a-9408-4be4-ab75-edfa8a6eb34f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    ":task_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "task_id",
+                      "description": "(Required) Task ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d57c1fb-7cbf-4786-8292-de6c97d842fb",
+          "name": "List Tasks",
+          "request": {
+            "name": "List Tasks",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "task-management",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<dateTime>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab0c847e-685d-48ca-82fb-99366fd8fb0f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tasks\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"no_op\",\n      \"status\": \"failed\",\n      \"status_changed_at\": \"1952-07-25T05:30:20.932Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"2016-07-15T00:34:21.234Z\",\n      \"updated_at\": \"1953-04-20T17:16:37.326Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"dispatch_outbound_call\",\n      \"status\": \"running\",\n      \"status_changed_at\": \"1990-06-09T17:29:26.922Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"1971-06-29T16:49:55.938Z\",\n      \"updated_at\": \"2003-06-17T16:21:39.253Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    }\n  ],\n  \"has_next\": false,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a847ea0-a673-48cf-93b2-2f7f1f13d785",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2e5bdb9-79f8-4b03-a215-0c6be0e4d2ba",
+          "name": "List Tasks By Call",
+          "request": {
+            "name": "List Tasks By Call",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "task-management",
+                "list-by-call",
+                ":call_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<dateTime>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "261bc9c8-cb8e-4219-88e6-abc5831ef095",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list-by-call",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tasks\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"scenario_generation\",\n      \"status\": \"failed\",\n      \"status_changed_at\": \"1990-11-22T22:47:44.048Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"1980-02-13T06:35:30.591Z\",\n      \"updated_at\": \"1950-03-10T14:34:08.892Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"process_messaging_message\",\n      \"status\": \"cancelled\",\n      \"status_changed_at\": \"2020-04-17T00:47:20.582Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"1980-03-30T01:18:49.550Z\",\n      \"updated_at\": \"2026-06-17T10:17:38.611Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    }\n  ],\n  \"has_next\": true,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59bed8fd-ca53-4aa0-bd13-2c41b60dacf7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list-by-call",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a38c08c-577c-415e-9e8d-4906c8491536",
+          "name": "List Tasks By Batch",
+          "request": {
+            "name": "List Tasks By Batch",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "task-management",
+                "list-by-batch",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<dateTime>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eaed23ae-d922-4168-a5f7-14feb92b5e32",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list-by-batch",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tasks\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"scenario_generation\",\n      \"status\": \"failed\",\n      \"status_changed_at\": \"1990-11-22T22:47:44.048Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"1980-02-13T06:35:30.591Z\",\n      \"updated_at\": \"1950-03-10T14:34:08.892Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"process_messaging_message\",\n      \"status\": \"cancelled\",\n      \"status_changed_at\": \"2020-04-17T00:47:20.582Z\",\n      \"message\": {\n        \"call_id\": \"<string>\",\n        \"type\": \"enhanced_transcription\"\n      },\n      \"created_at\": \"1980-03-30T01:18:49.550Z\",\n      \"updated_at\": \"2026-06-17T10:17:38.611Z\",\n      \"organization_id\": \"string\",\n      \"user_id\": \"string\",\n      \"call_id\": \"string\",\n      \"batch_id\": \"string\"\n    }\n  ],\n  \"has_next\": true,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1995f2cb-55a9-4c6d-b2ef-1161ea67046c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "task-management",
+                    "list-by-batch",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e63ccbbf-1f01-413d-9cdb-6d7a22ef67f3",
+    "name": "Sarj.ai Voice Task Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

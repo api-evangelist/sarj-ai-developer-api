@@ -1,0 +1,1415 @@
+{
+  "item": [
+    {
+      "id": "c1dd3657-17b5-4a5b-aeb9-934103ae0539",
+      "name": "batch",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46e713d0-9a2b-4fdc-a402-e50a56288379",
+          "name": "Create Batch",
+          "request": {
+            "name": "Create Batch",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"file\": {\n    \"key\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"display_time_zone\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      },\n      \"key_1\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"start_at\": \"<dateTime>\",\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  },\n  \"voices\": [\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    },\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    }\n  ],\n  \"sip_trunk_id\": \"<string>\",\n  \"trunk_phone_number\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "72a32b33-9429-43b0-b533-4a51ba20b295",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file\": {\n    \"key\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"display_time_zone\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"start_at\": \"<dateTime>\",\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  },\n  \"voices\": [\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    },\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    }\n  ],\n  \"sip_trunk_id\": \"<string>\",\n  \"trunk_phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"settings\": {\n    \"language\": \"<string>\",\n    \"scenario\": {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"variables\": {},\n      \"scenario_settings_override\": {\n        \"agent_profile_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"voices\": [\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      },\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      }\n    ],\n    \"voice_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"app_settings\": {\n      \"settings\": {\n        \"key_0\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_2\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_3\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"type\": \"override\"\n    },\n    \"start_at\": \"2024-06-04T00:28:27.414Z\",\n    \"calling_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    },\n    \"retry_settings\": {\n      \"retry_interval_seconds\": 4879,\n      \"max_retry_attempts\": 5600,\n      \"retry_window\": {\n        \"start_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"sip_trunk_id\": \"string\",\n    \"trunk_phone_number\": \"string\"\n  },\n  \"created_at\": \"1997-09-27T04:30:13.831Z\",\n  \"updated_at\": \"1988-01-10T08:14:42.326Z\",\n  \"total_calls\": 532,\n  \"successful_calls\": 5303,\n  \"completed_calls\": 7559,\n  \"settled_calls\": 7622,\n  \"status\": \"stopped\",\n  \"display_time_zone\": \"Asia/Riyadh\",\n  \"custom_scenario_id\": \"string\",\n  \"report_file_key\": \"string\",\n  \"signed_report_url\": \"string\",\n  \"file_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "158d7dcf-5bbb-4aaf-af38-85e8fb24c48d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"file\": {\n    \"key\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"display_time_zone\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"start_at\": \"<dateTime>\",\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  },\n  \"voices\": [\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    },\n    {\n      \"id\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"is_active\": true\n    }\n  ],\n  \"sip_trunk_id\": \"<string>\",\n  \"trunk_phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcefc591-09fb-4e95-9f91-390e145519d2",
+          "name": "Generate Upload Url",
+          "request": {
+            "name": "Generate Upload Url",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                "upload-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27b4ad5d-afac-468d-b8d2-3fab1c9ba494",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    "upload-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"upload_url\": \"string\",\n  \"file_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d36ba95d-39ba-49c0-a3ce-62530849a721",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    "upload-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90ec5918-4c4a-4ad1-8a65-2fe68d6a4b94",
+          "name": "Get Batch Detail",
+          "request": {
+            "name": "Get Batch Detail",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9875f62-9201-4666-936c-de09fba772a0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"settings\": {\n    \"language\": \"<string>\",\n    \"scenario\": {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"variables\": {},\n      \"scenario_settings_override\": {\n        \"agent_profile_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"voices\": [\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      },\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      }\n    ],\n    \"voice_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"app_settings\": {\n      \"settings\": {\n        \"key_0\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"type\": \"override\"\n    },\n    \"start_at\": \"2017-08-19T04:34:43.076Z\",\n    \"calling_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    },\n    \"retry_settings\": {\n      \"retry_interval_seconds\": 1376,\n      \"max_retry_attempts\": 6035,\n      \"retry_window\": {\n        \"start_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"sip_trunk_id\": \"string\",\n    \"trunk_phone_number\": \"string\"\n  },\n  \"created_at\": \"1967-11-12T19:20:33.841Z\",\n  \"updated_at\": \"1995-01-17T06:21:36.379Z\",\n  \"total_calls\": 5174,\n  \"successful_calls\": 2909,\n  \"completed_calls\": 1922,\n  \"settled_calls\": 5172,\n  \"status\": \"queued\",\n  \"display_time_zone\": \"Asia/Riyadh\",\n  \"custom_scenario_id\": \"string\",\n  \"report_file_key\": \"string\",\n  \"signed_report_url\": \"string\",\n  \"file_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72795ce4-9712-4a85-aba5-54a5afea4804",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4153c5b3-7631-4abd-a539-a664d797ecce",
+          "name": "Get Batch Calls",
+          "request": {
+            "name": "Get Batch Calls",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id",
+                "calls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "672a08d3-9245-4125-9fe2-289f3bf55792",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batch_calls\": [\n    {\n      \"id\": \"string\",\n      \"created_at\": \"2021-02-22T13:20:25.874Z\",\n      \"updated_at\": \"1982-08-22T18:04:34.400Z\",\n      \"batch_id\": \"string\",\n      \"phone_number\": \"string\",\n      \"status\": \"ringing\",\n      \"start_at\": \"1956-03-02T17:59:47.695Z\",\n      \"latest_call_id\": \"string\",\n      \"name\": \"string\",\n      \"scenario_data\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\",\n        \"key_4\": \"string\"\n      },\n      \"attempt_number\": 0,\n      \"retry_at\": \"2016-03-06T00:21:12.473Z\",\n      \"settings\": {\n        \"voice\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gender\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"created_at\": \"1967-06-10T01:33:33.529Z\",\n      \"updated_at\": \"2010-05-08T03:22:11.349Z\",\n      \"batch_id\": \"string\",\n      \"phone_number\": \"string\",\n      \"status\": \"timeout\",\n      \"start_at\": \"1962-12-07T13:13:57.598Z\",\n      \"latest_call_id\": \"string\",\n      \"name\": \"string\",\n      \"scenario_data\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"attempt_number\": 0,\n      \"retry_at\": \"2018-06-13T13:58:29.632Z\",\n      \"settings\": {\n        \"voice\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gender\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\"\n      }\n    }\n  ],\n  \"cursor\": \"string\",\n  \"prev_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d13fb386-7b6e-4113-931c-a9a4f7916be7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92be9b0d-4c97-404a-b6fc-6f3cd67da9c5",
+          "name": "Retry Call",
+          "request": {
+            "name": "Retry Call",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch-call",
+                ":batch_call_id",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7e2a139-a09e-4490-a84c-6449937f8925",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch-call",
+                    ":batch_call_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a383458-ecdf-48b8-8303-5ac7314b1ae7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch-call",
+                    ":batch_call_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59651069-76fd-44a1-a18b-b8200ec6fa7c",
+          "name": "Retry Batch",
+          "request": {
+            "name": "Retry Batch",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1da72b4-9ea6-482e-9d3f-82a74edd2f44",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b730dc2a-a290-4698-8f17-8fd81f678b68",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e42dbe2-28f2-4ef2-bf4b-550a6e7385cb",
+          "name": "Set Batch Status",
+          "request": {
+            "name": "Set Batch Status",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d7538956-798b-40db-9bd2-5d54c1039f16",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15eddf52-c5b2-4458-8288-940209f2a4ee",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81840d77-d7eb-4304-b5b2-14aae57dfef7",
+          "name": "Update Batch Settings",
+          "request": {
+            "name": "Update Batch Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e896cc15-4fcc-4ed8-9637-1a6360453ae4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"settings\": {\n    \"language\": \"<string>\",\n    \"scenario\": {\n      \"type\": \"<string>\",\n      \"id\": \"<string>\",\n      \"variables\": {},\n      \"scenario_settings_override\": {\n        \"agent_profile_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"voices\": [\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      },\n      {\n        \"id\": \"<string>\",\n        \"display_name\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"language\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"tts_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"vibe\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"is_active\": true\n      }\n    ],\n    \"voice_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"app_settings\": {\n      \"settings\": {\n        \"key_0\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_2\": {\n          \"models\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"back_channel\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"allow_interruptions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"timeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"agent_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"turn_detection\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_duration_end_call_message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"type\": \"override\"\n    },\n    \"start_at\": \"2017-03-28T22:09:05.995Z\",\n    \"calling_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    },\n    \"retry_settings\": {\n      \"retry_interval_seconds\": 6914,\n      \"max_retry_attempts\": 5073,\n      \"retry_window\": {\n        \"start_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"end_edge\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"sip_trunk_id\": \"string\",\n    \"trunk_phone_number\": \"string\"\n  },\n  \"created_at\": \"1986-06-11T22:45:58.007Z\",\n  \"updated_at\": \"1991-12-02T16:26:50.736Z\",\n  \"total_calls\": 335,\n  \"successful_calls\": 3918,\n  \"completed_calls\": 1513,\n  \"settled_calls\": 6342,\n  \"status\": \"<string>\",\n  \"display_time_zone\": \"Asia/Riyadh\",\n  \"custom_scenario_id\": \"string\",\n  \"report_file_key\": \"string\",\n  \"signed_report_url\": \"string\",\n  \"file_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab7ea457-2abe-4842-ad67-f71472745da7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"calling_window\": {\n    \"start_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    },\n    \"end_edge\": {\n      \"hour\": \"<integer>\",\n      \"minute\": \"<integer>\"\n    }\n  },\n  \"retry_settings\": {\n    \"retry_interval_seconds\": \"<integer>\",\n    \"max_retry_attempts\": \"<integer>\",\n    \"retry_window\": {\n      \"start_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      },\n      \"end_edge\": {\n        \"hour\": \"<integer>\",\n        \"minute\": \"<integer>\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "737e0883-8756-478d-896f-c63292ca095f",
+          "name": "Export Batch Reports",
+          "request": {
+            "name": "Export Batch Reports",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "batch",
+                ":batch_id",
+                "export-reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"custom_columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"template_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8e25500-a54a-4271-8554-fb85e883e9c6",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "export-reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"zoho_crm_record_update\",\n  \"status\": \"pending\",\n  \"status_changed_at\": \"1964-04-05T15:12:15.801Z\",\n  \"message\": {\n    \"call_id\": \"string\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"created_at\": \"1970-03-01T19:56:46.430Z\",\n  \"updated_at\": \"1949-01-13T07:47:30.766Z\",\n  \"organization_id\": \"string\",\n  \"user_id\": \"string\",\n  \"call_id\": \"string\",\n  \"batch_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0cd0e77-46fd-4cc3-a103-60adf21dd227",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "batch",
+                    ":batch_id",
+                    "export-reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"custom_columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"columns\": [\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    },\n    {\n      \"source\": \"<string>\",\n      \"key\": \"<string>\"\n    }\n  ],\n  \"template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6a14c98c-d59b-4209-b922-265f8844a8ed",
+    "name": "Sarj.ai Voice Batch API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

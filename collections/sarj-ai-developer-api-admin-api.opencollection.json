@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Admin API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Config"
+        },
+        {
+          "info": {
+            "name": "Get Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Config"
+        },
+        {
+          "info": {
+            "name": "Update Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Config"
+        },
+        {
+          "info": {
+            "name": "Delete Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Config"
+        },
+        {
+          "info": {
+            "name": "Get Configs By Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/org/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Configs By Org"
+        },
+        {
+          "info": {
+            "name": "List Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Configs"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

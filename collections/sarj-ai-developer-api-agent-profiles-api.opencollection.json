@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Agent Profiles API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "agent-profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Agent Profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Agent Profiles"
+        },
+        {
+          "info": {
+            "name": "Create Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Ensure Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id/ensure",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ensure Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Get Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Update Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Delete Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Set Agent Profile Default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id/set-default",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Set Agent Profile Default"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1866 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Liveness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/liveness"
+          },
+          "docs": "Check liveness - the service process is running\n\nReturns:\n    healthy=True whenever the process can serve the request"
+        },
+        {
+          "info": {
+            "name": "Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/readiness"
+          },
+          "docs": "Readiness check - can connect to database\n\nReturns:\n    healthy=True, or a 503 JSON payload when the database is unreachable"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "calls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Outbound Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/outbound",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Outbound Call"
+        },
+        {
+          "info": {
+            "name": "Create Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/chat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Chat"
+        },
+        {
+          "info": {
+            "name": "Create Client Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/client",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Client Call"
+        },
+        {
+          "info": {
+            "name": "Get Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/detail/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Detail"
+        },
+        {
+          "info": {
+            "name": "Get Transcriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/:call_id/transcriptions",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Transcriptions"
+        },
+        {
+          "info": {
+            "name": "Retry Call Outcome",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/:call_id/retry-outcome",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Call Outcome"
+        },
+        {
+          "info": {
+            "name": "Count For Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/count-for-org",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Count For Org"
+        },
+        {
+          "info": {
+            "name": "Block Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/blocked-numbers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Block Number"
+        },
+        {
+          "info": {
+            "name": "Unblock Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/calls/blocked-numbers/:phone_number",
+            "params": [
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unblock Number"
+        },
+        {
+          "info": {
+            "name": "List Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/phone-numbers",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Phone Numbers"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Batch"
+        },
+        {
+          "info": {
+            "name": "Generate Upload Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/upload-url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate Upload Url"
+        },
+        {
+          "info": {
+            "name": "Get Batch Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Batch Detail"
+        },
+        {
+          "info": {
+            "name": "Get Batch Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/calls",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Batch Calls"
+        },
+        {
+          "info": {
+            "name": "Retry Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch-call/:batch_call_id/retry",
+            "params": [
+              {
+                "name": "batch_call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Call"
+        },
+        {
+          "info": {
+            "name": "Retry Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/retry",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Batch"
+        },
+        {
+          "info": {
+            "name": "Set Batch Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/status",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Batch Status"
+        },
+        {
+          "info": {
+            "name": "Update Batch Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/settings",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Batch Settings"
+        },
+        {
+          "info": {
+            "name": "Export Batch Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/export-reports",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export Batch Reports"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "report-templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Report Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/report-templates"
+          },
+          "docs": "List Report Templates"
+        },
+        {
+          "info": {
+            "name": "Create Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/report-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Report Template"
+        },
+        {
+          "info": {
+            "name": "Get Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default"
+          },
+          "docs": "Get Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Set Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Clear Default Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/report-templates/default"
+          },
+          "docs": "Clear Default Report Template"
+        },
+        {
+          "info": {
+            "name": "Update Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/beta/report-templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Report Template"
+        },
+        {
+          "info": {
+            "name": "Delete Report Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/report-templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Report Template"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "organization-sip",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assign Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/assign",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "List All Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/all"
+          },
+          "docs": "List All Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "Get Default Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default"
+          },
+          "docs": "Get Default Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "Set Default Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Default Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Delete Default Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/default/:trunk_id",
+            "params": [
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Default Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Unassign Outbound Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/:organization_id/:trunk_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unassign Outbound Trunk"
+        },
+        {
+          "info": {
+            "name": "Get Available Outbound Trunks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/outbound/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Available Outbound Trunks"
+        },
+        {
+          "info": {
+            "name": "List Organizations For Trunk",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/sip/organizations/trunk/:trunk_id",
+            "params": [
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Organizations For Trunk"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "messaging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Socialbot Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/messaging/socialbot"
+          },
+          "docs": "Socialbot Webhook"
+        },
+        {
+          "info": {
+            "name": "Get Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Session"
+        },
+        {
+          "info": {
+            "name": "Get Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id/messages",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Messages"
+        },
+        {
+          "info": {
+            "name": "End Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/messaging/sessions/:session_id/end",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "End Session"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Config"
+        },
+        {
+          "info": {
+            "name": "Get Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Config"
+        },
+        {
+          "info": {
+            "name": "Update Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Config"
+        },
+        {
+          "info": {
+            "name": "Delete Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/:config_id",
+            "params": [
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Config"
+        },
+        {
+          "info": {
+            "name": "Get Configs By Org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/org/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Configs By Org"
+        },
+        {
+          "info": {
+            "name": "List Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messaging-settings/configs/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Configs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "task",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start Batch Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/start-batch-calls"
+          },
+          "docs": "Start Batch Calls"
+        },
+        {
+          "info": {
+            "name": "Dispatch Outbound Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/dispatch-outbound-calls"
+          },
+          "docs": "Dispatch Outbound Calls"
+        },
+        {
+          "info": {
+            "name": "Delete Old Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/delete-old-tasks"
+          },
+          "docs": "Delete Old Tasks"
+        },
+        {
+          "info": {
+            "name": "Delete Expired Org Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tasks/delete-expired-org-data"
+          },
+          "docs": "Delete Expired Org Data"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Active Providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/active-providers"
+          },
+          "docs": "List Active Providers"
+        },
+        {
+          "info": {
+            "name": "Get Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Token"
+        },
+        {
+          "info": {
+            "name": "Delete Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/:provider",
+            "params": [
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Token"
+        },
+        {
+          "info": {
+            "name": "Add Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Token"
+        },
+        {
+          "info": {
+            "name": "Refresh All",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/token/refresh-all"
+          },
+          "docs": "Refresh only OAuth tokens; providers without a token refresher count as failures.\n\nReturns:\n    Per-provider and total success/failure counts for the refresh sweep."
+        },
+        {
+          "info": {
+            "name": "Zoho Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/authorize",
+            "params": [
+              {
+                "name": "return_to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Zoho Authorize"
+        },
+        {
+          "info": {
+            "name": "Zoho Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/webhook",
+            "params": [
+              {
+                "name": "extra_conditions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trunk_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Public webhook API where ZohoCRM dumps its webhook data."
+        },
+        {
+          "info": {
+            "name": "Get Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/list-webhooks"
+          },
+          "docs": "Get Notifications"
+        },
+        {
+          "info": {
+            "name": "Create Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/create-webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Notification"
+        },
+        {
+          "info": {
+            "name": "Remove Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/disable-webhooks",
+            "params": [
+              {
+                "name": "channel_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of channel IDs"
+              }
+            ]
+          },
+          "docs": "Remove Notifications"
+        },
+        {
+          "info": {
+            "name": "Get Available Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/available-events"
+          },
+          "docs": "Return available Zoho CRM events that can be used for webhooks.\n\nReturns:\n    The subscribable notification events grouped by CRM module."
+        },
+        {
+          "info": {
+            "name": "Get Field Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/field-settings",
+            "params": [
+              {
+                "name": "crm_module",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "editable_fields_only",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Field Settings"
+        },
+        {
+          "info": {
+            "name": "Get Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/record",
+            "params": [
+              {
+                "name": "record_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "module",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Read a CRM record back over HTTP so the canary can verify its lead update landed.\n\nReturns:\n    The CRM record with its callable fields.\n\nRaises:\n    HTTPException: 404 if no record exists with `record_id` in `module`."
+        },
+        {
+          "info": {
+            "name": "Revalidate All Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/revalidate-all-webhooks"
+          },
+          "docs": "Revalidate notifications for all organizations with Zoho tokens."
+        },
+        {
+          "info": {
+            "name": "Create Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/zoho/desk/create-ticket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ticket in Zoho Desk for the specified organization.\n\nReturns:\n    The ticket as created in Zoho Desk."
+        },
+        {
+          "info": {
+            "name": "Salla Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Salla Webhook"
+        },
+        {
+          "info": {
+            "name": "Get Salla App Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/app-url"
+          },
+          "docs": "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The apps.salla.sa install URL for the configured Salla app id."
+        },
+        {
+          "info": {
+            "name": "Get Salla Integration Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/me"
+          },
+          "docs": "Get Salla Integration Details"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/authorize"
+          },
+          "docs": "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user to."
+        },
+        {
+          "info": {
+            "name": "Salesforce Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salesforce/callback",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "error_description",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or error outcome."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "settings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/voices",
+            "params": [
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Language code (en or ar)"
+              }
+            ]
+          },
+          "docs": "Get Voices"
+        },
+        {
+          "info": {
+            "name": "Create Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Voice"
+        },
+        {
+          "info": {
+            "name": "List Voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Voices"
+        },
+        {
+          "info": {
+            "name": "Get Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Voice"
+        },
+        {
+          "info": {
+            "name": "Update Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Voice"
+        },
+        {
+          "info": {
+            "name": "Preview Voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/settings/voices/:voice_id/preview",
+            "params": [
+              {
+                "name": "voice_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Preview Voice"
+        },
+        {
+          "info": {
+            "name": "Get Global Prompt Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/global-prompt/config"
+          },
+          "docs": "Get Global Prompt Config"
+        },
+        {
+          "info": {
+            "name": "Save Global Prompt Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/global-prompt/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save Global Prompt Config"
+        },
+        {
+          "info": {
+            "name": "Get Global Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/global"
+          },
+          "docs": "Get Global Settings"
+        },
+        {
+          "info": {
+            "name": "Update Global Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/settings/global",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Global Settings"
+        },
+        {
+          "info": {
+            "name": "Get Scenario Generation Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/settings/scenario-generation/models"
+          },
+          "docs": "Get Scenario Generation Models"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/analytics/dashboard",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get Dashboard"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "task-management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Task"
+        },
+        {
+          "info": {
+            "name": "Get Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/task-management/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ]
+          },
+          "docs": "Get Task"
+        },
+        {
+          "info": {
+            "name": "List Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks"
+        },
+        {
+          "info": {
+            "name": "List Tasks By Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list-by-call/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks By Call"
+        },
+        {
+          "info": {
+            "name": "List Tasks By Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list-by-batch/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks By Batch"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "agent-profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Agent Profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List Agent Profiles"
+        },
+        {
+          "info": {
+            "name": "Create Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Ensure Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id/ensure",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ensure Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Get Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Update Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Delete Agent Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Agent Profile"
+        },
+        {
+          "info": {
+            "name": "Set Agent Profile Default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent-profiles/:profile_id/set-default",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Set Agent Profile Default"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "organization-variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/organization-variables/list",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Variables"
+        },
+        {
+          "info": {
+            "name": "Create Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/organization-variables/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Variable"
+        },
+        {
+          "info": {
+            "name": "Get Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Variable"
+        },
+        {
+          "info": {
+            "name": "Update Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Variable"
+        },
+        {
+          "info": {
+            "name": "Delete Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/organization-variables/:variable_id",
+            "params": [
+              {
+                "name": "variable_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Variable"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

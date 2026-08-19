@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Batch API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Batch"
+        },
+        {
+          "info": {
+            "name": "Generate Upload Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/upload-url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate Upload Url"
+        },
+        {
+          "info": {
+            "name": "Get Batch Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Batch Detail"
+        },
+        {
+          "info": {
+            "name": "Get Batch Calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/calls",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Batch Calls"
+        },
+        {
+          "info": {
+            "name": "Retry Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/calls/batch-call/:batch_call_id/retry",
+            "params": [
+              {
+                "name": "batch_call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Call"
+        },
+        {
+          "info": {
+            "name": "Retry Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/retry",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retry Batch"
+        },
+        {
+          "info": {
+            "name": "Set Batch Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/status",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Batch Status"
+        },
+        {
+          "info": {
+            "name": "Update Batch Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/settings",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Batch Settings"
+        },
+        {
+          "info": {
+            "name": "Export Batch Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/calls/batch/:batch_id/export-reports",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export Batch Reports"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

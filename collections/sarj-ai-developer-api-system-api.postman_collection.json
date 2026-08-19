@@ -1,0 +1,119 @@
+{
+  "item": [
+    {
+      "id": "01ac0c81-ed2a-4fc0-8503-c8bec3772482",
+      "name": "System",
+      "description": {
+        "content": "Service health and status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7898daf3-094a-484b-aba3-6237fe443a65",
+          "name": "Health Check",
+          "request": {
+            "name": "Health Check",
+            "description": {
+              "content": "Returns the operational status of the API. Does not require authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "560303a9-ee7b-4cc8-baef-09b8f510da61",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"status\": \"string\"\n  },\n  \"meta\": {\n    \"request_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform-api.sarj.ai/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a19c8530-cb25-48d4-b143-0facb536414d",
+    "name": "Sarj.ai Developer System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API for programmatic access to the **Sarj.ai voice platform**.\n\n> [!TIP]\n> **New here?** Start with the [Getting Started guide](https://platform-docs.sarj.ai/getting-started)\n> to go from API key to first call in under 5 minutes.\n>\n> **Building with AI agents?** See the [MCP Server guide](https://platform-docs.sarj.ai/mcp-server)\n> to connect Claude Code, Cursor, or any MCP-compatible agent.\n\n---\n\n## Authentication\n\nAll authenticated endpoints require a **Bearer token** in the `Authorization`\nheader:\n\n```\nAuthorization: Bearer <your-api-key>\n```\n\nGenerate an API key from [platform.sarj.ai/api-keys](https://platform.sarj.ai/api-keys).\n\n> [!WARNING]\n> If you receive a `401 Unauthorized` response, your key may be invalid,\n> expired, or missing. Check the `error.type` field in the response body.\n\n---\n\n## Response Format\n\n**Success**\n\n```json\n{\n  \"data\": { ... },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\n**Error**\n\n```json\n{\n  \"error\": {\n    \"type\": \"unauthorized\",\n    \"message\": \"Authentication required.\"\n  },\n  \"meta\": { \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\" }\n}\n```\n\nAlways branch on `error.type` — the `message` field is for humans only.\n\n---\n\n## Support\n\nInclude `meta.request_id` in all support tickets for faster resolution.\n",
+      "type": "text/plain"
+    }
+  }
+}

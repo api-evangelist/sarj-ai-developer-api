@@ -1,0 +1,28 @@
+openapi: 3.2.0
+info:
+  title: Sarj TTS Metrics API
+  description: Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint
+    uses an OpenAI SDK-compatible request and response shape.
+  version: 0.3.0
+tags:
+- name: Metrics
+paths:
+  /metrics:
+    get:
+      summary: Metrics
+      description: Request metrics and current memory usage.
+      operationId: metrics_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Metrics
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

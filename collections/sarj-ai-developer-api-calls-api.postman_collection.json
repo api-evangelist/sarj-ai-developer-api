@@ -1,0 +1,2185 @@
+{
+  "item": [
+    {
+      "id": "b0045cab-0143-4cd3-a57b-919e9013af49",
+      "name": "Calls",
+      "description": {
+        "content": "Create outbound voice calls and retrieve call details and transcripts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c56a549f-4c7f-42db-b541-1b550af94c33",
+          "name": "Place an outbound Sarj.ai voice call",
+          "request": {
+            "name": "Place an outbound Sarj.ai voice call",
+            "description": {
+              "content": "Place an outbound Sarj.ai voice call: dials the given phone_number and runs the specified scenario (with optional template variables and language). Returns a call_id that can be polled via getCall. Use this whenever the user asks to call, dial, ring, or phone someone through Sarj.ai — do not attempt to start calls by writing to the database or invoking telephony providers directly.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls"
+              ],
+              "host": [
+                "{{calls-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"language\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9dfd7c1-8e4d-43c0-a654-3cd1def3b32f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\",\n    \"status\": \"queued\",\n    \"phone_number\": \"+966512345678\",\n    \"scenario_id\": \"scn_abc123\",\n    \"created_at\": \"2026-04-12T10:30:00Z\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a121359-9682-4bdd-9e94-b921cc204ad9",
+              "name": "Outbound call failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"outbound_call_failed\",\n    \"message\": \"Outbound call could not be initiated.\",\n    \"reason\": \"telephony_provider_unavailable\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0a9aed8-333c-471a-9460-e963ccc81053",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unauthorized\",\n    \"message\": \"Authentication required.\"\n  },\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83b1ea12-6651-407b-a9f5-25398de220a3",
+              "name": "Forbidden — phone number blocked or scenario access denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"phone_number_blocked\",\n    \"message\": \"Phone number +966512345678 is blocked.\",\n    \"phone_number\": \"+966512345678\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ec4eef1-81a3-40f0-b485-34ac50491f79",
+              "name": "Scenario not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"scenario_not_found\",\n    \"message\": \"Scenario scn_abc123 was not found.\",\n    \"scenario_id\": \"scn_abc123\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1857951-a307-4652-9df1-1cf5dde8f150",
+              "name": "Validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"validation_error\",\n    \"message\": \"Request validation failed.\",\n    \"field_violations\": [\n      {\n        \"field\": \"body.phone_number\",\n        \"message\": \"value is not a valid phone number\"\n      }\n    ]\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d1f70e0-1597-4f9a-8847-60a6cf9cc53c",
+              "name": "Call limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{calls-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\",\n  \"scenario_id\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5792.217989550266\n  },\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"call_limit_exceeded\",\n    \"message\": \"Call limit of 10 reached for phone number +966512345678.\",\n    \"phone_number\": \"+966512345678\",\n    \"call_limit\": 10\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "722c944c-fba1-4b32-a952-216e84e70e82",
+          "name": "Fetch Sarj.ai voice call details by call_id",
+          "request": {
+            "name": "Fetch Sarj.ai voice call details by call_id",
+            "description": {
+              "content": "Fetch details of a Sarj.ai voice call by call_id: status, phone_number, scenario_id, language, direction (inbound/outbound), scenario variables, duration (seconds), recording_url (signed download link), transcript (list of spoken messages), report (post-call outcome with success-criteria results; generated asynchronously shortly after completed calls, null otherwise), and timestamps (created_at, updated_at, started_at, ended_at). Use this whenever the user asks about a specific call, phone conversation, or voice interaction by its call_id — do not query other tools.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                ":call_id"
+              ],
+              "host": [
+                "{{calls-call_id-Url}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "539fc311-039a-4a9d-8a91-bc8455b31d80",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{calls-call_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\",\n    \"status\": \"completed\",\n    \"phone_number\": \"+966512345678\",\n    \"scenario_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"language\": \"ar\",\n    \"direction\": \"outbound\",\n    \"variables\": {\n      \"customer_name\": \"Ahmad\",\n      \"order_id\": \"ORD-123\"\n    },\n    \"duration\": 142,\n    \"recording_url\": \"https://storage.googleapis.com/sarj-recordings/calls/8f9b2c1e.mp4?X-Goog-Signature=...\",\n    \"transcript\": [\n      {\n        \"role\": \"assistant\",\n        \"content\": \"Hello Ahmad, calling about order ORD-123.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Yes, hi.\"\n      },\n      {\n        \"role\": \"assistant\",\n        \"content\": \"Your order is ready for delivery tomorrow.\"\n      }\n    ],\n    \"report\": {\n      \"generated_at\": \"2026-04-12T10:33:41Z\",\n      \"outcome\": {\n        \"status\": \"success\",\n        \"reason\": \"The customer confirmed the delivery appointment for tomorrow.\",\n        \"success_criteria\": [\n          {\n            \"text\": \"Customer confirms the delivery slot\",\n            \"achieved\": true,\n            \"is_primary\": true\n          }\n        ]\n      }\n    },\n    \"created_at\": \"2026-04-12T10:30:00Z\",\n    \"updated_at\": \"2026-04-12T10:32:22Z\",\n    \"started_at\": \"2026-04-12T10:30:05Z\",\n    \"ended_at\": \"2026-04-12T10:32:22Z\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b60870e-3e74-474e-b35c-45ff2083a9ce",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{calls-call_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unauthorized\",\n    \"message\": \"Authentication required.\"\n  },\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "297c709d-4422-43fe-b69e-8033c7688e58",
+              "name": "API key not associated with an organization.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{calls-call_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"no_organization\",\n    \"message\": \"API key is not associated with an organization.\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f3a8a4b-7bf3-4022-8364-905c407b8f91",
+              "name": "Call not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{calls-call_id-Url}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"call_not_found\",\n    \"message\": \"Call call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b was not found.\",\n    \"call_id\": \"call_8f9b2c1e-4a5d-4f6e-8b1a-2c3d4e5f6a7b\"\n  },\n  \"meta\": {\n    \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db05b8b0-6e5f-4b27-8baf-a6ec716589e9",
+          "name": "Outbound Call",
+          "request": {
+            "name": "Outbound Call",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "outbound"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"phone_number\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      },\n      \"key_1\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      },\n      \"key_2\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"trunk_phone_number\": \"<string>\",\n  \"sip_trunk_id\": \"<string>\",\n  \"call_limit\": \"<integer>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "783a6392-7411-416a-93a6-235df45376d8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "outbound"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"phone_number\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"trunk_phone_number\": \"<string>\",\n  \"sip_trunk_id\": \"<string>\",\n  \"call_limit\": \"<integer>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"created_at\": \"1981-07-05T16:41:26.469Z\",\n  \"updated_at\": \"2000-02-06T15:38:56.381Z\",\n  \"started_at\": \"2009-04-30T13:24:08.181Z\",\n  \"egress_started_at\": \"1947-11-10T10:47:00.689Z\",\n  \"total_duration\": 285,\n  \"ended_at\": \"1963-12-12T22:53:39.228Z\",\n  \"status\": \"in_progress\",\n  \"scenario\": \"string\",\n  \"scenario_id\": \"string\",\n  \"scenario_data\": {\n    \"key_0\": false,\n    \"key_1\": 1681\n  },\n  \"custom_scenario_id\": \"string\",\n  \"custom_scenario\": {\n    \"id\": \"string\",\n    \"created_at\": \"2026-01-11T11:46:41.947Z\",\n    \"organization_id\": \"string\",\n    \"creator_id\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"draft\",\n    \"config\": {\n      \"for_language_settings\": [\n        {\n          \"language_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_message\": \"string\",\n          \"prompt\": \"string\",\n          \"default\": false,\n          \"disable_first_message\": false,\n          \"agent_profile_id\": \"\"\n        }\n      ],\n      \"template_schema\": {\n        \"fields\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"tools\": [\n        {\n          \"tool_slug\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_call_conditions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_call_messages\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"tool_slug\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_call_conditions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"end_call_messages\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"data_extraction_settings\": {\n        \"json_schema\": {\n          \"key_0\": 9634.109867608599\n        },\n        \"type\": \"enabled\",\n        \"advanced_settings\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"record_sinks\": {\n        \"recording_lifetime\": \"P7D\",\n        \"sinks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"knowledge_base_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"kb_retrieval_mode\": \"llm_tool\",\n      \"tz\": \"Asia/Riyadh\"\n    },\n    \"updated_at\": \"2017-06-26T23:46:59.163Z\",\n    \"last_modified_by\": \"string\",\n    \"deleted_at\": \"2026-07-31T06:41:25.623Z\"\n  },\n  \"direction\": \"inbound\",\n  \"phone_number\": \"string\",\n  \"sip_status\": \"user_rejected\",\n  \"sip_status_code\": 8794,\n  \"disconnection_reason\": \"media_failure\",\n  \"sip_trunk_id\": \"string\",\n  \"sip_call_id\": \"string\",\n  \"lk_room_name\": \"string\",\n  \"trunk_phone_number\": \"string\",\n  \"response_body\": {\n    \"key_0\": 5100.798392026221\n  },\n  \"language\": \"<string>\",\n  \"report\": {\n    \"outcome\": {\n      \"status\": \"success\",\n      \"reason\": \"string\",\n      \"success_criteria\": [\n        {\n          \"text\": \"string\",\n          \"achieved\": false,\n          \"is_primary\": true\n        },\n        {\n          \"text\": \"string\",\n          \"achieved\": true,\n          \"is_primary\": true\n        }\n      ]\n    },\n    \"generated_at\": \"1966-12-22T09:24:41.306Z\"\n  },\n  \"post_call_transcript\": {\n    \"transcript\": {\n      \"messages\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"errors\": [\n      {\n        \"incorrect_text\": \"string\",\n        \"correction\": \"string\",\n        \"type\": \"word\"\n      },\n      {\n        \"incorrect_text\": \"string\",\n        \"correction\": \"string\",\n        \"type\": \"phrase\"\n      }\n    ]\n  },\n  \"interaction_type\": \"voice\",\n  \"attempt_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6edfd1b9-aaab-4c16-a990-be34f08ddc2d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "outbound"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"phone_number\": \"<string>\",\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  },\n  \"trunk_phone_number\": \"<string>\",\n  \"sip_trunk_id\": \"<string>\",\n  \"call_limit\": \"<integer>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a22c0408-138d-463c-83e8-b2efe03e93ee",
+          "name": "Create Chat",
+          "request": {
+            "name": "Create Chat",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "chat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0580e83b-8d59-4e6a-88b6-fbdcc812db4a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      },\n      \"key_1\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"call_id\": \"string\",\n  \"participant_name\": \"string\",\n  \"participant_token\": \"string\",\n  \"room_name\": \"string\",\n  \"server_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7333790b-ee14-4b9a-9e12-ce16079daa9d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"language\": \"<string>\",\n  \"scenario\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"variables\": {},\n    \"scenario_settings_override\": {\n      \"agent_profile_id\": \"<string>\"\n    }\n  },\n  \"app_settings\": {\n    \"settings\": {\n      \"key_0\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      },\n      \"key_1\": {\n        \"models\": {\n          \"stt\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"llm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voice_id\": \"<string>\",\n          \"stt_fallback\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"back_channel\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"whitelist\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"allow_interruptions\": \"<boolean>\",\n        \"timeout\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"agent_name\": \"\",\n        \"turn_detection\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_duration_end_call_message\": \"<string>\"\n      }\n    },\n    \"type\": \"override\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f9bf9af-9f58-484e-b982-c5aad6a0eb10",
+          "name": "Create Client Call",
+          "request": {
+            "name": "Create Client Call",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "client"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scenario_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"language\": \"<string>\",\n  \"external_id\": \"<string>\",\n  \"variables\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4a7026b4-ebf8-4758-bba8-964ecf686175",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scenario_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"language\": \"<string>\",\n  \"external_id\": \"<string>\",\n  \"variables\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"call_id\": \"string\",\n  \"language\": \"<string>\",\n  \"created_at\": \"string\",\n  \"direction\": \"inbound\",\n  \"total_duration\": 5055,\n  \"status\": \"failed\",\n  \"phone_number\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4592993-b6a2-44df-83ee-7973020ccc8d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "client"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"scenario_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"language\": \"<string>\",\n  \"external_id\": \"<string>\",\n  \"variables\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36827512-e93b-4baa-a555-387f539beb0f",
+          "name": "Get Detail",
+          "request": {
+            "name": "Get Detail",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "detail",
+                ":call_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3bb16c5-b6f2-4fd4-9979-925d2561dd3e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "detail",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"created_at\": \"1968-07-03T15:34:29.160Z\",\n  \"updated_at\": \"1980-09-28T06:34:49.990Z\",\n  \"scenario_id\": \"string\",\n  \"started_at\": \"1957-05-20T00:37:27.009Z\",\n  \"egress_started_at\": \"1966-02-15T04:38:31.366Z\",\n  \"total_duration\": 2164,\n  \"ended_at\": \"1975-11-12T18:25:44.427Z\",\n  \"status\": \"transferring\",\n  \"scenario\": \"string\",\n  \"scenario_data\": {\n    \"key_0\": 6182,\n    \"key_1\": 5223\n  },\n  \"direction\": \"outbound\",\n  \"sip_trunk_id\": \"string\",\n  \"sip_call_id\": \"string\",\n  \"lk_room_name\": \"string\",\n  \"trunk_phone_number\": \"string\",\n  \"sip_account_id\": 2942,\n  \"transferred_at\": \"2008-06-03T17:11:54.560Z\",\n  \"number_format\": \"no_plus\",\n  \"phone_number\": \"string\",\n  \"sip_status\": \"user_unavailable\",\n  \"sip_status_code\": 2468,\n  \"disconnection_reason\": \"user_hangup\",\n  \"response_body\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"language\": \"<string>\",\n  \"report\": {\n    \"outcome\": {\n      \"status\": \"success\",\n      \"reason\": \"string\",\n      \"success_criteria\": [\n        {\n          \"text\": \"string\",\n          \"achieved\": false,\n          \"is_primary\": true\n        },\n        {\n          \"text\": \"string\",\n          \"achieved\": false,\n          \"is_primary\": true\n        }\n      ]\n    },\n    \"generated_at\": \"2022-05-11T10:13:17.997Z\"\n  },\n  \"post_call_transcript\": {\n    \"transcript\": {\n      \"messages\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"content\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"errors\": [\n      {\n        \"incorrect_text\": \"string\",\n        \"correction\": \"string\",\n        \"type\": \"word\"\n      },\n      {\n        \"incorrect_text\": \"string\",\n        \"correction\": \"string\",\n        \"type\": \"word\"\n      }\n    ]\n  },\n  \"interaction_type\": \"voice\",\n  \"attempt_count\": 0,\n  \"transcript\": {\n    \"messages\": [\n      {\n        \"role\": \"string\",\n        \"content\": \"string\",\n        \"type\": \"instructions\"\n      },\n      {\n        \"role\": \"string\",\n        \"content\": \"string\",\n        \"type\": \"instructions\"\n      }\n    ]\n  },\n  \"raw_transcript\": [\n    {\n      \"key_0\": 916,\n      \"key_1\": true\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": true,\n      \"key_2\": false\n    }\n  ],\n  \"recording\": {\n    \"recording_prefix\": \"string\",\n    \"recording_format\": \"mp4\",\n    \"signed_url\": \"string\"\n  },\n  \"webhook_data\": {\n    \"status\": \"string\",\n    \"payload\": {\n      \"response_body\": {\n        \"key_0\": 8134.807193198147\n      },\n      \"type\": \"complete\",\n      \"call_started\": \"1992-12-30T00:33:34.077Z\",\n      \"call_data\": {\n        \"call_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"created_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"direction\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"total_duration\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"enhanced_transcript\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"report\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"recording_url\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"started_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ended_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"interaction_type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"external_response\": {\n      \"key_0\": 1872,\n      \"key_1\": \"string\"\n    }\n  },\n  \"end_reason\": \"string\",\n  \"model_settings\": {\n    \"stt\": {\n      \"provider\": \"string\",\n      \"model\": \"telephony\",\n      \"region\": \"eu\"\n    },\n    \"tts\": {\n      \"model\": \"eleven_flash_v2_5\",\n      \"provider\": \"string\",\n      \"arabic_voice_id\": \"string\",\n      \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n      \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n      \"region\": \"eu\",\n      \"speed\": 1\n    },\n    \"llm\": {\n      \"provider\": \"string\",\n      \"model\": \"gpt-5-mini\",\n      \"region\": \"default\"\n    },\n    \"voice_details\": {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"provider\": \"string\",\n      \"language\": \"<string>\",\n      \"gender\": \"female\",\n      \"tts_settings\": {\n        \"model\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"provider\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"arabic_voice_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"english_voice_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"urdu_voice_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"region\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"speed\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"vibe\": \"string\",\n      \"created_at\": \"1983-04-08T13:08:34.638Z\",\n      \"updated_at\": \"2009-09-25T05:36:26.954Z\",\n      \"is_active\": true\n    },\n    \"voice_id\": \"string\"\n  },\n  \"scenario_insights\": [\n    {\n      \"id\": \"string\",\n      \"organization_id\": \"string\",\n      \"custom_scenario_id\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"knowledge\",\n      \"created_at\": \"1958-11-17T19:11:03.917Z\",\n      \"updated_at\": \"1993-06-30T22:46:22.156Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"organization_id\": \"string\",\n      \"custom_scenario_id\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"category\": \"platform\",\n      \"created_at\": \"1973-06-01T20:42:02.057Z\",\n      \"updated_at\": \"1953-08-18T03:48:32.214Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a43936a0-93c3-4ae0-b35e-5f8c7a4253a4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "detail",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7273f41a-3e2e-48c5-a434-f8c5c47a7c42",
+          "name": "Get Transcriptions",
+          "request": {
+            "name": "Get Transcriptions",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                ":call_id",
+                "transcriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "100d389a-defd-4f86-ac65-df2ee0d0801b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    ":call_id",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"call_id\": \"string\",\n    \"created_at\": \"1962-11-02T08:08:51.572Z\",\n    \"provider\": \"groq\",\n    \"transcript\": \"string\",\n    \"latency\": 3823\n  },\n  {\n    \"id\": \"string\",\n    \"call_id\": \"string\",\n    \"created_at\": \"1999-09-12T15:38:21.318Z\",\n    \"provider\": \"deepgram\",\n    \"transcript\": \"string\",\n    \"latency\": 1967\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9376423-49e3-4fe5-b9d0-4b49ddd58866",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    ":call_id",
+                    "transcriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f66c4d43-cac0-4e02-8453-e935fb389d57",
+          "name": "Retry Call Outcome",
+          "request": {
+            "name": "Retry Call Outcome",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                ":call_id",
+                "retry-outcome"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "call_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "110693d5-3c80-4b75-81b7-7e464774bc9d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    ":call_id",
+                    "retry-outcome"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"voice_migration\",\n  \"status\": \"cancelled\",\n  \"status_changed_at\": \"2009-10-23T09:56:18.994Z\",\n  \"message\": {\n    \"call_id\": \"string\",\n    \"type\": \"enhanced_transcription\"\n  },\n  \"created_at\": \"2009-02-12T01:20:38.054Z\",\n  \"updated_at\": \"2011-12-06T19:06:00.681Z\",\n  \"organization_id\": \"string\",\n  \"user_id\": \"string\",\n  \"call_id\": \"string\",\n  \"batch_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af80d149-1e4e-43c1-b679-77a374e1f419",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    ":call_id",
+                    "retry-outcome"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "call_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0967b2cc-2502-4750-8cec-95db337c91cb",
+          "name": "Count For Org",
+          "request": {
+            "name": "Count For Org",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "count-for-org"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2e3656dc-76fa-4dc8-ac75-b44323b3fe38",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "count-for-org"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"outbound\": 8400,\n  \"answered\": 2411\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38b7b0af-812e-4995-882b-961920a6777e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "count-for-org"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2ec9178-b407-4820-ad9a-942bc4e51f63",
+          "name": "Block Number",
+          "request": {
+            "name": "Block Number",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "blocked-numbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3db9926a-b9df-4cd5-a456-af6ff50fa732",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "blocked-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "663d2d8d-2550-40a9-a371-cdd1b9029ce2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "blocked-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6e89601-d7eb-4103-bdcd-b009638cee67",
+          "name": "Unblock Number",
+          "request": {
+            "name": "Unblock Number",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "blocked-numbers",
+                ":phone_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone_number",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63f013a0-52cf-4bec-8510-1e184a2bc423",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "blocked-numbers",
+                    ":phone_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f5db647-ac1f-4330-bbca-76a055c4a9b2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "blocked-numbers",
+                    ":phone_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11a8caa0-d770-4a61-888b-fcdd11f00d61",
+          "name": "List Phone Numbers",
+          "request": {
+            "name": "List Phone Numbers",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "calls",
+                "phone-numbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "phone_number",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a959fa36-7814-4292-9b2a-28206abc9ffb",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "phone-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"numbers\": [\n    {\n      \"phone_number\": \"string\",\n      \"blocked_at\": \"1994-02-15T08:10:46.338Z\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"inbound_count\": 3551,\n      \"outbound_count\": 6276,\n      \"total_call_count\": 2402,\n      \"answered\": 4080,\n      \"first_call_at\": \"1975-09-04T14:43:07.927Z\",\n      \"last_call_at\": \"1998-07-18T16:06:47.336Z\"\n    },\n    {\n      \"phone_number\": \"string\",\n      \"blocked_at\": \"1991-01-19T23:18:22.807Z\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"inbound_count\": 1894,\n      \"outbound_count\": 9821,\n      \"total_call_count\": 3813,\n      \"answered\": 3567,\n      \"first_call_at\": \"1986-04-06T20:01:40.760Z\",\n      \"last_call_at\": \"1994-11-24T17:05:40.713Z\"\n    }\n  ],\n  \"cursor\": \"string\",\n  \"prev_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45126d6b-9c1d-4a4d-9726-b217177796b9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "calls",
+                    "phone-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform-api.sarj.ai/api/v1",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://platform-api.sarj.ai/api/v1",
+      "key": "calls-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://platform-api.sarj.ai/api/v1",
+      "key": "calls-call_id-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "f97b0945-733d-4269-b207-2967a9d63100",
+    "name": "Sarj Ai Developer Calls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Operations tagged Calls across 2 of this provider's published API definitions: sarj-ai-developer-api-developer-openapi.json, sarj-ai-developer-api-voice-platform-openapi.json. Each path carries the servers of the definition it was published in.",
+      "type": "text/plain"
+    }
+  }
+}

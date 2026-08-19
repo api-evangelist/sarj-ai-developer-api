@@ -1,0 +1,328 @@
+{
+  "item": [
+    {
+      "id": "c299725c-0bcc-46e5-ba4e-d9a6caeeec85",
+      "name": "salla",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e2ba4463-6fd1-4b6a-a1d2-f059a9986b73",
+          "name": "Salla Webhook",
+          "request": {
+            "name": "Salla Webhook",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "salla",
+                "webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"merchant\": \"<integer>\",\n  \"created_at\": \"<dateTime>\",\n  \"data\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ae60227-38cc-4e51-ab74-d2ed03e9eedd",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "salla",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"<string>\",\n  \"merchant\": \"<integer>\",\n  \"created_at\": \"<dateTime>\",\n  \"data\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "707138f1-2d87-400a-a13f-6e3856bd0a80",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "salla",
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"<string>\",\n  \"merchant\": \"<integer>\",\n  \"created_at\": \"<dateTime>\",\n  \"data\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0b4330b-5c88-44d7-b1f5-4816ebd50d72",
+          "name": "Get Salla App Url",
+          "request": {
+            "name": "Get Salla App Url",
+            "description": {
+              "content": "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The apps.salla.sa install URL for the configured Salla app id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "salla",
+                "app-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e528bbf5-50e6-417c-9bb3-02567de5642d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "salla",
+                    "app-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e933c6f7-d9a5-4ee0-922c-3d2ea6570d65",
+          "name": "Get Salla Integration Details",
+          "request": {
+            "name": "Get Salla Integration Details",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "beta",
+                "integrations",
+                "salla",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ad799c4-6bea-4ab5-8f7d-e90188571355",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "beta",
+                    "integrations",
+                    "salla",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"merchant_id\": 1347,\n    \"merchant_name\": \"string\",\n    \"organization_id\": \"string\",\n    \"id\": \"string\",\n    \"created_at\": \"1947-07-25T12:23:25.607Z\",\n    \"updated_at\": \"1981-09-06T02:24:41.758Z\",\n    \"integration_status\": \"INCOMPLETE\",\n    \"merchant_calls\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"merchant_id\": 9512,\n    \"merchant_name\": \"string\",\n    \"organization_id\": \"string\",\n    \"id\": \"string\",\n    \"created_at\": \"1987-10-21T14:16:37.937Z\",\n    \"updated_at\": \"1971-11-02T23:37:31.519Z\",\n    \"integration_status\": \"COMPLETED\",\n    \"merchant_calls\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9864de14-d781-42f9-b86c-ef0f08cdbedd",
+    "name": "Sarj.ai Voice Salla API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

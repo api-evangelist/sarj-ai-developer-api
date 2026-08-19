@@ -1,0 +1,344 @@
+openapi: 3.2.0
+info:
+  title: Sarj TTS Voices API
+  description: Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint
+    uses an OpenAI SDK-compatible request and response shape.
+  version: 0.3.0
+tags:
+- name: Voices
+paths:
+  /v1/voices:
+    get:
+      summary: List available voices
+      description: Authoritative runtime voice discovery. Entries with `type=builtin` are the deployed
+        Sarj voice catalog; the response also identifies design modes, compatible presets, and saved clone
+        profiles.
+      operationId: list_voices_v1_voices_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoiceListResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - Voices
+  /v1/voices/profiles:
+    post:
+      summary: Create Profile
+      operationId: create_profile_v1_voices_profiles_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_profile_v1_voices_profiles_post'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoiceProfileResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Voices
+  /v1/voices/profiles/{profile_id}:
+    get:
+      summary: Get Profile
+      operationId: get_profile_v1_voices_profiles__profile_id__get
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Profile Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoiceProfileResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Voices
+    delete:
+      summary: Delete Profile
+      operationId: delete_profile_v1_voices_profiles__profile_id__delete
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Profile Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Voices
+    patch:
+      summary: Update Profile
+      operationId: update_profile_v1_voices_profiles__profile_id__patch
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Profile Id
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_update_profile_v1_voices_profiles__profile_id__patch'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoiceProfileResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Voices
+components:
+  schemas:
+    VoiceListResponse:
+      properties:
+        voices:
+          items:
+            $ref: '#/components/schemas/VoiceEntry'
+          type: array
+          title: Voices
+        design_attributes:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Design Attributes
+        languages:
+          additionalProperties:
+            type: string
+          type: object
+          title: Languages
+        total:
+          type: integer
+          minimum: 0.0
+          title: Total
+      type: object
+      required:
+      - voices
+      - design_attributes
+      - languages
+      - total
+      title: VoiceListResponse
+    VoiceProfileResponse:
+      properties:
+        profile_id:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Profile Id
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        ref_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ref Text
+        created_at:
+          type: string
+          title: Created At
+      type: object
+      required:
+      - profile_id
+      - name
+      - created_at
+      title: VoiceProfileResponse
+    VoiceEntry:
+      properties:
+        id:
+          type: string
+          minLength: 1
+          title: Id
+        type:
+          type: string
+          minLength: 1
+          title: Type
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        language:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Language
+        language_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Language Name
+        dialect:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Dialect
+        gender:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gender
+        profile_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Profile Id
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        ref_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ref Text
+        generation_defaults:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Generation Defaults
+      type: object
+      required:
+      - id
+      - type
+      title: VoiceEntry
+    Body_create_profile_v1_voices_profiles_post:
+      properties:
+        profile_id:
+          type: string
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Profile Id
+          description: Unique identifier. Alphanumeric, dashes, underscores only.
+        ref_audio:
+          type: string
+          contentMediaType: application/octet-stream
+          title: Ref Audio
+        ref_text:
+          anyOf:
+          - type: string
+            maxLength: 10000
+          - type: 'null'
+          title: Ref Text
+        overwrite:
+          type: boolean
+          title: Overwrite
+          default: false
+      type: object
+      required:
+      - profile_id
+      - ref_audio
+      title: Body_create_profile_v1_voices_profiles_post
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Body_update_profile_v1_voices_profiles__profile_id__patch:
+      properties:
+        ref_audio:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: Ref Audio
+        ref_text:
+          anyOf:
+          - type: string
+            maxLength: 10000
+          - type: 'null'
+          title: Ref Text
+      type: object
+      title: Body_update_profile_v1_voices_profiles__profile_id__patch
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

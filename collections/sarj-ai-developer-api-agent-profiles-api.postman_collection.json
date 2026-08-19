@@ -1,0 +1,1072 @@
+{
+  "item": [
+    {
+      "id": "5896f842-fd5a-4526-99b8-80aea0b90a6a",
+      "name": "agent-profiles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "94607505-218a-474a-a3be-c7ab866f502b",
+          "name": "List Agent Profiles",
+          "request": {
+            "name": "List Agent Profiles",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"language\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d3a12c10-9793-46b4-be50-bb1574ee2b60",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profiles\": [\n    {\n      \"id\": \"string\",\n      \"organization_id\": \"string\",\n      \"name\": \"string\",\n      \"language\": \"<string>\",\n      \"voice_id\": \"string\",\n      \"gender\": \"male\",\n      \"settings\": {\n        \"back_channeling\": {\n          \"type\": \"freq\",\n          \"value\": 0.6,\n          \"whitelist\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"timeout\": {\n          \"type\": \"enabled\",\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": 5\n        },\n        \"background_noise\": {\n          \"type\": \"enable\",\n          \"noise_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"volume\": 0.05\n        },\n        \"voice_speed\": 3373.0696804074246\n      },\n      \"created_at\": \"1990-11-07T16:18:25.514Z\",\n      \"updated_at\": \"1977-03-29T04:09:49.042Z\",\n      \"persona_prompt\": \"\",\n      \"is_default\": false\n    },\n    {\n      \"id\": \"string\",\n      \"organization_id\": \"string\",\n      \"name\": \"string\",\n      \"language\": \"<string>\",\n      \"voice_id\": \"string\",\n      \"gender\": \"male\",\n      \"settings\": {\n        \"back_channeling\": {\n          \"type\": \"freq\",\n          \"value\": 0.6,\n          \"whitelist\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"timeout\": {\n          \"type\": \"enabled\",\n          \"duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"max_retries\": 5\n        },\n        \"background_noise\": {\n          \"type\": \"enable\",\n          \"noise_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"volume\": 0.05\n        },\n        \"voice_speed\": 9887.761607391727\n      },\n      \"created_at\": \"2014-05-04T13:08:23.553Z\",\n      \"updated_at\": \"1968-05-12T10:54:08.090Z\",\n      \"persona_prompt\": \"\",\n      \"is_default\": false\n    }\n  ],\n  \"cursor\": \"1961-05-24T09:00:26.093Z\",\n  \"prev_cursor\": \"2003-12-28T09:41:44.854Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fec0f757-1864-48c6-87da-10bc98c10a28",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"language\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5beb8995-efe6-4bbb-aafc-0d280fe2130f",
+          "name": "Create Agent Profile",
+          "request": {
+            "name": "Create Agent Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f9e6560-9665-4ba2-ac7c-735e08c29364",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"string\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": 3618.528876421655\n  },\n  \"created_at\": \"1982-03-17T23:07:44.971Z\",\n  \"updated_at\": \"1973-04-10T18:32:13.484Z\",\n  \"persona_prompt\": \"\",\n  \"is_default\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb6032f7-7876-451f-aac6-13b0f7b1abd6",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0766c420-450d-4f08-a230-bdb685914f16",
+          "name": "Ensure Agent Profile",
+          "request": {
+            "name": "Ensure Agent Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ":profile_id",
+                "ensure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "736dcff8-5a4b-4901-9ea6-855eed0d4e3b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id",
+                    "ensure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"string\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": 3618.528876421655\n  },\n  \"created_at\": \"1982-03-17T23:07:44.971Z\",\n  \"updated_at\": \"1973-04-10T18:32:13.484Z\",\n  \"persona_prompt\": \"\",\n  \"is_default\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b4ba957-644a-4fa2-a75e-3171a2c1eb36",
+              "name": "The id already exists in another organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id",
+                    "ensure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ee140e1-8937-4113-afa3-0b9f65312f94",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id",
+                    "ensure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a446a1ce-4399-4ffc-802f-46b51ad1b279",
+          "name": "Update Agent Profile",
+          "request": {
+            "name": "Update Agent Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voice_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "45bfe772-5834-40ef-ae09-eb8060007fd7",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"voice_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"string\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": 3618.528876421655\n  },\n  \"created_at\": \"1982-03-17T23:07:44.971Z\",\n  \"updated_at\": \"1973-04-10T18:32:13.484Z\",\n  \"persona_prompt\": \"\",\n  \"is_default\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "641256e4-6e0a-4a32-ac14-7219579ca7f9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"voice_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": \"<number>\"\n  },\n  \"persona_prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59c3e3ed-8959-4215-912f-7e558de57695",
+          "name": "Get Agent Profile",
+          "request": {
+            "name": "Get Agent Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05572ca0-3904-400e-bba0-b57ece29d50c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"string\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": 3618.528876421655\n  },\n  \"created_at\": \"1982-03-17T23:07:44.971Z\",\n  \"updated_at\": \"1973-04-10T18:32:13.484Z\",\n  \"persona_prompt\": \"\",\n  \"is_default\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dd677d8-9b3b-478a-ad7e-18634357bf18",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbf0ea61-4178-4971-90a1-aa2b7f65e1d0",
+          "name": "Delete Agent Profile",
+          "request": {
+            "name": "Delete Agent Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ":profile_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1ebc99f-56aa-41e2-8993-753b71f14594",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aaf99ff7-eb62-4e0d-9953-ed643b459c59",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b17e343d-431a-4ac8-a8f3-46c2a5a56ed4",
+          "name": "Set Agent Profile Default",
+          "request": {
+            "name": "Set Agent Profile Default",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "agent-profiles",
+                ":profile_id",
+                "set-default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10911051-465d-4508-88e1-9996b5a93c45",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id",
+                    "set-default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"organization_id\": \"string\",\n  \"name\": \"string\",\n  \"language\": \"<string>\",\n  \"voice_id\": \"string\",\n  \"gender\": \"<string>\",\n  \"settings\": {\n    \"back_channeling\": {\n      \"type\": \"freq\",\n      \"value\": 0.6,\n      \"whitelist\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"timeout\": {\n      \"type\": \"enabled\",\n      \"duration\": \"<duration>\",\n      \"max_retries\": 5\n    },\n    \"background_noise\": {\n      \"type\": \"enable\",\n      \"noise_type\": \"<string>\",\n      \"volume\": 0.05\n    },\n    \"voice_speed\": 3618.528876421655\n  },\n  \"created_at\": \"1982-03-17T23:07:44.971Z\",\n  \"updated_at\": \"1973-04-10T18:32:13.484Z\",\n  \"persona_prompt\": \"\",\n  \"is_default\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09f2b014-b719-43d8-b1c3-04573c06f137",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agent-profiles",
+                    ":profile_id",
+                    "set-default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7ac622dd-cd5c-4768-9d3b-57b45cac934c",
+    "name": "Sarj.ai Voice Agent Profiles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

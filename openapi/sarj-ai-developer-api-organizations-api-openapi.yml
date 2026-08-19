@@ -1,0 +1,354 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Organizations API
+  version: 1.0.0
+tags:
+- name: organizations
+paths:
+  /v1/sip/organizations/outbound/assign:
+    post:
+      tags:
+      - organizations
+      summary: Assign Outbound Trunk
+      operationId: organizationSipAssignOutboundTrunk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignTrunkRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrunkWithUsage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sip/organizations/outbound/all:
+    get:
+      tags:
+      - organizations
+      summary: List All Outbound Trunks
+      operationId: organizationSipListAllOutboundTrunks
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TrunkWithUsage'
+                type: array
+                title: Response Organizationsiplistalloutboundtrunks
+  /v1/sip/organizations/outbound/default:
+    get:
+      tags:
+      - organizations
+      summary: Get Default Outbound Trunks
+      operationId: organizationSipGetDefaultOutboundTrunks
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TrunkWithUsage'
+                type: array
+                title: Response Organizationsipgetdefaultoutboundtrunks
+    post:
+      tags:
+      - organizations
+      summary: Set Default Outbound Trunk
+      operationId: organizationSipSetDefaultOutboundTrunk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDefaultTrunkRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrunkWithUsage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sip/organizations/outbound/default/{trunk_id}:
+    delete:
+      tags:
+      - organizations
+      summary: Delete Default Outbound Trunk
+      operationId: organizationSipDeleteDefaultOutboundTrunk
+      parameters:
+      - name: trunk_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Trunk Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sip/organizations/outbound/{organization_id}/{trunk_id}:
+    delete:
+      tags:
+      - organizations
+      summary: Unassign Outbound Trunk
+      operationId: organizationSipUnassignOutboundTrunk
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      - name: trunk_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Trunk Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sip/organizations/outbound/{organization_id}:
+    get:
+      tags:
+      - organizations
+      summary: Get Available Outbound Trunks
+      operationId: organizationSipGetAvailableOutboundTrunks
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrunkWithUsage'
+                title: Response Organizationsipgetavailableoutboundtrunks
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/sip/organizations/trunk/{trunk_id}:
+    get:
+      tags:
+      - organizations
+      summary: List Organizations For Trunk
+      operationId: organizationSipListOrganizationsForTrunk
+      parameters:
+      - name: trunk_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Trunk Id
+      - name: direction
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/SIPTrunkDirection'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                title: Response Organizationsiplistorganizationsfortrunk
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    SIPTrunkDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: SIPTrunkDirection
+    TrunkWithUsage:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        name:
+          type: string
+          title: Name
+        address:
+          type: string
+          title: Address
+        numbers:
+          items:
+            type: string
+          type: array
+          title: Numbers
+        auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Username
+        direction:
+          $ref: '#/components/schemas/SIPTrunkDirection'
+        usage:
+          $ref: '#/components/schemas/TrunkUsage'
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        provider:
+          type: string
+          title: Provider
+          readOnly: true
+      type: object
+      required:
+      - sip_trunk_id
+      - name
+      - address
+      - numbers
+      - direction
+      - usage
+      - provider
+      title: TrunkWithUsage
+    SetDefaultTrunkRequest:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+      type: object
+      required:
+      - sip_trunk_id
+      title: SetDefaultTrunkRequest
+    TrunkUsage:
+      properties:
+        is_global_default:
+          type: boolean
+          title: Is Global Default
+          default: false
+        assigned_organizations:
+          items:
+            $ref: '#/components/schemas/OrganizationSummary'
+          type: array
+          title: Assigned Organizations
+          default: []
+        is_in_use:
+          type: boolean
+          title: Is In Use
+          readOnly: true
+      type: object
+      required:
+      - is_in_use
+      title: TrunkUsage
+    OrganizationSummary:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - id
+      title: OrganizationSummary
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AssignTrunkRequest:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+      type: object
+      required:
+      - organization_id
+      - sip_trunk_id
+      title: AssignTrunkRequest

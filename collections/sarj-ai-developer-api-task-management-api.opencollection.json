@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Task Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "task-management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Task"
+        },
+        {
+          "info": {
+            "name": "Get Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/task-management/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Task ID"
+              }
+            ]
+          },
+          "docs": "Get Task"
+        },
+        {
+          "info": {
+            "name": "List Tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks"
+        },
+        {
+          "info": {
+            "name": "List Tasks By Call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list-by-call/:call_id",
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks By Call"
+        },
+        {
+          "info": {
+            "name": "List Tasks By Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/task-management/list-by-batch/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "List Tasks By Batch"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

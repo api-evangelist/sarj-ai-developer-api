@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj STT API",
+    "version": "1.0.2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health Check",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      },
+      "docs": "Performs a health check on the ASR service."
+    },
+    {
+      "info": {
+        "name": "Groq Transcriptions Endpoint",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/openai/v1/audio/transcriptions",
+        "headers": [
+          {
+            "name": "accept",
+            "value": ""
+          },
+          {
+            "name": "x-session-id",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "multipart-form",
+          "data": []
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Transcribes an audio file. This endpoint is now a thin wrapper that\ncalls the business logic in the ASR model."
+    },
+    {
+      "info": {
+        "name": "Debug Decode Endpoint",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/debug/decode",
+        "body": {
+          "type": "multipart-form",
+          "data": []
+        },
+        "auth": {
+          "type": "bearer",
+          "token": "{{bearerToken}}"
+        }
+      },
+      "docs": "Debug endpoint to compare decoding modes and parameters without affecting production flow.\nReturns RNNT/CTC outputs and scores per segment."
+    },
+    {
+      "info": {
+        "name": "Interface",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      },
+      "docs": "Serves a simple web interface for demonstrating the ASR API."
+    }
+  ],
+  "bundled": true
+}

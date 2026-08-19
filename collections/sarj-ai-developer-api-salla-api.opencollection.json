@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sarj.ai Voice Salla API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "salla",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Salla Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Salla Webhook"
+        },
+        {
+          "info": {
+            "name": "Get Salla App Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/app-url"
+          },
+          "docs": "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The apps.salla.sa install URL for the configured Salla app id."
+        },
+        {
+          "info": {
+            "name": "Get Salla Integration Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/beta/integrations/salla/me"
+          },
+          "docs": "Get Salla Integration Details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

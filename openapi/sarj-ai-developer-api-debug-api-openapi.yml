@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: Sarj STT Debug API
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI-
+    and AWS-compatible interfaces.
+  version: 1.0.2
+tags:
+- name: Debug
+paths:
+  /debug/decode:
+    post:
+      summary: Debug Decode Endpoint
+      description: 'Debug endpoint to compare decoding modes and parameters without affecting production
+        flow.
+
+        Returns RNNT/CTC outputs and scores per segment.'
+      operationId: debug_decode_endpoint_debug_decode_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_debug_decode_endpoint_debug_decode_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Debug
+components:
+  schemas:
+    DecodingMode:
+      type: string
+      enum:
+      - hybrid
+      - rnnt
+      - ctc
+      title: DecodingMode
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Body_debug_decode_endpoint_debug_decode_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+          description: Audio file to decode.
+        mode:
+          $ref: '#/components/schemas/DecodingMode'
+          default: hybrid
+        temperature:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Temperature
+        max_symbols_per_step:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Symbols Per Step
+        beam_enabled:
+          type: boolean
+          title: Beam Enabled
+          default: false
+        beam_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Beam Size
+        beam_length_penalty:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Beam Length Penalty
+        beam_temperature:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Beam Temperature
+        loop_labels:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Loop Labels
+        use_cuda_graph_decoder:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Cuda Graph Decoder
+        acoustic_scale:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Acoustic Scale
+        ctc_weight:
+          type: number
+          title: Ctc Weight
+          default: 0.0
+        ctc_ws_enabled:
+          type: boolean
+          title: Ctc Ws Enabled
+          default: false
+        ctc_ws_context:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ctc Ws Context
+        ctc_ws_apply:
+          type: boolean
+          title: Ctc Ws Apply
+          default: false
+        ctc_ws_beam_threshold:
+          type: number
+          title: Ctc Ws Beam Threshold
+          default: 7.0
+        ctc_ws_context_score:
+          type: number
+          title: Ctc Ws Context Score
+          default: 3.0
+        ctc_ws_ali_token_weight:
+          type: number
+          title: Ctc Ws Ali Token Weight
+          default: 0.5
+        ctc_ws_intersection_threshold:
+          type: number
+          title: Ctc Ws Intersection Threshold
+          default: 30.0
+        ctc_ws_keyword_threshold:
+          type: number
+          title: Ctc Ws Keyword Threshold
+          default: -5.0
+        ctc_ws_blank_threshold:
+          type: number
+          title: Ctc Ws Blank Threshold
+          default: 0.8
+        ctc_ws_non_blank_threshold:
+          type: number
+          title: Ctc Ws Non Blank Threshold
+          default: 0.001
+        max_chunk_seconds:
+          type: integer
+          title: Max Chunk Seconds
+          default: 15
+        vad_threshold:
+          type: number
+          title: Vad Threshold
+          default: 0.4
+        vad_min_speech_ms:
+          type: integer
+          title: Vad Min Speech Ms
+          default: 100
+        vad_max_speech_s:
+          type: integer
+          title: Vad Max Speech S
+          default: 20
+        vad_min_silence_ms:
+          type: integer
+          title: Vad Min Silence Ms
+          default: 200
+        vad_pad_ms:
+          type: integer
+          title: Vad Pad Ms
+          default: 30
+      type: object
+      required:
+      - file
+      title: Body_debug_decode_endpoint_debug_decode_post
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

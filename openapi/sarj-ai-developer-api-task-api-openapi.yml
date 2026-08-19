@@ -1,0 +1,67 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Task API
+  version: 1.0.0
+tags:
+- name: task
+paths:
+  /v1/tasks/start-batch-calls:
+    post:
+      tags:
+      - task
+      summary: Start Batch Calls
+      operationId: taskStartBatchCalls
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                const: ok
+                title: Response Taskstartbatchcalls
+  /v1/tasks/dispatch-outbound-calls:
+    post:
+      tags:
+      - task
+      summary: Dispatch Outbound Calls
+      operationId: taskDispatchOutboundCalls
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                const: ok
+                title: Response Taskdispatchoutboundcalls
+  /v1/tasks/delete-old-tasks:
+    post:
+      tags:
+      - task
+      summary: Delete Old Tasks
+      operationId: taskDeleteOldTasks
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                const: ok
+                title: Response Taskdeleteoldtasks
+  /v1/tasks/delete-expired-org-data:
+    post:
+      tags:
+      - task
+      summary: Delete Expired Org Data
+      operationId: taskDeleteExpiredOrgData
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                const: ok
+                title: Response Taskdeleteexpiredorgdata

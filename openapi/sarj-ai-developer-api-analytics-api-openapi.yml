@@ -1,0 +1,182 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Analytics API
+  version: 1.0.0
+tags:
+- name: analytics
+paths:
+  /v1/analytics/dashboard:
+    post:
+      tags:
+      - analytics
+      summary: Get Dashboard
+      operationId: analyticsGetDashboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/StandardPeriod'
+              - $ref: '#/components/schemas/CustomPeriod'
+              title: Period Input
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CustomPeriod:
+      properties:
+        period:
+          type: string
+          const: custom
+          title: Period
+          default: custom
+        start_date:
+          type: string
+          format: date-time
+          title: Start Date
+        end_date:
+          type: string
+          format: date-time
+          title: End Date
+      type: object
+      required:
+      - start_date
+      - end_date
+      title: CustomPeriod
+    StandardPeriod:
+      properties:
+        period:
+          type: string
+          enum:
+          - today
+          - week
+          - month
+          - quarter
+          title: Period
+      type: object
+      required:
+      - period
+      title: StandardPeriod
+    DashboardResponse:
+      properties:
+        kpi:
+          $ref: '#/components/schemas/KPI'
+        chart:
+          items:
+            $ref: '#/components/schemas/SeriesPoint'
+          type: array
+          title: Chart
+      type: object
+      required:
+      - kpi
+      - chart
+      title: DashboardResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SeriesPoint:
+      properties:
+        bucket:
+          type: string
+          title: Bucket
+        inbound:
+          type: integer
+          title: Inbound
+        outbound:
+          type: integer
+          title: Outbound
+      type: object
+      required:
+      - bucket
+      - inbound
+      - outbound
+      title: SeriesPoint
+    KPI:
+      properties:
+        total_calls:
+          type: integer
+          title: Total Calls
+        average_duration_seconds:
+          type: integer
+          title: Average Duration Seconds
+        success_rate:
+          type: number
+          title: Success Rate
+        total_calls_trend_percentage:
+          type: number
+          title: Total Calls Trend Percentage
+        success_rate_trend_percentage:
+          type: number
+          title: Success Rate Trend Percentage
+        average_duration_trend_percentage:
+          type: number
+          title: Average Duration Trend Percentage
+        trend_period_label:
+          type: string
+          title: Trend Period Label
+        inbound_calls:
+          type: integer
+          title: Inbound Calls
+        outbound_calls:
+          type: integer
+          title: Outbound Calls
+        scenarios_used:
+          type: integer
+          title: Scenarios Used
+      type: object
+      required:
+      - total_calls
+      - average_duration_seconds
+      - success_rate
+      - total_calls_trend_percentage
+      - success_rate_trend_percentage
+      - average_duration_trend_percentage
+      - trend_period_label
+      - inbound_calls
+      - outbound_calls
+      - scenarios_used
+      title: KPI

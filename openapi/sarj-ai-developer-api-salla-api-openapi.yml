@@ -1,0 +1,165 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Salla API
+  version: 1.0.0
+tags:
+- name: salla
+paths:
+  /v1/beta/integrations/salla/webhook:
+    post:
+      tags:
+      - salla
+      summary: Salla Webhook
+      operationId: integrationsSallaWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SallaEventTrigger'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/salla/app-url:
+    get:
+      tags:
+      - salla
+      summary: Get Salla App Url
+      description: "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The\
+        \ apps.salla.sa install URL for the configured Salla app id."
+      operationId: integrationsGetSallaAppUrl
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /v1/beta/integrations/salla/me:
+    get:
+      tags:
+      - salla
+      summary: Get Salla Integration Details
+      operationId: integrationsGetSallaIntegrationDetails
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SallaMerchantInfo'
+                type: array
+                title: Response Integrationsgetsallaintegrationdetails
+components:
+  schemas:
+    SallaMerchantInfo:
+      properties:
+        merchant_id:
+          type: integer
+          title: Merchant Id
+        merchant_name:
+          type: string
+          title: Merchant Name
+        organization_id:
+          type: string
+          title: Organization Id
+        integration_status:
+          $ref: '#/components/schemas/SallaIntegrationStatus'
+          default: INCOMPLETE
+        merchant_calls:
+          items:
+            type: string
+          type: array
+          title: Merchant Calls
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - merchant_id
+      - merchant_name
+      - organization_id
+      - id
+      - created_at
+      - updated_at
+      title: SallaMerchantInfo
+    SallaIntegrationStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - INCOMPLETE
+      title: SallaIntegrationStatus
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SallaEventTrigger:
+      properties:
+        event:
+          type: string
+          title: Event
+        merchant:
+          type: integer
+          title: Merchant
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        data:
+          title: Data
+      type: object
+      required:
+      - event
+      - merchant
+      - created_at
+      - data
+      title: SallaEventTrigger

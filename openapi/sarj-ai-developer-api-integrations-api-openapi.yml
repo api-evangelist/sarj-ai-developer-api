@@ -1,0 +1,1382 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Integrations API
+  version: 1.0.0
+tags:
+- name: integrations
+paths:
+  /v1/beta/integrations/active-providers:
+    get:
+      tags:
+      - integrations
+      summary: List Active Providers
+      operationId: integrationsListActiveProviders
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProviderItem'
+                type: array
+                title: Response Integrationslistactiveproviders
+  /v1/beta/integrations/token/{provider}:
+    get:
+      tags:
+      - integrations
+      summary: Get Token
+      operationId: integrationsGetToken
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/IntegrationProvider'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialPublic'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - integrations
+      summary: Delete Token
+      operationId: integrationsDeleteToken
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/IntegrationProvider'
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/token:
+    post:
+      tags:
+      - integrations
+      summary: Add Token
+      operationId: integrationsAddToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Data
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialPublic'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/token/refresh-all:
+    post:
+      tags:
+      - integrations
+      summary: Refresh All
+      description: "Refresh only OAuth tokens; providers without a token refresher count as failures.\n\
+        \nReturns:\n    Per-provider and total success/failure counts for the refresh sweep."
+      operationId: integrationsRefreshAll
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshAllTokensResponse'
+  /v1/beta/integrations/zoho/authorize:
+    get:
+      tags:
+      - integrations
+      summary: Zoho Authorize
+      operationId: integrationsZohoAuthorize
+      parameters:
+      - name: return_to
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Return To
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoAuthorizeUrlResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/webhook:
+    post:
+      tags:
+      - integrations
+      summary: Zoho Webhook
+      description: Public webhook API where ZohoCRM dumps its webhook data.
+      operationId: integrationsZohoWebhook
+      parameters:
+      - name: extra_conditions
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Extra Conditions
+      - name: scenario_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Scenario Id
+      - name: user_email
+        in: query
+        required: true
+        schema:
+          type: string
+          title: User Email
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: organization_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Organization Id
+      - name: trunk_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Id
+      - name: language
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Language'
+          default: ar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZohoNotificationWebhookPayload_dict_str__object__'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/list-webhooks:
+    get:
+      tags:
+      - integrations
+      summary: Get Notifications
+      operationId: integrationsGetNotifications
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoNotificationGetResponse'
+  /v1/beta/integrations/zoho/create-webhook:
+    post:
+      tags:
+      - integrations
+      summary: Create Notification
+      operationId: integrationsCreateNotification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZohoWebhookData'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoNotificationCreateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/disable-webhooks:
+    delete:
+      tags:
+      - integrations
+      summary: Remove Notifications
+      operationId: integrationsRemoveNotifications
+      parameters:
+      - name: channel_ids
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Comma-separated list of channel IDs
+          title: Channel Ids
+        description: Comma-separated list of channel IDs
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoNotificationDeleteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/available-events:
+    get:
+      tags:
+      - integrations
+      summary: Get Available Events
+      description: "Return available Zoho CRM events that can be used for webhooks.\n\nReturns:\n    The\
+        \ subscribable notification events grouped by CRM module."
+      operationId: integrationsGetAvailableEvents
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoAvailableEventsResponse'
+  /v1/beta/integrations/zoho/field-settings:
+    get:
+      tags:
+      - integrations
+      summary: Get Field Settings
+      operationId: integrationsGetFieldSettings
+      parameters:
+      - name: crm_module
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ZohoCRMModules'
+          default: Leads
+      - name: editable_fields_only
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+          title: Editable Fields Only
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ZohoFieldSetting'
+                title: Response Integrationsgetfieldsettings
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/record:
+    get:
+      tags:
+      - integrations
+      summary: Get Record
+      description: "Read a CRM record back over HTTP so the canary can verify its lead update landed.\n\
+        \nReturns:\n    The CRM record with its callable fields.\n\nRaises:\n    HTTPException: 404 if\
+        \ no record exists with `record_id` in `module`."
+      operationId: integrationsGetRecord
+      parameters:
+      - name: record_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Record Id
+      - name: module
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ZohoCRMModules'
+          default: Leads
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZohoCallableRecord'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/zoho/revalidate-all-webhooks:
+    post:
+      tags:
+      - integrations
+      summary: Revalidate All Notifications
+      description: Revalidate notifications for all organizations with Zoho tokens.
+      operationId: integrationsRevalidateAllNotifications
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /v1/beta/integrations/zoho/desk/create-ticket:
+    post:
+      tags:
+      - integrations
+      summary: Create Ticket
+      description: "Create a ticket in Zoho Desk for the specified organization.\n\nReturns:\n    The\
+        \ ticket as created in Zoho Desk."
+      operationId: integrationsCreateTicket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTicketRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeskTicketGet'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/salla/webhook:
+    post:
+      tags:
+      - integrations
+      summary: Salla Webhook
+      operationId: integrationsSallaWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SallaEventTrigger'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/salla/app-url:
+    get:
+      tags:
+      - integrations
+      summary: Get Salla App Url
+      description: "Return the Salla marketplace URL for installing the Bulbul app.\n\nReturns:\n    The\
+        \ apps.salla.sa install URL for the configured Salla app id."
+      operationId: integrationsGetSallaAppUrl
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /v1/beta/integrations/salla/me:
+    get:
+      tags:
+      - integrations
+      summary: Get Salla Integration Details
+      operationId: integrationsGetSallaIntegrationDetails
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SallaMerchantInfo'
+                type: array
+                title: Response Integrationsgetsallaintegrationdetails
+  /v1/beta/integrations/salesforce/authorize:
+    get:
+      tags:
+      - integrations
+      summary: Authorize
+      description: "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled\
+        \ server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's\
+        \ organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user\
+        \ to."
+      operationId: integrationsAuthorize
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceAuthorizationUrl'
+  /v1/beta/integrations/salesforce/callback:
+    get:
+      tags:
+      - integrations
+      summary: Salesforce Callback
+      description: "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied\
+        \ consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error\
+        \ path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or\
+        \ error outcome."
+      operationId: integrationsSalesforceCallback
+      parameters:
+      - name: state
+        in: query
+        required: true
+        schema:
+          type: string
+          title: State
+      - name: code
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+      - name: error
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+      - name: error_description
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Description
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ZohoWebhookQueryParams:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        user_email:
+          type: string
+          title: User Email
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Id
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+      type: object
+      required:
+      - scenario_id
+      - user_email
+      - user_id
+      - organization_id
+      title: ZohoWebhookQueryParams
+      description: The query params retrieved from Zoho webhooks
+    _OperationType:
+      properties:
+        web_update:
+          type: boolean
+          title: Web Update
+        api_create:
+          type: boolean
+          title: Api Create
+        web_create:
+          type: boolean
+          title: Web Create
+        api_update:
+          type: boolean
+          title: Api Update
+      type: object
+      required:
+      - web_update
+      - api_create
+      - web_create
+      - api_update
+      title: _OperationType
+    _NotificationResponseCreate:
+      properties:
+        code:
+          type: string
+          const: SUCCESS
+          title: Code
+        details:
+          $ref: '#/components/schemas/_NotificationDetails'
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - code
+      - details
+      - message
+      title: _NotificationResponseCreate
+    SalesforceAuthorizationUrl:
+      properties:
+        authorization_url:
+          type: string
+          title: Authorization Url
+      type: object
+      required:
+      - authorization_url
+      title: SalesforceAuthorizationUrl
+    ZohoNotificationGetResponse:
+      properties:
+        watch:
+          items:
+            $ref: '#/components/schemas/_WatchResponse'
+          type: array
+          title: Watch
+      type: object
+      title: ZohoNotificationGetResponse
+    ZohoNotificationWebhookPayload_dict_str__object__:
+      properties:
+        server_time:
+          type: integer
+          title: Server Time
+        affected_values:
+          items:
+            $ref: '#/components/schemas/Record_dict_str__object__'
+          type: array
+          title: Affected Values
+        query_params:
+          additionalProperties: true
+          type: object
+          title: Query Params
+        module:
+          $ref: '#/components/schemas/ZohoCRMModules'
+        ids:
+          items:
+            type: string
+          type: array
+          title: Ids
+        operation:
+          type: string
+          enum:
+          - insert
+          - update
+          title: Operation
+        channel_id:
+          type: string
+          title: Channel Id
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - server_time
+      - affected_values
+      - query_params
+      - module
+      - ids
+      - operation
+      - channel_id
+      - token
+      title: ZohoNotificationWebhookPayload[dict[str, object]]
+    ZohoAuthorizeUrlResponse:
+      properties:
+        authorize_url:
+          type: string
+          title: Authorize Url
+      type: object
+      required:
+      - authorize_url
+      title: ZohoAuthorizeUrlResponse
+      description: Zoho consent-page URL for the browser to navigate to.
+    ZohoFieldSetting:
+      properties:
+        api_name:
+          type: string
+          title: Api Name
+        display_label:
+          type: string
+          title: Display Label
+        read_only:
+          type: boolean
+          title: Read Only
+        operation_type:
+          $ref: '#/components/schemas/_OperationType'
+          description: Allowed operations on this field.
+        json_type:
+          type: string
+          enum:
+          - boolean
+          - integer
+          - double
+          - string
+          - jsonarray
+          - jsonobject
+          title: Json Type
+        tooltip:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Tooltip
+        pick_list_values:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ZohoPickListValue'
+            type: array
+          - type: 'null'
+          title: Pick List Values
+        length:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Length
+          description: Maximum number of characters Zoho accepts for this field. Used to constrain extraction
+            so updates don't fail Zoho validation.
+        data_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Data Type
+          description: Zoho's semantic field type (e.g. 'email', 'date', 'datetime'). Mapped to a JSON
+            Schema format so extraction produces well-formed values.
+        system_mandatory:
+          type: boolean
+          title: System Mandatory
+          description: Whether Zoho requires this field to be present on create/update.
+          default: false
+      type: object
+      required:
+      - api_name
+      - display_label
+      - read_only
+      - operation_type
+      - json_type
+      - tooltip
+      title: ZohoFieldSetting
+    AuthType:
+      type: string
+      enum:
+      - oauth
+      - api_key
+      title: AuthType
+    ZohoAvailableEventsResponse:
+      properties:
+        events_by_module:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/ZohoNotificationEvent'
+            type: array
+          propertyNames:
+            $ref: '#/components/schemas/ZohoCRMModules'
+          type: object
+          title: Events By Module
+      type: object
+      required:
+      - events_by_module
+      title: ZohoAvailableEventsResponse
+      description: Available Zoho CRM events grouped by module
+    Record_dict_str__object__:
+      properties:
+        record_id:
+          type: string
+          title: Record Id
+        values:
+          additionalProperties: true
+          type: object
+          title: Values
+      type: object
+      required:
+      - record_id
+      - values
+      title: Record[dict[str, object]]
+    TicketPriority:
+      type: string
+      enum:
+      - High
+      - Medium
+      - Low
+      title: TicketPriority
+    EmptyCondition:
+      properties:
+        condition_type:
+          type: string
+          const: empty
+          title: Condition Type
+          default: empty
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
+      type: object
+      required:
+      - evaluated_field_name
+      title: EmptyCondition
+    SallaMerchantInfo:
+      properties:
+        merchant_id:
+          type: integer
+          title: Merchant Id
+        merchant_name:
+          type: string
+          title: Merchant Name
+        organization_id:
+          type: string
+          title: Organization Id
+        integration_status:
+          $ref: '#/components/schemas/SallaIntegrationStatus'
+          default: INCOMPLETE
+        merchant_calls:
+          items:
+            type: string
+          type: array
+          title: Merchant Calls
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - merchant_id
+      - merchant_name
+      - organization_id
+      - id
+      - created_at
+      - updated_at
+      title: SallaMerchantInfo
+    SallaIntegrationStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - INCOMPLETE
+      title: SallaIntegrationStatus
+    ZohoNotificationCreateResponse:
+      properties:
+        watch:
+          items:
+            $ref: '#/components/schemas/_NotificationResponseCreate'
+          type: array
+          title: Watch
+      type: object
+      title: ZohoNotificationCreateResponse
+    CreateTicketRequest:
+      properties:
+        subject:
+          type: string
+          title: Subject
+        description:
+          type: string
+          title: Description
+        name:
+          type: string
+          title: Name
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        language:
+          type: string
+          title: Language
+          default: English
+        department_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Department Id
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+          default: Medium
+        status:
+          $ref: '#/components/schemas/TicketStatus'
+          default: Open
+        channel:
+          $ref: '#/components/schemas/TicketChannel'
+          default: Phone
+      type: object
+      required:
+      - subject
+      - description
+      - name
+      title: CreateTicketRequest
+      description: Request payload for creating a Zoho Desk ticket
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EventEvaluationConditions:
+      properties:
+        module_type:
+          $ref: '#/components/schemas/ZohoCRMModules'
+        conditions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/EqualityCondition'
+            - $ref: '#/components/schemas/LikenessCondition'
+            - $ref: '#/components/schemas/EmptyCondition'
+            discriminator:
+              propertyName: condition_type
+              mapping:
+                empty: '#/components/schemas/EmptyCondition'
+                equality: '#/components/schemas/EqualityCondition'
+                likeness: '#/components/schemas/LikenessCondition'
+          type: array
+          minItems: 1
+          title: Conditions
+      type: object
+      required:
+      - module_type
+      - conditions
+      title: EventEvaluationConditions
+    ZohoNotificationDeleteResponse:
+      properties:
+        watch:
+          items:
+            $ref: '#/components/schemas/_NotificationResponseDelete'
+          type: array
+          title: Watch
+      type: object
+      title: ZohoNotificationDeleteResponse
+    SallaEventTrigger:
+      properties:
+        event:
+          type: string
+          title: Event
+        merchant:
+          type: integer
+          title: Merchant
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        data:
+          title: Data
+      type: object
+      required:
+      - event
+      - merchant
+      - created_at
+      - data
+      title: SallaEventTrigger
+    ZohoWebhookData:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/ZohoNotificationEvent'
+          type: array
+          title: Events
+        query_params:
+          $ref: '#/components/schemas/ZohoWebhookQueryParams'
+        extra_conditions:
+          anyOf:
+          - $ref: '#/components/schemas/EventEvaluationConditions'
+          - type: 'null'
+          description: Extra conditions that may be injected in the webhook configuration. Allows fine-tuning
+            routing different cases to scenarios.
+      type: object
+      required:
+      - events
+      - query_params
+      title: ZohoWebhookData
+      description: Required payload to create a new Zoho webhook
+    EqualityCondition:
+      properties:
+        condition_type:
+          type: string
+          const: equality
+          title: Condition Type
+          default: equality
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
+        expected_field_value:
+          type: string
+          minLength: 1
+          title: Expected Field Value
+      type: object
+      required:
+      - evaluated_field_name
+      - expected_field_value
+      title: EqualityCondition
+    CredentialPublic:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+        auth_type:
+          $ref: '#/components/schemas/AuthType'
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        scopes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Scopes
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - provider
+      - auth_type
+      - expires_at
+      - scopes
+      - metadata
+      - created_at
+      - updated_at
+      title: CredentialPublic
+    DeskTicketGet:
+      properties:
+        subject:
+          type: string
+          title: Subject
+        description:
+          type: string
+          title: Description
+        language:
+          type: string
+          title: Language
+        phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        departmentId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Departmentid
+        priority:
+          $ref: '#/components/schemas/TicketPriority'
+          default: Medium
+        status:
+          $ref: '#/components/schemas/TicketStatus'
+          default: Open
+        channel:
+          $ref: '#/components/schemas/TicketChannel'
+          default: Phone
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        subCategory:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subcategory
+        id:
+          type: string
+          title: Id
+        ticketNumber:
+          type: string
+          title: Ticketnumber
+        contactId:
+          type: string
+          title: Contactid
+      type: object
+      required:
+      - subject
+      - description
+      - language
+      - id
+      - ticketNumber
+      - contactId
+      title: DeskTicketGet
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TicketChannel:
+      type: string
+      enum:
+      - Phone
+      - Email
+      - Web
+      - Chat
+      title: TicketChannel
+    _NotificationEvent:
+      properties:
+        channel_expiry:
+          type: string
+          format: date-time
+          title: Channel Expiry
+        resource_uri:
+          type: string
+          title: Resource Uri
+        resource_id:
+          type: string
+          title: Resource Id
+        resource_name:
+          type: string
+          title: Resource Name
+        channel_id:
+          type: string
+          title: Channel Id
+      type: object
+      required:
+      - channel_expiry
+      - resource_uri
+      - resource_id
+      - resource_name
+      - channel_id
+      title: _NotificationEvent
+    LikenessCondition:
+      properties:
+        condition_type:
+          type: string
+          const: likeness
+          title: Condition Type
+          default: likeness
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
+        expected_field_value:
+          type: string
+          minLength: 1
+          title: Expected Field Value
+      type: object
+      required:
+      - evaluated_field_name
+      - expected_field_value
+      title: LikenessCondition
+    RefreshAllTokensResponse:
+      properties:
+        provider_stats:
+          additionalProperties:
+            additionalProperties:
+              type: integer
+            type: object
+          type: object
+          title: Provider Stats
+        total_success:
+          type: integer
+          title: Total Success
+          default: 0
+        total_fail:
+          type: integer
+          title: Total Fail
+          default: 0
+      type: object
+      title: RefreshAllTokensResponse
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    ZohoNotificationEvent:
+      type: string
+      enum:
+      - Leads.create
+      - Leads.edit
+      - Contacts.create
+      - Contacts.edit
+      title: ZohoNotificationEvent
+    ZohoCallableRecord:
+      properties:
+        id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Id
+        First_Name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: First Name
+        Last_Name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Name
+        Full_Name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Full Name
+        Phone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone
+        Mobile:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mobile
+        Email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+      additionalProperties: true
+      type: object
+      title: ZohoCallableRecord
+      description: The subset of a CRM record (Leads, Contacts, ...) needed to place an outbound call.
+    TicketStatus:
+      type: string
+      enum:
+      - Open
+      - On Hold
+      - Escalated
+      - Closed
+      title: TicketStatus
+    ZohoPickListValue:
+      properties:
+        display_value:
+          type: string
+          title: Display Value
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - display_value
+      - id
+      title: ZohoPickListValue
+    IntegrationProvider:
+      type: string
+      enum:
+      - zoho
+      - rasayel
+      - salla
+      - salesforce
+      title: IntegrationProvider
+      description: "Available integration providers.\n\n`salla-tools` and `zoho-desk-create-ticket` require\
+        \ external OAuth setup and are\nNEVER auto-generated in the output tool config, connected or not\
+        \ - suggest them\ninstead (see `Suggestion Categorization for Integration Tools` below).\n\n**Suggestion\
+        \ Categorization for Integration Tools:**\n\n   **Use `verification_needed`** (shows in \"Action\
+        \ Required\" section):\n   - When user EXPLICITLY mentions needing Salla/Zoho in their business\
+        \ requirements\n   - Example: User says \"We use Salla for orders\" but Salla not in active integrations\n\
+        \   - This is a REQUIREMENT the user stated - they need to set it up\n\n   **Use `resource_linking`**\
+        \ (shows in \"Opportunities\" section):\n   - When LLM SUGGESTS an integration that could enhance\
+        \ the scenario\n   - User did NOT ask for this; LLM thinks it would be helpful\n   - Example:\
+        \ For a restaurant scenario, LLM suggests Salla could help with order tracking\n\n**Examples:**\n\
+        \nUser prompt: \"We need Salla for order management\"\nActive integrations: None connected\n→\
+        \ DO NOT add a salla-tools entry to the tool config\n→ ADD `verification_needed` suggestion: \"\
+        Connect Salla Store\" with action_url=\"/integrations\"\n\nUser prompt: \"Restaurant delivery\
+        \ agent\" (no mention of Salla/Zoho)\nActive integrations: zoho\n→ DO NOT add a zoho-desk-create-ticket\
+        \ entry to the tool config\n→ Can suggest salla as `resource_linking` (optional enhancement)"
+    _WatchResponse:
+      properties:
+        channel_expiry:
+          type: string
+          format: date-time
+          title: Channel Expiry
+        resource_name:
+          type: string
+          title: Resource Name
+        channel_id:
+          type: string
+          title: Channel Id
+        events:
+          items:
+            $ref: '#/components/schemas/ZohoNotificationEvent'
+          type: array
+          title: Events
+        notify_url:
+          type: string
+          title: Notify Url
+        token:
+          type: string
+          title: Token
+        query_strings:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Query Strings
+          description: This custom field contains the query strings provided in the webhook URL.
+      type: object
+      required:
+      - channel_expiry
+      - resource_name
+      - channel_id
+      - events
+      - notify_url
+      - token
+      title: _WatchResponse
+    ProviderItem:
+      properties:
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+      type: object
+      required:
+      - provider
+      title: ProviderItem
+    _NotificationDetails:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/_NotificationEvent'
+          type: array
+          title: Events
+      type: object
+      required:
+      - events
+      title: _NotificationDetails
+    _NotificationResponseDelete:
+      properties:
+        code:
+          type: string
+          const: SUCCESS
+          title: Code
+        message:
+          type: string
+          title: Message
+        channel_id:
+          type: string
+          title: Channel Id
+      type: object
+      required:
+      - code
+      - message
+      - channel_id
+      title: _NotificationResponseDelete
+    ZohoCRMModules:
+      type: string
+      enum:
+      - Leads
+      - Contacts
+      - Calls
+      title: ZohoCRMModules

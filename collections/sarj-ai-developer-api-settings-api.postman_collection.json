@@ -1,0 +1,1365 @@
+{
+  "item": [
+    {
+      "id": "945e042a-c710-43a4-a1c2-c1cb07474d34",
+      "name": "settings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46d61dc6-d859-45d4-a9fb-b5e5dce2c046",
+          "name": "Get Voices",
+          "request": {
+            "name": "Get Voices",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "(Required) Language code (en or ar)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "880ef948-cf7a-4520-9f54-a4fee48655f4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"display_name\": \"string\",\n    \"provider\": \"string\",\n    \"language\": \"<string>\",\n    \"gender\": \"female\",\n    \"tts_settings\": {\n      \"model\": \"eleven_multilingual_v2\",\n      \"provider\": \"string\",\n      \"arabic_voice_id\": \"string\",\n      \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n      \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n      \"region\": \"eu\",\n      \"speed\": 1\n    },\n    \"vibe\": \"string\",\n    \"created_at\": \"1954-03-22T18:20:33.022Z\",\n    \"updated_at\": \"1991-02-05T00:51:21.620Z\",\n    \"is_active\": true\n  },\n  {\n    \"id\": \"string\",\n    \"display_name\": \"string\",\n    \"provider\": \"string\",\n    \"language\": \"<string>\",\n    \"gender\": \"female\",\n    \"tts_settings\": {\n      \"model\": \"eleven_flash_v2_5\",\n      \"provider\": \"string\",\n      \"arabic_voice_id\": \"string\",\n      \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n      \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n      \"region\": \"us\",\n      \"speed\": 1\n    },\n    \"vibe\": \"string\",\n    \"created_at\": \"2024-04-13T08:40:58.596Z\",\n    \"updated_at\": \"1984-11-13T06:16:18.372Z\",\n    \"is_active\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5a84633-5405-4a6d-ae79-f475d5c520c6",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cff4d2b4-0c36-41ef-8581-525db47ce956",
+          "name": "Create Voice",
+          "request": {
+            "name": "Create Voice",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"vibe\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"gender\": \"<string>\",\n  \"language\": \"<string>\",\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c6042fd1-ac39-472d-9588-bc77a68a3344",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"vibe\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"gender\": \"<string>\",\n  \"language\": \"<string>\",\n  \"is_active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"display_name\": \"string\",\n  \"provider\": \"string\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"vibe\": \"string\",\n  \"created_at\": \"1986-08-18T13:45:34.156Z\",\n  \"updated_at\": \"2000-10-02T06:54:02.673Z\",\n  \"is_active\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "952c25c1-d68b-431e-b5a6-81472610643d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"vibe\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"gender\": \"<string>\",\n  \"language\": \"<string>\",\n  \"is_active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c822703-2dce-4cbd-99a5-c7cdbb09bb28",
+          "name": "List Voices",
+          "request": {
+            "name": "List Voices",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"is_active\": \"<boolean>\",\n  \"provider\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "097d3b01-d9df-4cad-9181-9f522ba2ea3e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"is_active\": \"<boolean>\",\n  \"provider\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"voices\": [\n    {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"provider\": \"string\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"string\",\n      \"created_at\": \"1972-11-04T09:08:46.830Z\",\n      \"updated_at\": \"2020-09-25T01:26:58.453Z\",\n      \"is_active\": true\n    },\n    {\n      \"id\": \"string\",\n      \"display_name\": \"string\",\n      \"provider\": \"string\",\n      \"language\": \"<string>\",\n      \"gender\": \"<string>\",\n      \"tts_settings\": {\n        \"model\": \"<string>\",\n        \"provider\": \"<string>\",\n        \"arabic_voice_id\": \"<string>\",\n        \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n        \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n        \"region\": \"<string>\",\n        \"speed\": 1\n      },\n      \"vibe\": \"string\",\n      \"created_at\": \"1982-09-08T00:11:50.563Z\",\n      \"updated_at\": \"1962-10-19T20:48:24.650Z\",\n      \"is_active\": true\n    }\n  ],\n  \"cursor\": \"2006-05-26T02:59:11.721Z\",\n  \"prev_cursor\": \"1951-09-16T02:13:27.905Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c778e4ab-ace8-46b1-9995-65698efbe060",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<dateTime>\",\n  \"limit\": 10,\n  \"is_active\": \"<boolean>\",\n  \"provider\": \"<string>\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9cde925a-3131-46cd-b4ef-9b19504b87c1",
+          "name": "Get Voice",
+          "request": {
+            "name": "Get Voice",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices",
+                ":voice_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "voice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "540a6f6b-c360-4a45-a568-cf667e7c9834",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"display_name\": \"string\",\n  \"provider\": \"string\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"vibe\": \"string\",\n  \"created_at\": \"1986-08-18T13:45:34.156Z\",\n  \"updated_at\": \"2000-10-02T06:54:02.673Z\",\n  \"is_active\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a4271e-ad11-46c7-89f4-46f82874e56c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "901d74ad-2a88-4999-87ae-045fd519c272",
+          "name": "Update Voice",
+          "request": {
+            "name": "Update Voice",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices",
+                ":voice_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "voice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"display_name\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"is_active\": \"<boolean>\",\n  \"vibe\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56b487e3-e16d-4b80-8dac-35f08743db18",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"is_active\": \"<boolean>\",\n  \"vibe\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"display_name\": \"string\",\n  \"provider\": \"string\",\n  \"language\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"tts_settings\": {\n    \"model\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"arabic_voice_id\": \"<string>\",\n    \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n    \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n    \"region\": \"<string>\",\n    \"speed\": 1\n  },\n  \"vibe\": \"string\",\n  \"created_at\": \"1986-08-18T13:45:34.156Z\",\n  \"updated_at\": \"2000-10-02T06:54:02.673Z\",\n  \"is_active\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0041c71c-65c7-4be0-b05c-ed500252fed2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"display_name\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"is_active\": \"<boolean>\",\n  \"vibe\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4981885-0e05-4982-ab92-0ba10b5b523f",
+          "name": "Preview Voice",
+          "request": {
+            "name": "Preview Voice",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "voices",
+                ":voice_id",
+                "preview"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "voice_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "audio/mpeg"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f08f6dd5-75a5-4fa4-b008-d20e43a85692",
+              "name": "TTS audio preview",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "audio/mpeg"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "audio/mpeg"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f486574-d9ee-4eee-9f2d-e694d5e82783",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "voices",
+                    ":voice_id",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "voice_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44180484-f28c-4596-9477-f011131f7190",
+          "name": "Get Global Prompt Config",
+          "request": {
+            "name": "Get Global Prompt Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "global-prompt",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d90509fd-6c15-425b-9d3b-89b87c2cb00a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global-prompt",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updated_at\": \"string\",\n  \"updated_by\": \"string\",\n  \"available_variables\": {\n    \"key_0\": {\n      \"description\": \"string\",\n      \"label\": \"string\"\n    }\n  },\n  \"sections\": [\n    {\n      \"name\": \"string\",\n      \"language\": \"<string>\",\n      \"content\": \"string\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": 8042\n    },\n    {\n      \"name\": \"string\",\n      \"language\": \"<string>\",\n      \"content\": \"string\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": 4849\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ba2c3a0-5677-4ec9-9ace-c4abfd746853",
+          "name": "Save Global Prompt Config",
+          "request": {
+            "name": "Save Global Prompt Config",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "global-prompt",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"updated_at\": \"<string>\",\n  \"updated_by\": \"<string>\",\n  \"available_variables\": {\n    \"key_0\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    \"key_1\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    \"key_2\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    }\n  },\n  \"sections\": [\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "20db6027-eddd-4fd8-be51-07fc3cd94572",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global-prompt",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"updated_at\": \"<string>\",\n  \"updated_by\": \"<string>\",\n  \"available_variables\": {\n    \"key_0\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    \"key_1\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    }\n  },\n  \"sections\": [\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"updated_at\": \"<string>\",\n  \"updated_by\": \"<string>\",\n  \"available_variables\": {\n    \"key_0\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    \"key_1\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    }\n  },\n  \"sections\": [\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a60198d-3232-4a33-80b4-901c5bb6ada0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global-prompt",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"updated_at\": \"<string>\",\n  \"updated_by\": \"<string>\",\n  \"available_variables\": {\n    \"key_0\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    },\n    \"key_1\": {\n      \"description\": \"<string>\",\n      \"label\": \"<string>\"\n    }\n  },\n  \"sections\": [\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"language\": \"<string>\",\n      \"content\": \"<string>\",\n      \"scope\": {\n        \"type\": \"general\"\n      },\n      \"order\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e97986d-e7b4-49f4-aced-12a640ea7409",
+          "name": "Get Global Settings",
+          "request": {
+            "name": "Get Global Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "global"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d85151c-692e-42e2-b5e7-353301fccd9b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"string\",\n          \"model\": \"short\",\n          \"region\": \"eu\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"string\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"string\",\n          \"display_name\": \"string\",\n          \"provider\": \"string\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"string\",\n          \"created_at\": \"1998-04-29T19:28:05.899Z\",\n          \"updated_at\": \"2005-04-20T16:34:58.100Z\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"allow_interruptions\": true,\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"string\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"string\"\n    },\n    \"key_1\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"string\",\n          \"model\": \"chirp_2\",\n          \"region\": \"eu\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"string\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"string\",\n          \"display_name\": \"string\",\n          \"provider\": \"string\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"string\",\n          \"created_at\": \"1969-08-27T20:19:41.042Z\",\n          \"updated_at\": \"1986-01-31T14:05:41.692Z\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"allow_interruptions\": false,\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"string\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"string\"\n    },\n    \"key_2\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"string\",\n          \"model\": \"long\",\n          \"region\": \"eu\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"string\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"string\",\n          \"display_name\": \"string\",\n          \"provider\": \"string\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"string\",\n          \"created_at\": \"1953-11-23T04:43:01.572Z\",\n          \"updated_at\": \"1996-07-23T21:22:35.188Z\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"allow_interruptions\": false,\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"string\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"string\"\n    },\n    \"key_3\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"string\",\n          \"model\": \"chirp_3\",\n          \"region\": \"eu\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"string\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"string\",\n          \"display_name\": \"string\",\n          \"provider\": \"string\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"string\",\n          \"created_at\": \"1977-02-28T22:56:53.893Z\",\n          \"updated_at\": \"1979-01-11T09:55:06.389Z\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"string\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"allow_interruptions\": false,\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"string\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"string\"\n    }\n  },\n  \"last_updated\": \"string\",\n  \"updated_by\": \"string\",\n  \"scenario_generation\": {\n    \"model\": \"gemini-2.5-pro\",\n    \"temperature\": 0.7\n  },\n  \"max_call_duration_seconds\": 600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "185734be-2cdf-4d97-bbd8-2fc42ecc3afa",
+          "name": "Update Global Settings",
+          "request": {
+            "name": "Update Global Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "global"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"key_0\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    }\n  },\n  \"scenario_generation\": {\n    \"model\": \"<string>\",\n    \"temperature\": 0.7\n  },\n  \"max_call_duration_seconds\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "383f1198-d4a2-47c1-9da1-d56649dc24e5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"key_0\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    },\n    \"key_1\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    }\n  },\n  \"scenario_generation\": {\n    \"model\": \"<string>\",\n    \"temperature\": 0.7\n  },\n  \"max_call_duration_seconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    }\n  },\n  \"last_updated\": \"string\",\n  \"updated_by\": \"string\",\n  \"scenario_generation\": {\n    \"model\": \"<string>\",\n    \"temperature\": 0.7\n  },\n  \"max_call_duration_seconds\": 600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "381c1345-9c5d-4c07-b057-580045b742f1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "global"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"key_0\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    },\n    \"key_1\": {\n      \"models\": {\n        \"stt\": {\n          \"provider\": \"<string>\",\n          \"model\": \"<string>\",\n          \"region\": \"<string>\"\n        },\n        \"tts\": {\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"provider\": \"<string>\",\n          \"arabic_voice_id\": \"<string>\",\n          \"english_voice_id\": \"21m00Tcm4TlvDq8ikWAM\",\n          \"urdu_voice_id\": \"9cI5mhBtM4WtQ9Fo6jWQ\",\n          \"region\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"speed\": 1\n        },\n        \"llm\": {\n          \"provider\": \"<string>\",\n          \"model\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"region\": \"default\"\n        },\n        \"voice_details\": {\n          \"id\": \"<string>\",\n          \"display_name\": \"<string>\",\n          \"provider\": \"<string>\",\n          \"language\": \"<string>\",\n          \"gender\": \"<string>\",\n          \"tts_settings\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"vibe\": \"<string>\",\n          \"created_at\": \"<dateTime>\",\n          \"updated_at\": \"<dateTime>\",\n          \"is_active\": true\n        },\n        \"voice_id\": \"<string>\",\n        \"stt_fallback\": {\n          \"type\": \"disable\"\n        }\n      },\n      \"back_channel\": {\n        \"type\": \"freq\",\n        \"value\": 0.6,\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"allow_interruptions\": \"<boolean>\",\n      \"timeout\": {\n        \"type\": \"enabled\",\n        \"duration\": \"<duration>\",\n        \"max_retries\": 5\n      },\n      \"agent_name\": \"\",\n      \"turn_detection\": {\n        \"type\": \"disable\"\n      },\n      \"max_duration_end_call_message\": \"<string>\"\n    }\n  },\n  \"scenario_generation\": {\n    \"model\": \"<string>\",\n    \"temperature\": 0.7\n  },\n  \"max_call_duration_seconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8688ac2e-942e-4e3f-be72-6e4d3505058b",
+          "name": "Get Scenario Generation Models",
+          "request": {
+            "name": "Get Scenario Generation Models",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "settings",
+                "scenario-generation",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33108e99-98b7-46c5-82fe-b2ef9e75e99c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "settings",
+                    "scenario-generation",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": \"string\",\n  \"key_2\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eb6f64a5-3b10-42fb-a3e8-8ec765847ede",
+    "name": "Sarj.ai Voice Settings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

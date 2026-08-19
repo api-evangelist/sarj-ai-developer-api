@@ -1,0 +1,661 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Agent Profiles API
+  version: 1.0.0
+tags:
+- name: agent-profiles
+paths:
+  /v1/agent-profiles/list:
+    post:
+      tags:
+      - agent-profiles
+      summary: List Agent Profiles
+      operationId: agentProfilesListAgentProfiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListAgentProfilesRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAgentProfilesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/agent-profiles/:
+    post:
+      tags:
+      - agent-profiles
+      summary: Create Agent Profile
+      operationId: agentProfilesCreateAgentProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentProfileRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentProfile'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/agent-profiles/{profile_id}/ensure:
+    put:
+      tags:
+      - agent-profiles
+      summary: Ensure Agent Profile
+      operationId: agentProfilesEnsureAgentProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Profile Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentProfileRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentProfile'
+        '409':
+          description: The id already exists in another organization
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/agent-profiles/{profile_id}:
+    put:
+      tags:
+      - agent-profiles
+      summary: Update Agent Profile
+      operationId: agentProfilesUpdateAgentProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Profile Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAgentProfileRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentProfile'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - agent-profiles
+      summary: Get Agent Profile
+      operationId: agentProfilesGetAgentProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Profile Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentProfile'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - agent-profiles
+      summary: Delete Agent Profile
+      operationId: agentProfilesDeleteAgentProfile
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Profile Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/agent-profiles/{profile_id}/set-default:
+    post:
+      tags:
+      - agent-profiles
+      summary: Set Agent Profile Default
+      operationId: agentProfilesSetAgentProfileDefault
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Profile Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentProfile'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    BackgroundNoiseType:
+      type: string
+      enum:
+      - office_ambience
+      - city_ambience
+      - forest_ambience
+      - crowded_room
+      title: BackgroundNoiseType
+    BackChannelWordConfig:
+      properties:
+        type:
+          type: string
+          const: word
+          title: Type
+          default: word
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelWordConfig
+    DisableBackgroundNoise:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackgroundNoise
+    BackChannelConfig:
+      properties:
+        type:
+          type: string
+          const: freq
+          title: Type
+          default: freq
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelConfig
+    BackchannelAudioConfig:
+      properties:
+        sound_id:
+          $ref: '#/components/schemas/SoundId'
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 1.0
+        probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Probability
+          default: 1.0
+      type: object
+      required:
+      - sound_id
+      title: BackchannelAudioConfig
+    BackChannelSoundConfig:
+      properties:
+        type:
+          type: string
+          const: sound
+          title: Type
+          default: sound
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelSoundConfig
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: enabled
+          title: Type
+          default: enabled
+        duration:
+          anyOf:
+          - type: string
+            format: duration
+          - type: integer
+          title: Duration
+          default: 15
+        max_retries:
+          type: integer
+          title: Max Retries
+          default: 5
+      type: object
+      title: TimeoutSettings
+    SoundId:
+      type: string
+      enum:
+      - keyboard_typing
+      title: SoundId
+    ListAgentProfilesResponse:
+      properties:
+        profiles:
+          items:
+            $ref: '#/components/schemas/AgentProfile'
+          type: array
+          title: Profiles
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - profiles
+      title: ListAgentProfilesResponse
+    DisableBackChanneling:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackChanneling
+    EnableBackgroundNoise:
+      properties:
+        type:
+          type: string
+          const: enable
+          title: Type
+          default: enable
+        noise_type:
+          $ref: '#/components/schemas/BackgroundNoiseType'
+          default: crowded_room
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 0.05
+      type: object
+      title: EnableBackgroundNoise
+    DisableTimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTimeoutSettings
+    AgentProfile:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        name:
+          type: string
+          title: Name
+        language:
+          $ref: '#/components/schemas/Language'
+        voice_id:
+          type: string
+          title: Voice Id
+        gender:
+          $ref: '#/components/schemas/Gender'
+        settings:
+          $ref: '#/components/schemas/AgentProfileSettings'
+        persona_prompt:
+          type: string
+          title: Persona Prompt
+          default: ''
+        is_default:
+          type: boolean
+          title: Is Default
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - name
+      - language
+      - voice_id
+      - gender
+      - settings
+      - created_at
+      - updated_at
+      title: AgentProfile
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    ListAgentProfilesRequest:
+      properties:
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        limit:
+          type: integer
+          title: Limit
+          default: 10
+        language:
+          anyOf:
+          - $ref: '#/components/schemas/Language'
+          - type: 'null'
+      type: object
+      title: ListAgentProfilesRequest
+    AgentProfileSettingsRequest:
+      properties:
+        back_channeling:
+          anyOf:
+          - $ref: '#/components/schemas/BackChannelConfig'
+          - $ref: '#/components/schemas/BackChannelWordConfig'
+          - $ref: '#/components/schemas/BackChannelSoundConfig'
+          - $ref: '#/components/schemas/BackChannelMixConfig'
+          - $ref: '#/components/schemas/DisableBackChanneling'
+          title: Back Channeling
+        background_noise:
+          anyOf:
+          - $ref: '#/components/schemas/EnableBackgroundNoise'
+          - $ref: '#/components/schemas/DisableBackgroundNoise'
+          title: Background Noise
+          default:
+            type: enable
+            noise_type: crowded_room
+            volume: 0.05
+        timeout:
+          anyOf:
+          - $ref: '#/components/schemas/TimeoutSettings'
+          - $ref: '#/components/schemas/DisableTimeoutSettings'
+          title: Timeout
+        voice_speed:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Voice Speed
+      type: object
+      required:
+      - back_channeling
+      - timeout
+      title: AgentProfileSettingsRequest
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      title: Gender
+    CreateAgentProfileRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        language:
+          $ref: '#/components/schemas/Language'
+        voice_id:
+          type: string
+          title: Voice Id
+        gender:
+          $ref: '#/components/schemas/Gender'
+        settings:
+          $ref: '#/components/schemas/AgentProfileSettingsRequest'
+        persona_prompt:
+          type: string
+          title: Persona Prompt
+          default: ''
+      type: object
+      required:
+      - name
+      - language
+      - voice_id
+      - gender
+      - settings
+      title: CreateAgentProfileRequest
+    UpdateAgentProfileRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        language:
+          anyOf:
+          - $ref: '#/components/schemas/Language'
+          - type: 'null'
+        voice_id:
+          type: string
+          title: Voice Id
+        gender:
+          anyOf:
+          - $ref: '#/components/schemas/Gender'
+          - type: 'null'
+        settings:
+          anyOf:
+          - $ref: '#/components/schemas/AgentProfileSettingsRequest'
+          - type: 'null'
+        persona_prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Persona Prompt
+      type: object
+      required:
+      - voice_id
+      title: UpdateAgentProfileRequest
+    BackChannelMixConfig:
+      properties:
+        type:
+          type: string
+          const: mix
+          title: Type
+          default: mix
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        word_probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Word Probability
+          default: 0.7
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelMixConfig
+    AgentProfileSettings:
+      properties:
+        back_channeling:
+          anyOf:
+          - $ref: '#/components/schemas/BackChannelConfig'
+          - $ref: '#/components/schemas/BackChannelWordConfig'
+          - $ref: '#/components/schemas/BackChannelSoundConfig'
+          - $ref: '#/components/schemas/BackChannelMixConfig'
+          - $ref: '#/components/schemas/DisableBackChanneling'
+          title: Back Channeling
+        background_noise:
+          oneOf:
+          - $ref: '#/components/schemas/EnableBackgroundNoise'
+          - $ref: '#/components/schemas/DisableBackgroundNoise'
+          title: Background Noise
+          discriminator:
+            propertyName: type
+            mapping:
+              disable: '#/components/schemas/DisableBackgroundNoise'
+              enable: '#/components/schemas/EnableBackgroundNoise'
+        timeout:
+          oneOf:
+          - $ref: '#/components/schemas/TimeoutSettings'
+          - $ref: '#/components/schemas/DisableTimeoutSettings'
+          title: Timeout
+          discriminator:
+            propertyName: type
+            mapping:
+              disable: '#/components/schemas/DisableTimeoutSettings'
+              enabled: '#/components/schemas/TimeoutSettings'
+        voice_speed:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Voice Speed
+      type: object
+      required:
+      - back_channeling
+      - timeout
+      title: AgentProfileSettings
