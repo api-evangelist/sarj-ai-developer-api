@@ -12,6 +12,20 @@ created: '2026-08-04'
 modified: '2026-08-09'
 specificationVersion: '0.23'
 tags:
+  - Voice AI
+  - Voice Agents
+  - Conversational AI
+  - Arabic AI
+  - Outbound Calls
+  - Telephony
+  - Speech-to-Text
+  - Text-to-Speech
+  - Voice Cloning
+  - MCP
+  - agent-native
+  - Saudi Arabia
+  - MENA
+tags_raw:
   - voice AI
   - voice agents
   - conversational AI
@@ -32,6 +46,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Admin
+  tags_raw:
   - admin
   properties:
   - type: OpenAPI
@@ -76,6 +92,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Analytics
+  tags_raw:
   - analytics
   properties:
   - type: OpenAPI
@@ -120,6 +138,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Batch
+  tags_raw:
   - batch
   properties:
   - type: OpenAPI
@@ -208,6 +228,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Integration
+  tags_raw:
   - integrations
   properties:
   - type: OpenAPI
@@ -230,6 +252,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Messaging
+  tags_raw:
   - messaging
   properties:
   - type: OpenAPI
@@ -296,6 +320,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - OpenAI
+  tags_raw:
   - Openai
   properties:
   - type: OpenAPI
@@ -364,6 +390,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Organization
+  tags_raw:
   - organizations
   properties:
   - type: OpenAPI
@@ -387,6 +415,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Report Templates
+  tags_raw:
   - report-templates
   properties:
   - type: OpenAPI
@@ -409,6 +439,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Salesforce
+  tags_raw:
   - salesforce
   properties:
   - type: OpenAPI
@@ -475,6 +507,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Settings
+  tags_raw:
   - settings
   properties:
   - type: OpenAPI
@@ -497,6 +531,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - SIP
+  tags_raw:
   - sip
   properties:
   - type: OpenAPI
@@ -541,6 +577,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Task
+  tags_raw:
   - task
   properties:
   - type: OpenAPI
@@ -563,6 +601,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Task Management
+  tags_raw:
   - task-management
   properties:
   - type: OpenAPI
@@ -607,6 +647,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Zoho
+  tags_raw:
   - zoho
   properties:
   - type: OpenAPI
