@@ -24,15 +24,15 @@ created: '2026-08-04'
 modified: '2026-08-09'
 specificationVersion: '0.23'
 tags:
-  - voice AI
-  - voice agents
-  - conversational AI
+  - Voice AI
+  - Voice Agents
+  - Conversational AI
   - Arabic AI
-  - outbound calls
-  - telephony
-  - speech to text
-  - text to speech
-  - voice cloning
+  - Outbound Calls
+  - Telephony
+  - Speech-to-Text
+  - Text-to-Speech
+  - Voice Cloning
   - MCP
   - agent-native
   - Saudi Arabia
@@ -332,7 +332,7 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
-  - Openai
+  - OpenAI
   tags_raw:
   - Openai
   properties:
@@ -427,7 +427,7 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
-  - report-templates
+  - Report Templates
   tags_raw:
   - report-templates
   properties:
@@ -613,7 +613,7 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
-  - task-management
+  - Task Management
   tags_raw:
   - task-management
   properties:
