@@ -1,11 +1,14 @@
 name: Sarj AI Developer API
 description: >-
   Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused on the Saudi and wider MENA
-  market. The public developer surface is a REST API for outbound voice calls — place a call against a saved scenario,
-  then retrieve its status, signed recording URL, transcript and asynchronous post-call outcome report. Alongside the
-  call API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech with
-  voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, an A2A agent card, a
-  published Agent Skill, an llms.txt, webhook push notifications for call completion, and an official Python SDK.
+  market. The public developer surface is a REST API for outbound voice calls — place a call against a saved scenario
+  (immediately, or booked up to 30 days ahead), cancel or reschedule it while it is still pending, create a retry
+  policy governing how often a number is re-dialed, and retrieve the call's status, recording, transcript and
+  asynchronous post-call outcome report. Alongside the call API, Sarj publishes two OpenAI-compatible speech APIs
+  (Speech-to-Text with streaming, and Text-to-Speech with voice cloning), a hosted MCP server exposing createCall and
+  getCall as native agent tools, a second unauthenticated MCP server over its documentation, an A2A agent card, a
+  published Agent Skill with an agentskills.io discovery index, an llms.txt, webhook push notifications covering
+  eleven call outcomes, and an official Python SDK.
 url: https://raw.githubusercontent.com/api-evangelist/sarj-ai-developer-api/refs/heads/main/apis.yml
 deliveryModel:
   model: saas
@@ -35,7 +38,7 @@ accessModel:
   method: derived
 image: https://www.sarj.ai/og-image.png
 created: '2026-08-04'
-modified: '2026-08-09'
+modified: '2026-09-11'
 specificationVersion: '0.23'
 tags:
   - Voice AI
@@ -78,7 +81,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-admin-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -100,7 +103,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-agent-profiles-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -124,7 +127,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-analytics-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -140,13 +143,13 @@ apis:
   name: Sarj AI Developer API Audio API
   description: The Audio API from Sarj AI Developer API — 3 operation(s) for audio.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://sarj-omni-tts.sarj.ai
   tags:
   - Audio
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-audio-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -170,7 +173,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-batch-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -192,7 +195,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-calls-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -208,13 +211,13 @@ apis:
   name: Sarj AI Developer API Debug API
   description: The Debug API from Sarj AI Developer API — 1 operation(s) for debug.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://stt-rnnt-ar.sarj.ai
   tags:
   - Debug
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-debug-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -236,7 +239,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-health-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -260,7 +263,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-integrations-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -284,7 +287,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-messaging-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -300,13 +303,13 @@ apis:
   name: Sarj AI Developer API Metrics API
   description: The Metrics API from Sarj AI Developer API — 1 operation(s) for metrics.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://sarj-omni-tts.sarj.ai
   tags:
   - Metrics
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-metrics-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -322,13 +325,13 @@ apis:
   name: Sarj AI Developer API Models API
   description: The Models API from Sarj AI Developer API — 2 operation(s) for models.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://sarj-omni-tts.sarj.ai
   tags:
   - Models
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-models-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -344,7 +347,7 @@ apis:
   name: Sarj AI Developer API Openai API
   description: The Openai API from Sarj AI Developer API — 1 operation(s) for openai.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://stt-rnnt-ar.sarj.ai
   tags:
   - OpenAI
   tags_raw:
@@ -352,7 +355,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-openai-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -375,7 +378,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-organization-sip-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -398,7 +401,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-organization-variables-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -422,7 +425,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-organizations-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -447,7 +450,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-report-templates-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -471,7 +474,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-salesforce-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -493,7 +496,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-salla-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -509,13 +512,13 @@ apis:
   name: Sarj AI Developer API Sarj STT API API
   description: The Sarj STT API API from Sarj AI Developer API — 1 operation(s) for sarj stt api.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://stt-rnnt-ar.sarj.ai
   tags:
   - Sarj STT API
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-sarj-stt-api-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -539,7 +542,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-settings-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -563,7 +566,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-sip-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -585,7 +588,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-system-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -609,7 +612,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-task-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -633,7 +636,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-task-management-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -649,13 +652,13 @@ apis:
   name: Sarj AI Developer API Voices API
   description: The Voices API from Sarj AI Developer API — 3 operation(s) for voices.
   humanURL: https://platform-docs.sarj.ai
-  baseURL: https://platform-api.sarj.ai/api/v1
+  baseURL: https://sarj-omni-tts.sarj.ai
   tags:
   - Voices
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-voices-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -679,7 +682,7 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/sarj-ai-developer-api-zoho-api-openapi.yml
-  - type: MCP
+  - type: MCPServer
     url: https://platform-api.sarj.ai/api/v1/mcp
   - type: Documentation
     url: https://platform-docs.sarj.ai
@@ -692,6 +695,8 @@ apis:
   - type: Documentation
     url: https://platform-docs.sarj.ai/text-to-speech
 common:
+  - type: Website
+    url: https://www.sarj.ai/
   - type: Overlay
     url: overlays/sarj-ai-developer-api-developer-overlay.yaml
   - type: DeveloperPortal
@@ -708,7 +713,7 @@ common:
     url: https://platform.sarj.ai/sign-in
   - type: GitHubOrganization
     url: https://github.com/sarj-ai
-  - type: LLMSTxt
+  - type: LLMsTxt
     url: llms/sarj-ai-developer-api-llms.txt
   - type: AgentCard
     url: a2a/sarj-ai-developer-api-a2a.yml
@@ -744,6 +749,22 @@ common:
     url: data-model/sarj-ai-developer-api-data-model.yml
   - type: AgenticAccess
     url: agentic-access/sarj-ai-developer-api-agentic-access.yml
+  - type: Plans
+    url: plans/sarj-ai-developer-api-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/sarj-ai-developer-api-rate-limits.yml
+  - type: Console
+    url: https://platform-docs.sarj.ai/api-reference
+  - type: Blog
+    url: https://blog.sarj.ai
+  - type: BlogRSS
+    url: https://blog.sarj.ai/rss.xml
+  - type: TermsOfService
+    url: https://sarj.ai/terms
+  - type: PrivacyPolicy
+    url: https://sarj.ai/privacy
+  - type: Contact
+    url: https://sarj.ai/contact
 maintainers:
   - FN: Sarj AI Developer API
     url: https://www.sarj.ai/en/
@@ -754,7 +775,7 @@ generated:
   confidence: 97
   at: '2026-08-04T12:01:50.428Z'
 x-enrichment:
-  date: '2026-08-09'
+  date: '2026-09-11'
   status: enriched
-  artifacts_added: 27
-  pass: local-v1
+  artifacts_added: 7
+  pass: local-v3
