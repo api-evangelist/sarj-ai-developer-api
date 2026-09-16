@@ -1,14 +1,14 @@
 name: Sarj AI Developer API
-description: >-
-  Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused on the Saudi and wider MENA
-  market. The public developer surface is a REST API for outbound voice calls — place a call against a saved scenario
-  (immediately, or booked up to 30 days ahead), cancel or reschedule it while it is still pending, create a retry
-  policy governing how often a number is re-dialed, and retrieve the call's status, recording, transcript and
-  asynchronous post-call outcome report. Alongside the call API, Sarj publishes two OpenAI-compatible speech APIs
-  (Speech-to-Text with streaming, and Text-to-Speech with voice cloning), a hosted MCP server exposing createCall and
-  getCall as native agent tools, a second unauthenticated MCP server over its documentation, an A2A agent card, a
-  published Agent Skill with an agentskills.io discovery index, an llms.txt, webhook push notifications covering
-  eleven call outcomes, and an official Python SDK.
+description: Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused
+  on the Saudi and wider MENA market. The public developer surface is a REST API for outbound voice calls
+  — place a call against a saved scenario (immediately, or booked up to 30 days ahead), cancel or reschedule
+  it while it is still pending, create a retry policy governing how often a number is re-dialed, and retrieve
+  the call's status, recording, transcript and asynchronous post-call outcome report. Alongside the call
+  API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech
+  with voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, a second
+  unauthenticated MCP server over its documentation, an A2A agent card, a published Agent Skill with an
+  agentskills.io discovery index, an llms.txt, webhook push notifications covering eleven call outcomes,
+  and an official Python SDK.
 url: https://raw.githubusercontent.com/api-evangelist/sarj-ai-developer-api/refs/heads/main/apis.yml
 deliveryModel:
   model: saas
@@ -38,36 +38,36 @@ accessModel:
   method: derived
 image: https://www.sarj.ai/og-image.png
 created: '2026-08-04'
-modified: '2026-09-11'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 tags:
-  - Voice AI
-  - Voice Agents
-  - Conversational AI
-  - Arabic AI
-  - Outbound Calls
-  - Telephony
-  - Speech-to-Text
-  - Text-to-Speech
-  - Voice Cloning
-  - MCP
-  - agent-native
-  - Saudi Arabia
-  - MENA
+- Voice AI
+- Voice Agents
+- Conversational AI
+- Arabic AI
+- Outbound Calls
+- Telephony
+- Speech-to-Text
+- Text-to-Speech
+- Voice Cloning
+- MCP
+- agent-native
+- Saudi Arabia
+- MENA
 tags_raw:
-  - voice AI
-  - voice agents
-  - conversational AI
-  - Arabic AI
-  - outbound calls
-  - telephony
-  - speech to text
-  - text to speech
-  - voice cloning
-  - MCP
-  - agent-native
-  - Saudi Arabia
-  - MENA
+- voice AI
+- voice agents
+- conversational AI
+- Arabic AI
+- outbound calls
+- telephony
+- speech to text
+- text to speech
+- voice cloning
+- MCP
+- agent-native
+- Saudi Arabia
+- MENA
 apis:
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-admin-api
   name: Sarj AI Developer API Admin API
@@ -369,8 +369,7 @@ apis:
     url: https://platform-docs.sarj.ai/text-to-speech
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-sip-api
   name: Sarj AI Developer API Organization Sip API
-  description: >-
-    The organization-sip API from Sarj AI Developer API — 7 operation(s) for organization-sip.
+  description: The organization-sip API from Sarj AI Developer API — 7 operation(s) for organization-sip.
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
@@ -392,8 +391,7 @@ apis:
     url: https://platform-docs.sarj.ai/text-to-speech
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-variables-api
   name: Sarj AI Developer API Organization Variables API
-  description: >-
-    The organization-variables API from Sarj AI Developer API — 3 operation(s) for organization-variables.
+  description: The organization-variables API from Sarj AI Developer API — 3 operation(s) for organization-variables.
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
@@ -439,8 +437,7 @@ apis:
     url: https://platform-docs.sarj.ai/text-to-speech
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-report-templates-api
   name: Sarj AI Developer API Report Templates API
-  description: >-
-    The report-templates API from Sarj AI Developer API — 3 operation(s) for report-templates.
+  description: The report-templates API from Sarj AI Developer API — 3 operation(s) for report-templates.
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
@@ -509,7 +506,7 @@ apis:
   - type: Documentation
     url: https://platform-docs.sarj.ai/text-to-speech
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-sarj-stt-api-api
-  name: Sarj AI Developer API Sarj STT API API
+  name: Sarj AI Developer API Sarj STT API
   description: The Sarj STT API API from Sarj AI Developer API — 1 operation(s) for sarj stt api.
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://stt-rnnt-ar.sarj.ai
@@ -695,80 +692,80 @@ apis:
   - type: Documentation
     url: https://platform-docs.sarj.ai/text-to-speech
 common:
-  - type: Website
-    url: https://www.sarj.ai/
-  - type: Overlay
-    url: overlays/sarj-ai-developer-api-developer-overlay.yaml
-  - type: DeveloperPortal
-    url: https://platform-docs.sarj.ai
-  - type: Documentation
-    url: https://platform-docs.sarj.ai
-  - type: APIReference
-    url: https://platform-docs.sarj.ai/api-reference
-  - type: GettingStarted
-    url: https://platform-docs.sarj.ai/getting-started
-  - type: Support
-    url: mailto:support@sarj.ai
-  - type: SignUp
-    url: https://platform.sarj.ai/sign-in
-  - type: GitHubOrganization
-    url: https://github.com/sarj-ai
-  - type: LLMsTxt
-    url: llms/sarj-ai-developer-api-llms.txt
-  - type: AgentCard
-    url: a2a/sarj-ai-developer-api-a2a.yml
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: MCPServer
-    url: mcp/sarj-ai-developer-api-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/sarj-ai-developer-api-tool-crosswalk.yml
-  - type: Packages
-    url: packages/sarj-ai-developer-api-packages.yml
-  - type: SDKs
-    url: packages/sarj-ai-developer-api-packages.yml
-  - type: WellKnown
-    url: well-known/sarj-ai-developer-api-well-known.yml
-  - type: Authentication
-    url: authentication/sarj-ai-developer-api-authentication.yml
-  - type: OAuthScopes
-    url: scopes/sarj-ai-developer-api-scopes.yml
-  - type: DomainSecurity
-    url: security/sarj-ai-developer-api-domain-security.yml
-  - type: Conformance
-    url: conformance/sarj-ai-developer-api-conformance.yml
-  - type: ErrorCatalog
-    url: errors/sarj-ai-developer-api-problem-types.yml
-  - type: Lifecycle
-    url: lifecycle/sarj-ai-developer-api-lifecycle.yml
-  - type: Conventions
-    url: conventions/sarj-ai-developer-api-conventions.yml
-  - type: Webhooks
-    url: asyncapi/sarj-ai-developer-api-webhooks.yml
-  - type: DataModel
-    url: data-model/sarj-ai-developer-api-data-model.yml
-  - type: AgenticAccess
-    url: agentic-access/sarj-ai-developer-api-agentic-access.yml
-  - type: Plans
-    url: plans/sarj-ai-developer-api-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/sarj-ai-developer-api-rate-limits.yml
-  - type: Console
-    url: https://platform-docs.sarj.ai/api-reference
-  - type: Blog
-    url: https://blog.sarj.ai
-  - type: BlogRSS
-    url: https://blog.sarj.ai/rss.xml
-  - type: TermsOfService
-    url: https://sarj.ai/terms
-  - type: PrivacyPolicy
-    url: https://sarj.ai/privacy
-  - type: Contact
-    url: https://sarj.ai/contact
+- type: Website
+  url: https://www.sarj.ai/
+- type: Overlay
+  url: overlays/sarj-ai-developer-api-developer-overlay.yaml
+- type: DeveloperPortal
+  url: https://platform-docs.sarj.ai
+- type: Documentation
+  url: https://platform-docs.sarj.ai
+- type: APIReference
+  url: https://platform-docs.sarj.ai/api-reference
+- type: GettingStarted
+  url: https://platform-docs.sarj.ai/getting-started
+- type: Support
+  url: mailto:support@sarj.ai
+- type: SignUp
+  url: https://platform.sarj.ai/sign-in
+- type: GitHubOrganization
+  url: https://github.com/sarj-ai
+- type: LLMsTxt
+  url: llms/sarj-ai-developer-api-llms.txt
+- type: AgentCard
+  url: a2a/sarj-ai-developer-api-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/sarj-ai-developer-api-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/sarj-ai-developer-api-tool-crosswalk.yml
+- type: Packages
+  url: packages/sarj-ai-developer-api-packages.yml
+- type: SDKs
+  url: packages/sarj-ai-developer-api-packages.yml
+- type: WellKnown
+  url: well-known/sarj-ai-developer-api-well-known.yml
+- type: Authentication
+  url: authentication/sarj-ai-developer-api-authentication.yml
+- type: OAuthScopes
+  url: scopes/sarj-ai-developer-api-scopes.yml
+- type: DomainSecurity
+  url: security/sarj-ai-developer-api-domain-security.yml
+- type: Conformance
+  url: conformance/sarj-ai-developer-api-conformance.yml
+- type: ErrorCatalog
+  url: errors/sarj-ai-developer-api-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/sarj-ai-developer-api-lifecycle.yml
+- type: Conventions
+  url: conventions/sarj-ai-developer-api-conventions.yml
+- type: Webhooks
+  url: asyncapi/sarj-ai-developer-api-webhooks.yml
+- type: DataModel
+  url: data-model/sarj-ai-developer-api-data-model.yml
+- type: AgenticAccess
+  url: agentic-access/sarj-ai-developer-api-agentic-access.yml
+- type: Plans
+  url: plans/sarj-ai-developer-api-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/sarj-ai-developer-api-rate-limits.yml
+- type: Console
+  url: https://platform-docs.sarj.ai/api-reference
+- type: Blog
+  url: https://blog.sarj.ai
+- type: BlogRSS
+  url: https://blog.sarj.ai/rss.xml
+- type: TermsOfService
+  url: https://sarj.ai/terms
+- type: PrivacyPolicy
+  url: https://sarj.ai/privacy
+- type: Contact
+  url: https://sarj.ai/contact
 maintainers:
-  - FN: Sarj AI Developer API
-    url: https://www.sarj.ai/en/
-    email: contact@sarj.ai
+- FN: Sarj AI Developer API
+  url: https://www.sarj.ai/en/
+  email: contact@sarj.ai
 generated:
   by: apis.io/add
   model: claude-opus-4-8
