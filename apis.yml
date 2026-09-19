@@ -584,6 +584,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://sarj-omni-tts.sarj.ai
   tags:
+  - Voice
+  tags_raw:
   - Voices
   properties:
   - type: OpenAPI
@@ -606,6 +608,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - APIKeys
+  tags_raw:
   - api-keys
   properties:
   - type: OpenAPI
@@ -687,6 +691,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Knowledge Bases
+  tags_raw:
   - knowledge-bases
   properties:
   - type: OpenAPI
@@ -770,6 +776,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Organization Settings
+  tags_raw:
   - organization-settings
   properties:
   - type: OpenAPI
@@ -790,6 +798,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Phone Numbers
+  tags_raw:
   - phone-numbers
   properties:
   - type: OpenAPI
@@ -850,6 +860,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Reports
+  tags_raw:
   - reports
   properties:
   - type: OpenAPI
@@ -1056,6 +1068,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - SIP Trunk
+  tags_raw:
   - sip_trunk
   properties:
   - type: OpenAPI
@@ -1076,6 +1090,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
@@ -1096,6 +1112,8 @@ apis:
   humanURL: https://platform-docs.sarj.ai
   baseURL: https://platform-api.sarj.ai/api/v1
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
