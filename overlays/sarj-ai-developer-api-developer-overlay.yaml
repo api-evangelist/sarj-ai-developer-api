@@ -2,11 +2,11 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for the Sarj.ai Developer API
   version: 1.0.0
-extends: openapi/sarj-ai-developer-api-developer-openapi.json
+extends: openapi/_original/sarj-ai-developer-api-developer-openapi.json
 x-provenance:
-  generated: '2026-08-09'
+  generated: '2026-09-11'
   method: generated
-  source: openapi/sarj-ai-developer-api-developer-openapi.json
+  source: openapi/_original/sarj-ai-developer-api-developer-openapi.json
   note: >-
     Captures API Evangelist observations as an Overlay so the harvested spec is never mutated. Every statement here is
     grounded in a probed URL or in the spec itself.
@@ -14,18 +14,21 @@ actions:
   - target: $.info
     update:
       x-apievangelist-slug: sarj-ai-developer-api
-      x-apievangelist-reviewed: '2026-08-09'
+      x-apievangelist-reviewed: '2026-09-11'
       x-apievangelist-surface: public-developer-api
       x-apievangelist-note: >-
-        The documented public contract: 3 operations. A 99-operation platform spec is served unauthenticated at
+        The documented public contract: 7 operations as of 2026-09-11, up from 3 on 2026-08-09 with no
+        changelog and no info.version change. A 231-operation platform spec is served unauthenticated at
         https://platform-api.sarj.ai/openapi.json and is captured separately as
-        openapi/sarj-ai-developer-api-voice-platform-openapi.json.
+        openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json.
   - target: $.info
     update:
       x-agent-surfaces:
         mcp: https://platform-api.sarj.ai/api/v1/mcp
         agent_card: https://platform-docs.sarj.ai/.well-known/agent-card.json
         agent_skill: https://platform-docs.sarj.ai/.well-known/agent-skills/sarj/skill.md
+        agent_skills_index: https://platform-docs.sarj.ai/.well-known/agent-skills/index.json
+        mcp_docs_server_card: https://platform-docs.sarj.ai/.well-known/mcp/server-card.json
         llms_txt: https://platform-docs.sarj.ai/llms.txt
   - target: $.paths['/calls'].post
     update:
@@ -56,7 +59,79 @@ actions:
         rfc9457: false
         envelope: '{"error": {"type", "message"}, "meta": {"request_id"}}'
         discriminator: error.type
-        types: 13
+        types: 17
         note: >-
           Typed, discriminated and machine-branchable, but not application/problem+json. See
           errors/sarj-ai-developer-api-problem-types.yml.
+  - target: $.paths['/calls'].post
+    update:
+      x-apievangelist-reversibility:
+        reversible: conditional
+        reversal_operation: cancelScheduledCall
+        condition: only when created with scheduled_at and still in status 'scheduled'
+        window: >-
+          scheduled_at must be at least 10 minutes ahead and within 30 days, so the cancellation window runs
+          from booking until the call is released for dialing.
+        window_stated_by_provider: true
+        note: >-
+          Without scheduled_at the call dials immediately and there is no undo. An agent that wants a way
+          back must deliberately book the call rather than place it.
+  - target: $.paths['/calls/{call_id}/cancel'].post
+    update:
+      x-apievangelist-note: >-
+        The provider's published Agent Skill documents this as DELETE /calls/{call_id}. That path and method
+        do not exist in this specification. Recorded in skills/_index.yml as a high-severity defect.
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        reversal-of: createCall
+        escalation:
+          human-in-the-loop: false
+          rationale: >-
+            Stopping an unwanted call should not require approval. This is the provider's own "per-person
+            stop-calling lever" — cancelling a pending retry ends the whole retry chain.
+  - target: $.paths['/calls/{call_id}/reschedule'].post
+    update:
+      x-apievangelist-note: >-
+        The provider's published Agent Skill documents this as PATCH /calls/{call_id}. That path and method
+        do not exist in this specification.
+  - target: $.paths['/schedule-configs'].post
+    update:
+      x-apievangelist-reversibility:
+        reversible: false
+        provider_acknowledged: true
+        note: >-
+          "This endpoint is create-only today — there is no way to fetch, list, update, or disable a config
+          after creation." A retry policy created in error governs up to 10 re-dials of a real person and
+          cannot be turned off through the API.
+      x-agentic-access:
+        escalation:
+          human-in-the-loop: required
+  - target: $.paths['/calls/{call_id}/recording'].get
+    update:
+      x-apievangelist-note: >-
+        302 to a freshly minted short-lived download URL. The call-scoped X-Sarj-Recording-Token may also be
+        passed as a `t` query parameter; the specification itself advises the header, because the query form
+        puts a credential in a URL that will be logged.
+  - target: $.components.schemas.PublicCallDetail
+    update:
+      x-apievangelist-deprecation:
+        field: recording_url
+        replacement: permanent_recording_url
+        machine_readable: false
+        note: >-
+          Deprecated in prose only. OpenAPI 3.1 supports `deprecated: true` on a schema property and this
+          field does not carry it, so no tooling will flag it. Its expiry (24 hours, or 7 days pre-rollout)
+          depends on a deployment flag the caller cannot observe.
+  - target: $.info
+    update:
+      x-apievangelist-runtime-gaps:
+        idempotency: none
+        rate_limit_headers: none
+        published_rate_limits: 0
+        published_plans: 0
+        public_status_page: false
+        changelog: false
+        note: >-
+          Recorded so the gaps travel with the contract: see conventions/, rate-limits/, plans/ and
+          lifecycle/ for the evidence behind each.

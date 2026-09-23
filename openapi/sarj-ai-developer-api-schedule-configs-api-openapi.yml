@@ -1,0 +1,965 @@
+openapi: 3.2.0
+info:
+  title: Sarj Ai Developer Schedule Configs API
+  version: 1.0.0
+  description: 'Operations tagged Schedule Configs across 2 of this provider''s published API definitions: sarj-ai-developer-api-developer-openapi.json, sarj-ai-developer-api-voice-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: /api/v1
+- url: https://platform-api.sarj.ai/api/v1
+  description: Production
+tags:
+- name: Schedule Configs
+  description: Create and manage retry policies for scheduled outbound calls.
+paths:
+  /schedule-configs:
+    post:
+      tags:
+      - Schedule Configs
+      summary: Create a Sarj.ai schedule config (retry policy) for outbound calls
+      description: 'Create a reusable retry policy: how many times to retry a call the customer did not answer, how long to wait between attempts, and in which daily window. Reference the returned id as schedule_config_id when creating calls. This endpoint is create-only today — there is no way to fetch, list, update, or disable a config after creation; that ships in a follow-up.'
+      operationId: createScheduleConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScheduleConfigRequest'
+        required: true
+      responses:
+        '201':
+          description: The schedule config was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse_PublicScheduleConfig_'
+        '400':
+          description: Malformed request body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Missing or invalid API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Scheduling disabled, or no organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+    servers:
+    - url: /api/v1
+    - url: https://platform-api.sarj.ai/api/v1
+      description: Production
+  /v1/schedule-configs/availability:
+    get:
+      tags:
+      - Schedule Configs
+      summary: Get Availability
+      operationId: scheduleConfigsGetAvailability
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchedulingAvailability'
+  /v1/schedule-configs/{config_id}:
+    get:
+      tags:
+      - Schedule Configs
+      summary: Get Schedule Config
+      operationId: scheduleConfigsGetScheduleConfig
+      parameters:
+      - name: config_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Schedule config id.
+          title: Config Id
+        description: Schedule config id.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleConfig'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Schedule Configs
+      summary: Update Schedule Config
+      operationId: scheduleConfigsUpdateScheduleConfig
+      parameters:
+      - name: config_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Schedule config id.
+          title: Config Id
+        description: Schedule config id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateScheduleConfigPolicy'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleConfig'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/schedule-configs:
+    post:
+      tags:
+      - Schedule Configs
+      summary: Create Schedule Config
+      operationId: scheduleConfigsCreateScheduleConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScheduleConfigPolicy'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleConfig'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ApiResponse_PublicScheduleConfig_:
+      properties:
+        data:
+          $ref: '#/components/schemas/PublicScheduleConfig'
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      title: ApiResponse[PublicScheduleConfig]
+    ScenarioNotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_not_found
+          title: Type
+          default: scenario_not_found
+        scenario_id:
+          type: string
+          title: Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - scenario_id
+      title: ScenarioNotFoundPayload
+    InvalidScheduleTimePayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: invalid_schedule_time
+          title: Type
+          default: invalid_schedule_time
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: InvalidScheduleTimePayload
+    ScenarioForbiddenPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_forbidden
+          title: Type
+          default: scenario_forbidden
+        scenario_id:
+          type: string
+          title: Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - scenario_id
+      title: ScenarioForbiddenPayload
+    CreateScheduleConfigRequest:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+          description: Whether calls referencing this config retry. Disabling cancels pending retries at release time.
+          default: true
+        max_retries:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Retries
+          description: Maximum retry attempts after the first call reaches the customer (1-10).
+          examples:
+          - 2
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+          description: Wait between attempts, measured from the end of the previous call. Accepts seconds (7200) or an ISO 8601 duration ('PT2H'). 60 seconds to 30 days.
+          examples:
+          - PT2H
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+          description: Daily window retries may dial in, as start/end wall-clock edges in the config timezone. Omitted, retries dial at any hour.
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+          description: IANA timezone the retry_window is evaluated in. Omitted, the scenario's timezone applies.
+          examples:
+          - Asia/Riyadh
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+          description: Stop retrying this long after the first call ended, whichever of attempts/expiry hits first. 1 hour to 7 days (the platform ceiling); omitted, only max_retries and the ceiling bound the group.
+          examples:
+          - P3D
+      additionalProperties: false
+      type: object
+      required:
+      - max_retries
+      - wait_between
+      title: CreateScheduleConfigRequest
+    InternalErrorPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: internal_error
+          title: Type
+          default: internal_error
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: InternalErrorPayload
+    CallNotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: call_not_found
+          title: Type
+          default: call_not_found
+        call_id:
+          type: string
+          title: Call Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - call_id
+      title: CallNotFoundPayload
+    ScheduleConfigNotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: schedule_config_not_found
+          title: Type
+          default: schedule_config_not_found
+        schedule_config_id:
+          type: string
+          title: Schedule Config Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - schedule_config_id
+      title: ScheduleConfigNotFoundPayload
+    CallNotPendingPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: call_not_pending
+          title: Type
+          default: call_not_pending
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - status
+      title: CallNotPendingPayload
+    OauthInvalidRedirectUriPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: oauth_invalid_redirect_uri
+          title: Type
+          default: oauth_invalid_redirect_uri
+        redirect_uri:
+          type: string
+          title: Redirect Uri
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - redirect_uri
+      title: OauthInvalidRedirectUriPayload
+    ScenarioInvalidConfigPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_invalid_config
+          title: Type
+          default: scenario_invalid_config
+        scenario_id:
+          type: string
+          title: Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - scenario_id
+      title: ScenarioInvalidConfigPayload
+    ValidationErrorPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: validation_error
+          title: Type
+          default: validation_error
+        field_violations:
+          items:
+            $ref: '#/components/schemas/FieldViolation'
+          type: array
+          title: Field Violations
+          description: Per-field validation details.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - field_violations
+      title: ValidationErrorPayload
+    UnauthorizedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: unauthorized
+          title: Type
+          default: unauthorized
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: UnauthorizedPayload
+    OutboundCallFailedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: outbound_call_failed
+          title: Type
+          default: outbound_call_failed
+        reason:
+          type: string
+          title: Reason
+          description: Stable-ish reason string from the call service.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - reason
+      title: OutboundCallFailedPayload
+    SchedulingDisabledPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scheduling_disabled
+          title: Type
+          default: scheduling_disabled
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: SchedulingDisabledPayload
+    NoOrganizationPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: no_organization
+          title: Type
+          default: no_organization
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: NoOrganizationPayload
+    ResponseMeta:
+      properties:
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
+          examples:
+          - 550e8400-e29b-41d4-a716-446655440000
+      additionalProperties: false
+      type: object
+      title: ResponseMeta
+      description: Contains request-level metadata included with every public API response.
+    CallLimitExceededPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: call_limit_exceeded
+          title: Type
+          default: call_limit_exceeded
+        phone_number:
+          type: string
+          title: Phone Number
+          description: The phone number that hit the limit.
+        call_limit:
+          type: integer
+          title: Call Limit
+          description: The per-number call limit that was reached.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - phone_number
+      - call_limit
+      title: CallLimitExceededPayload
+    PhoneNumberBlockedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: phone_number_blocked
+          title: Type
+          default: phone_number_blocked
+        phone_number:
+          type: string
+          title: Phone Number
+          description: The phone number that is blocked.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - phone_number
+      title: PhoneNumberBlockedPayload
+    TimeEdge:
+      properties:
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
+      additionalProperties: false
+      type: object
+      required:
+      - hour
+      - minute
+      title: TimeEdge
+    TimeWindow:
+      properties:
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
+      additionalProperties: false
+      type: object
+      required:
+      - start_edge
+      - end_edge
+      title: TimeWindow
+    FieldViolation:
+      properties:
+        field:
+          type: string
+          title: Field
+          description: Dot-separated path to the invalid field (e.g. `phone_number.country_code`).
+          examples:
+          - phone_number.country_code
+        message:
+          type: string
+          title: Message
+          description: Human-readable description of the violation.
+          examples:
+          - Must start with +
+      additionalProperties: false
+      type: object
+      required:
+      - field
+      - message
+      title: FieldViolation
+    PublicScheduleConfig:
+      properties:
+        id:
+          type: string
+          title: Id
+          description: Unique schedule config identifier. Pass it as schedule_config_id when creating calls.
+          examples:
+          - 01890000-0000-7000-8000-000000000000
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Timestamp when the config was created.
+        enabled:
+          type: boolean
+          title: Enabled
+          description: Whether calls referencing this config retry.
+        max_retries:
+          type: integer
+          title: Max Retries
+          description: Maximum retry attempts after the first call reaches the customer.
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+          description: Wait between attempts (ISO 8601 duration).
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+          description: Daily window retries may dial in.
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+          description: IANA timezone the retry_window is evaluated in.
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+          description: How long after the first call's end the group stops retrying.
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - created_at
+      - enabled
+      - max_retries
+      - wait_between
+      title: PublicScheduleConfig
+    ErrorResponse:
+      properties:
+        error:
+          oneOf:
+          - $ref: '#/components/schemas/ValidationErrorPayload'
+          - $ref: '#/components/schemas/UnauthorizedPayload'
+          - $ref: '#/components/schemas/NotFoundPayload'
+          - $ref: '#/components/schemas/InternalErrorPayload'
+          - $ref: '#/components/schemas/PhoneNumberBlockedPayload'
+          - $ref: '#/components/schemas/CallLimitExceededPayload'
+          - $ref: '#/components/schemas/OutboundCallFailedPayload'
+          - $ref: '#/components/schemas/ScenarioNotFoundPayload'
+          - $ref: '#/components/schemas/ScenarioForbiddenPayload'
+          - $ref: '#/components/schemas/ScenarioInvalidConfigPayload'
+          - $ref: '#/components/schemas/NoOrganizationPayload'
+          - $ref: '#/components/schemas/CallNotFoundPayload'
+          - $ref: '#/components/schemas/OauthInvalidRedirectUriPayload'
+          - $ref: '#/components/schemas/SchedulingDisabledPayload'
+          - $ref: '#/components/schemas/InvalidScheduleTimePayload'
+          - $ref: '#/components/schemas/ScheduleConfigNotFoundPayload'
+          - $ref: '#/components/schemas/CallNotPendingPayload'
+          title: Error
+          discriminator:
+            propertyName: type
+            mapping:
+              call_limit_exceeded: '#/components/schemas/CallLimitExceededPayload'
+              call_not_found: '#/components/schemas/CallNotFoundPayload'
+              call_not_pending: '#/components/schemas/CallNotPendingPayload'
+              internal_error: '#/components/schemas/InternalErrorPayload'
+              invalid_schedule_time: '#/components/schemas/InvalidScheduleTimePayload'
+              no_organization: '#/components/schemas/NoOrganizationPayload'
+              not_found: '#/components/schemas/NotFoundPayload'
+              oauth_invalid_redirect_uri: '#/components/schemas/OauthInvalidRedirectUriPayload'
+              outbound_call_failed: '#/components/schemas/OutboundCallFailedPayload'
+              phone_number_blocked: '#/components/schemas/PhoneNumberBlockedPayload'
+              scenario_forbidden: '#/components/schemas/ScenarioForbiddenPayload'
+              scenario_invalid_config: '#/components/schemas/ScenarioInvalidConfigPayload'
+              scenario_not_found: '#/components/schemas/ScenarioNotFoundPayload'
+              schedule_config_not_found: '#/components/schemas/ScheduleConfigNotFoundPayload'
+              scheduling_disabled: '#/components/schemas/SchedulingDisabledPayload'
+              unauthorized: '#/components/schemas/UnauthorizedPayload'
+              validation_error: '#/components/schemas/ValidationErrorPayload'
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+      additionalProperties: false
+      type: object
+      required:
+      - error
+      title: ErrorResponse
+      description: 'Standard envelope for all public API error responses.
+
+
+        `error` is a discriminated union — branch on `error.type` to access
+
+        variant-specific fields. Clients MUST treat unknown `type` values as
+
+        retryable internal errors to preserve forward compatibility.'
+    NotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: not_found
+          title: Type
+          default: not_found
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: NotFoundPayload
+    ScheduleConfig:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        organization_id:
+          type: string
+          title: Organization Id
+        enabled:
+          type: boolean
+          title: Enabled
+        max_retries:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Retries
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+        retry_on:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Outcome'
+            type: array
+            uniqueItems: true
+          - type: 'null'
+          title: Retry On
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - organization_id
+      - enabled
+      - max_retries
+      - wait_between
+      - retry_window
+      - timezone
+      - retry_on
+      - expire_after
+      title: ScheduleConfig
+      description: 'One schedule_config row.
+
+
+        `retry_on=None` means the phase-1 default outcome set; `retry_on=frozenset()`
+
+        means "retry on nothing" and is a distinct, deliberate value — the two round-trip
+
+        separately. Never collapse them with a falsy check
+
+        (`config.retry_on or DEFAULT_OUTCOMES`): that turns "explicitly retry on nothing"
+
+        back into "use the default set".'
+    SchedulingAvailability:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+      type: object
+      required:
+      - enabled
+      title: SchedulingAvailability
+      description: Whether the scenario editor should render its retry section at all.
+    UpdateScheduleConfigPolicy:
+      properties:
+        max_retries:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Retries
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+        enabled:
+          type: boolean
+          title: Enabled
+      additionalProperties: false
+      type: object
+      required:
+      - max_retries
+      - wait_between
+      - enabled
+      title: UpdateScheduleConfigPolicy
+      description: 'An update states the whole policy, so `enabled` carries no default.
+
+
+        `UpdateScheduleConfig.enabled` has none either, for the same reason. A default
+
+        of `True` here would let a body that simply omitted the field un-retire a policy
+
+        its owner had switched off.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Outcome:
+      type: string
+      enum:
+      - busy
+      - declined
+      - no_response
+      - user_unavailable
+      - voicemail_reached
+      - our_fault
+      title: Outcome
+      description: 'Retry-policy buckets, and the persisted vocabulary of `schedule_config.retry_on`.
+
+
+        Members that restate a `DisconnectionReason` keep its exact name and value, so the
+
+        only genuinely new ones are `BUSY`/`DECLINED` (a split of `USER_REJECTED` that only
+
+        the SIP code can make) and `OUR_FAULT` (a collapse of the five infrastructure
+
+        reasons). Kept separate from `DisconnectionReason` because most of that enum is
+
+        meaningless as a retry rule — nobody writes `retry_on: [user_hangup]`.'
+    CreateScheduleConfigPolicy:
+      properties:
+        max_retries:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Retries
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      additionalProperties: false
+      type: object
+      required:
+      - max_retries
+      - wait_between
+      title: CreateScheduleConfigPolicy
+      description: A policy the editor has just written is on unless it says otherwise.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      description: 'API key from your Sarj.ai dashboard. Pass as: Authorization: Bearer <api-key>'
+externalDocs:
+  description: Sarj.ai Documentation
+  url: https://platform-docs.sarj.ai
+x-refined-from:
+- sarj-ai-developer-api-developer-openapi.json
+- sarj-ai-developer-api-voice-platform-openapi.json

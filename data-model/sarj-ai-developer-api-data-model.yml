@@ -1,10 +1,10 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: derived
 source: >-
-  openapi/sarj-ai-developer-api-developer-openapi.json, openapi/sarj-ai-developer-api-tts-openapi.json,
+  openapi/_original/sarj-ai-developer-api-developer-openapi.json, openapi/_original/sarj-ai-developer-api-tts-openapi.json,
   https://platform-docs.sarj.ai/webhooks
 scope: >-
-  Derived from the public developer OpenAPI ($ref graph + id-reference fields) and the TTS spec. The 99-operation
+  Derived from the public developer OpenAPI ($ref graph + id-reference fields) and the TTS spec. The 231-operation
   platform spec and the speech APIs are separate surfaces; only entities reachable from the documented developer
   contract and the TTS voice catalog are modelled here.
 entities:
@@ -23,7 +23,10 @@ entities:
       - {name: direction, type: PhoneDirection}
       - {name: language, type: Language}
       - {name: duration, type: integer, unit: seconds, nullable_until: call end}
-      - {name: recording_url, type: string, format: signed-url, expiring: true}
+      - {name: recording_url, type: string, format: signed-url, expiring: true, deprecated: true, replaced_by: permanent_recording_url}
+      - {name: permanent_recording_url, type: string, format: url, stable: true, added: '2026-09-11', resolves_via: 'GET /calls/{call_id}/recording (302)'}
+      - {name: scheduled_at, type: string, format: date-time, nullable: true, added: '2026-09-11'}
+      - {name: schedule_config_id, type: string, references: ScheduleConfig, nullable: true, added: '2026-09-11'}
       - {name: transcript, type: array, items: PublicTranscriptMessage}
       - {name: report, type: PublicCallReport, async: true}
       - {name: created_at, type: string, format: date-time}
@@ -36,6 +39,41 @@ entities:
       OpenAPI and not creatable through the API — scenarios exist only in the dashboard.
     external: true
     managed_in: https://platform.sarj.ai/scenarios
+  - name: ScheduleConfig
+    schema: PublicScheduleConfig
+    request_schema: CreateScheduleConfigRequest
+    id_field: id
+    id_prefix: none
+    id_format: bare UUID v7
+    added: '2026-09-11'
+    description: >-
+      A reusable retry policy referenced by calls as schedule_config_id — how many times to re-dial someone
+      who did not answer, how long to wait, inside which daily window, and when to give up. Create-only: the
+      public API exposes no read, list, update or delete, which the provider acknowledges in the operation
+      description.
+    fields:
+      - {name: id, type: string, format: uuid-v7}
+      - {name: created_at, type: string, format: date-time}
+      - {name: enabled, type: boolean, default: true}
+      - {name: max_retries, type: integer, minimum: 1, maximum: 10}
+      - {name: wait_between, type: string, format: duration, range: 60s to 30d}
+      - {name: retry_window, type: TimeWindow, nullable: true}
+      - {name: timezone, type: string, format: iana-timezone, nullable: true}
+      - {name: expire_after, type: string, format: duration, range: 1h to 7d, nullable: true}
+  - name: TimeWindow
+    schema: TimeWindow
+    added: '2026-09-11'
+    description: A daily wall-clock window (start_edge, end_edge) retries may dial inside.
+    fields:
+      - {name: start_edge, type: TimeEdge}
+      - {name: end_edge, type: TimeEdge}
+  - name: TimeEdge
+    schema: TimeEdge
+    added: '2026-09-11'
+    description: An hour/minute pair, 0-23 and 0-59.
+    fields:
+      - {name: hour, type: integer, minimum: 0, maximum: 23}
+      - {name: minute, type: integer, minimum: 0, maximum: 59}
   - name: TranscriptMessage
     schema: PublicTranscriptMessage
     description: One spoken turn in the call transcript.
@@ -62,18 +100,18 @@ entities:
     implicit: true
   - name: Voice
     schema: null
-    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    source: openapi/_original/sarj-ai-developer-api-tts-openapi.json
     id_field: voice_id
     description: A TTS voice. Catalogued via GET /v1/voices.
     known_values: [ars_male, ars_fares, ars_female_expressive]
   - name: VoiceProfile
     schema: null
-    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    source: openapi/_original/sarj-ai-developer-api-tts-openapi.json
     id_field: profile_id
     description: A cloned voice created from a 6-10 second reference recording. Full CRUD under /v1/voices/profiles.
   - name: TtsModel
     schema: null
-    source: openapi/sarj-ai-developer-api-tts-openapi.json
+    source: openapi/_original/sarj-ai-developer-api-tts-openapi.json
     id_field: model_id
     description: A speech-synthesis model. Catalogued via GET /v1/models.
 relationships:
@@ -99,6 +137,34 @@ relationships:
     to: SuccessCriteriaResult
     type: has_many
     via: success_criteria_results
+  - from: Call
+    to: ScheduleConfig
+    type: belongs_to
+    via: schedule_config_id
+    optional: true
+    note: >-
+      Omitted, the scenario's default schedule config applies automatically when one is configured — so a call
+      can inherit a retry policy the caller never named.
+  - from: ScheduleConfig
+    to: TimeWindow
+    type: has_one
+    via: retry_window
+    optional: true
+  - from: TimeWindow
+    to: TimeEdge
+    type: has_many
+    via: start_edge, end_edge
+  - from: Call
+    to: Call
+    type: has_many
+    via: root_call_id
+    relationship: retry_chain
+    source: https://platform-docs.sarj.ai/webhooks
+    note: >-
+      A self-referencing relationship that exists only in the webhook payload, never in a REST response. Each
+      retry dial is its own Call; root_call_id points at the first attempt and is null on that attempt itself.
+      There is no API operation that returns the members of a chain — an integrator can only assemble it from
+      the webhooks it received.
   - from: VoiceProfile
     to: Voice
     type: belongs_to
@@ -111,11 +177,12 @@ envelopes:
       - ApiResponse_HealthStatus_
       - ApiResponse_PublicCall_
       - ApiResponse_PublicCallDetail_
+      - ApiResponse_PublicScheduleConfig_
     shape: '{data, meta}'
   - name: ErrorResponse
     shape: '{error, meta}'
     discriminator: error.type
-    variants: 13
+    variants: 17
     see: errors/sarj-ai-developer-api-problem-types.yml
 findings:
   - id: scenario-is-a-hole-in-the-model
@@ -127,3 +194,13 @@ findings:
     detail: >-
       The public developer API exposes no way to enumerate calls. Every read is by known call_id, so the only durable
       record of what was called is the integrator's own or the dashboard's.
+  - id: retry-chain-is-webhook-only
+    detail: >-
+      The Call-to-Call retry relationship is documented only in the webhook payload. A consumer that polls
+      instead of subscribing cannot reconstruct which dials belong to the same contact, which means polling
+      and webhooks do not return the same information model.
+  - id: schedule-config-is-write-once
+    detail: >-
+      ScheduleConfig can be created and referenced but never read back, listed, changed or disabled through
+      the API. The entity exists in the model with no retrieval path — the provider states a follow-up will
+      add one.

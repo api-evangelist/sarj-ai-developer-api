@@ -1,9 +1,9 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 docs: https://platform-docs.sarj.ai/getting-started
 source: >-
-  openapi/sarj-ai-developer-api-developer-openapi.json, openapi/sarj-ai-developer-api-stt-openapi.json,
-  openapi/sarj-ai-developer-api-tts-openapi.json, https://platform-docs.sarj.ai/getting-started,
+  openapi/_original/sarj-ai-developer-api-developer-openapi.json, openapi/_original/sarj-ai-developer-api-stt-openapi.json,
+  openapi/_original/sarj-ai-developer-api-tts-openapi.json, https://platform-docs.sarj.ai/getting-started,
   https://platform-docs.sarj.ai/mcp-server, https://platform-api.sarj.ai/.well-known/oauth-authorization-server
 summary:
   types:
@@ -15,6 +15,9 @@ summary:
     - authorizationCode
   api_key_in:
     - header
+    - query
+  declared_security_schemes: 1
+  undeclared_credentials: 1
   key_management: dashboard
 schemes:
   - name: ApiKeyAuth
@@ -23,7 +26,7 @@ schemes:
     description: 'API key from the Sarj.ai dashboard. Pass as: Authorization: Bearer <api-key>'
     header: Authorization
     sources:
-      - openapi/sarj-ai-developer-api-developer-openapi.json
+      - openapi/_original/sarj-ai-developer-api-developer-openapi.json
     applies_to: https://platform-api.sarj.ai/api/v1
   - name: BearerAuth
     type: http
@@ -31,11 +34,29 @@ schemes:
     description: The same Sarj.ai API key, used against the Speech-to-Text and Text-to-Speech hosts.
     header: Authorization
     sources:
-      - openapi/sarj-ai-developer-api-stt-openapi.json
-      - openapi/sarj-ai-developer-api-tts-openapi.json
+      - openapi/_original/sarj-ai-developer-api-stt-openapi.json
+      - openapi/_original/sarj-ai-developer-api-tts-openapi.json
     applies_to:
       - https://stt-rnnt-ar.sarj.ai/openai/v1
       - https://sarj-omni-tts.sarj.ai/v1
+  - name: RecordingToken
+    type: apiKey
+    in: header
+    header: X-Sarj-Recording-Token
+    alternative_in: query
+    alternative_param: t
+    added: '2026-09-11'
+    description: >-
+      A call-scoped credential that authorizes ONE operation — GET /calls/{call_id}/recording — for ONE call.
+      Exists for header-less consumers such as an HTML5 audio player. If an API key is present it always wins
+      and the token is ignored. Not declared as a securityScheme; it is described in the operation's own
+      description, and the operation's security is [{ApiKeyAuth: []}, {}] — optional auth.
+    applies_to: https://platform-api.sarj.ai/api/v1/calls/{call_id}/recording
+    sources:
+      - openapi/_original/sarj-ai-developer-api-developer-openapi.json
+    note: >-
+      The first and only scoped credential Sarj.ai issues. The provider advises the header form over the `t`
+      query parameter precisely because a query credential ends up in logs and referrers.
   - name: MCP OAuth
     type: oauth2
     description: >-
@@ -69,6 +90,18 @@ findings:
       One API key authenticates the call API, Speech-to-Text and Text-to-Speech across three different hosts. There is
       no per-service credential and no scoping, so a key leaked from a transcription workload can also place billable
       outbound phone calls.
+  - id: scoped-credential-is-undeclared
+    detail: >-
+      The call-scoped recording token is a genuinely good idea — the only narrow credential on the whole
+      surface — and it is invisible to tooling. It is not a securityScheme, so no SDK generator, no gateway
+      and no agent reading the spec's security model will know it exists. Declaring it as an apiKey scheme
+      would cost nothing.
+  - id: optional-auth-operation
+    detail: >-
+      GET /calls/{call_id}/recording declares security [{ApiKeyAuth: []}, {}] — an empty requirement object,
+      meaning anonymous access is permitted at the spec level. Anonymous access actually requires the
+      call-scoped token, which the spec cannot express. A strict client will conclude the recording endpoint
+      is public.
   - id: no-oauth-for-rest
     detail: >-
       OAuth exists only for the MCP transport. Direct REST and SDK integrators have no authorization-code path and no
@@ -80,3 +113,6 @@ x-evidence:
     http_status: 200
   - url: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
     http_status: 200
+  - url: https://platform-api.sarj.ai/api/v1/openapi.json
+    http_status: 200
+    note: re-derived 2026-09-11 against the refreshed 7-operation spec

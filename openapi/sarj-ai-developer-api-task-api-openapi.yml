@@ -3,12 +3,12 @@ info:
   title: Sarj.ai Voice Task API
   version: 1.0.0
 tags:
-- name: task
+- name: Task
 paths:
   /v1/tasks/start-batch-calls:
     post:
       tags:
-      - task
+      - Task
       summary: Start Batch Calls
       operationId: taskStartBatchCalls
       responses:
@@ -23,7 +23,7 @@ paths:
   /v1/tasks/dispatch-outbound-calls:
     post:
       tags:
-      - task
+      - Task
       summary: Dispatch Outbound Calls
       operationId: taskDispatchOutboundCalls
       responses:
@@ -38,7 +38,7 @@ paths:
   /v1/tasks/delete-old-tasks:
     post:
       tags:
-      - task
+      - Task
       summary: Delete Old Tasks
       operationId: taskDeleteOldTasks
       responses:
@@ -53,7 +53,7 @@ paths:
   /v1/tasks/delete-expired-org-data:
     post:
       tags:
-      - task
+      - Task
       summary: Delete Expired Org Data
       operationId: taskDeleteExpiredOrgData
       responses:

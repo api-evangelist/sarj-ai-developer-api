@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 source: https://platform-docs.sarj.ai/webhooks
 spec_type: Webhooks
@@ -58,9 +58,51 @@ events:
   - type: automation
     summary: Hit an IVR, voicemail or other non-human answer.
     payload_fields: [type]
+  - type: rejected_by_carrier
+    summary: The carrier refused the call.
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+    added: '2026-09-11'
+  - type: invalid_number
+    summary: The number could not be dialed.
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+    added: '2026-09-11'
+  - type: sip_trunk_failure
+    summary: Telephony trunk failure before ringing.
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+    added: '2026-09-11'
+  - type: cancelled
+    summary: A scheduled call or pending retry was cancelled before dialing.
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+    added: '2026-09-11'
+    note: >-
+      The webhook side of cancelScheduledCall — the reversal operation emits its own event, so a receiver
+      learns that an agent (or a person) stopped a booked call.
+  - type: expired
+    summary: A scheduled call or pending retry expired before dialing.
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+    added: '2026-09-11'
   - type: failed
     summary: Telephony failure with no SIP-level reason.
-    payload_fields: [type]
+    payload_fields: [type, retry_attempt_number, root_call_id, next_retry_at]
+retry_chain_correlation:
+  added: '2026-09-11'
+  detail: >-
+    Documented since the 2026-08 pass. Every dial in a retry group is its own call with its own webhook, and
+    both payload variants now carry three correlation fields.
+  fields:
+    - name: retry_attempt_number
+      meaning: Which dial this was (1, 2, 3 ...).
+    - name: root_call_id
+      meaning: >-
+        The first attempt's call_id, shared by every retry in the group; null on the first attempt itself.
+    - name: next_retry_at
+      meaning: >-
+        When the next attempt is booked to dial. null means no more attempts are coming — that webhook is the
+        group's last word.
+  consumer_guidance: >-
+    next_retry_at == null is the terminal signal for a contact, not the call status. A receiver that treats
+    each no_answer as final will double-count a single person; a receiver that waits for a `complete` that
+    never arrives will hang forever.
 retries:
   attempts: 3
   backoff: fixed
@@ -88,13 +130,21 @@ findings:
   - id: no-asyncapi
     detail: >-
       The event surface is real, well-documented and typed by a payload.type discriminator — it is a good candidate
-      for an AsyncAPI 3.x document. Publishing one would make the six event variants machine-readable alongside the
-      OpenAPI.
+      for an AsyncAPI 3.x document. Publishing one would make the eleven event variants and the three retry
+      correlation fields machine-readable alongside the OpenAPI. Re-probed 2026-09-11: /asyncapi.yaml and
+      /asyncapi.json still 404 on every host and the docs sitemap (now thirteen pages) has no event-catalog
+      page.
   - id: no-webhook-management-api
     detail: Endpoints are dashboard-only, so webhook configuration cannot be automated or managed as code.
+  - id: event-catalog-grew-without-announcement
+    detail: >-
+      Five event types (rejected_by_carrier, invalid_number, sip_trunk_failure, cancelled, expired) and three
+      correlation fields were added to the documented webhook surface between 2026-08 and 2026-09. A receiver
+      switching on payload.type with an exhaustive match would have started hitting its default branch with
+      no notice — there is no changelog.
 x-evidence:
   - url: https://platform-docs.sarj.ai/webhooks
     http_status: 200
   - url: https://platform-docs.sarj.ai/sitemap.xml
     http_status: 200
-    note: Ten pages total; no event-catalog or AsyncAPI page.
+    note: Thirteen pages total (2026-09-11); no event-catalog or AsyncAPI page.

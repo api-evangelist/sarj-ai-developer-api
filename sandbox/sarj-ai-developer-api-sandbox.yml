@@ -1,0 +1,76 @@
+generated: '2026-09-11'
+method: searched
+source: https://platform-docs.sarj.ai/webhooks
+docs: https://platform-docs.sarj.ai/webhooks
+sandbox_published: false
+test_mode: false
+pointer_emitted: false
+pointer_note: >-
+  No `Sandbox` pointer is wired into apis.yml, because a pointer of that type asserts the provider publishes
+  a sandbox and they do not. A `Console` pointer IS wired, to
+  https://platform-docs.sarj.ai/api-reference — the docs do ship a real interactive request playground
+  (Mintlify "Try it", confirmed in the rendered page markup), which is a genuine try-before-you-build surface
+  even though it fires against production.
+summary: >-
+  Sarj.ai publishes no sandbox, no test-mode key prefix and no simulated phone numbers. There is exactly one
+  published test affordance — a dashboard button that fires a synthetic webhook — and one unauthenticated
+  endpoint an integrator can call for free. Everything else is live: the first call an integrator places is a
+  real, billable telephone call to a real number.
+facilities:
+  - id: send-test-webhook
+    kind: fixture-trigger
+    surface: dashboard
+    url: https://platform.sarj.ai
+    api_available: false
+    detail: >-
+      "The dashboard offers a 'Send test webhook' button to fire a synthetic `complete` payload at your URL —
+      use this while standing up the integration." Dashboard-only; there is no API operation to trigger it, so
+      it cannot be wired into CI or driven by an agent.
+    source: https://platform-docs.sarj.ai/webhooks
+  - id: unauthenticated-health-check
+    kind: free-probe
+    operation: getHealth
+    url: https://platform-api.sarj.ai/api/v1/health
+    auth_required: false
+    http_status: 200
+    response: '{"data":{"status":"ok"},"meta":{"request_id":"..."}}'
+    detail: >-
+      The only operation callable with no credential. Documented in Getting Started as the setup verification
+      step, and genuinely usable as a connectivity smoke test.
+  - id: scheduled-call-as-dry-run
+    kind: deferred-execution
+    operation: createCall
+    parameter: scheduled_at
+    detail: >-
+      Not a sandbox, but the nearest published substitute: booking a call at least 10 minutes ahead creates it
+      in status `scheduled` and leaves a window in which cancelScheduledCall can abort it before any dialing or
+      billing occurs. An integrator can exercise create → inspect → cancel end-to-end without placing a call.
+      The provider does not frame it this way; this is our reading of the contract, recorded as a derivation.
+    method: derived
+absent:
+  - test_key_prefix
+  - test_vs_live_modes
+  - magic_test_phone_numbers
+  - call_simulator
+  - time_travel_or_test_clocks
+  - recorded_fixture_transcripts
+  - webhook_signature_test_secret
+test_values_published: []
+findings:
+  - id: no-safe-first-call
+    detail: >-
+      Every documented path to a first successful createCall dials a real phone. Comparable voice and telephony
+      providers publish magic test numbers (Twilio's +15005550006 range) precisely so integration work does not
+      ring a human. Sarj.ai publishes none, and the Getting Started guide's worked example is a live E.164
+      number in the Saudi range.
+  - id: test-webhook-is-dashboard-only
+    detail: >-
+      The one fixture tool that exists cannot be reached from code. An agent or CI pipeline standing up a
+      webhook receiver must have a human click a button in the dashboard.
+x-evidence:
+  - url: https://platform-docs.sarj.ai/webhooks
+    http_status: 200
+  - url: https://platform-api.sarj.ai/api/v1/health
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/getting-started
+    http_status: 200

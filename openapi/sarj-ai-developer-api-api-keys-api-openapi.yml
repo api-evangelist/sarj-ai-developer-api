@@ -1,0 +1,137 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice API Keys API
+  version: 1.0.0
+tags:
+- name: API Keys
+paths:
+  /v1/beta/api-keys/:
+    post:
+      tags:
+      - API Keys
+      summary: Insert
+      operationId: apiKeysInsert
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyResponse'
+  /v1/beta/api-keys/user/{user_id}:
+    get:
+      tags:
+      - API Keys
+      summary: For User
+      operationId: apiKeysForUser
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiKeyResponse'
+                title: Response Apikeysforuser
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/api-keys/{id_}:
+    delete:
+      tags:
+      - API Keys
+      summary: Delete Key
+      operationId: apiKeysDeleteKey
+      parameters:
+      - name: id_
+        in: path
+        required: true
+        schema:
+          type: string
+          title: 'Id '
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: boolean
+                title: Response Apikeysdeletekey
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ApiKeyResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        key_prefix:
+          type: string
+          title: Key Prefix
+        key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - key_prefix
+      - key
+      - created_at
+      title: ApiKeyResponse

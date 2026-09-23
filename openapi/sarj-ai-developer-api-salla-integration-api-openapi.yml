@@ -1,0 +1,400 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Salla Integration API
+  version: 1.0.0
+tags:
+- name: salla-integration
+paths:
+  /v1/beta/integrations/salla/webhook:
+    post:
+      tags:
+      - salla-integration
+      summary: Webhook
+      operationId: sallaIntegrationWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SallaEventTrigger'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/salla/app-url:
+    get:
+      tags:
+      - salla-integration
+      summary: Get App Url
+      description: 'Return the Salla marketplace URL for installing the Bulbul app.
+
+
+        Returns:
+
+        The apps.salla.sa install URL for the configured Salla app id.'
+      operationId: sallaIntegrationGetAppUrl
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /v1/beta/integrations/salla/me:
+    get:
+      tags:
+      - salla-integration
+      summary: Get Integration Details
+      operationId: sallaIntegrationGetIntegrationDetails
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SallaMerchantInfo'
+                type: array
+                title: Response Sallaintegrationgetintegrationdetails
+  /v1/beta/integrations/salla/automations:
+    get:
+      tags:
+      - salla-integration
+      summary: List Salla Automations
+      operationId: sallaIntegrationListSallaAutomations
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SallaEventAutomation'
+                type: array
+                title: Response Sallaintegrationlistsallaautomations
+  /v1/beta/integrations/salla/events:
+    get:
+      tags:
+      - salla-integration
+      summary: List Salla Automatable Events
+      operationId: sallaIntegrationListSallaAutomatableEvents
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SallaAutomatableEvent'
+                type: array
+                title: Response Sallaintegrationlistsallaautomatableevents
+  /v1/beta/integrations/salla/events/{event_type}/fields:
+    get:
+      tags:
+      - salla-integration
+      summary: Get Salla Event Fields
+      operationId: sallaIntegrationGetSallaEventFields
+      parameters:
+      - name: event_type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/SallaEvent'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SallaPayloadField'
+                title: Response Sallaintegrationgetsallaeventfields
+        '404':
+          description: The event has no payload catalog
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/integrations/salla/automations/{merchant_id}/{event_type}:
+    put:
+      tags:
+      - salla-integration
+      summary: Upsert Salla Automation
+      operationId: sallaIntegrationUpsertSallaAutomation
+      parameters:
+      - name: merchant_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          title: Merchant Id
+      - name: event_type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/SallaEvent'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SallaAutomationUpsertRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SallaEventAutomation'
+        '403':
+          description: The scenario belongs to another organization
+        '404':
+          description: The event is not automatable, or the merchant belongs to another organization
+        '422':
+          description: The mapping or the language does not match the selected scenario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    SallaPayloadField:
+      properties:
+        path:
+          type: string
+          title: Path
+        type:
+          type: string
+          enum:
+          - string
+          - number
+          title: Type
+        label:
+          type: string
+          title: Label
+      additionalProperties: false
+      type: object
+      required:
+      - path
+      - type
+      - label
+      title: SallaPayloadField
+    SallaAutomatableEvent:
+      properties:
+        event_type:
+          $ref: '#/components/schemas/SallaEvent'
+        label:
+          type: string
+          title: Label
+        description:
+          type: string
+          title: Description
+      additionalProperties: false
+      type: object
+      required:
+      - event_type
+      - label
+      - description
+      title: SallaAutomatableEvent
+    SallaAutomationUpsertRequest:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+        scenario_id:
+          type: string
+          title: Scenario Id
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+        variable_mapping:
+          additionalProperties:
+            type: string
+          type: object
+          title: Variable Mapping
+      type: object
+      required:
+      - enabled
+      - scenario_id
+      - variable_mapping
+      title: SallaAutomationUpsertRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SallaEventAutomation:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        merchant_id:
+          type: integer
+          title: Merchant Id
+        event_type:
+          $ref: '#/components/schemas/SallaEvent'
+        enabled:
+          type: boolean
+          title: Enabled
+        scenario_id:
+          type: string
+          title: Scenario Id
+        sarj_user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sarj User Id
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+        variable_mapping:
+          additionalProperties:
+            type: string
+          type: object
+          title: Variable Mapping
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - organization_id
+      - merchant_id
+      - event_type
+      - enabled
+      - scenario_id
+      - variable_mapping
+      - id
+      - created_at
+      - updated_at
+      title: SallaEventAutomation
+    SallaIntegrationStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - INCOMPLETE
+      title: SallaIntegrationStatus
+    SallaEvent:
+      type: string
+      enum:
+      - app.store.authorize
+      - app.uninstalled
+      - abandoned.cart
+      title: SallaEvent
+      description: For the full list, see https://docs.salla.dev/421413m0?nav=01HNA8M216X4HFNGWM9TWSTCKQ and https://docs.salla.dev/doc-421119#list-of-salla-store-events.
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SallaMerchantInfo:
+      properties:
+        merchant_id:
+          type: integer
+          title: Merchant Id
+        merchant_name:
+          type: string
+          title: Merchant Name
+        organization_id:
+          type: string
+          title: Organization Id
+        integration_status:
+          $ref: '#/components/schemas/SallaIntegrationStatus'
+          default: INCOMPLETE
+        merchant_calls:
+          items:
+            type: string
+          type: array
+          title: Merchant Calls
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - merchant_id
+      - merchant_name
+      - organization_id
+      - id
+      - created_at
+      - updated_at
+      title: SallaMerchantInfo
+    SallaEventTrigger:
+      properties:
+        event:
+          type: string
+          title: Event
+        merchant:
+          type: integer
+          title: Merchant
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        data:
+          title: Data
+      type: object
+      required:
+      - event
+      - merchant
+      - created_at
+      - data
+      title: SallaEventTrigger

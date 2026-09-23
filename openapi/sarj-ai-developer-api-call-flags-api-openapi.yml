@@ -1,0 +1,450 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Call Flags API
+  version: 1.0.0
+tags:
+- name: call-flags
+paths:
+  /v1/beta/calls/{call_id}/flags:
+    post:
+      tags:
+      - call-flags
+      summary: Create Call Flag
+      operationId: callFlagsCreateCallFlag
+      parameters:
+      - name: call_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Call Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallFlagCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallFlag'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - call-flags
+      summary: Get Call Flags
+      operationId: callFlagsGetCallFlags
+      parameters:
+      - name: call_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Call Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CallFlag'
+                title: Response Callflagsgetcallflags
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/flags/list:
+    post:
+      tags:
+      - call-flags
+      summary: List Flags
+      operationId: callFlagsListFlags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlagListParams'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlagListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/flags/{flag_id}/status:
+    patch:
+      tags:
+      - call-flags
+      summary: Update Flag Status
+      operationId: callFlagsUpdateFlagStatus
+      parameters:
+      - name: flag_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Flag Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFlagStatusRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallFlag'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/flags/export:
+    post:
+      tags:
+      - call-flags
+      summary: Export Flags
+      operationId: callFlagsExportFlags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlagExportParams'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    IssueType:
+      type: string
+      enum:
+      - pronunciation
+      - connectivity
+      - flow
+      - silence
+      - latency
+      - other
+      title: IssueType
+    FlagExportParams:
+      properties:
+        call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Id
+        statuses:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/FlagStatus'
+            type: array
+          - type: 'null'
+          title: Statuses
+        issue_types:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/IssueType'
+            type: array
+          - type: 'null'
+          title: Issue Types
+        start_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: End Date
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+      type: object
+      title: FlagExportParams
+    CallFlag:
+      properties:
+        id:
+          type: string
+          title: Id
+        call_id:
+          type: string
+          title: Call Id
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        timestamp_ms:
+          type: integer
+          title: Timestamp Ms
+        issue_type:
+          $ref: '#/components/schemas/IssueType'
+        comment:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Comment
+        status:
+          $ref: '#/components/schemas/FlagStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - call_id
+      - user_id
+      - organization_id
+      - timestamp_ms
+      - issue_type
+      - comment
+      - status
+      - created_at
+      - updated_at
+      title: CallFlag
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    FlagStatus:
+      type: string
+      enum:
+      - open
+      - in_progress
+      - resolved
+      title: FlagStatus
+    CallFlagWithContext:
+      properties:
+        id:
+          type: string
+          title: Id
+        call_id:
+          type: string
+          title: Call Id
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        timestamp_ms:
+          type: integer
+          title: Timestamp Ms
+        issue_type:
+          $ref: '#/components/schemas/IssueType'
+        comment:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Comment
+        status:
+          $ref: '#/components/schemas/FlagStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        reporter_email:
+          type: string
+          title: Reporter Email
+        organization_name:
+          type: string
+          title: Organization Name
+      type: object
+      required:
+      - id
+      - call_id
+      - user_id
+      - organization_id
+      - timestamp_ms
+      - issue_type
+      - comment
+      - status
+      - created_at
+      - updated_at
+      - reporter_email
+      - organization_name
+      title: CallFlagWithContext
+    UpdateFlagStatusRequest:
+      properties:
+        status:
+          $ref: '#/components/schemas/FlagStatus'
+      type: object
+      required:
+      - status
+      title: UpdateFlagStatusRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    FlagListResponse:
+      properties:
+        flags:
+          items:
+            $ref: '#/components/schemas/CallFlagWithContext'
+          type: array
+          title: Flags
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - flags
+      title: FlagListResponse
+    CallFlagCreate:
+      properties:
+        timestamp_ms:
+          type: integer
+          minimum: 0.0
+          title: Timestamp Ms
+        issue_type:
+          $ref: '#/components/schemas/IssueType'
+        comment:
+          anyOf:
+          - type: string
+            maxLength: 1000
+          - type: 'null'
+          title: Comment
+      type: object
+      required:
+      - timestamp_ms
+      - issue_type
+      title: CallFlagCreate
+    FlagListParams:
+      properties:
+        call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Id
+        statuses:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/FlagStatus'
+            type: array
+          - type: 'null'
+          title: Statuses
+        issue_types:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/IssueType'
+            type: array
+          - type: 'null'
+          title: Issue Types
+        start_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: End Date
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 50
+      type: object
+      title: FlagListParams

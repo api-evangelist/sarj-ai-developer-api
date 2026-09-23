@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: derived
 source: >-
   mcp/sarj-ai-developer-api-mcp.yml + openapi/sarj-ai-developer-api-developer-openapi.json +
@@ -7,12 +7,12 @@ surfaces:
   openapi:
     - file: openapi/sarj-ai-developer-api-developer-openapi.json
       title: Sarj.ai Developer API
-      operations: 3
+      operations: 7
       gated: false
       note: The public, documented developer contract. This is what the MCP tools are bound to.
     - file: openapi/sarj-ai-developer-api-voice-platform-openapi.json
       title: Sarj.ai Voice API
-      operations: 99
+      operations: 231
       gated: false
       note: >-
         Served unauthenticated at the API host root (https://platform-api.sarj.ai/openapi.json). The full platform
@@ -37,9 +37,16 @@ surfaces:
       action: Raise with the provider — see findings.internal-spec-publicly-linked below.
   graphql: null
   mcp:
-    url: https://platform-api.sarj.ai/api/v1/mcp
-    gated: true
-    note: tools/list returns 401 Bearer; tool names taken from published docs, input schemas inherited from REST.
+    - id: platform
+      url: https://platform-api.sarj.ai/api/v1/mcp
+      gated: true
+      note: tools/list returns 401 Bearer; tool names taken from published docs, input schemas inherited from REST.
+    - id: docs
+      url: https://sarj-f8ecf0ca.main-kill-isr.mintlify.me/mcp
+      gated: false
+      note: >-
+        Documentation MCP server, anonymous tools/list observed 2026-09-11. Its three tools read documentation
+        rather than the API, so they bind to no REST operation and are recorded in mcp_only[] below.
 crosswalk:
   - tool: createCall
     category: calls
@@ -60,8 +67,46 @@ crosswalk:
     note: >-
       Documented 1:1 by the provider ("Fetch call details by call_id (see GET /calls/{call_id})"). Input is the
       call_id path parameter; response carries status, recording_url, transcript and the async report.
-mcp_only: []
+mcp_only:
+  - tool: search_sarj_ai
+    server: docs
+    reason: >-
+      Searches the documentation corpus, not the API. No REST operation exposes documentation search; there
+      is no /search endpoint on any Sarj.ai host.
+  - tool: query_docs_filesystem_sarj_ai
+    server: docs
+    reason: >-
+      Reads documentation pages and the OpenAPI specs through a virtualized filesystem. The underlying
+      content is reachable over plain HTTPS (the .md twins and /api-reference/openapi.json), but no REST
+      operation offers the grep/tree/cat interface.
+  - tool: submit_feedback
+    server: docs
+    reason: Docs-platform feedback capture. No public REST equivalent.
 rest_only:
+  - capability: Scheduled-call lifecycle (cancel, reschedule)
+    operations:
+      - cancelScheduledCall
+      - rescheduleScheduledCall
+    source: openapi/_original/sarj-ai-developer-api-developer-openapi.json
+    note: >-
+      Shipped to the public REST contract between 2026-08 and 2026-09 and still has no MCP tool. This is the
+      most consequential gap in the crosswalk: cancelScheduledCall is the provider's own documented
+      "per-person stop-calling lever", and an agent connected over MCP cannot reach it. The provider's
+      updated Agent Skill explicitly instructs agents to cancel and reschedule pending calls.
+  - capability: Retry policy configuration
+    operations:
+      - createScheduleConfig
+    source: openapi/_original/sarj-ai-developer-api-developer-openapi.json
+    note: >-
+      Also new, also toolless. The Agent Skill tells agents to "create a schedule config via
+      POST /schedule-configs"; over MCP they cannot.
+  - capability: Recording resolution
+    operations:
+      - getCallRecording
+    source: openapi/_original/sarj-ai-developer-api-developer-openapi.json
+    note: >-
+      302 redirect to a freshly minted short-lived download URL, with a call-scoped
+      X-Sarj-Recording-Token alternative to the API key. No tool.
   - capability: System health
     operations:
       - getHealth
@@ -160,18 +205,23 @@ rest_only:
       - create_script_audio_v1_audio_script_post
     source: openapi/sarj-ai-developer-api-tts-openapi.json
 coverage:
-  tools_named: 2
+  tools_named: 5
   tools_bound: 2
-  tools_unbound: 0
-  mcp_only: 0
-  rest_ops_developer_spec: 3
+  tools_unbound: 3
+  mcp_only: 3
+  product_tools: 2
+  docs_tools: 3
+  rest_ops_developer_spec: 7
   rest_ops_developer_spec_with_tool: 2
-  rest_ops_all_specs: 118
+  rest_ops_all_specs: 254
   rest_ops_all_specs_with_tool: 2
+  note: >-
+    rest_ops_all_specs counts the 7 public developer operations, the 231 operations on the platform spec
+    served at the API host root, and the 16 STT/TTS operations on the speech hosts.
 findings:
   - id: agent-surface-narrower-than-rest
     detail: >-
-      Two MCP tools against 118 published REST operations. The MCP server is a deliberate, tightly-scoped projection of
+      Two product MCP tools against 254 published REST operations. The MCP server is a deliberate, tightly-scoped projection of
       the 3-operation developer API, not a projection of the platform. Batch calling and the speech APIs are both named
       as agent use cases in the provider's own Agent Skill but have no tool behind them.
   - id: no-divergence
@@ -191,3 +241,14 @@ findings:
       provisioning and SIP management under a SarjJwtAuth scheme. Whether this is intentional is the provider's call
       to make, but it is worth putting in front of them: an llms.txt entry is an explicit invitation for agents to
       read it.
+  - id: tool-surface-frozen-while-contract-moved
+    detail: >-
+      Between the 2026-08 and 2026-09 passes the public REST contract more than doubled (3 -> 7 operations)
+      and the MCP tool list did not change. The provider's agent card, agent skill and llms.txt were all
+      rewritten to describe the new operations; only the tools were left behind. An agent reading the skill
+      will be told to call tools that do not exist.
+  - id: a-second-mcp-server-appeared
+    detail: >-
+      Sarj.ai now publishes a documentation MCP server with no authentication at all, discovered from a
+      rel="mcp-server-card" Link header. It is the only Sarj.ai agent surface whose schemas can be read
+      anonymously, and the 2026-08 pass missed it because it is not on the conventional probe list.

@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
   title: Sarj STT Openai API
-  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI-
-    and AWS-compatible interfaces.
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.
   version: 1.0.2
 tags:
 - name: Openai
@@ -59,11 +58,27 @@ paths:
       - Openai
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     TranscriptionLanguage:
       type: string
       enum:
       - ar
       title: TranscriptionLanguage
+    TranscriptionResponseFormat:
+      type: string
+      enum:
+      - json
+      - text
+      - verbose_json
+      title: TranscriptionResponseFormat
     Body_groq_transcriptions_endpoint_openai_v1_audio_transcriptions_post:
       properties:
         file:
@@ -92,13 +107,6 @@ components:
       required:
       - file
       title: Body_groq_transcriptions_endpoint_openai_v1_audio_transcriptions_post
-    TranscriptionResponseFormat:
-      type: string
-      enum:
-      - json
-      - text
-      - verbose_json
-      title: TranscriptionResponseFormat
     ValidationError:
       properties:
         loc:
@@ -125,15 +133,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     BearerAuth:
       type: http

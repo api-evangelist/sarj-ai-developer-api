@@ -1,0 +1,984 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Phone Numbers API
+  version: 1.0.0
+tags:
+- name: Phone Numbers
+paths:
+  /v1/beta/phone-numbers:
+    get:
+      tags:
+      - Phone Numbers
+      summary: List Phone Numbers
+      operationId: phoneNumbersListPhoneNumbers
+      parameters:
+      - name: organization_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      - name: provider_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider Id
+      - name: allocation_kind
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - enum:
+            - shared
+            - sarj_dedicated
+            - client_owned
+            type: string
+          - type: 'null'
+          title: Allocation Kind
+      - name: direction
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/NumberDirection'
+          - type: 'null'
+          title: Direction
+      - name: search
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Search
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 50
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/providers:
+    get:
+      tags:
+      - Phone Numbers
+      summary: List Phone Number Providers
+      operationId: phoneNumbersListPhoneNumberProviders
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberProviderListResponse'
+  /v1/beta/phone-numbers/mine:
+    get:
+      tags:
+      - Phone Numbers
+      summary: List My Phone Numbers
+      operationId: phoneNumbersListMyPhoneNumbers
+      parameters:
+      - name: search
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Search
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgPhoneNumberListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/register:
+    post:
+      tags:
+      - Phone Numbers
+      summary: Register Phone Number
+      operationId: phoneNumbersRegisterPhoneNumber
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RegisterSharedRequest'
+              - $ref: '#/components/schemas/RegisterSarjDedicatedRequest'
+              - $ref: '#/components/schemas/RegisterClientOwnedRequest'
+              title: Request
+              discriminator:
+                propertyName: kind
+                mapping:
+                  shared: '#/components/schemas/RegisterSharedRequest'
+                  sarj_dedicated: '#/components/schemas/RegisterSarjDedicatedRequest'
+                  client_owned: '#/components/schemas/RegisterClientOwnedRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/inbound:
+    post:
+      tags:
+      - Phone Numbers
+      summary: Assign Inbound Scenario
+      operationId: phoneNumbersAssignInboundScenario
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignInboundRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Phone Numbers
+      summary: Remove Inbound Scenario
+      operationId: phoneNumbersRemoveInboundScenario
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/organization:
+    post:
+      tags:
+      - Phone Numbers
+      summary: Change Phone Number Organization
+      operationId: phoneNumbersChangePhoneNumberOrganization
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeOrganizationRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/trunk:
+    patch:
+      tags:
+      - Phone Numbers
+      summary: Update Trunk
+      operationId: phoneNumbersUpdateTrunk
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTrunkRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/outbound:
+    put:
+      tags:
+      - Phone Numbers
+      summary: Set Outbound Organizations
+      operationId: phoneNumbersSetOutboundOrganizations
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetOutboundOrganizationsRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/direction:
+    patch:
+      tags:
+      - Phone Numbers
+      summary: Set Direction
+      operationId: phoneNumbersSetDirection
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDirectionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/allocation:
+    put:
+      tags:
+      - Phone Numbers
+      summary: Change Allocation
+      operationId: phoneNumbersChangeAllocation
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ChangeToSharedRequest'
+              - $ref: '#/components/schemas/ChangeToSarjDedicatedRequest'
+              - $ref: '#/components/schemas/ChangeToClientOwnedRequest'
+              discriminator:
+                propertyName: kind
+                mapping:
+                  shared: '#/components/schemas/ChangeToSharedRequest'
+                  sarj_dedicated: '#/components/schemas/ChangeToSarjDedicatedRequest'
+                  client_owned: '#/components/schemas/ChangeToClientOwnedRequest'
+              title: Request
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/sip-connection:
+    put:
+      tags:
+      - Phone Numbers
+      summary: Link Sip Connection
+      operationId: phoneNumbersLinkSipConnection
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkSipConnectionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Phone Numbers
+      summary: Unlink Sip Connection
+      operationId: phoneNumbersUnlinkSipConnection
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/activate:
+    post:
+      tags:
+      - Phone Numbers
+      summary: Activate Phone Number
+      operationId: phoneNumbersActivatePhoneNumber
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-numbers/{provisioned_number_id}/deactivate:
+    post:
+      tags:
+      - Phone Numbers
+      summary: Deactivate Phone Number
+      operationId: phoneNumbersDeactivatePhoneNumber
+      parameters:
+      - name: provisioned_number_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provisioned Number Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumberMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    PhoneNumberListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneNumberListItem'
+          type: array
+          title: Items
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      - next_cursor
+      title: PhoneNumberListResponse
+    PhoneNumberProvider:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      title: PhoneNumberProvider
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PhoneNumberScenario:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      title: PhoneNumberScenario
+    PhoneNumberOrganization:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      title: PhoneNumberOrganization
+    SharedAllocation:
+      properties:
+        kind:
+          type: string
+          const: shared
+          title: Kind
+          default: shared
+      additionalProperties: false
+      type: object
+      title: SharedAllocation
+    ChangeToSarjDedicatedRequest:
+      properties:
+        kind:
+          type: string
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      additionalProperties: false
+      type: object
+      title: ChangeToSarjDedicatedRequest
+    PhoneStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      title: PhoneStatus
+    ChangeToClientOwnedRequest:
+      properties:
+        kind:
+          type: string
+          const: client_owned
+          title: Kind
+          default: client_owned
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      additionalProperties: false
+      type: object
+      title: ChangeToClientOwnedRequest
+    OrgPhoneNumberListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/OrgPhoneNumberListItem'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: OrgPhoneNumberListResponse
+    RegisterSarjDedicatedRequest:
+      properties:
+        kind:
+          type: string
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        phone_number:
+          type: string
+          title: Phone Number
+        provider_id:
+          type: string
+          title: Provider Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        is_extension:
+          type: boolean
+          title: Is Extension
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - phone_number
+      - provider_id
+      - sip_trunk_id
+      title: RegisterSarjDedicatedRequest
+    SetDirectionRequest:
+      properties:
+        direction:
+          $ref: '#/components/schemas/NumberDirection'
+      additionalProperties: false
+      type: object
+      required:
+      - direction
+      title: SetDirectionRequest
+    OrgPhoneNumberType:
+      type: string
+      enum:
+      - dedicated
+      - shared
+      title: OrgPhoneNumberType
+    ChangeToSharedRequest:
+      properties:
+        kind:
+          type: string
+          const: shared
+          title: Kind
+          default: shared
+      additionalProperties: false
+      type: object
+      title: ChangeToSharedRequest
+    PhoneNumberMutationResponse:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      title: PhoneNumberMutationResponse
+    NumberDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - both
+      title: NumberDirection
+    LinkSipConnectionRequest:
+      properties:
+        sip_connection_id:
+          type: string
+          format: uuid
+          title: Sip Connection Id
+      additionalProperties: false
+      type: object
+      required:
+      - sip_connection_id
+      title: LinkSipConnectionRequest
+    ClientOwnedAllocation:
+      properties:
+        kind:
+          type: string
+          const: client_owned
+          title: Kind
+          default: client_owned
+        organization:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberOrganization'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - organization
+      title: ClientOwnedAllocation
+    SetOutboundOrganizationsRequest:
+      properties:
+        organization_ids:
+          items:
+            type: string
+          type: array
+          title: Organization Ids
+      additionalProperties: false
+      type: object
+      title: SetOutboundOrganizationsRequest
+    PhoneNumberListItem:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+        phone_number:
+          type: string
+          title: Phone Number
+        provider:
+          $ref: '#/components/schemas/PhoneNumberProvider'
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        sip_connection_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sip Connection Id
+        allocation:
+          oneOf:
+          - $ref: '#/components/schemas/SharedAllocation'
+          - $ref: '#/components/schemas/SarjDedicatedAllocation'
+          - $ref: '#/components/schemas/ClientOwnedAllocation'
+          title: Allocation
+          discriminator:
+            propertyName: kind
+            mapping:
+              client_owned: '#/components/schemas/ClientOwnedAllocation'
+              sarj_dedicated: '#/components/schemas/SarjDedicatedAllocation'
+              shared: '#/components/schemas/SharedAllocation'
+        outbound_organizations:
+          items:
+            $ref: '#/components/schemas/PhoneNumberOrganization'
+          type: array
+          title: Outbound Organizations
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberScenario'
+          - type: 'null'
+        status:
+          $ref: '#/components/schemas/PhoneStatus'
+        direction:
+          $ref: '#/components/schemas/NumberDirection'
+        is_extension:
+          type: boolean
+          title: Is Extension
+        registered_at:
+          type: string
+          format: date-time
+          title: Registered At
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      - phone_number
+      - provider
+      - sip_trunk_id
+      - sip_connection_id
+      - allocation
+      - outbound_organizations
+      - scenario
+      - status
+      - direction
+      - is_extension
+      - registered_at
+      title: PhoneNumberListItem
+    UpdateTrunkRequest:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        provider_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Provider Id
+      additionalProperties: false
+      type: object
+      required:
+      - sip_trunk_id
+      title: UpdateTrunkRequest
+    SarjDedicatedAllocation:
+      properties:
+        kind:
+          type: string
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        organization:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberOrganization'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - organization
+      title: SarjDedicatedAllocation
+    AssignInboundRequest:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        inbound_scenario_id:
+          type: string
+          title: Inbound Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - inbound_scenario_id
+      title: AssignInboundRequest
+    PhoneNumberProviderListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneNumberProvider'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: PhoneNumberProviderListResponse
+    ChangeOrganizationRequest:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      title: ChangeOrganizationRequest
+    RegisterSharedRequest:
+      properties:
+        kind:
+          type: string
+          const: shared
+          title: Kind
+          default: shared
+        phone_number:
+          type: string
+          title: Phone Number
+        provider_id:
+          type: string
+          title: Provider Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        is_extension:
+          type: boolean
+          title: Is Extension
+          default: false
+        shared_organization_ids:
+          items:
+            type: string
+          type: array
+          title: Shared Organization Ids
+      additionalProperties: false
+      type: object
+      required:
+      - phone_number
+      - provider_id
+      - sip_trunk_id
+      title: RegisterSharedRequest
+    OrgPhoneNumberListItem:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+        phone_number:
+          type: string
+          title: Phone Number
+        type:
+          $ref: '#/components/schemas/OrgPhoneNumberType'
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberScenario'
+          - type: 'null'
+        registered_at:
+          type: string
+          format: date-time
+          title: Registered At
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      - phone_number
+      - type
+      - scenario
+      - registered_at
+      title: OrgPhoneNumberListItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RegisterClientOwnedRequest:
+      properties:
+        kind:
+          type: string
+          const: client_owned
+          title: Kind
+          default: client_owned
+        phone_number:
+          type: string
+          title: Phone Number
+        provider_id:
+          type: string
+          title: Provider Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        owner_organization_id:
+          type: string
+          title: Owner Organization Id
+        is_extension:
+          type: boolean
+          title: Is Extension
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - phone_number
+      - provider_id
+      - sip_trunk_id
+      - owner_organization_id
+      title: RegisterClientOwnedRequest

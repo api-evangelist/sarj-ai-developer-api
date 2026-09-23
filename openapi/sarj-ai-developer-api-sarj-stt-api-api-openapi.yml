@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Sarj STT Sarj STT API API
-  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI-
-    and AWS-compatible interfaces.
+  title: Sarj STT API
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.
   version: 1.0.2
 tags:
 - name: Sarj STT API

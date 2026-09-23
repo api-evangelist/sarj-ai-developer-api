@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: probed
 source: https://platform-docs.sarj.ai/.well-known/agent-card.json
 discovery:
@@ -43,20 +43,44 @@ card:
   capabilities:
     streaming: false
     push_notifications: false
+  default_input_modes:
+    - text/plain
+  default_output_modes:
+    - text/plain
   skills: 1
   skill_ids:
     - sarj
+  changed_since_last_pass:
+    - field: skills[0].description
+      detail: >-
+        Rewritten to name call scheduling, retry policies and webhooks. Tracks the four operations that
+        shipped to the REST contract; the card is being maintained.
   file: sarj-ai-developer-api-agent-card.json
+discovery_index:
+  url: https://platform-docs.sarj.ai/.well-known/agent-skills/index.json
+  http_status: 200
+  schema: https://schemas.agentskills.io/discovery/0.2.0/schema.json
+  saved_to: well-known/sarj-ai-developer-api-agent-skills-index.json
+  digest_published: sha256:856e9f515005ebfd4e5b9cc6e522f9b43aa64d057f9727ec289f97e24103b528
+  digest_verified: true
+  note: >-
+    NEW since the 2026-08 pass. An agentskills.io discovery document sits alongside the card and publishes a
+    sha256 digest of the skill. We recomputed it over the file we harvested and it matches byte-for-byte, so
+    the integrity claim is real and checkable — unusual on this surface.
 linked_agent_skill:
   url: https://platform-docs.sarj.ai/.well-known/agent-skills/sarj/skill.md
   http_status: 200
   content_type: text/markdown; charset=utf-8
   saved_to: skills/sarj-ai-developer-api-sarj.md
+  bytes: 9696
+  sha256: 856e9f515005ebfd4e5b9cc6e522f9b43aa64d057f9727ec289f97e24103b528
   note: >-
     The agent card's single skill points at a provider-published Agent Skill document. This is a genuine
-    provider-authored skill, harvested verbatim rather than generated.
+    provider-authored skill, harvested verbatim rather than generated. Rewritten and expanded by the provider
+    since 2026-08 (9532 -> 9696 bytes, substantially restructured): it now covers scheduled calls, cancel and
+    reschedule, retry policies and permanent_recording_url, and it drops the speech-API material.
 x-evidence:
-  fetched: '2026-08-09'
+  fetched: '2026-09-11'
   url: https://platform-docs.sarj.ai/.well-known/agent-card.json
   http_status: 200
   content_type: application/json

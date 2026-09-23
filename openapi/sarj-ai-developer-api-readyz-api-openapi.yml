@@ -1,0 +1,26 @@
+openapi: 3.2.0
+info:
+  title: Sarj STT Readyz API
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.
+  version: 1.0.2
+tags:
+- name: Readyz
+paths:
+  /readyz:
+    get:
+      summary: Readiness Check
+      operationId: readiness_check_readyz_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Readyz
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

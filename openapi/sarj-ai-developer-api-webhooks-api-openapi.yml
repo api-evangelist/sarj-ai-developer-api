@@ -1,0 +1,242 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Webhooks API
+  version: 1.0.0
+tags:
+- name: Webhooks
+paths:
+  /v1/beta/webhooks/:
+    get:
+      tags:
+      - Webhooks
+      summary: Get Webhook
+      operationId: webhooksGetWebhook
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/Webhook'
+                - type: 'null'
+                title: Response Webhooksgetwebhook
+    post:
+      tags:
+      - Webhooks
+      summary: Create Webhook
+      operationId: webhooksCreateWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertWebhookRequestInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/webhooks/{webhook_id}:
+    delete:
+      tags:
+      - Webhooks
+      summary: Delete Webhook
+      operationId: webhooksDeleteWebhook
+      parameters:
+      - name: webhook_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Webhook Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteWebhookResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/webhooks/test:
+    post:
+      tags:
+      - Webhooks
+      summary: Test Webhook
+      operationId: webhooksTestWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestWebhookInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/TestWebhookSuccessResponse'
+                - $ref: '#/components/schemas/TestWebhookErrorResponse'
+                title: Response Webhookstestwebhook
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    TestWebhookSuccessResponse:
+      properties:
+        success:
+          type: boolean
+          const: true
+          title: Success
+        status:
+          type: integer
+          title: Status
+        body:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - items: {}
+            type: array
+          - type: string
+          - type: 'null'
+          title: Body
+      type: object
+      required:
+      - success
+      - status
+      - body
+      title: TestWebhookSuccessResponse
+    DeleteWebhookResponse:
+      properties:
+        status:
+          type: string
+          const: success
+          title: Status
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - status
+      - message
+      title: DeleteWebhookResponse
+    Webhook:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        organization_id:
+          type: string
+          title: Organization Id
+        creator_id:
+          type: string
+          title: Creator Id
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - organization_id
+      - creator_id
+      - url
+      title: Webhook
+    TestWebhookInput:
+      properties:
+        test_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Test Url
+      type: object
+      required:
+      - test_url
+      title: TestWebhookInput
+    UpsertWebhookRequestInput:
+      properties:
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - url
+      title: UpsertWebhookRequestInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TestWebhookErrorResponse:
+      properties:
+        success:
+          type: boolean
+          const: false
+          title: Success
+        error:
+          type: string
+          title: Error
+      type: object
+      required:
+      - success
+      - error
+      title: TestWebhookErrorResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

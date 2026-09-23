@@ -148,28 +148,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CreateOrganizationVariableRequest:
+    HTTPValidationError:
       properties:
-        key:
-          type: string
-          title: Key
-        value:
-          type: string
-          title: Value
-        is_secret:
-          type: boolean
-          title: Is Secret
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - key
-      - value
-      - is_secret
-      title: CreateOrganizationVariableRequest
+      title: HTTPValidationError
     UpdateOrganizationVariableRequest:
       properties:
         value:
@@ -184,6 +171,23 @@ components:
           title: Description
       type: object
       title: UpdateOrganizationVariableRequest
+    ListOrganizationVariablesResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PlaintextOrganizationVariable'
+          type: array
+          title: Items
+        next_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Next Cursor
+      type: object
+      required:
+      - items
+      title: ListOrganizationVariablesResponse
     PlaintextOrganizationVariable:
       properties:
         organization_id:
@@ -199,8 +203,7 @@ components:
         is_secret:
           type: boolean
           title: Is Secret
-          description: A flag deciding if the value should be encrypted in the database and write-only
-            by clients (no read).
+          description: A flag deciding if the value should be encrypted in the database and write-only by clients (no read).
         description:
           anyOf:
           - type: string
@@ -235,23 +238,6 @@ components:
       - created_at
       - updated_at
       title: PlaintextOrganizationVariable
-    ListOrganizationVariablesResponse:
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/PlaintextOrganizationVariable'
-          type: array
-          title: Items
-        next_cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Next Cursor
-      type: object
-      required:
-      - items
-      title: ListOrganizationVariablesResponse
     ValidationError:
       properties:
         loc:
@@ -278,12 +264,25 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    CreateOrganizationVariableRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        key:
+          type: string
+          title: Key
+        value:
+          type: string
+          title: Value
+        is_secret:
+          type: boolean
+          title: Is Secret
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
       type: object
-      title: HTTPValidationError
+      required:
+      - key
+      - value
+      - is_secret
+      title: CreateOrganizationVariableRequest

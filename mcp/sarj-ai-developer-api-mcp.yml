@@ -1,13 +1,55 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 status: published
-source: https://platform-docs.sarj.ai/mcp-server
+source: >-
+  https://platform-docs.sarj.ai/mcp-server,
+  https://platform-docs.sarj.ai/.well-known/mcp/server-card.json
+server_count: 2
+deployment:
+  mode: remote
+  endpoint: https://platform-api.sarj.ai/api/v1/mcp
+  auth: oauth
+  verified: probed
+  probe: gated
+  checked: '2026-09-11'
+  note: >-
+    Remote only. No stdio package, no npx install — the provider ships a URL an MCP client POSTs to, and
+    nothing to install. A second remote server (the documentation MCP below) is reachable with no auth at all.
+servers:
+  - id: platform
+    name: sarj-voice
+    role: product
+    transport: http
+    url: https://platform-api.sarj.ai/api/v1/mcp
+    auth: oauth
+    gated: true
+    note: >-
+      The endpoint requires the trailing slash. POST to /api/v1/mcp (no slash) answers 307 with a Location
+      that downgrades to http://; POST to /api/v1/mcp/ answers directly.
+    tools_documented: 2
+    tools_observed: null
+  - id: docs
+    name: Sarj.ai Docs MCP
+    role: documentation
+    transport: http
+    url: https://sarj-f8ecf0ca.main-kill-isr.mintlify.me/mcp
+    card: https://platform-docs.sarj.ai/.well-known/mcp/server-card.json
+    auth: none
+    gated: false
+    tools_documented: 2
+    tools_observed: 3
+    tools_file: mcp/sarj-ai-developer-api-docs-mcp-tools.json
+    note: >-
+      NEW since the 2026-08 pass, found via the docs host's rel="mcp-server-card" Link header. Anonymous
+      tools/list returns 200 with three real tools and full inputSchemas, captured verbatim. Platform-hosted
+      (Mintlify) rather than authored by Sarj.ai — the card is served from the provider's own docs host and
+      names the provider's own content, but the runtime lives on a mintlify.me hostname. Recorded as a real,
+      callable agent surface Sarj.ai publishes, with that caveat attached rather than hidden.
 server:
   name: sarj-voice
   transport: http
   url: https://platform-api.sarj.ai/api/v1/mcp
-  note: The endpoint requires the trailing slash. POST to /api/v1/mcp (no slash) answers 307 with a Location
-    that downgrades to http://; POST to /api/v1/mcp/ answers directly.
+  note: Retained for readers of the pre-0.12 single-server shape; see servers[] above.
 authentication:
   model: oauth2
   flow: authorization_code
@@ -15,43 +57,88 @@ authentication:
   dynamic_client_registration: true
   authorization_server_metadata: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
   scopes_supported:
-  - openid
-  described_as: On first connect the MCP client opens a browser to the Sarj.ai sign-in page; an API key
-    is minted server-side and cached by the client. No manual key handling.
+    - openid
+  protected_resource_metadata: null
+  described_as: >-
+    On first connect the MCP client opens a browser to the Sarj.ai sign-in page; an API key is minted
+    server-side and cached by the client. No manual key handling.
+  gap: >-
+    /.well-known/oauth-protected-resource still 404s on every host (re-probed 2026-09-11) even though the
+    endpoint answers 401 with WWW-Authenticate: Bearer. An RFC 9728 discovery hop is missing, so a client
+    must be told the authorization server out of band.
 introspection:
-  attempted: '2026-08-09'
+  attempted: '2026-09-11'
   method: tools/list
   gated: true
   http_status: 401
   www_authenticate: Bearer
-  response: '{"error":{"type":"unauthorized","message":"Authentication required."}}'
-  note: The live tool schemas require an authenticated session, so inputSchema could not be captured anonymously.
-    The tool names and purposes below are taken verbatim from the provider's published MCP Server documentation
-    and Agent Skill, not guessed. Real input contracts are inherited from the backing OpenAPI operations
-    — see mcp/sarj-ai-developer-api-tool-crosswalk.yml.
+  response: '{"error":{"type":"unauthorized","message":"Authentication required."},"meta":{"request_id":null}}'
+  note: >-
+    Unchanged from 2026-08. The live tool schemas on the product server require an authenticated session, so
+    inputSchema could not be captured anonymously. Tool names and purposes are taken verbatim from the
+    provider's MCP Server documentation and published Agent Skill, not guessed. Real input contracts are
+    inherited from the backing OpenAPI operations — see mcp/sarj-ai-developer-api-tool-crosswalk.yml.
 tools:
-- name: createCall
-  description: Place an outbound voice call.
-  source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
-- name: getCall
-  description: Fetch call details by call_id.
-  source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+  - name: createCall
+    server: platform
+    description: Place an outbound voice call.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
+  - name: getCall
+    server: platform
+    description: Fetch call details by call_id.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#getCall
+  - name: search_sarj_ai
+    server: docs
+    description: Search the Sarj.ai knowledge base for docs, code examples and API references.
+    input_schema: '{ query: string (required) }'
+    annotations:
+      readOnlyHint: true
+      destructiveHint: false
+      idempotentHint: true
+      openWorldHint: false
+    method: probed
+  - name: query_docs_filesystem_sarj_ai
+    server: docs
+    description: >-
+      Read-only shell-like query (rg/grep/find/tree/ls/cat/head/jq) against a virtualized in-memory
+      filesystem containing only the Sarj.ai documentation pages and OpenAPI specs.
+    input_schema: '{ command: string (required) }'
+    annotations:
+      readOnlyHint: true
+      destructiveHint: false
+      idempotentHint: true
+      openWorldHint: false
+    method: probed
+  - name: submit_feedback
+    server: docs
+    description: Present on the live tools/list but absent from the published server card.
+    method: probed
 clients_documented:
-- name: Claude Code
-  install: claude mcp add sarj-voice --transport http https://platform-api.sarj.ai/api/v1/mcp
-- name: Cursor
-  install: 'mcpServers entry: {"sarj-voice": {"type": "http", "url": "https://platform-api.sarj.ai/api/v1/mcp"}}'
+  - name: Claude Code
+    install: claude mcp add sarj-voice --transport http https://platform-api.sarj.ai/api/v1/mcp
+  - name: Cursor
+    install: 'mcpServers entry: {"sarj-voice": {"type": "http", "url": "https://platform-api.sarj.ai/api/v1/mcp"}}'
+findings:
+  - id: docs-server-card-understates-the-server
+    detail: >-
+      The published /.well-known/mcp/server-card.json lists two tools; the live tools/list returns three
+      (submit_feedback is missing from the card). The card is a static snapshot, not generated from the
+      running server.
+  - id: product-tools-lag-the-contract
+    detail: >-
+      The public REST contract grew from 3 to 7 operations between 2026-08 and 2026-09 — cancel, reschedule,
+      recording redirect and schedule configs all shipped — and the MCP server still exposes only createCall
+      and getCall. The provider's own updated Agent Skill tells agents to cancel and reschedule calls and to
+      create retry policies, none of which has a tool behind it.
 x-evidence:
-- url: https://platform-docs.sarj.ai/mcp-server
-  http_status: 200
-- url: https://platform-api.sarj.ai/api/v1/mcp/
-  http_status: 401
-- url: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
-  http_status: 200
-deployment:
-  mode: remote
-  endpoint: https://platform-api.sarj.ai/api/v1/mcp
-  verified: probed
-  probe: gated
-  checked: '2026-08-12'
-  source: catalog MCP census
+  - url: https://platform-docs.sarj.ai/mcp-server
+    http_status: 200
+  - url: https://platform-api.sarj.ai/api/v1/mcp/
+    http_status: 401
+  - url: https://platform-api.sarj.ai/.well-known/oauth-authorization-server
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/.well-known/mcp/server-card.json
+    http_status: 200
+  - url: https://sarj-f8ecf0ca.main-kill-isr.mintlify.me/mcp
+    http_status: 200
+    note: anonymous JSON-RPC tools/list returned 3 tools

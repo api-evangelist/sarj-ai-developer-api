@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
   title: Sarj STT Debug API
-  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI-
-    and AWS-compatible interfaces.
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.
   version: 1.0.2
 tags:
 - name: Debug
@@ -10,8 +9,7 @@ paths:
   /debug/decode:
     post:
       summary: Debug Decode Endpoint
-      description: 'Debug endpoint to compare decoding modes and parameters without affecting production
-        flow.
+      description: 'Debug endpoint to compare decoding modes and parameters without affecting production flow.
 
         Returns RNNT/CTC outputs and scores per segment.'
       operationId: debug_decode_endpoint_debug_decode_post
@@ -39,13 +37,6 @@ paths:
       - Debug
 components:
   schemas:
-    DecodingMode:
-      type: string
-      enum:
-      - hybrid
-      - rnnt
-      - ctc
-      title: DecodingMode
     ValidationError:
       properties:
         loc:
@@ -81,6 +72,13 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    DecodingMode:
+      type: string
+      enum:
+      - hybrid
+      - rnnt
+      - ctc
+      title: DecodingMode
     Body_debug_decode_endpoint_debug_decode_post:
       properties:
         file:

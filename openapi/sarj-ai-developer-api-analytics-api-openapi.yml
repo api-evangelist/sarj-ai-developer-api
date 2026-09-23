@@ -3,13 +3,25 @@ info:
   title: Sarj.ai Voice Analytics API
   version: 1.0.0
 tags:
-- name: analytics
+- name: Analytics
 paths:
   /v1/analytics/dashboard:
     post:
       tags:
-      - analytics
+      - Analytics
       summary: Get Dashboard
+      description: 'Return KPI metrics and chart data for the caller''s organization.
+
+
+        Analytics are served from an hourly rollup whose materialized view
+
+        refreshes every five minutes: data may lag live calls by up to five
+
+        minutes, and the current (in-progress) UTC hour is always excluded —
+
+        every window ends at the last completed UTC hour. Custom period
+
+        boundaries must be aligned to exact UTC hour boundaries.'
       operationId: analyticsGetDashboard
       requestBody:
         content:
@@ -69,72 +81,6 @@ components:
       required:
       - period
       title: StandardPeriod
-    DashboardResponse:
-      properties:
-        kpi:
-          $ref: '#/components/schemas/KPI'
-        chart:
-          items:
-            $ref: '#/components/schemas/SeriesPoint'
-          type: array
-          title: Chart
-      type: object
-      required:
-      - kpi
-      - chart
-      title: DashboardResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SeriesPoint:
-      properties:
-        bucket:
-          type: string
-          title: Bucket
-        inbound:
-          type: integer
-          title: Inbound
-        outbound:
-          type: integer
-          title: Outbound
-      type: object
-      required:
-      - bucket
-      - inbound
-      - outbound
-      title: SeriesPoint
     KPI:
       properties:
         total_calls:
@@ -180,3 +126,69 @@ components:
       - outbound_calls
       - scenarios_used
       title: KPI
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SeriesPoint:
+      properties:
+        bucket:
+          type: string
+          title: Bucket
+        inbound:
+          type: integer
+          title: Inbound
+        outbound:
+          type: integer
+          title: Outbound
+      type: object
+      required:
+      - bucket
+      - inbound
+      - outbound
+      title: SeriesPoint
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DashboardResponse:
+      properties:
+        kpi:
+          $ref: '#/components/schemas/KPI'
+        chart:
+          items:
+            $ref: '#/components/schemas/SeriesPoint'
+          type: array
+          title: Chart
+      type: object
+      required:
+      - kpi
+      - chart
+      title: DashboardResponse

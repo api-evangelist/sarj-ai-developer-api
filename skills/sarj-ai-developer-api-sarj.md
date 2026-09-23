@@ -1,6 +1,6 @@
 ---
 name: Sarj
-description: Use when building outbound voice call automation, integrating voice AI agents into applications, tracking call outcomes, or processing speech (transcription and synthesis). Reach for this skill when users ask to make calls, check call status, configure webhooks, or work with speech APIs.
+description: Use when placing outbound voice calls, tracking call status and transcripts, managing scheduled calls with retries, or integrating voice AI into applications. Agents should reach for this skill when users request voice calling, need to retrieve call recordings/transcripts, configure retry policies, or work with the MCP server for agent-native call tools.
 metadata:
     mintlify-proj: sarj
     version: "1.0"
@@ -8,219 +8,152 @@ metadata:
 
 # Sarj.ai Skill
 
-## Product summary
+## Product Summary
 
-Sarj.ai is a REST API and MCP server for outbound voice calls with AI agents. It handles call placement, call tracking, transcription, and speech synthesis for conversational AI applications. The platform supports Arabic, English, and Urdu with low-latency speech processing.
+Sarj.ai is a REST API and MCP server for placing and managing outbound voice calls. Agents use it to dial phone numbers, run AI scenarios, track call progress, retrieve recordings and transcripts, and configure retry policies. The platform supports multiple languages (Arabic, English, Urdu) and integrates with Claude Code, Cursor, and any MCP-compatible client via the MCP server at `https://platform-api.sarj.ai/api/v1/mcp`. Key endpoints: `POST /api/v1/calls` (place call), `GET /api/v1/calls/{call_id}` (fetch details), `POST /api/v1/schedule-configs` (create retry policy). Use the Python SDK (`pip install sarj-platform-sdk`) or REST API with Bearer token authentication. Primary docs: https://platform-docs.sarj.ai
 
-**Key endpoints:**
-- `POST /api/v1/calls` — Place an outbound call
-- `GET /api/v1/calls/{call_id}` — Fetch call details, transcript, recording, and outcome report
-- `POST /api/v1/health` — Health check (no auth required)
+## When to Use
 
-**Key files and config:**
-- API key: Generate at `https://platform.sarj.ai/api-keys` (shown once; store as `SARJ_API_KEY` env var)
-- Scenario ID: Create at `https://platform.sarj.ai/scenarios` (prefixed `scn_`)
-- Webhook URL: Configure in dashboard (one per organization)
+- **Place outbound calls**: User asks to call, dial, ring, or phone someone; use `POST /calls` with phone number and scenario ID
+- **Track call status**: User asks about a specific call's progress, transcript, or recording; use `GET /calls/{call_id}`
+- **Retrieve recordings/transcripts**: User needs the call recording URL or conversation text; fetch via `GET /calls/{call_id}` and use `permanent_recording_url` (does not expire)
+- **Configure retries**: User wants automatic retry on no-answer; create a schedule config via `POST /schedule-configs` and reference it when placing calls
+- **Schedule future calls**: User wants to dial at a specific time; use `scheduled_at` parameter (10 minutes to 30 days ahead)
+- **Cancel/reschedule pending calls**: User wants to stop or move a scheduled call; use `DELETE /calls/{call_id}` or `PATCH /calls/{call_id}` while status is `scheduled`
+- **Receive webhooks**: User wants push notifications when calls complete; configure webhook URL in dashboard (one per organization)
+- **MCP integration**: User is working in Claude Code, Cursor, or MCP-compatible agent; use MCP server for native `createCall` and `getCall` tools
 
-**SDKs and clients:**
-- Python SDK: `pip install sarj-platform-sdk`
-- MCP Server: `https://platform-api.sarj.ai/api/v1/mcp` (OAuth auto-auth)
-- REST API: `https://platform-api.sarj.ai/api/v1`
+## Quick Reference
 
-**Primary docs:** https://platform-docs.sarj.ai
+### API Endpoints
 
-## When to use
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/health` | GET | Health check (no auth required) |
+| `/calls` | POST | Place outbound call |
+| `/calls/{call_id}` | GET | Fetch call details |
+| `/calls/{call_id}` | DELETE | Cancel pending scheduled call |
+| `/calls/{call_id}` | PATCH | Reschedule pending call |
+| `/schedule-configs` | POST | Create retry policy |
 
-Reach for this skill when:
-- A user asks to make a phone call, dial a number, or trigger an outbound call
-- You need to check call status, retrieve transcripts, or download recordings
-- You're setting up call webhooks for real-time notifications
-- You need to transcribe audio (Speech-to-Text) or generate speech (Text-to-Speech)
-- You're integrating Sarj.ai into an MCP-compatible agent (Claude Code, Cursor)
-- You need to pass template variables into a scenario or set call language
+### Call Status States
 
-Do not use this skill for:
-- Inbound call handling (Sarj.ai is outbound-only)
-- Modifying or creating scenarios (use the dashboard)
-- Generating API keys (dashboard only)
+| Status | Meaning |
+|--------|---------|
+| `queued` | Waiting to dial |
+| `in_progress` | Call is active |
+| `completed` | Call finished, report available |
+| `scheduled` | Booked for future time |
+| `no_answer` | Rang, no pickup |
+| `user_rejected` | Customer hung up or busy |
+| `failed` | Telephony failure |
+| `cancelled` | Manually cancelled |
+| `expired` | Scheduled call expired before dialing |
 
-## Quick reference
+### Authentication
 
-### Call placement
-
-| Task | Method | Required fields |
-|------|--------|-----------------|
-| Place a call | `POST /api/v1/calls` | `phone_number` (E.164), `scenario_id` (scn_*) |
-| Fetch call details | `GET /api/v1/calls/{call_id}` | `call_id` |
-| Health check | `GET /api/v1/health` | None (no auth) |
-
-### Call status progression
-
+All requests (except `/health`) require Bearer token in `Authorization` header:
 ```
-queued → in_progress → completed
-                    ↓
-              (or failed/timeout/user_rejected/voicemail)
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### Call response fields
+Get API key from https://platform.sarj.ai/api-keys (shown only once—store as env var `SARJ_API_KEY`).
 
-| Field | Type | Notes |
-|-------|------|-------|
-| `id` | string | Unique call identifier |
-| `status` | enum | queued, in_progress, completed, failed, etc. |
-| `phone_number` | string | E.164 format |
-| `scenario_id` | string | scn_-prefixed ID |
-| `recording_url` | string | Signed, time-limited download link |
-| `transcript` | array | List of {role, content} objects (user/assistant) |
-| `report` | object | Outcome assessment with success criteria (async, ~2 min) |
-| `duration` | integer | Seconds (null until call ends) |
-| `language` | enum | en, ar, ur |
+### Call Parameters
 
-### MCP tools
+| Parameter | Required | Notes |
+|-----------|----------|-------|
+| `phone_number` | Yes | E.164 format (e.g., `+966512345678`) |
+| `scenario_id` | Yes | Scenario ID from dashboard (starts with `scn_`) |
+| `language` | No | `en`, `ar`, `ur`; defaults to `ar` |
+| `variables` | No | Template variables object for scenario |
+| `scheduled_at` | No | RFC 3339 timestamp; 10 min to 30 days ahead |
+| `schedule_config_id` | No | Retry policy ID from `POST /schedule-configs` |
 
-| Tool | Purpose |
-|------|---------|
-| `createCall` | Place outbound call (POST /calls) |
-| `getCall` | Fetch call details (GET /calls/{call_id}) |
+### Response Format
 
-### Speech APIs
+All endpoints return standard envelope:
+```json
+{
+  "data": { /* response payload */ },
+  "meta": { "request_id": "..." }
+}
+```
 
-| API | Endpoint | Purpose |
-|-----|----------|---------|
-| STT | `POST https://stt-rnnt-ar.sarj.ai/openai/v1/audio/transcriptions` | Transcribe audio to text |
-| TTS | `POST https://sarj-omni-tts.sarj.ai/v1/audio/speech` | Generate speech from text |
+Errors include `error.type` (branch on this, not message):
+```json
+{
+  "error": {
+    "type": "unauthorized",
+    "message": "Authentication required."
+  },
+  "meta": { "request_id": "..." }
+}
+```
 
-## Decision guidance
+## Decision Guidance
 
-### When to use REST API vs MCP Server
-
-| Scenario | Use REST API | Use MCP Server |
-|----------|-------------|----------------|
-| Direct backend integration | ✓ | |
-| Python/Node.js application | ✓ | |
-| Claude Code / Cursor agent | | ✓ |
-| Batch call automation | ✓ | ✓ |
-| Manual API key management | ✓ | |
-| OAuth auto-auth preferred | | ✓ |
-
-### When to poll vs use webhooks
-
-| Scenario | Poll | Webhook |
-|----------|------|---------|
-| Single call, wait for result | ✓ | |
-| Batch calls, real-time updates | | ✓ |
-| Asynchronous processing | | ✓ |
-| Simple synchronous flow | ✓ | |
-| High-volume calls | | ✓ |
-
-**Note:** Reports are generated asynchronously (~2 min after completion). Polling alone is insufficient for production; use webhooks as the authoritative source.
-
-### When to use Speech APIs
-
-| Task | API | Notes |
-|------|-----|-------|
-| Transcribe call recording | STT | OpenAI-compatible |
-| Generate voice from text | TTS | Supports voice cloning |
-| Real-time transcription | STT | Streaming supported |
-| Custom voice synthesis | TTS | Clone endpoint available |
+| Scenario | Use | Why |
+|----------|-----|-----|
+| **Immediate call** | `POST /calls` without `scheduled_at` | Dials now, returns `call_id` immediately |
+| **Future call** | `POST /calls` with `scheduled_at` | Dials at specified time, status `scheduled` until release |
+| **Retry on no-answer** | Create `schedule_config`, reference in `POST /calls` | Automatic retries with configurable delay and window |
+| **No retries** | Omit `schedule_config_id` | Uses scenario's default config (if any) |
+| **Poll for updates** | `GET /calls/{call_id}` in loop | Synchronous, blocks until report available (2 min typical) |
+| **Push updates** | Configure webhook in dashboard | Asynchronous, fires when call ends; must be idempotent |
+| **Download recording** | Use `permanent_recording_url` from `GET /calls/{call_id}` | Does not expire; safe to store long-term |
+| **Download recording (legacy)** | Use `recording_url` if `permanent_recording_url` is null | Expires in 24–7 days; fetch promptly |
 
 ## Workflow
 
-### Typical call workflow
+1. **Verify API access**: Call `GET /health` to confirm API is reachable (no auth needed)
+2. **Get API key**: Sign in at https://platform.sarj.ai/api-keys, generate key, store as `SARJ_API_KEY` env var
+3. **Identify scenario**: Go to https://platform.sarj.ai/scenarios, find or create scenario, copy `scn_`-prefixed ID
+4. **Place call**: POST to `/api/v1/calls` with `phone_number`, `scenario_id`, optional `language`, `variables`, `scheduled_at`, `schedule_config_id`
+5. **Track progress**: Poll `GET /api/v1/calls/{call_id}` or configure webhook to receive updates
+6. **Wait for report**: Report (success/failure against criteria) generated asynchronously, typically within 2 minutes of completion
+7. **Retrieve data**: Extract `transcript`, `recording_url` or `permanent_recording_url`, and `report.outcome` from call detail
+8. **Handle retries**: If call failed and retry config is set, platform automatically dials again; each attempt is a separate call with its own webhook
 
-1. **Verify setup:** Call `GET /api/v1/health` to confirm API is reachable (no auth required).
+## Common Gotchas
 
-2. **Prepare call parameters:**
-   - Phone number in E.164 format (e.g., `+966512345678`)
-   - Scenario ID from dashboard (starts with `scn_`)
-   - Optional: template variables (dict), language (en/ar/ur, defaults to ar)
+- **API key shown once**: Copy immediately after generation; cannot be retrieved later. Store as env var.
+- **Report is async**: `report` field is `null` immediately after call completes. Poll again or wait for webhook. Only `completed` and `max_duration_reached` statuses get reports; other terminal statuses never do.
+- **Recording URLs expire**: `recording_url` expires in 24–7 days. Use `permanent_recording_url` (does not expire) if available; fall back to `recording_url` during rollout.
+- **Webhook must be idempotent**: Same `call_id` may arrive multiple times if your 2xx response is delayed. Deduplicate on `call_id`.
+- **Scheduled calls can only be cancelled/rescheduled while pending**: Once status changes from `scheduled` to anything else, cancel/reschedule returns 409. Check status before attempting.
+- **Retry config is create-only**: No way to fetch, list, update, or delete after creation (ships in future release). Plan ahead.
+- **Phone number format**: Must be E.164 (e.g., `+966512345678`). Invalid format returns validation error.
+- **Scenario must exist and be accessible**: Scenario ID must be valid and your API key's organization must have access. Returns `scenario_not_found` or `scenario_forbidden` if not.
+- **Language defaults to Arabic**: If not specified, `language` defaults to `ar`. Explicitly set `en` or `ur` if needed.
+- **Webhook retries are automatic**: Platform retries failed webhook deliveries up to 3 times with 2-second delay. After 3 failures, delivery is marked failed but call data is durable (re-fetch via `GET /calls/{call_id}`).
+- **Booking outcome on create**: Response includes `booking_outcome` field: `created` (new call), `rescheduled_existing` (took over existing pending call), or `kept_existing` (kept existing call). Check this to avoid assuming a second call exists.
 
-3. **Place the call:** POST to `/api/v1/calls` with phone_number, scenario_id, and optional variables/language. Returns `call_id` and initial status (queued).
-
-4. **Track the call:** Either:
-   - **Poll:** Repeatedly call `GET /api/v1/calls/{call_id}` until status is terminal (completed, failed, etc.)
-   - **Webhook:** Configure webhook URL in dashboard; Sarj.ai POSTs when call ends
-
-5. **Retrieve results:** Once completed, response includes:
-   - `recording_url` (signed, time-limited)
-   - `transcript` (array of user/assistant messages)
-   - `report` (outcome assessment, generated ~2 min after completion)
-
-6. **Handle async report:** If report is null immediately after completion, poll again or wait for webhook. Reports only exist for completed/max_duration_reached calls.
-
-### Setting up webhooks
-
-1. Prepare an HTTPS endpoint that:
-   - Returns 2xx within 10 seconds
-   - Is idempotent (deduplicates on `call_id`)
-   - Handles retries (up to 3 attempts, 2-sec delay)
-
-2. Set webhook URL in Sarj.ai Dashboard (one per organization).
-
-3. Test with "Send test webhook" button in dashboard.
-
-4. Verify with a real test call.
-
-### Using MCP Server with Claude Code
-
-1. Add server: `claude mcp add sarj-voice --transport http https://platform-api.sarj.ai/api/v1/mcp`
-
-2. On first use, browser opens Sarj.ai sign-in; API key is cached automatically.
-
-3. Prompt agent: "Call +966512345678 using scenario scn_appointment_reminder with language set to Arabic."
-
-4. Agent uses `createCall` and `getCall` tools natively.
-
-## Common gotchas
-
-- **API key shown once:** Copy and store immediately as env var. If lost, generate a new one from dashboard.
-
-- **Phone number format:** Must be E.164 (leading +, country code, no spaces/dashes). `+966512345678` ✓, `966512345678` ✗, `+966 51 234 5678` ✗
-
-- **Scenario ID required:** Cannot place a call without a valid `scn_`-prefixed scenario ID. Create scenarios in dashboard first.
-
-- **Report is async:** The `report` field is null immediately after call completion. It appears ~2 minutes later. Polling alone is unreliable; use webhooks for production.
-
-- **Recording URL is time-limited:** Download promptly or fetch a fresh URL via `GET /calls/{call_id}`.
-
-- **Webhook must be idempotent:** Same `call_id` may arrive multiple times if your response is delayed. Deduplicate on `call_id`.
-
-- **Language defaults to Arabic:** If not specified, calls default to `ar`. Explicitly set `language: "en"` or `"ur"` if needed.
-
-- **Call limits per phone number:** Hitting a per-number rate limit returns 429 with `call_limit_exceeded` error. Check error.call_limit field.
-
-- **Blocked phone numbers:** Some numbers may be blocked; error type is `phone_number_blocked`.
-
-- **Webhook signature verification not yet shipped:** For now, secure webhooks via IP allow-listing (contact support) or hard-to-guess URL path.
-
-- **Speech APIs are separate base URLs:** STT and TTS use different endpoints and require the same API key.
-
-## Verification checklist
+## Verification Checklist
 
 Before submitting work:
 
-- [ ] API key is stored securely (env var, not hardcoded)
-- [ ] Phone numbers are in E.164 format
-- [ ] Scenario ID is valid and accessible (starts with `scn_`)
-- [ ] Health check passes: `GET /api/v1/health` returns `{"data": {"status": "ok"}}`
-- [ ] Call placement returns 202 Accepted with a valid `call_id`
-- [ ] Call status progresses through expected states (queued → in_progress → completed)
-- [ ] Webhook endpoint (if used) returns 2xx within 10 seconds
-- [ ] Webhook endpoint is idempotent (deduplicates on `call_id`)
-- [ ] Recording URL is downloaded before it expires
-- [ ] Transcript and report are retrieved (report may take ~2 min)
-- [ ] Error responses branch on `error.type`, not `message`
-- [ ] Request IDs are logged for support tickets
+- [ ] API key is valid and stored securely (not in code)
+- [ ] Phone number is in E.164 format (e.g., `+966512345678`)
+- [ ] Scenario ID exists and starts with `scn_`
+- [ ] Language parameter is one of `en`, `ar`, `ur` (or omitted for default `ar`)
+- [ ] For scheduled calls: `scheduled_at` is 10+ minutes ahead and within 30 days
+- [ ] For retries: Schedule config was created and `schedule_config_id` is referenced in call
+- [ ] Webhook endpoint (if used) returns 2xx within 10 seconds and is idempotent
+- [ ] Call was placed successfully (202 Accepted response with `call_id`)
+- [ ] Call status is tracked via polling or webhook (not assumed to be complete immediately)
+- [ ] Report is checked only after call reaches terminal state (not immediately after completion)
+- [ ] Recording URL is `permanent_recording_url` if available; fall back to `recording_url` only if necessary
+- [ ] Error responses are handled by branching on `error.type`, not parsing message text
+- [ ] `meta.request_id` is logged for support tickets
 
 ## Resources
 
-**Comprehensive page listing:** https://platform-docs.sarj.ai/llms.txt
-
-**Critical documentation:**
-- [Getting Started](https://platform-docs.sarj.ai/getting-started) — API key, health check, first call
-- [API Reference](https://platform-docs.sarj.ai/api-reference) — Interactive endpoint docs with schemas
-- [MCP Server](https://platform-docs.sarj.ai/mcp-server) — Connect Claude Code, Cursor, or MCP-compatible agents
-- [Webhooks](https://platform-docs.sarj.ai/webhooks) — Configure push notifications for call completion
+- **Comprehensive page listing**: https://platform-docs.sarj.ai/llms.txt
+- **Getting Started**: https://platform-docs.sarj.ai/getting-started
+- **API Reference**: https://platform-docs.sarj.ai/api-reference
+- **MCP Server**: https://platform-docs.sarj.ai/mcp-server
+- **Webhooks**: https://platform-docs.sarj.ai/webhooks
 
 ---
 

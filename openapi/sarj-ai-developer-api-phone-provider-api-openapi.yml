@@ -1,0 +1,200 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Phone Provider API
+  version: 1.0.0
+tags:
+- name: phone-provider
+paths:
+  /v1/beta/phone-providers:
+    get:
+      tags:
+      - phone-provider
+      summary: List
+      operationId: phoneProviderList
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneProviderListResponse'
+    post:
+      tags:
+      - phone-provider
+      summary: Create
+      operationId: phoneProviderCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePhoneProviderRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneProviderMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/phone-providers/{provider_id}:
+    patch:
+      tags:
+      - phone-provider
+      summary: Update
+      operationId: phoneProviderUpdate
+      parameters:
+      - name: provider_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePhoneProviderRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneProviderMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    PhoneProviderListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneProviderListItem'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: PhoneProviderListResponse
+    CreatePhoneProviderRequest:
+      properties:
+        provider_name:
+          type: string
+          minLength: 1
+          title: Provider Name
+        type:
+          $ref: '#/components/schemas/ProviderType'
+      additionalProperties: false
+      type: object
+      required:
+      - provider_name
+      - type
+      title: CreatePhoneProviderRequest
+    ProviderStatus:
+      type: string
+      enum:
+      - active
+      - deprecated
+      title: ProviderStatus
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PhoneProviderMutationResponse:
+      properties:
+        provider_id:
+          type: string
+          title: Provider Id
+      additionalProperties: false
+      type: object
+      required:
+      - provider_id
+      title: PhoneProviderMutationResponse
+    ProviderType:
+      type: string
+      enum:
+      - carrier
+      - client_endpoint
+      title: ProviderType
+    UpdatePhoneProviderRequest:
+      properties:
+        provider_name:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+          title: Provider Name
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ProviderStatus'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      title: UpdatePhoneProviderRequest
+    PhoneProviderListItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/ProviderType'
+        status:
+          $ref: '#/components/schemas/ProviderStatus'
+        connection_count:
+          type: integer
+          title: Connection Count
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - status
+      - connection_count
+      title: PhoneProviderListItem
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

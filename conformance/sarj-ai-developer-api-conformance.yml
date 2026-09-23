@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 source: >-
   openapi/*.json, https://platform-api.sarj.ai/.well-known/oauth-authorization-server,
@@ -60,7 +60,9 @@ standards:
       application/json, not application/problem+json. Typed and discriminated, but not the IETF shape.
   - id: rfc9116-security-txt
     conforms: false
-    evidence: /.well-known/security.txt returns 404 on platform-api, platform-docs, www.sarj.ai, sarj.ai and platform.
+    evidence: >-
+      /.well-known/security.txt returns 404 on platform-api, platform-docs, www.sarj.ai, sarj.ai, blog and
+      403/401 on platform and the two speech hosts. Re-probed 2026-09-11, unchanged.
   - id: rfc8594-sunset-header
     conforms: false
     evidence: No Sunset or Deprecation headers declared in any spec; no deprecation policy published.
@@ -82,11 +84,80 @@ standards:
     evidence: >-
       cursor + limit query parameters on list operations in the platform spec. Absent from the public developer API,
       which exposes no list operation.
+  - id: agent-skills-discovery-0.2.0
+    conforms: true
+    evidence: >-
+      /.well-known/agent-skills/index.json declares $schema
+      https://schemas.agentskills.io/discovery/0.2.0/schema.json, lists one skill, and publishes a sha256
+      digest that we verified against the harvested skill.md byte-for-byte. Found 2026-09-11.
+  - id: rfc8288-web-linking
+    conforms: true
+    evidence: >-
+      platform-docs.sarj.ai returns a Link header on every response advertising six discovery documents by
+      relation type (llms-txt, llms-full-txt, api-catalog, mcp-server-card, agent-card, agent-skills). Four
+      of the six resolve. This is a genuine, unusual piece of discovery hygiene.
+  - id: rfc9727-api-catalog
+    conforms: false
+    evidence: >-
+      /.well-known/api-catalog is advertised by rel="api-catalog" in the docs host's Link header but returns
+      404 (9-byte text/plain) on every host. Advertised, not served.
+  - id: mcp-server-card
+    conforms: true
+    partial: true
+    evidence: >-
+      /.well-known/mcp/server-card.json on platform-docs.sarj.ai returns a server card for the documentation
+      MCP server, whose anonymous tools/list returns 200 with three tools and full inputSchemas. The card
+      lists two tools and omits submit_feedback, so the published card and the running server disagree.
+  - id: openapi-3.1-deprecated-keyword
+    conforms: false
+    evidence: >-
+      PublicCallDetail.recording_url is deprecated in prose ("DEPRECATED — use permanent_recording_url") but
+      carries no `deprecated: true` keyword, which OpenAPI 3.1 supports on both schemas and operations. No
+      tooling can see the deprecation.
+  - id: rfc3339-scheduled-times
+    conforms: true
+    evidence: >-
+      CreateCallRequest.scheduled_at and RescheduleCallRequest.scheduled_at are documented as "RFC 3339 with
+      timezone offset" with a worked example (2026-05-01T15:30:00+03:00), and ISO 8601 durations (PT2H, P3D)
+      are accepted for schedule-config intervals.
+  - id: iana-timezone-database
+    conforms: true
+    evidence: CreateScheduleConfigRequest.timezone is an IANA timezone name (example "Asia/Riyadh").
   - id: idempotency
     conforms: false
     evidence: >-
-      No Idempotency-Key header or equivalent in any of the four specs. POST /calls is a billable, non-idempotent
-      side-effecting operation.
+      No Idempotency-Key header or equivalent in any of the four specs. Re-checked 2026-09-11 against the
+      refreshed 7-operation developer spec: none of the four mutating operations accepts a replay key.
+      POST /calls is a billable, non-idempotent side-effecting operation. conventions/ records
+      idempotency.coverage: none.
+domain_standard_signature:
+  market: conversational voice AI / outbound telephony
+  declared_in_contract: false
+  candidates_checked:
+    - standard: E.164 numbering plan (ITU-T)
+      found: true
+      where: CreateCallRequest.phone_number, documented and exemplified
+      note: >-
+        Real and load-bearing, but E.164 is a universal numbering format rather than a market-specific
+        interchange standard — it earns the conformance entry above, not a domain-standard credit.
+    - standard: OpenAI Audio API shape
+      found: true
+      where: POST /openai/v1/audio/transcriptions and POST /v1/audio/speech on the speech hosts
+      note: >-
+        The closest thing to a domain standard Sarj.ai actually implements: a de-facto interface standard for
+        speech, declared in the contract (paths, model/voice/input/response_format parameters) and claimed in
+        the docs as drop-in compatibility. It is a vendor-originated convention rather than a standards-body
+        specification, recorded as such.
+    - standard: TM Forum / CAMARA telecom APIs
+      found: false
+    - standard: SIP / RFC 3261 signalling surfaces
+      found: partial
+      where: >-
+        The platform spec carries SIP trunk administration operations (organization-sip tag), so SIP is used
+        beneath the product, but no SIP-standard contract is exposed to callers.
+  verdict: >-
+    No market-specific domain standard is declared by the contract. This market has no mature interchange
+    standard for outbound AI voice calling, so nothing is invented to fill the slot — reward-only, not penalised.
 regional_frameworks:
   claimed_on: https://www.sarj.ai/en/
   claim_text: 'SAMA-ready NCA & SDAIA frameworks with ECC & CCC audits available'

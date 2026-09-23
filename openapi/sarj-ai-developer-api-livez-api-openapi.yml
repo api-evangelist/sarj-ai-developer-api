@@ -1,0 +1,26 @@
+openapi: 3.2.0
+info:
+  title: Sarj STT Livez API
+  description: Production Arabic speech recognition API serving the single `sarj-stt` model through OpenAI- and AWS-compatible interfaces.
+  version: 1.0.2
+tags:
+- name: Livez
+paths:
+  /livez:
+    get:
+      summary: Liveness Check
+      operationId: liveness_check_livez_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - Livez
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key

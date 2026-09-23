@@ -1,0 +1,73 @@
+generated: '2026-09-11'
+method: searched
+source: >-
+  openapi/_original/sarj-ai-developer-api-developer-openapi.json,
+  https://platform-docs.sarj.ai/llms.txt, docs MCP filesystem query
+docs: null
+limit_count: 0
+limits_published: false
+note: >-
+  Sarj.ai documents no numeric rate limit anywhere. The docs host serves fifteen pages and none mentions a
+  limit, a quota or a burst allowance — confirmed by querying the provider's own documentation MCP server
+  (`rg -il "rate limit|quota|throttle" /` against its virtual docs filesystem returned exit 1). The contract
+  does enforce at least one limit, but it is only discoverable by hitting it.
+limits: []
+response_headers:
+  published: []
+  observed: []
+  probe:
+    url: https://platform-api.sarj.ai/api/v1/health
+    http_status: 200
+    method: GET
+    headers_returned:
+      - x-request-id
+      - x-response-time
+      - x-cloud-trace-context
+    note: >-
+      An unauthenticated 200 from the production health endpoint returns request-correlation and timing headers
+      but no RateLimit-*, X-RateLimit-* or Retry-After header. There is no runtime budget signal an agent can
+      read before it is throttled.
+exhaustion:
+  status_code: 429
+  error_type: call_limit_exceeded
+  envelope: '{"error": {"type": "call_limit_exceeded", "message": "...", "phone_number": "...", "call_limit": N}, "meta": {"request_id": "..."}}'
+  scope: per-destination-phone-number
+  retry_after_header: false
+  source_operation: createCall
+  detail: >-
+    The 429 body is the only published limit signal, and it is unusually informative for a body-only signal: it
+    names the offending `phone_number` and the integer `call_limit` that was reached. The limit is per
+    destination number rather than per key or per account — a consumer-protection cap on how many times one
+    person may be dialed, not a throughput cap. Its value is not published in advance and no Retry-After tells
+    the caller when the window resets.
+related_platform_controls:
+  - control: retry policy (schedule config)
+    operation: createScheduleConfig
+    bounds:
+      max_retries: 1-10
+      wait_between: 60 seconds to 30 days
+      expire_after: 1 hour to 7 days (platform ceiling)
+      retry_window: optional daily wall-clock window in an IANA timezone
+    note: >-
+      Not a rate limit on the API, but the provider's published ceiling on how often a single person may be
+      re-dialed. These are the only hard numeric bounds Sarj.ai publishes anywhere, and they are in the spec
+      rather than in the docs.
+  - control: webhook delivery retries
+    source: https://platform-docs.sarj.ai/webhooks
+    attempts: 3
+    delay: 2 seconds
+    timeout: 10 seconds
+    note: Applies to Sarj.ai calling the consumer's endpoint, not the consumer calling Sarj.ai.
+findings:
+  - id: no-pre-flight-budget-signal
+    detail: >-
+      An agent driving createCall has no way to know how much headroom it has. The only feedback is a 429 after
+      the fact, with no Retry-After, so backoff has to be guessed. Publishing RateLimit-* response headers
+      (RFC 9331 style) would be the single cheapest agent-readiness upgrade available here.
+x-evidence:
+  - url: https://platform-api.sarj.ai/api/v1/health
+    http_status: 200
+  - url: https://platform-api.sarj.ai/api/v1/openapi.json
+    http_status: 200
+  - url: https://platform-docs.sarj.ai/llms.txt
+    http_status: 200

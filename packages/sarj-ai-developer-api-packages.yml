@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 source: https://pypi.org/pypi/sarj-platform-sdk/json
 packages:
@@ -8,6 +8,19 @@ packages:
     url: https://pypi.org/project/sarj-platform-sdk/
     install: pip install sarj-platform-sdk
     version: 0.2.0
+    published: '2026-06-12'
+    release_history:
+      - 0.1.0
+      - 0.1.1
+      - 0.1.2
+      - 0.1.3
+      - 0.2.0
+    currency_note: >-
+      Re-checked against registry metadata 2026-09-11: still 0.2.0, last published 2026-06-12 — three months
+      old and unchanged since the 2026-08 pass. In the same window the API it wraps gained four public
+      operations (cancelScheduledCall, rescheduleScheduledCall, getCallRecording, createScheduleConfig). The
+      only first-party SDK therefore cannot reach the newest half of the public contract, and because the
+      repository it declares (sarj-ai/bulbul) is private, a consumer cannot check that for themselves.
     license: Apache-2.0
     author: Sarj.ai
     requires_python: '>=3.10'
@@ -19,23 +32,40 @@ registries_probed:
   - registry: pypi
     result: hit
     package: sarj-platform-sdk
+    version: 0.2.0
+    published: '2026-06-12'
+    checked: '2026-09-11'
   - registry: npm
     result: none
+    version: null
+    checked: '2026-09-11'
     note: >-
       No first-party JavaScript/TypeScript client. The Getting Started page shows TypeScript examples using bare
       fetch(), not an SDK.
   - registry: maven-central
     result: none
+    version: null
+    checked: '2026-09-11'
   - registry: nuget
     result: none
+    version: null
+    checked: '2026-09-11'
   - registry: pkg.go.dev
     result: none
+    version: null
+    checked: '2026-09-11'
   - registry: rubygems
     result: none
+    version: null
+    checked: '2026-09-11'
   - registry: packagist
     result: none
+    version: null
+    checked: '2026-09-11'
   - registry: crates.io
     result: none
+    version: null
+    checked: '2026-09-11'
 github:
   organization: https://github.com/sarj-ai
   public_repos: 1
@@ -43,8 +73,23 @@ github:
     The org's only public repo is `standards` (internal engineering standards for Python, TypeScript, SQL and IaC).
     The SDK's declared repository, sarj-ai/bulbul, is not public — the Python SDK ships to PyPI without a readable
     source repository.
+findings:
+  - id: sdk-lags-the-contract
+    detail: >-
+      sarj-platform-sdk 0.2.0 (2026-06-12) predates the four operations the public API shipped by 2026-09-11.
+      The Getting Started guide recommends the SDK "over raw requests", so the recommended path is the one
+      that cannot cancel a call.
+  - id: declared-repository-is-private
+    detail: >-
+      The package declares repository https://github.com/sarj-ai/bulbul.git, which is not public. The SDK
+      ships to PyPI with no readable source, no issue tracker and no tags a consumer can diff.
+  - id: single-language
+    detail: >-
+      Python only. The docs show TypeScript examples throughout but they use bare fetch(); npm was re-checked
+      2026-09-11 and carries no first-party client.
 x-evidence:
   - url: https://pypi.org/pypi/sarj-platform-sdk/json
     http_status: 200
+    checked: '2026-09-11'
   - url: https://api.github.com/orgs/sarj-ai/repos
     http_status: 200

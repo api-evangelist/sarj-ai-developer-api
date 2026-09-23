@@ -1,0 +1,316 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Users API
+  version: 1.0.0
+tags:
+- name: Users
+paths:
+  /v1/beta/users/me:
+    get:
+      tags:
+      - Users
+      summary: Me
+      operationId: usersMe
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /v1/beta/users/get-many:
+    post:
+      tags:
+      - Users
+      summary: Get Many
+      operationId: usersGetMany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetManyRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                type: array
+                title: Response Usersgetmany
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/users/email/{email}:
+    get:
+      tags:
+      - Users
+      summary: Get User By Email
+      operationId: usersGetUserByEmail
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          title: The email of the user to get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
+                title: Response Usersgetuserbyemail
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/users/:
+    post:
+      tags:
+      - Users
+      summary: Upsert
+      operationId: usersUpsert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/users/add-users-to-organization:
+    post:
+      tags:
+      - Users
+      summary: Add Users To Organization
+      operationId: usersAddUsersToOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUsersToOrganization'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/users/{user_id}/role:
+    put:
+      tags:
+      - Users
+      summary: Update User Role
+      operationId: usersUpdateUserRole
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: The ID of the user to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRole'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/organizations/{organization_id}/users:
+    get:
+      tags:
+      - Users
+      summary: List Organization Users
+      operationId: organizationsListOrganizationUsers
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Organization Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                title: Response Organizationslistorganizationusers
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/organizations/users/no-organization:
+    get:
+      tags:
+      - Users
+      summary: List Users With No Organization
+      operationId: organizationsListUsersWithNoOrganization
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                type: array
+                title: Response Organizationslistuserswithnoorganization
+components:
+  schemas:
+    GetManyRequest:
+      properties:
+        ids:
+          items:
+            type: string
+          type: array
+          title: Ids
+      type: object
+      required:
+      - ids
+      title: GetManyRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CreateUserRequest:
+      properties:
+        email:
+          type: string
+          title: Email
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      type: object
+      required:
+      - email
+      title: CreateUserRequest
+    User:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        email:
+          type: string
+          title: Email
+        role:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+      required:
+      - id
+      - email
+      - role
+      title: User
+    AddUsersToOrganization:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        user_ids:
+          items:
+            type: string
+          type: array
+          title: User Ids
+      type: object
+      required:
+      - organization_id
+      - user_ids
+      title: AddUsersToOrganization
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserRole:
+      type: string
+      enum:
+      - user
+      - admin
+      - superadmin
+      title: UserRole
+    UpdateUserRole:
+      properties:
+        role:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+      required:
+      - role
+      title: UpdateUserRole

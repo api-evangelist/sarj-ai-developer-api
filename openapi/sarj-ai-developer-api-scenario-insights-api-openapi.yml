@@ -1,0 +1,210 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Scenario Insights API
+  version: 1.0.0
+tags:
+- name: scenario-insights
+paths:
+  /v1/beta/scenario-insights:
+    get:
+      tags:
+      - scenario-insights
+      summary: List For Scenario
+      operationId: scenarioInsightsListForScenario
+      parameters:
+      - name: scenario_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Scenario Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 50
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScenarioInsightWithCallCount'
+                title: Response Scenarioinsightslistforscenario
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/scenario-insights/{scenario_insight_id}/calls:
+    get:
+      tags:
+      - scenario-insights
+      summary: List Calls For Insight
+      operationId: scenarioInsightsListCallsForInsight
+      parameters:
+      - name: scenario_insight_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Scenario Insight Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 50
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InsightCall'
+                title: Response Scenarioinsightslistcallsforinsight
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    InsightCategory:
+      type: string
+      enum:
+      - tool
+      - prompt
+      - knowledge
+      - platform
+      title: InsightCategory
+      description: What kind of change to the agent resolves the insight.
+    InsightCall:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        duration_seconds:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Seconds
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - created_at
+      - phone_number
+      - status
+      - duration_seconds
+      title: InsightCall
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ScenarioInsightWithCallCount:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        custom_scenario_id:
+          type: string
+          title: Custom Scenario Id
+        title:
+          type: string
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        category:
+          anyOf:
+          - $ref: '#/components/schemas/InsightCategory'
+          - type: 'null'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        call_count:
+          type: integer
+          minimum: 0.0
+          title: Call Count
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - custom_scenario_id
+      - title
+      - description
+      - category
+      - created_at
+      - updated_at
+      - call_count
+      title: ScenarioInsightWithCallCount

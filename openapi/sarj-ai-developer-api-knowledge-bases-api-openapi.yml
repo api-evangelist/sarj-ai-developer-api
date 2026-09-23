@@ -1,0 +1,617 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Knowledge Bases API
+  version: 1.0.0
+tags:
+- name: Knowledge Bases
+paths:
+  /v1/beta/knowledge-bases/:
+    put:
+      tags:
+      - Knowledge Bases
+      summary: Upsert Knowledge Base
+      operationId: knowledgeBasesUpsertKnowledgeBase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertKnowledgeBase'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeBase'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/list:
+    post:
+      tags:
+      - Knowledge Bases
+      summary: List Knowledge Bases
+      operationId: knowledgeBasesListKnowledgeBases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListKnowledgeBasesFilter'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListKnowledgeBasesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/{knowledge_base_id}:
+    get:
+      tags:
+      - Knowledge Bases
+      summary: Get Knowledge Base
+      operationId: knowledgeBasesGetKnowledgeBase
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeBaseWithFiles'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Knowledge Bases
+      summary: Delete Knowledge Base
+      operationId: knowledgeBasesDeleteKnowledgeBase
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/{knowledge_base_id}/files/upload-url:
+    post:
+      tags:
+      - Knowledge Bases
+      summary: Generate Upload Url
+      operationId: knowledgeBasesGenerateUploadUrl
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeBaseUploadUrlRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreSignedUrlResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/{knowledge_base_id}/files/confirm-upload:
+    post:
+      tags:
+      - Knowledge Bases
+      summary: Confirm Upload
+      operationId: knowledgeBasesConfirmUpload
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmUploadRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeBaseFile'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/{knowledge_base_id}/files/{file_id}/download-url:
+    get:
+      tags:
+      - Knowledge Bases
+      summary: Generate Download Url
+      operationId: knowledgeBasesGenerateDownloadUrl
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: File ID
+          title: File Id
+        description: File ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadUrlResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/knowledge-bases/{knowledge_base_id}/files/{file_id}:
+    delete:
+      tags:
+      - Knowledge Bases
+      summary: Delete Knowledge Base File
+      operationId: knowledgeBasesDeleteKnowledgeBaseFile
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Knowledge Base ID
+          title: Knowledge Base Id
+        description: Knowledge Base ID
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: File ID
+          title: File Id
+        description: File ID
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    KnowledgeBase:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        title:
+          type: string
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - title
+      - created_at
+      - updated_at
+      title: KnowledgeBase
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ListKnowledgeBasesFilter:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        search:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Search
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 10
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+      type: object
+      required:
+      - organization_id
+      title: ListKnowledgeBasesFilter
+    KnowledgeBaseUploadUrlRequest:
+      properties:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+        content_type:
+          type: string
+          title: Content Type
+          default: text/plain; charset=utf-8
+      type: object
+      required:
+      - language_code
+      title: KnowledgeBaseUploadUrlRequest
+    PreSignedUrlResponse:
+      properties:
+        upload_url:
+          type: string
+          title: Upload Url
+        file_key:
+          type: string
+          title: File Key
+      type: object
+      required:
+      - upload_url
+      - file_key
+      title: PreSignedUrlResponse
+    ConfirmUploadRequest:
+      properties:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        file_key:
+          type: string
+          maxLength: 2048
+          minLength: 1
+          title: File Key
+        byte_size:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Byte Size
+        character_count:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Character Count
+        filename:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Filename
+      type: object
+      required:
+      - language_code
+      - file_key
+      - byte_size
+      - character_count
+      title: ConfirmUploadRequest
+    ListKnowledgeBasesResponse:
+      properties:
+        knowledge_bases:
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseListItem'
+          type: array
+          title: Knowledge Bases
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - knowledge_bases
+      title: ListKnowledgeBasesResponse
+    UpsertKnowledgeBase:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        title:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+          - type: 'null'
+          title: Title
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - organization_id
+      title: UpsertKnowledgeBase
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    KnowledgeBaseWithFiles:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        title:
+          type: string
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        files:
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseFile'
+          type: array
+          title: Files
+      type: object
+      required:
+      - id
+      - organization_id
+      - title
+      - created_at
+      - updated_at
+      - files
+      title: KnowledgeBaseWithFiles
+    KnowledgeBaseListItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        title:
+          type: string
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        last_file_updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last File Updated By
+        languages:
+          items:
+            $ref: '#/components/schemas/Language'
+          type: array
+          title: Languages
+        byte_size_by_language:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Byte Size By Language
+        character_count_by_language:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Character Count By Language
+      type: object
+      required:
+      - id
+      - organization_id
+      - title
+      - created_at
+      - updated_at
+      title: KnowledgeBaseListItem
+    KnowledgeBaseFile:
+      properties:
+        id:
+          type: string
+          title: Id
+        knowledge_base_id:
+          type: string
+          title: Knowledge Base Id
+        organization_id:
+          type: string
+          title: Organization Id
+        language_code:
+          $ref: '#/components/schemas/Language'
+        filename:
+          type: string
+          title: Filename
+        storage_path:
+          type: string
+          title: Storage Path
+        byte_size:
+          type: integer
+          title: Byte Size
+        character_count:
+          type: integer
+          title: Character Count
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+      type: object
+      required:
+      - id
+      - knowledge_base_id
+      - organization_id
+      - language_code
+      - filename
+      - storage_path
+      - byte_size
+      - character_count
+      - created_at
+      - updated_at
+      title: KnowledgeBaseFile
+    DownloadUrlResponse:
+      properties:
+        download_url:
+          type: string
+          title: Download Url
+      type: object
+      required:
+      - download_url
+      title: DownloadUrlResponse

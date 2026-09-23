@@ -1,0 +1,264 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Organization Batch Settings API
+  version: 1.0.0
+tags:
+- name: organization-batch-settings
+paths:
+  /v1/beta/organizations/{organization_id}/batch-settings:
+    get:
+      tags:
+      - organization-batch-settings
+      summary: Get Organization Batch Settings
+      operationId: organizationsGetOrganizationBatchSettings
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Organization Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationBatchSettingsResponse'
+        '404':
+          description: No batch settings default found for this organization
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - organization-batch-settings
+      summary: Update Organization Batch Settings
+      operationId: organizationsUpdateOrganizationBatchSettings
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Organization Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationBatchSettingsRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationBatchSettingsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - organization-batch-settings
+      summary: Delete Organization Batch Settings
+      operationId: organizationsDeleteOrganizationBatchSettings
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Organization Id
+      responses:
+        '204':
+          description: Successful Response
+        '404':
+          description: No batch settings default found for this organization
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    TimeWindow:
+      properties:
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
+      additionalProperties: false
+      type: object
+      required:
+      - start_edge
+      - end_edge
+      title: TimeWindow
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RetrySettings:
+      properties:
+        retry_interval_seconds:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Retry Interval Seconds
+        max_retry_attempts:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Max Retry Attempts
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+      type: object
+      required:
+      - retry_interval_seconds
+      - max_retry_attempts
+      title: RetrySettings
+    UpdateOrganizationBatchSettingsRequest:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationBatchCallDefaults'
+      type: object
+      required:
+      - data
+      title: UpdateOrganizationBatchSettingsRequest
+    OrganizationBatchCallDefaults:
+      properties:
+        calling_window:
+          $ref: '#/components/schemas/TimeWindow'
+        display_time_zone:
+          type: string
+          title: Display Time Zone
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettings'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - calling_window
+      - display_time_zone
+      title: OrganizationBatchCallDefaults
+      description: 'Write-side contract: what an admin is allowed to store as the default.
+
+
+        Subclasses the stored shape so a value that passes here is always readable
+
+        back, never the reverse.'
+    StoredBatchCallDefaults:
+      properties:
+        calling_window:
+          $ref: '#/components/schemas/TimeWindow'
+        display_time_zone:
+          type: string
+          title: Display Time Zone
+        retry_settings:
+          anyOf:
+          - $ref: '#/components/schemas/RetrySettings'
+          - type: 'null'
+      type: object
+      required:
+      - calling_window
+      - display_time_zone
+      title: StoredBatchCallDefaults
+      description: 'Read-side shape of the persisted `settings_data` JSONB.
+
+
+        Deliberately lenient, for the same reason `DeprecatedBatchSettings`
+
+        (batch_call_store) is: a row written under an older contract must stay
+
+        readable. Reading through the write-time contract instead would make a
+
+        stale row raise inside psycopg''s row factory, so `get()` 500s rather than
+
+        404s — and both callers only swallow 404, so the Create Batch page and the
+
+        admin page go down together for that org. The "Reset to platform defaults"
+
+        button that would clear the row lives on the page that just failed to
+
+        render, so the org cannot unlock itself.
+
+
+        Every write goes through `OrganizationBatchCallDefaults` below, so a row
+
+        only lands out of contract when the contract itself tightens.'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OrganizationBatchSettingsResponse:
+      properties:
+        settings:
+          $ref: '#/components/schemas/StoredBatchCallDefaults'
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Email
+      type: object
+      required:
+      - settings
+      - updated_at
+      - updated_by_email
+      title: OrganizationBatchSettingsResponse
+    TimeEdge:
+      properties:
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
+      additionalProperties: false
+      type: object
+      required:
+      - hour
+      - minute
+      title: TimeEdge

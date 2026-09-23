@@ -1,8 +1,8 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 source: >-
   https://platform-docs.sarj.ai/sitemap.xml, https://platform-docs.sarj.ai/getting-started,
-  openapi/sarj-ai-developer-api-developer-openapi.json, openapi/sarj-ai-developer-api-voice-platform-openapi.json
+  openapi/_original/sarj-ai-developer-api-developer-openapi.json, openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json
 versioning:
   scheme: uri-path
   current: v1
@@ -10,17 +10,17 @@ versioning:
   policy_url: null
   policy_published: false
   spec_versions:
-    - spec: openapi/sarj-ai-developer-api-developer-openapi.json
+    - spec: openapi/_original/sarj-ai-developer-api-developer-openapi.json
       info_version: 1.0.0
       openapi: 3.1.0
       license: Apache-2.0
-    - spec: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+    - spec: openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json
       info_version: 1.0.0
       openapi: 3.1.0
-    - spec: openapi/sarj-ai-developer-api-stt-openapi.json
+    - spec: openapi/_original/sarj-ai-developer-api-stt-openapi.json
       info_version: 1.0.2
       openapi: 3.1.0
-    - spec: openapi/sarj-ai-developer-api-tts-openapi.json
+    - spec: openapi/_original/sarj-ai-developer-api-tts-openapi.json
       info_version: 0.3.0
       openapi: 3.1.0
   stability:
@@ -36,19 +36,40 @@ deprecation:
   deprecation_header: false
   rfc8594: false
   detail: >-
-    No deprecation policy is published and no operation in any of the four harvested specs carries `deprecated: true`.
-    No Sunset or Deprecation response headers are declared. There is no stated notice period for breaking changes.
+    No deprecation policy is published and no operation in any of the four harvested specs carries
+    `deprecated: true`. No Sunset or Deprecation response headers are declared. There is no stated notice
+    period for breaking changes. The 2026-09 refresh did find the provider deprecating in practice, at the
+    FIELD level, with no policy behind it — see deprecated_fields below.
 deprecated_operations: []
+deprecated_fields:
+  - field: PublicCallDetail.recording_url
+    replacement: PublicCallDetail.permanent_recording_url
+    marker: prose in the field description ("DEPRECATED — use `permanent_recording_url`")
+    machine_readable: false
+    sunset_date: null
+    source: openapi/_original/sarj-ai-developer-api-developer-openapi.json
+    detail: >-
+      Found 2026-09-11. The spec says the deprecated field's signed URL "expires 24 hours after issue once
+      the recording-endpoint rollout is enabled on this deployment (7 days before then)". The expiry of a
+      field an integrator is already using therefore depends on a rollout flag the caller cannot observe,
+      announced nowhere, with no date attached. JSON Schema has a `deprecated: true` keyword and OpenAPI 3.1
+      honours it; the field does not carry it, so no tooling will flag it.
+    finding: >-
+      This is the first observed breaking-ish change on the public contract, and it demonstrates the gap the
+      missing deprecation policy leaves: the change is real, it is dated by an internal flag, and the only
+      notice is a word in a description.
 changelog:
   published: false
   probe:
     url: https://platform-docs.sarj.ai/changelog
-    http_status: 200
-    verdict: soft-404
+    http_status: 308
+    verdict: absent
     detail: >-
-      Returns HTTP 200 but the body is the Mintlify single-page-app shell (203368 bytes — byte-identical in size to
-      the shell returned for /.well-known/openid-configuration and other non-existent paths). The docs sitemap lists
-      ten pages and none of them is a changelog. Recorded as absent, not present.
+      Re-probed 2026-09-11. The soft-404 is gone — the docs host now answers 308 with Location: / for unknown
+      paths, which is an honest absence rather than a fake 200. The sitemap lists thirteen pages and none is a
+      changelog. The four public operations that shipped between 2026-08 and 2026-09 were announced nowhere:
+      an integrator could only discover cancel, reschedule, recording redirect and schedule configs by
+      re-reading the OpenAPI.
 sla:
   url: null
   uptime_target: null
@@ -57,13 +78,22 @@ sla:
     on www.sarj.ai, but no SLA document, uptime target or credit schedule is published.
 status_page:
   published: false
+  publicly_readable: false
+  gated: true
   probe:
     url: https://status.sarj.ai
-    http_status: 302
+    http_status: 200
+    resolves_to: https://main-bulbul-pages.cloudflareaccess.com/cdn-cgi/access/login/status.sarj.ai
     detail: >-
-      status.sarj.ai resolves and returns 200 after redirects, but the served document contains zero occurrences of
-      "operational", "uptime", "incident", "status" or "degraded", and its title is "302 Found". It is a redirect
-      landing page, not a status page. No StatusPage pointer is emitted.
+      CHANGED since 2026-08, and it is worth stating precisely. status.sarj.ai is no longer a bare redirect
+      landing page: it is now a real application sitting behind Cloudflare Access. A request is 302'd to a
+      Cloudflare Access sign-in page ("Sign in ・ Cloudflare Access", 35354 bytes) with an Access JWT
+      challenge naming hostname status.sarj.ai. Something is deployed there. It is not a bot challenge we
+      could pass with a browser User-Agent — it is an identity gate, so an integrator without a Sarj.ai
+      identity cannot read it and cannot subscribe to it.
+    verdict: >-
+      Exists but is not a public status page. No StatusPage pointer is emitted: the check asks whether a
+      consumer can see incident state, and here they cannot.
   health_endpoints:
     - operationId: getHealth
       url: https://platform-api.sarj.ai/api/v1/health
@@ -71,10 +101,10 @@ status_page:
       response: '{"data": {"status": "ok"}, "meta": {"request_id": "..."}}'
     - operationId: healthLiveness
       path: /health/liveness
-      source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+      source: openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json
     - operationId: healthReadiness
       path: /health/readiness
-      source: openapi/sarj-ai-developer-api-voice-platform-openapi.json
+      source: openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json
     - operationId: health_check_health_get
       url: https://stt-rnnt-ar.sarj.ai/health
     - operationId: health_health_get
@@ -84,12 +114,44 @@ status_page:
     but there is no first-party incident history or subscribeable status feed.
 roadmap:
   published: false
+  note: >-
+    The nearest thing to a published roadmap is a sentence inside the createScheduleConfig description:
+    "This endpoint is create-only today — there is no way to fetch, list, update, or disable a config after
+    creation; that ships in a follow-up." A commitment to future work stated in an operation description is
+    better than silence, but it is not a roadmap and carries no date.
+spec_drift_observed:
+  window: 2026-08-09 to 2026-09-11
+  public_developer_api:
+    operations_before: 3
+    operations_after: 7
+    added:
+      - cancelScheduledCall
+      - rescheduleScheduledCall
+      - getCallRecording
+      - createScheduleConfig
+  platform_api:
+    operations_before: 99
+    operations_after: 231
+  agent_surface_changes:
+    - The published Agent Skill was rewritten and expanded (9532 -> 9696 bytes).
+    - The agent card's skill description was rewritten to cover scheduling and retries.
+    - A documentation MCP server card and an agent-skills discovery index appeared.
+  announced_anywhere: false
+  detail: >-
+    A month of substantial, additive contract change with no changelog, no version bump (info.version is
+    still 1.0.0 on both specs) and no notification surface. The provider is maintaining its agent-facing
+    documents carefully and its change-communication surface not at all.
 findings:
   - id: no-change-communication
     detail: >-
       No changelog, no deprecation policy, no Sunset headers and no roadmap. An integrator has no published mechanism
       to learn that anything changed. Combined with a mostly-beta path namespace, this is the weakest area of the
       provider's operational posture.
+  - id: additive-change-without-announcement
+    detail: >-
+      Four public operations shipped in a month behind an unchanged info.version of 1.0.0. Additive change is
+      safe, so nothing broke — but an integrator has no mechanism to learn that the API can now cancel a call,
+      which is the single most useful thing it gained.
   - id: version-drift-across-services
     detail: >-
       Four specs at four different info.version values (1.0.0, 1.0.0, 1.0.2, 0.3.0) with no shared release train and

@@ -1,20 +1,27 @@
 openapi: 3.2.0
 info:
-  title: Sarj.ai Voice Salesforce API
+  title: Sarj.ai Voice Salesforce Integration API
   version: 1.0.0
 tags:
-- name: salesforce
+- name: salesforce-integration
 paths:
   /v1/beta/integrations/salesforce/authorize:
     get:
       tags:
-      - salesforce
+      - salesforce-integration
       summary: Authorize
-      description: "Return the Salesforce authorization URL for the front-end to redirect to.\n\nCalled\
-        \ server-side by the authenticated front-end so the signed\n``state`` can be bound to the caller's\
-        \ organization.\n\nReturns:\n    The authorization URL for the front-end to redirect the user\
-        \ to."
-      operationId: integrationsAuthorize
+      description: 'Return the Salesforce authorization URL for the front-end to redirect to.
+
+
+        Called server-side by the authenticated front-end so the signed
+
+        ``state`` can be bound to the caller''s organization.
+
+
+        Returns:
+
+        The authorization URL for the front-end to redirect the user to.'
+      operationId: salesforceIntegrationAuthorize
       responses:
         '200':
           description: Successful Response
@@ -25,13 +32,20 @@ paths:
   /v1/beta/integrations/salesforce/callback:
     get:
       tags:
-      - salesforce
+      - salesforce-integration
       summary: Salesforce Callback
-      description: "Salesforce redirects the browser here, then we bounce back to the app.\n\nOn denied\
-        \ consent Salesforce redirects with ``error`` and no ``code``,\nso both are optional and the error\
-        \ path is handled explicitly.\n\nReturns:\n    A redirect back to the app with the success or\
-        \ error outcome."
-      operationId: integrationsSalesforceCallback
+      description: 'Salesforce redirects the browser here, then we bounce back to the app.
+
+
+        On denied consent Salesforce redirects with ``error`` and no ``code``,
+
+        so both are optional and the error path is handled explicitly.
+
+
+        Returns:
+
+        A redirect back to the app with the success or error outcome.'
+      operationId: salesforceIntegrationSalesforceCallback
       parameters:
       - name: state
         in: query
@@ -77,15 +91,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    SalesforceAuthorizationUrl:
-      properties:
-        authorization_url:
-          type: string
-          title: Authorization Url
-      type: object
-      required:
-      - authorization_url
-      title: SalesforceAuthorizationUrl
     ValidationError:
       properties:
         loc:
@@ -121,3 +126,12 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    SalesforceAuthorizationUrl:
+      properties:
+        authorization_url:
+          type: string
+          title: Authorization Url
+      type: object
+      required:
+      - authorization_url
+      title: SalesforceAuthorizationUrl

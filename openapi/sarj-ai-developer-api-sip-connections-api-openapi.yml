@@ -1,0 +1,975 @@
+openapi: 3.2.0
+info:
+  title: Sarj.ai Voice Sip Connections API
+  version: 1.0.0
+tags:
+- name: sip-connections
+paths:
+  /v1/beta/sip-connections/adopt:
+    post:
+      tags:
+      - sip-connections
+      summary: Adopt
+      operationId: sipConnectionsAdopt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdoptSipConnectionRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SipConnectionMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/sip-connections/draft:
+    post:
+      tags:
+      - sip-connections
+      summary: Create Sip Connection Draft
+      operationId: sipConnectionsCreateSipConnectionDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSipConnectionRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SipConnectionMutationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/sip-connections/{sip_connection_id}/dispatcher-destinations:
+    get:
+      tags:
+      - sip-connections
+      summary: List Dispatcher Destinations
+      operationId: sipConnectionsListDispatcherDestinations
+      parameters:
+      - name: sip_connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Sip Connection Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DispatcherDestinationListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/sip-connections/{sip_connection_id}/dispatcher-destinations/no-ping:
+    post:
+      tags:
+      - sip-connections
+      summary: Set Dispatcher Destination No Ping
+      operationId: sipConnectionsSetDispatcherDestinationNoPing
+      parameters:
+      - name: sip_connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Sip Connection Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDispatcherNoPingRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SipVerificationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/sip-connections/{sip_connection_id}/bell-state:
+    get:
+      tags:
+      - sip-connections
+      summary: Get Connection Telephony State
+      operationId: sipConnectionsGetConnectionBellState
+      parameters:
+      - name: sip_connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Sip Connection Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionTelephonyStateResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/beta/telephony/livekit-trunks:
+    get:
+      tags:
+      - sip-connections
+      summary: List Livekit Trunks
+      operationId: sipConnectionsListLivekitTrunks
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivekitTrunkListResponse'
+components:
+  schemas:
+    LivekitDirectConnectionConfig:
+      properties:
+        path:
+          type: string
+          const: livekit_direct
+          title: Path
+          default: livekit_direct
+        livekit_inbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Inbound Trunk Id
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
+      additionalProperties: false
+      type: object
+      required:
+      - livekit_inbound_trunk_id
+      - livekit_outbound_trunk_id
+      title: LivekitDirectConnectionConfig
+    DigestCredentials:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          format: password
+          title: Password
+          writeOnly: true
+      additionalProperties: false
+      type: object
+      required:
+      - username
+      - password
+      title: DigestCredentials
+    OutboundDestination:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        state:
+          $ref: '#/components/schemas/DispatcherState'
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+      additionalProperties: false
+      type: object
+      required:
+      - uri
+      - state
+      - priority
+      title: OutboundDestination
+    SipConnection:
+      properties:
+        id:
+          type: string
+          title: Id
+        provider_id:
+          type: string
+          title: Provider Id
+        organization_id:
+          type: string
+          title: Organization Id
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformSipConnectionConfig'
+          - $ref: '#/components/schemas/LivekitDirectConnectionConfig'
+          title: Config
+          discriminator:
+            propertyName: path
+            mapping:
+              livekit_direct: '#/components/schemas/LivekitDirectConnectionConfig'
+              platform_sip: '#/components/schemas/PlatformSipConnectionConfig'
+        transport:
+          $ref: '#/components/schemas/Transport'
+        number_format:
+          $ref: '#/components/schemas/NumberFormat'
+        status:
+          $ref: '#/components/schemas/SipConnectionStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - provider_id
+      - organization_id
+      - config
+      - transport
+      - number_format
+      - status
+      - created_at
+      - updated_at
+      title: SipConnection
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    VerificationCheckStatus:
+      type: string
+      enum:
+      - passed
+      - pending
+      title: VerificationCheckStatus
+    VerificationCheckName:
+      type: string
+      enum:
+      - dispatcher_destinations_active
+      - inbound_addresses_whitelisted
+      - digest_registration
+      title: VerificationCheckName
+    RpcContact:
+      properties:
+        address:
+          type: string
+          title: Address
+        expires:
+          type: integer
+          title: Expires
+        q:
+          type: number
+          title: Q
+        user_agent:
+          type: string
+          title: User Agent
+      additionalProperties: false
+      type: object
+      required:
+      - address
+      - expires
+      - q
+      - user_agent
+      title: RpcContact
+    SipConnectionStatus:
+      type: string
+      enum:
+      - pending_verification
+      - active
+      - disabled
+      title: SipConnectionStatus
+    ConnectionDraft:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogProviderChoice'
+          - $ref: '#/components/schemas/CustomProviderChoice'
+          title: Provider
+          discriminator:
+            propertyName: kind
+            mapping:
+              catalog: '#/components/schemas/CatalogProviderChoice'
+              custom: '#/components/schemas/CustomProviderChoice'
+        provisioned_number_ids:
+          items:
+            type: string
+          type: array
+          title: Provisioned Number Ids
+        transport:
+          $ref: '#/components/schemas/Transport'
+          default: udp
+        number_format:
+          $ref: '#/components/schemas/NumberFormat'
+          default: e164
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - provider
+      title: ConnectionDraft
+    IpEndpointSpec:
+      properties:
+        auth_kind:
+          type: string
+          const: ip
+          title: Auth Kind
+          default: ip
+        outbound_destination:
+          anyOf:
+          - $ref: '#/components/schemas/DispatcherDestination'
+          - type: 'null'
+        inbound_addresses:
+          items:
+            $ref: '#/components/schemas/InboundSignalingAddress'
+          type: array
+          title: Inbound Addresses
+      additionalProperties: false
+      type: object
+      title: IpEndpointSpec
+    SIPInboundRuleInfo:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        numbers:
+          items:
+            type: string
+          type: array
+          title: Numbers
+        metadata:
+          type: string
+          title: Metadata
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - sip_trunk_id
+      - numbers
+      - metadata
+      - name
+      title: SIPInboundRuleInfo
+    CatalogProviderChoice:
+      properties:
+        kind:
+          type: string
+          const: catalog
+          title: Kind
+          default: catalog
+        provider_id:
+          type: string
+          title: Provider Id
+      additionalProperties: false
+      type: object
+      required:
+      - provider_id
+      title: CatalogProviderChoice
+    VerificationCheck:
+      properties:
+        name:
+          $ref: '#/components/schemas/VerificationCheckName'
+        status:
+          $ref: '#/components/schemas/VerificationCheckStatus'
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - status
+      title: VerificationCheck
+    SipVerificationResponse:
+      properties:
+        status:
+          $ref: '#/components/schemas/SipConnectionStatus'
+        checks:
+          items:
+            $ref: '#/components/schemas/VerificationCheck'
+          type: array
+          title: Checks
+      additionalProperties: false
+      type: object
+      required:
+      - status
+      - checks
+      title: SipVerificationResponse
+    DigestEndpointSpec:
+      properties:
+        auth_kind:
+          type: string
+          const: digest
+          title: Auth Kind
+          default: digest
+        outbound_destination:
+          anyOf:
+          - $ref: '#/components/schemas/DispatcherDestination'
+          - type: 'null'
+        digest_credentials:
+          $ref: '#/components/schemas/DigestCredentials'
+      additionalProperties: false
+      type: object
+      required:
+      - digest_credentials
+      title: DigestEndpointSpec
+    PlatformSipAdoptionSpec:
+      properties:
+        path:
+          type: string
+          const: platform_sip
+          title: Path
+          default: platform_sip
+        outbound_setid:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Outbound Setid
+        outbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Outbound Auth Username
+        inbound_group_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Inbound Group Id
+        inbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inbound Auth Username
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
+      additionalProperties: false
+      type: object
+      title: PlatformSipAdoptionSpec
+      description: Existing Kamailio ids to model as a connection, adopted as-is.
+    SetDispatcherNoPingRequest:
+      properties:
+        destination:
+          type: string
+          minLength: 1
+          title: Destination
+        no_ping:
+          type: boolean
+          title: No Ping
+      additionalProperties: false
+      type: object
+      required:
+      - destination
+      - no_ping
+      title: SetDispatcherNoPingRequest
+    CustomProviderChoice:
+      properties:
+        kind:
+          type: string
+          const: custom
+          title: Kind
+          default: custom
+        provider_name:
+          type: string
+          title: Provider Name
+      additionalProperties: false
+      type: object
+      required:
+      - provider_name
+      title: CustomProviderChoice
+    LivekitTrunkListResponse:
+      properties:
+        inbound:
+          items:
+            $ref: '#/components/schemas/SIPInboundRuleInfo'
+          type: array
+          title: Inbound
+        outbound:
+          items:
+            $ref: '#/components/schemas/SIPOutboundRuleInfo'
+          type: array
+          title: Outbound
+        claimed_trunk_ids:
+          items:
+            type: string
+          type: array
+          title: Claimed Trunk Ids
+      additionalProperties: false
+      type: object
+      required:
+      - inbound
+      - outbound
+      - claimed_trunk_ids
+      title: LivekitTrunkListResponse
+    InboundSignalingAddress:
+      properties:
+        ip:
+          type: string
+          title: Ip
+        mask:
+          type: integer
+          maximum: 128.0
+          minimum: 0.0
+          title: Mask
+          default: 32
+        port:
+          type: integer
+          maximum: 65535.0
+          minimum: 0.0
+          title: Port
+          default: 0
+        tag:
+          type: string
+          title: Tag
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - ip
+      title: InboundSignalingAddress
+    RpcAddressEntry:
+      properties:
+        table:
+          type: integer
+          minimum: 0.0
+          title: Table
+        group:
+          type: integer
+          minimum: 0.0
+          title: Group
+        ip:
+          type: string
+          title: Ip
+        port:
+          type: integer
+          maximum: 65535.0
+          minimum: 0.0
+          title: Port
+        tag:
+          type: string
+          title: Tag
+      additionalProperties: false
+      type: object
+      required:
+      - table
+      - group
+      - ip
+      - port
+      - tag
+      title: RpcAddressEntry
+    RpcDispatcherSet:
+      properties:
+        id:
+          type: integer
+          minimum: 0.0
+          title: Id
+        gateways:
+          items:
+            $ref: '#/components/schemas/RpcGateway'
+          type: array
+          title: Gateways
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - gateways
+      title: RpcDispatcherSet
+    TelephonySectionName:
+      type: string
+      enum:
+      - dispatcher_sets
+      - addresses
+      - subnets
+      - registrations
+      - subscribers
+      - routers
+      - allocations
+      title: TelephonySectionName
+    CreateSipConnectionRequest:
+      properties:
+        draft:
+          $ref: '#/components/schemas/ConnectionDraft'
+        spec:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/IpEndpointSpec'
+            - $ref: '#/components/schemas/DigestEndpointSpec'
+            discriminator:
+              propertyName: auth_kind
+              mapping:
+                digest: '#/components/schemas/DigestEndpointSpec'
+                ip: '#/components/schemas/IpEndpointSpec'
+          - type: 'null'
+          title: Spec
+      additionalProperties: false
+      type: object
+      required:
+      - draft
+      title: CreateSipConnectionRequest
+    DispatcherDestinationListResponse:
+      properties:
+        destinations:
+          items:
+            $ref: '#/components/schemas/OutboundDestination'
+          type: array
+          title: Destinations
+      additionalProperties: false
+      type: object
+      required:
+      - destinations
+      title: DispatcherDestinationListResponse
+    NumberFormat:
+      type: string
+      enum:
+      - e164
+      - no_plus
+      title: NumberFormat
+    SIPOutboundRuleInfo:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        numbers:
+          items:
+            type: string
+          type: array
+          title: Numbers
+        metadata:
+          type: string
+          title: Metadata
+        name:
+          type: string
+          title: Name
+        address:
+          type: string
+          title: Address
+        auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Username
+      type: object
+      required:
+      - sip_trunk_id
+      - numbers
+      - metadata
+      - name
+      - address
+      title: SIPOutboundRuleInfo
+    DispatcherState:
+      type: string
+      enum:
+      - a
+      - i
+      - d
+      - t
+      title: DispatcherState
+      description: Destination states accepted by Kamailio's dispatcher.set_state RPC.
+    RpcRegistration:
+      properties:
+        aor:
+          type: string
+          title: Aor
+        contacts:
+          items:
+            $ref: '#/components/schemas/RpcContact'
+          type: array
+          title: Contacts
+      additionalProperties: false
+      type: object
+      required:
+      - aor
+      - contacts
+      title: RpcRegistration
+    LivekitDirectAdoptionSpec:
+      properties:
+        path:
+          type: string
+          const: livekit_direct
+          title: Path
+          default: livekit_direct
+        livekit_inbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Inbound Trunk Id
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
+      additionalProperties: false
+      type: object
+      title: LivekitDirectAdoptionSpec
+      description: Existing LiveKit trunks to model as a connection, adopted as-is.
+    RpcGateway:
+      properties:
+        destination:
+          type: string
+          title: Destination
+        flags:
+          type: string
+          title: Flags
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+        attrs:
+          type: string
+          title: Attrs
+      additionalProperties: false
+      type: object
+      required:
+      - destination
+      - flags
+      - priority
+      - attrs
+      title: RpcGateway
+    DispatcherDestination:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        flags:
+          type: integer
+          minimum: 0.0
+          title: Flags
+          default: 0
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+          default: 0
+        attrs:
+          type: string
+          title: Attrs
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - uri
+      title: DispatcherDestination
+    TelephonySection:
+      properties:
+        name:
+          $ref: '#/components/schemas/TelephonySectionName'
+        available:
+          type: boolean
+          title: Available
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - available
+      - detail
+      title: TelephonySection
+    ConnectionTelephonyStateResult:
+      properties:
+        sections:
+          items:
+            $ref: '#/components/schemas/TelephonySection'
+          type: array
+          title: Sections
+        state:
+          $ref: '#/components/schemas/ConnectionTelephonyState'
+      additionalProperties: false
+      type: object
+      required:
+      - sections
+      - state
+      title: ConnectionTelephonyStateResult
+      description: Per-connection telephony view; sections degrade individually like the snapshot.
+    ConnectionTelephonyState:
+      properties:
+        connection:
+          $ref: '#/components/schemas/SipConnection'
+        provider_name:
+          type: string
+          title: Provider Name
+        dispatcher_set:
+          anyOf:
+          - $ref: '#/components/schemas/RpcDispatcherSet'
+          - type: 'null'
+        address_entries:
+          items:
+            $ref: '#/components/schemas/RpcAddressEntry'
+          type: array
+          title: Address Entries
+        registration:
+          anyOf:
+          - $ref: '#/components/schemas/RpcRegistration'
+          - type: 'null'
+        subscriber_present:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Subscriber Present
+        outbound_registration:
+          anyOf:
+          - $ref: '#/components/schemas/RpcRegistration'
+          - type: 'null'
+        outbound_subscriber_present:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Outbound Subscriber Present
+      additionalProperties: false
+      type: object
+      required:
+      - connection
+      - provider_name
+      - dispatcher_set
+      - address_entries
+      - registration
+      - subscriber_present
+      - outbound_registration
+      - outbound_subscriber_present
+      title: ConnectionTelephonyState
+    SipConnectionMutationResponse:
+      properties:
+        sip_connection_id:
+          type: string
+          title: Sip Connection Id
+      additionalProperties: false
+      type: object
+      required:
+      - sip_connection_id
+      title: SipConnectionMutationResponse
+    Transport:
+      type: string
+      enum:
+      - udp
+      - tcp
+      - tls
+      title: Transport
+    PlatformSipConnectionConfig:
+      properties:
+        path:
+          type: string
+          const: platform_sip
+          title: Path
+          default: platform_sip
+        outbound_setid:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Outbound Setid
+        inbound_group_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Inbound Group Id
+        inbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inbound Auth Username
+        outbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Outbound Auth Username
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
+      additionalProperties: false
+      type: object
+      required:
+      - outbound_setid
+      - inbound_group_id
+      - inbound_auth_username
+      title: PlatformSipConnectionConfig
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AdoptSipConnectionRequest:
+      properties:
+        draft:
+          $ref: '#/components/schemas/ConnectionDraft'
+        adoption:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformSipAdoptionSpec'
+          - $ref: '#/components/schemas/LivekitDirectAdoptionSpec'
+          title: Adoption
+          discriminator:
+            propertyName: path
+            mapping:
+              livekit_direct: '#/components/schemas/LivekitDirectAdoptionSpec'
+              platform_sip: '#/components/schemas/PlatformSipAdoptionSpec'
+      additionalProperties: false
+      type: object
+      required:
+      - draft
+      - adoption
+      title: AdoptSipConnectionRequest

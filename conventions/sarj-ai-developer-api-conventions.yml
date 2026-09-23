@@ -1,4 +1,4 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: searched
 docs: https://platform-docs.sarj.ai/getting-started
 source: >-
@@ -35,17 +35,115 @@ request_tracing:
     documented in the spec itself, not only in prose.
 idempotency:
   supported: false
+  coverage: none
   request_header: null
   detail: >-
-    No Idempotency-Key header, parameter or equivalent appears in any of the four harvested OpenAPI documents, and the
-    documentation describes none. POST /calls places a real, billable phone call, so a retried or duplicated request
-    dials the recipient again. Callers must deduplicate before sending.
+    No Idempotency-Key header, parameter or equivalent appears in any harvested OpenAPI document, and the
+    documentation describes none. Re-confirmed 2026-09-11 against the refreshed 7-operation public developer
+    spec: of its four mutating operations (createCall, cancelScheduledCall, rescheduleScheduledCall,
+    createScheduleConfig) not one accepts a replay key. POST /calls places a real, billable phone call, so a
+    retried or duplicated request dials the recipient again. Callers must deduplicate before sending.
+  mutating_operations_total: 4
+  mutating_operations_protected: 0
+  natural_idempotence:
+    - operation: cancelScheduledCall
+      detail: >-
+        Effectively idempotent by outcome rather than by mechanism — a second cancel of an already-cancelled
+        call returns 409 call_not_pending rather than doing anything twice. Safe to retry, but the caller
+        cannot distinguish "my retry landed" from "someone else cancelled it".
+    - operation: rescheduleScheduledCall
+      detail: >-
+        Replaying the same scheduled_at converges on the same state. Still not a guarantee the provider makes.
   consumer_side_requirement: >-
     Idempotency is required in the opposite direction: webhook receivers must be idempotent and deduplicate on
     call_id, because Sarj retries a delivery up to 3 times and the same call_id may arrive more than once.
   gap: >-
-    This is the clearest remediation available to Sarj. An Idempotency-Key on POST /calls would make agent-driven
-    calling safe to retry; today an agent that times out on createCall cannot safely retry it.
+    This remains the clearest remediation available to Sarj. An Idempotency-Key on POST /calls would make
+    agent-driven calling safe to retry; today an agent that times out on createCall cannot safely retry it.
+reversibility:
+  grade: verified
+  applicable: true
+  source: >-
+    openapi/_original/sarj-ai-developer-api-developer-openapi.json (operation descriptions),
+    https://platform-docs.sarj.ai/api-reference/calls/cancel-a-pending-scheduled-sarjai-call
+  summary: >-
+    Sarj.ai added a genuine reversal path between the 2026-08 and 2026-09 passes. A booked call can be
+    cancelled or moved while it is still pending, and the contract states the window in which that works — so
+    this grades `verified` rather than merely `documented`. The reversal does NOT extend to a call placed for
+    immediate dialing: once dialing starts there is no undo, and no refund, void or redial-reversal operation
+    exists anywhere on the surface.
+  write_surfaces:
+    - operation: createCall
+      consequence: >-
+        Places a real, billable outbound telephone call to a third party. Irreversible once dialing begins —
+        a person's phone rings and cannot be un-rung.
+      reversal:
+        exists: conditional
+        operation: cancelScheduledCall
+        operation_id: cancelScheduledCall
+        path: POST /calls/{call_id}/cancel
+        condition: >-
+          Only when the call was created with `scheduled_at` (or is a platform-booked retry attempt) and is
+          still in status `scheduled`.
+        window: >-
+          From creation until the call is released for dialing. Because `scheduled_at` must be at least 10
+          minutes ahead and within 30 days, the cancellation window is bounded by the same range — a minimum
+          of roughly 10 minutes and a maximum of 30 days.
+        window_stated_by_provider: true
+        window_evidence: >-
+          "Cancel a call that is still pending in status 'scheduled' ... Once a call has been released for
+          dialing it can no longer be cancelled and this returns 409." plus CreateCallRequest.scheduled_at:
+          "Must be at least 10 minutes ahead and within 30 days."
+        failure_signal: 409 call_not_pending
+      no_reversal_when: >-
+        `scheduled_at` omitted. The call is dialed immediately and there is no cancel, abort or hang-up
+        operation on the public contract.
+    - operation: createCall (with schedule_config_id)
+      consequence: Books a retry chain — up to 10 further dials of the same person.
+      reversal:
+        exists: true
+        operation: cancelScheduledCall
+        detail: >-
+          "This is also the per-person stop-calling lever: cancelling a pending retry ends its retry chain."
+          The single most consequential reversal on the surface: one call to /cancel stops every remaining
+          attempt against that number in the group.
+        window: While the next pending attempt has not yet been released for dialing.
+        window_stated_by_provider: true
+    - operation: rescheduleScheduledCall
+      consequence: Moves a booked call to a new time.
+      reversal:
+        exists: true
+        operation: rescheduleScheduledCall
+        detail: Self-reversing — call it again with the original time.
+        window: >-
+          While status is `scheduled`; the new time must be at least 10 minutes ahead and within 30 days.
+          Returns 409 once released for dialing, 422 on an out-of-range time.
+        window_stated_by_provider: true
+    - operation: createScheduleConfig
+      consequence: Creates a reusable retry policy referenced by future calls.
+      reversal:
+        exists: false
+        detail: >-
+          "This endpoint is create-only today — there is no way to fetch, list, update, or disable a config
+          after creation; that ships in a follow-up." A config created in error cannot be deleted or disabled
+          through the API; the only published mitigation is to stop referencing its id. The
+          `enabled: false` field exists on the create request, so a policy can be born disabled but cannot be
+          turned off afterwards.
+        provider_acknowledged: true
+  not_applicable:
+    - operation: getHealth
+    - operation: getCall
+    - operation: getCallRecording
+  findings:
+    - id: reversal-exists-only-for-deferred-writes
+      detail: >-
+        The undo lever is real and well-specified, but it is reachable only if the caller opted into
+        scheduling. An agent that wants the safety of a cancel window must deliberately book the call at
+        least 10 minutes out instead of dialing now — a trade the docs never spell out.
+    - id: create-only-schedule-configs
+      detail: >-
+        The one write with no reversal at all is the one the provider itself flags as incomplete. Worth
+        raising: an agent that misconfigures a retry policy has no API path back.
 pagination:
   style: cursor
   applies_to: openapi/sarj-ai-developer-api-voice-platform-openapi.json
@@ -67,7 +165,7 @@ pagination:
     - scenario_id
     - phone_number
   note: >-
-    The 3-operation public developer API has no list endpoint at all, so pagination is invisible to developer-portal
+    The 7-operation public developer API has no list endpoint at all, so pagination is invisible to developer-portal
     readers — there is no way to enumerate your calls through the documented API. Cursor pagination exists only on the
     platform spec served at the API host root.
 versioning:
@@ -86,7 +184,7 @@ rate_limiting:
   detail: >-
     No X-RateLimit-* headers and no Retry-After are declared in any spec. The only published limit signal is the
     429 call_limit_exceeded error payload, which returns the offending phone_number and the call_limit that was hit.
-    No numeric quotas are published anywhere, so no rate-limits artifact could be built.
+    No numeric quotas are published anywhere. Recorded with evidence in rate-limits/sarj-ai-developer-api-rate-limits.yml (limit_count: 0).
 async_semantics:
   create_call:
     status: 202 Accepted
@@ -128,6 +226,12 @@ identifiers:
   - entity: api_key
     prefix: sk-
     note: Documented in the Getting Started export example.
+  - entity: schedule_config
+    prefix: none
+    format: 'bare UUID v7 (e.g. 01890000-0000-7000-8000-000000000000)'
+    note: >-
+      The only public identifier with no type prefix — it breaks the call_/scn_/sk- convention the rest of
+      the surface keeps.
 field_conventions:
   phone_numbers: E.164 required, leading + and country code, no spaces or dashes
   timestamps: ISO 8601 UTC (created_at, started_at, ended_at)
@@ -135,8 +239,14 @@ field_conventions:
   languages: [en, ar, ur]
   language_default: ar
   signed_urls: >-
-    recording_url is a signed, time-limited Google Cloud Storage URL. Download promptly or re-fetch a fresh URL via
-    getCall.
+    recording_url is a signed, time-limited Google Cloud Storage URL and is now marked DEPRECATED in the spec in
+    favour of permanent_recording_url, a stable Sarj-hosted URL that resolves through
+    GET /calls/{call_id}/recording (302 to a freshly minted short-lived download URL). The deprecated field
+    expires 24 hours after issue once the recording-endpoint rollout is enabled on a deployment, and 7 days
+    before then — so its lifetime depends on a flag the caller cannot observe.
+  durations_iso8601: >-
+    Schedule-config durations (wait_between, expire_after) accept either raw seconds or an ISO 8601 duration
+    ("PT2H", "P3D") — the only place on the surface where two encodings of one value are both valid.
 expansion: none
 metadata:
   supported: true
@@ -148,3 +258,5 @@ cross_links:
   authentication: authentication/sarj-ai-developer-api-authentication.yml
   webhooks: asyncapi/sarj-ai-developer-api-webhooks.yml
   scopes: scopes/sarj-ai-developer-api-scopes.yml
+  rate_limits: rate-limits/sarj-ai-developer-api-rate-limits.yml
+  sandbox: sandbox/sarj-ai-developer-api-sandbox.yml

@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   title: Sarj Ai Developer Health API
   version: '1.0'
-  description: 'Operations tagged Health across 3 of this provider''s published API definitions: sarj-ai-developer-api-stt-openapi.json,
-    sarj-ai-developer-api-tts-openapi.json, sarj-ai-developer-api-voice-platform-openapi.json. Each path
-    carries the servers of the definition it was published in.'
+  description: 'Operations tagged Health across 3 of this provider''s published API definitions: sarj-ai-developer-api-stt-openapi.json, sarj-ai-developer-api-tts-openapi.json, sarj-ai-developer-api-voice-platform-openapi.json. Each path carries the servers of the definition it was published in.'
 tags:
 - name: Health
 paths:
@@ -27,8 +25,12 @@ paths:
       tags:
       - Health
       summary: Liveness
-      description: "Check liveness - the service process is running\n\nReturns:\n    healthy=True whenever\
-        \ the process can serve the request"
+      description: 'Check liveness - the service process is running
+
+
+        Returns:
+
+        healthy=True whenever the process can serve the request'
       operationId: healthLiveness
       responses:
         '200':
@@ -42,8 +44,12 @@ paths:
       tags:
       - Health
       summary: Readiness
-      description: "Readiness check - can connect to database\n\nReturns:\n    healthy=True, or a 503\
-        \ JSON payload when the database is unreachable"
+      description: 'Readiness check - can connect to database
+
+
+        Returns:
+
+        healthy=True, or a 503 JSON payload when the database is unreachable'
       operationId: healthReadiness
       responses:
         '200':

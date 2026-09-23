@@ -1,16 +1,16 @@
 openapi: 3.2.0
 info:
-  title: Sarj.ai Voice Admin API
+  title: Sarj.ai Voice Messaging Settings API
   version: 1.0.0
 tags:
-- name: admin
+- name: messaging-settings
 paths:
   /v1/messaging-settings/configs:
     post:
       tags:
-      - admin
+      - messaging-settings
       summary: Create Config
-      operationId: adminCreateConfig
+      operationId: messagingSettingsCreateConfig
       requestBody:
         content:
           application/json:
@@ -33,9 +33,9 @@ paths:
   /v1/messaging-settings/configs/{config_id}:
     get:
       tags:
-      - admin
+      - messaging-settings
       summary: Get Config
-      operationId: adminGetConfig
+      operationId: messagingSettingsGetConfig
       parameters:
       - name: config_id
         in: path
@@ -59,9 +59,9 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     put:
       tags:
-      - admin
+      - messaging-settings
       summary: Update Config
-      operationId: adminUpdateConfig
+      operationId: messagingSettingsUpdateConfig
       parameters:
       - name: config_id
         in: path
@@ -91,9 +91,9 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
     delete:
       tags:
-      - admin
+      - messaging-settings
       summary: Delete Config
-      operationId: adminDeleteConfig
+      operationId: messagingSettingsDeleteConfig
       parameters:
       - name: config_id
         in: path
@@ -114,9 +114,9 @@ paths:
   /v1/messaging-settings/configs/org/{organization_id}:
     get:
       tags:
-      - admin
+      - messaging-settings
       summary: Get Configs By Org
-      operationId: adminGetConfigsByOrg
+      operationId: messagingSettingsGetConfigsByOrg
       parameters:
       - name: organization_id
         in: path
@@ -134,7 +134,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MessagingProviderConfigPublic'
-                title: Response Admingetconfigsbyorg
+                title: Response Messagingsettingsgetconfigsbyorg
         '422':
           description: Validation Error
           content:
@@ -144,9 +144,9 @@ paths:
   /v1/messaging-settings/configs/list:
     post:
       tags:
-      - admin
+      - messaging-settings
       summary: List Configs
-      operationId: adminListConfigs
+      operationId: messagingSettingsListConfigs
       requestBody:
         content:
           application/json:
@@ -162,7 +162,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/MessagingProviderConfigPublic'
                 type: array
-                title: Response Adminlistconfigs
+                title: Response Messagingsettingslistconfigs
         '422':
           description: Validation Error
           content:
@@ -227,11 +227,110 @@ components:
       - created_at
       - updated_at
       title: MessagingProviderConfigPublic
+    UpdateMessagingProviderConfigRequest:
+      properties:
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        auth_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
+          type: array
+          title: Scenario Inbox Mappings
+          default: []
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      type: object
+      required:
+      - provider
+      - name
+      - config
+      title: UpdateMessagingProviderConfigRequest
     MessagingProvider:
       type: string
       enum:
       - socialbot_whatsapp
       title: MessagingProvider
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ListMessagingProviderConfigRequest:
+      properties:
+        organization_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Organization Id
+        provider:
+          anyOf:
+          - $ref: '#/components/schemas/MessagingProvider'
+          - type: 'null'
+        enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+      type: object
+      title: ListMessagingProviderConfigRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ScenarioInboxMapping:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMapping
     CreateMessagingProviderConfigRequest:
       properties:
         organization_id:
@@ -283,102 +382,3 @@ components:
       - scenario_id
       - inbox_id
       title: ScenarioInboxMappingRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ScenarioInboxMapping:
-      properties:
-        scenario_id:
-          type: string
-          title: Scenario Id
-        inbox_id:
-          type: string
-          title: Inbox Id
-      type: object
-      required:
-      - scenario_id
-      - inbox_id
-      title: ScenarioInboxMapping
-    UpdateMessagingProviderConfigRequest:
-      properties:
-        provider:
-          $ref: '#/components/schemas/MessagingProvider'
-        name:
-          type: string
-          title: Name
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-        auth_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auth Token
-        scenario_inbox_mappings:
-          items:
-            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
-          type: array
-          title: Scenario Inbox Mappings
-          default: []
-        enabled:
-          type: boolean
-          title: Enabled
-          default: true
-      type: object
-      required:
-      - provider
-      - name
-      - config
-      title: UpdateMessagingProviderConfigRequest
-    ListMessagingProviderConfigRequest:
-      properties:
-        organization_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Organization Id
-        provider:
-          anyOf:
-          - $ref: '#/components/schemas/MessagingProvider'
-          - type: 'null'
-        enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Enabled
-      type: object
-      title: ListMessagingProviderConfigRequest

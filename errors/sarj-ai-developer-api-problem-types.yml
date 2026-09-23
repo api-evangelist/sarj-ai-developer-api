@@ -1,6 +1,6 @@
-generated: '2026-08-09'
+generated: '2026-09-11'
 method: derived
-source: openapi/sarj-ai-developer-api-developer-openapi.json
+source: openapi/_original/sarj-ai-developer-api-developer-openapi.json (refreshed 2026-09-11, 7 operations)
 docs: https://platform-docs.sarj.ai/getting-started
 format: vendor-envelope
 format_note: >-
@@ -22,53 +22,53 @@ problems:
     fields:
       - field_violations
     description: Request body or parameters failed validation; field_violations carries per-field detail.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: unauthorized
     status: 401
     title: Missing or invalid API key
     description: No Authorization header, or the bearer API key is invalid.
     remediation: 'Generate a key at https://platform.sarj.ai/api-keys and send it as: Authorization: Bearer <api-key>'
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall, #getCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall, #getCall
   - type: no_organization
     status: 403
     title: API key not associated with an organization
     description: The key authenticated but is not bound to an organization, so no call context can be resolved.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#getCall
   - type: phone_number_blocked
     status: 403
     title: Phone number blocked
     fields:
       - phone_number
     description: The destination number is on a block list and will not be dialed.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: scenario_forbidden
     status: 403
     title: Scenario access denied
     fields:
       - scenario_id
     description: The scenario exists but the authenticated organization may not use it.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: scenario_not_found
     status: 404
     title: Scenario not found
     fields:
       - scenario_id
     description: No scenario matches the supplied scn_-prefixed ID.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: scenario_invalid_config
     status: 400
     title: Scenario configuration invalid
     fields:
       - scenario_id
     description: The scenario is misconfigured and cannot be run.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: call_not_found
     status: 404
     title: Call not found
     fields:
       - call_id
     description: No call matches the supplied call_id for this organization.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#getCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#getCall
   - type: not_found
     status: 404
     title: Resource not found
@@ -79,7 +79,7 @@ problems:
     fields:
       - reason
     description: The call could not be placed; reason carries the telephony-level cause.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: call_limit_exceeded
     status: 429
     title: Call limit exceeded
@@ -90,7 +90,7 @@ problems:
       A per-phone-number call limit was hit. The payload returns the limit that was exceeded. This is the only
       rate-limiting signal the API publishes — there are no X-RateLimit-* response headers and no Retry-After in the
       spec.
-    source_operation: openapi/sarj-ai-developer-api-developer-openapi.json#createCall
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
   - type: oauth_invalid_redirect_uri
     status: 400
     title: Invalid OAuth redirect URI
@@ -103,11 +103,50 @@ problems:
     status: 500
     title: Internal error
     description: Unhandled server-side failure.
+  - type: call_not_pending
+    status: 409
+    title: Call is no longer pending
+    fields:
+      - status
+    description: >-
+      The call has already been released for dialing (or was cancelled/completed), so it can no longer be
+      cancelled or rescheduled. Carries the current `status` so the caller can see why.
+    remediation: >-
+      Terminal. There is no way to stop a call once dialing has begun; read `status` and stop retrying.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#cancelScheduledCall, #rescheduleScheduledCall
+    added: '2026-09-11'
+  - type: scheduling_disabled
+    status: 403
+    title: Scheduling is disabled on this environment
+    description: >-
+      Scheduled calls, reschedule and retry policies are gated per deployment/tenant. Returned when
+      scheduled_at or schedule_config_id is supplied where the feature is off.
+    remediation: Contact Sarj.ai to have scheduling enabled; nothing the caller sends will work around it.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall, #cancelScheduledCall, #rescheduleScheduledCall, #createScheduleConfig
+    added: '2026-09-11'
+  - type: invalid_schedule_time
+    status: 422
+    title: Invalid scheduled_at
+    description: >-
+      The requested dial time is outside the allowed range — it must be at least 10 minutes ahead and within
+      30 days.
+    remediation: Clamp scheduled_at to now+10m .. now+30d.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#rescheduleScheduledCall
+    added: '2026-09-11'
+  - type: schedule_config_not_found
+    status: 404
+    title: Schedule config not found
+    fields:
+      - schedule_config_id
+    description: No retry policy matches the supplied schedule_config_id.
+    source_operation: openapi/_original/sarj-ai-developer-api-developer-openapi.json#createCall
+    added: '2026-09-11'
 findings:
   - id: typed-discriminated-union
     detail: >-
-      Thirteen error types modelled as a oneOf with an explicit OpenAPI discriminator on error.type, each with its own
-      payload fields. This is unusually good machine-readable error design for an API of this size — an agent can
+      Seventeen error types modelled as a oneOf with an explicit OpenAPI discriminator on error.type, each with its own
+      payload fields (up from thirteen — the 2026-09 refresh added call_not_pending, scheduling_disabled,
+      invalid_schedule_time and schedule_config_not_found alongside the scheduling operations). This is unusually good machine-readable error design for an API of this size — an agent can
       branch deterministically without string-matching messages.
   - id: not-rfc9457
     detail: >-
@@ -117,3 +156,8 @@ findings:
     detail: >-
       The documentation has no error reference page. The full taxonomy exists only inside the OpenAPI component
       schemas; a human reading the docs sees only the envelope shape in Getting Started.
+  - id: entitlement-errors-are-not-failures
+    detail: >-
+      `scheduling_disabled` (403) is not a caller mistake — it says the tenant does not have the feature. An agent
+      needs to treat it as a capability probe result, not as something to retry or correct. Nothing in the
+      documentation explains it; it exists only in the spec.

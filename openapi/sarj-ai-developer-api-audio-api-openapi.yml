@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
   title: Sarj TTS Audio API
-  description: Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint
-    uses an OpenAI SDK-compatible request and response shape.
+  description: Production speech synthesis API serving the single `sarj-tts` model. The speech endpoint uses an OpenAI SDK-compatible request and response shape.
   version: 0.3.0
 tags:
 - name: Audio
@@ -97,6 +96,36 @@ paths:
       - Audio
 components:
   schemas:
+    ScriptSegment:
+      properties:
+        speaker:
+          type: string
+          maxLength: 64
+          minLength: 1
+          title: Speaker
+        text:
+          type: string
+          maxLength: 10000
+          minLength: 1
+          title: Text
+        voice:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Voice
+        speed:
+          anyOf:
+          - type: number
+            maximum: 4.0
+            minimum: 0.25
+          - type: 'null'
+          title: Speed
+      type: object
+      required:
+      - speaker
+      - text
+      title: ScriptSegment
+      description: Single segment in a multi-speaker script.
     ScriptRequest:
       properties:
         script:
@@ -153,6 +182,27 @@ components:
       - script
       title: ScriptRequest
       description: Request body for /v1/audio/script endpoint.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    VoiceObject:
+      properties:
+        id:
+          type: string
+          maxLength: 128
+          minLength: 1
+          title: Id
+      type: object
+      required:
+      - id
+      title: VoiceObject
+      description: 'OpenAI custom voice object: {"id": "..."}.'
     Body_create_speech_clone_v1_audio_speech_clone_post:
       properties:
         text:
@@ -309,57 +359,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    VoiceObject:
-      properties:
-        id:
-          type: string
-          maxLength: 128
-          minLength: 1
-          title: Id
-      type: object
-      required:
-      - id
-      title: VoiceObject
-      description: 'OpenAI custom voice object: {"id": "..."}.'
-    ScriptSegment:
-      properties:
-        speaker:
-          type: string
-          maxLength: 64
-          minLength: 1
-          title: Speaker
-        text:
-          type: string
-          maxLength: 10000
-          minLength: 1
-          title: Text
-        voice:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Voice
-        speed:
-          anyOf:
-          - type: number
-            maximum: 4.0
-            minimum: 0.25
-          - type: 'null'
-          title: Speed
-      type: object
-      required:
-      - speaker
-      - text
-      title: ScriptSegment
-      description: Single segment in a multi-speaker script.
     SpeechRequest:
       properties:
         model:

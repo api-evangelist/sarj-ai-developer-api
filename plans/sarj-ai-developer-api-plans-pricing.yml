@@ -1,0 +1,54 @@
+generated: '2026-09-11'
+method: searched
+source: https://sarj.ai/sitemap.xml
+docs: https://sarj.ai/book-a-demo
+plan_count: 0
+pricing_published: false
+model: contact-sales
+currency: null
+note: >-
+  Sarj.ai publishes no pricing page and no plan tiers. The marketing sitemap at https://sarj.ai/sitemap.xml
+  enumerates exactly twelve URLs (home, /ar, book-a-demo, contact, privacy-request, privacy, terms and their
+  Arabic twins) and none of them is a pricing page; /pricing and /en/pricing both return the Next.js 404 shell
+  (HTTP 404, 5329 bytes — the same byte size the site returns for every unrouted path). The developer
+  documentation host carries no pricing page either: the docs MCP server's own virtual filesystem
+  (`rg -il "pricing|quota|rate limit" /`) exits 1 across all fifteen documentation files. The only commercial
+  path published anywhere on the surface is the demo booking form.
+plans: []
+commercial_entry_points:
+  - type: book-a-demo
+    url: https://sarj.ai/book-a-demo
+    http_status: 200
+  - type: contact
+    url: https://sarj.ai/contact
+    http_status: 200
+  - type: self-serve-signup
+    url: https://platform.sarj.ai/sign-in
+    http_status: 200
+    note: >-
+      Sign-in exists and an API key can be minted from the dashboard, so onboarding is self-serve — but what a
+      key costs, what it includes, and what happens when the included volume runs out are all unpublished.
+metered_signals_without_prices:
+  - signal: per-number call limit
+    evidence: >-
+      openapi CallLimitExceededPayload (HTTP 429) returns `phone_number` and `call_limit`, so a numeric limit
+      exists and is enforced per destination number — but its value is only revealed at the moment it is
+      breached.
+  - signal: scheduling availability
+    evidence: >-
+      HTTP 403 `scheduling_disabled` is documented as "scheduling is disabled on this environment", implying
+      scheduled calls and retry policies are a per-deployment or per-tier entitlement. No tier list is published.
+findings:
+  - id: no-published-price-for-a-billable-write
+    detail: >-
+      POST /calls places a real, billable telephone call and nothing on the public surface states what it costs.
+      An agent evaluating Sarj.ai against a competitor cannot price the integration without talking to sales.
+x-evidence:
+  - url: https://sarj.ai/pricing
+    http_status: 404
+  - url: https://www.sarj.ai/en/pricing
+    http_status: 404
+  - url: https://sarj.ai/sitemap.xml
+    http_status: 200
+  - url: https://sarj.ai/book-a-demo
+    http_status: 200
