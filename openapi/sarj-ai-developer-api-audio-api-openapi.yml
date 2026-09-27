@@ -126,62 +126,6 @@ components:
       - text
       title: ScriptSegment
       description: Single segment in a multi-speaker script.
-    ScriptRequest:
-      properties:
-        script:
-          items:
-            $ref: '#/components/schemas/ScriptSegment'
-          type: array
-          maxItems: 100
-          minItems: 1
-          title: Script
-        default_voice:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Voice
-        speed:
-          type: number
-          maximum: 4.0
-          minimum: 0.25
-          title: Speed
-          default: 1.0
-        response_format:
-          type: string
-          enum:
-          - mp3
-          - opus
-          - aac
-          - flac
-          - wav
-          - pcm
-          title: Response Format
-          default: wav
-        output_format:
-          type: string
-          enum:
-          - single_track
-          - multi_track
-          title: Output Format
-          default: single_track
-        pause_between_speakers:
-          type: number
-          maximum: 5.0
-          minimum: 0.0
-          title: Pause Between Speakers
-          default: 0.5
-        on_error:
-          type: string
-          enum:
-          - abort
-          - skip
-          title: On Error
-          default: abort
-      type: object
-      required:
-      - script
-      title: ScriptRequest
-      description: Request body for /v1/audio/script endpoint.
     HTTPValidationError:
       properties:
         detail:
@@ -203,162 +147,6 @@ components:
       - id
       title: VoiceObject
       description: 'OpenAI custom voice object: {"id": "..."}.'
-    Body_create_speech_clone_v1_audio_speech_clone_post:
-      properties:
-        text:
-          type: string
-          maxLength: 50000
-          minLength: 1
-          title: Text
-        ref_audio:
-          type: string
-          contentMediaType: application/octet-stream
-          title: Ref Audio
-        ref_text:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ref Text
-        response_format:
-          type: string
-          enum:
-          - mp3
-          - opus
-          - aac
-          - flac
-          - wav
-          - pcm
-          title: Response Format
-          default: wav
-        stream:
-          type: boolean
-          title: Stream
-          default: false
-        speed:
-          type: number
-          maximum: 4.0
-          minimum: 0.25
-          title: Speed
-          default: 1.0
-        num_step:
-          anyOf:
-          - type: integer
-            maximum: 64.0
-            minimum: 1.0
-          - type: 'null'
-          title: Num Step
-        guidance_scale:
-          anyOf:
-          - type: number
-            maximum: 10.0
-            minimum: 0.0
-          - type: 'null'
-          title: Guidance Scale
-        denoise:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Denoise
-        t_shift:
-          anyOf:
-          - type: number
-            maximum: 2.0
-            minimum: 0.0
-          - type: 'null'
-          title: T Shift
-        position_temperature:
-          anyOf:
-          - type: number
-            maximum: 10.0
-            minimum: 0.0
-          - type: 'null'
-          title: Position Temperature
-        class_temperature:
-          anyOf:
-          - type: number
-            maximum: 2.0
-            minimum: 0.0
-          - type: 'null'
-          title: Class Temperature
-        duration:
-          anyOf:
-          - type: number
-            maximum: 60.0
-            minimum: 0.1
-          - type: 'null'
-          title: Duration
-        language:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Language
-          description: Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation
-        layer_penalty_factor:
-          anyOf:
-          - type: number
-            minimum: 0.0
-          - type: 'null'
-          title: Layer Penalty Factor
-        preprocess_prompt:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Preprocess Prompt
-        postprocess_output:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Postprocess Output
-        audio_chunk_duration:
-          anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Audio Chunk Duration
-        audio_chunk_threshold:
-          anyOf:
-          - type: number
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Audio Chunk Threshold
-        request_timeout_s:
-          anyOf:
-          - type: integer
-            maximum: 600.0
-            minimum: 1.0
-          - type: 'null'
-          title: Request Timeout S
-      type: object
-      required:
-      - text
-      - ref_audio
-      title: Body_create_speech_clone_v1_audio_speech_clone_post
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     SpeechRequest:
       properties:
         model:
@@ -517,6 +305,218 @@ components:
       - input
       title: SpeechRequest
       description: Sarj TTS request body with an OpenAI SDK-compatible shape.
+    ScriptRequest:
+      properties:
+        script:
+          items:
+            $ref: '#/components/schemas/ScriptSegment'
+          type: array
+          maxItems: 100
+          minItems: 1
+          title: Script
+        default_voice:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Voice
+        speed:
+          type: number
+          maximum: 4.0
+          minimum: 0.25
+          title: Speed
+          default: 1.0
+        response_format:
+          type: string
+          enum:
+          - mp3
+          - opus
+          - aac
+          - flac
+          - wav
+          - pcm
+          title: Response Format
+          default: wav
+        output_format:
+          type: string
+          enum:
+          - single_track
+          - multi_track
+          title: Output Format
+          default: single_track
+        pause_between_speakers:
+          type: number
+          maximum: 5.0
+          minimum: 0.0
+          title: Pause Between Speakers
+          default: 0.5
+        on_error:
+          type: string
+          enum:
+          - abort
+          - skip
+          title: On Error
+          default: abort
+      type: object
+      required:
+      - script
+      title: ScriptRequest
+      description: Request body for /v1/audio/script endpoint.
+    Body_create_speech_clone_v1_audio_speech_clone_post:
+      properties:
+        text:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          title: Text
+        ref_audio:
+          type: string
+          contentMediaType: application/octet-stream
+          title: Ref Audio
+        ref_text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ref Text
+        response_format:
+          type: string
+          enum:
+          - mp3
+          - opus
+          - aac
+          - flac
+          - wav
+          - pcm
+          title: Response Format
+          default: wav
+        stream:
+          type: boolean
+          title: Stream
+          default: false
+        speed:
+          type: number
+          maximum: 4.0
+          minimum: 0.25
+          title: Speed
+          default: 1.0
+        num_step:
+          anyOf:
+          - type: integer
+            maximum: 64.0
+            minimum: 1.0
+          - type: 'null'
+          title: Num Step
+        guidance_scale:
+          anyOf:
+          - type: number
+            maximum: 10.0
+            minimum: 0.0
+          - type: 'null'
+          title: Guidance Scale
+        denoise:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Denoise
+        t_shift:
+          anyOf:
+          - type: number
+            maximum: 2.0
+            minimum: 0.0
+          - type: 'null'
+          title: T Shift
+        position_temperature:
+          anyOf:
+          - type: number
+            maximum: 10.0
+            minimum: 0.0
+          - type: 'null'
+          title: Position Temperature
+        class_temperature:
+          anyOf:
+          - type: number
+            maximum: 2.0
+            minimum: 0.0
+          - type: 'null'
+          title: Class Temperature
+        duration:
+          anyOf:
+          - type: number
+            maximum: 60.0
+            minimum: 0.1
+          - type: 'null'
+          title: Duration
+        language:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Language
+          description: Language code (e.g., 'en', 'vi', 'zh') for multilingual pronunciation
+        layer_penalty_factor:
+          anyOf:
+          - type: number
+            minimum: 0.0
+          - type: 'null'
+          title: Layer Penalty Factor
+        preprocess_prompt:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Preprocess Prompt
+        postprocess_output:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Postprocess Output
+        audio_chunk_duration:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Audio Chunk Duration
+        audio_chunk_threshold:
+          anyOf:
+          - type: number
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Audio Chunk Threshold
+        request_timeout_s:
+          anyOf:
+          - type: integer
+            maximum: 600.0
+            minimum: 1.0
+          - type: 'null'
+          title: Request Timeout S
+      type: object
+      required:
+      - text
+      - ref_audio
+      title: Body_create_speech_clone_v1_audio_speech_clone_post
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     BearerAuth:
       type: http

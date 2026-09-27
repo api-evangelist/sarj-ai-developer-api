@@ -171,6 +171,42 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ScenarioInboxMappingRequest:
+      properties:
+        scenario_id:
+          type: string
+          format: uuid
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMappingRequest
+    ScenarioInboxMapping:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMapping
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     MessagingProviderConfigPublic:
       properties:
         id:
@@ -227,6 +263,30 @@ components:
       - created_at
       - updated_at
       title: MessagingProviderConfigPublic
+    MessagingProvider:
+      type: string
+      enum:
+      - socialbot_whatsapp
+      title: MessagingProvider
+    ListMessagingProviderConfigRequest:
+      properties:
+        organization_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Organization Id
+        provider:
+          anyOf:
+          - $ref: '#/components/schemas/MessagingProvider'
+          - type: 'null'
+        enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enabled
+      type: object
+      title: ListMessagingProviderConfigRequest
     UpdateMessagingProviderConfigRequest:
       properties:
         provider:
@@ -259,39 +319,6 @@ components:
       - name
       - config
       title: UpdateMessagingProviderConfigRequest
-    MessagingProvider:
-      type: string
-      enum:
-      - socialbot_whatsapp
-      title: MessagingProvider
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ListMessagingProviderConfigRequest:
-      properties:
-        organization_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Organization Id
-        provider:
-          anyOf:
-          - $ref: '#/components/schemas/MessagingProvider'
-          - type: 'null'
-        enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Enabled
-      type: object
-      title: ListMessagingProviderConfigRequest
     ValidationError:
       properties:
         loc:
@@ -318,19 +345,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ScenarioInboxMapping:
-      properties:
-        scenario_id:
-          type: string
-          title: Scenario Id
-        inbox_id:
-          type: string
-          title: Inbox Id
-      type: object
-      required:
-      - scenario_id
-      - inbox_id
-      title: ScenarioInboxMapping
     CreateMessagingProviderConfigRequest:
       properties:
         organization_id:
@@ -368,17 +382,3 @@ components:
       - name
       - config
       title: CreateMessagingProviderConfigRequest
-    ScenarioInboxMappingRequest:
-      properties:
-        scenario_id:
-          type: string
-          format: uuid
-          title: Scenario Id
-        inbox_id:
-          type: string
-          title: Inbox Id
-      type: object
-      required:
-      - scenario_id
-      - inbox_id
-      title: ScenarioInboxMappingRequest

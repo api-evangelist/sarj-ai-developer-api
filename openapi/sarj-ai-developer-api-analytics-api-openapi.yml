@@ -47,40 +47,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CustomPeriod:
-      properties:
-        period:
-          type: string
-          const: custom
-          title: Period
-          default: custom
-        start_date:
-          type: string
-          format: date-time
-          title: Start Date
-        end_date:
-          type: string
-          format: date-time
-          title: End Date
-      type: object
-      required:
-      - start_date
-      - end_date
-      title: CustomPeriod
-    StandardPeriod:
-      properties:
-        period:
-          type: string
-          enum:
-          - today
-          - week
-          - month
-          - quarter
-          title: Period
-      type: object
-      required:
-      - period
-      title: StandardPeriod
     KPI:
       properties:
         total_calls:
@@ -126,15 +92,20 @@ components:
       - outbound_calls
       - scenarios_used
       title: KPI
-    HTTPValidationError:
+    DashboardResponse:
       properties:
-        detail:
+        kpi:
+          $ref: '#/components/schemas/KPI'
+        chart:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/SeriesPoint'
           type: array
-          title: Detail
+          title: Chart
       type: object
-      title: HTTPValidationError
+      required:
+      - kpi
+      - chart
+      title: DashboardResponse
     SeriesPoint:
       properties:
         bucket:
@@ -152,6 +123,49 @@ components:
       - inbound
       - outbound
       title: SeriesPoint
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CustomPeriod:
+      properties:
+        period:
+          type: string
+          const: custom
+          title: Period
+          default: custom
+        start_date:
+          type: string
+          format: date-time
+          title: Start Date
+        end_date:
+          type: string
+          format: date-time
+          title: End Date
+      type: object
+      required:
+      - start_date
+      - end_date
+      title: CustomPeriod
+    StandardPeriod:
+      properties:
+        period:
+          type: string
+          enum:
+          - today
+          - week
+          - month
+          - quarter
+          title: Period
+      type: object
+      required:
+      - period
+      title: StandardPeriod
     ValidationError:
       properties:
         loc:
@@ -178,17 +192,3 @@ components:
       - msg
       - type
       title: ValidationError
-    DashboardResponse:
-      properties:
-        kpi:
-          $ref: '#/components/schemas/KPI'
-        chart:
-          items:
-            $ref: '#/components/schemas/SeriesPoint'
-          type: array
-          title: Chart
-      type: object
-      required:
-      - kpi
-      - chart
-      title: DashboardResponse

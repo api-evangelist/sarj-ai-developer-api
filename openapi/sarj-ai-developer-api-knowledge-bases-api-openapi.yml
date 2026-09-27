@@ -252,73 +252,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    KnowledgeBase:
-      properties:
-        id:
-          type: string
-          title: Id
-        organization_id:
-          type: string
-          title: Organization Id
-        title:
-          type: string
-          title: Title
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-      type: object
-      required:
-      - id
-      - organization_id
-      - title
-      - created_at
-      - updated_at
-      title: KnowledgeBase
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ListKnowledgeBasesFilter:
       properties:
         organization_id:
@@ -344,23 +277,6 @@ components:
       required:
       - organization_id
       title: ListKnowledgeBasesFilter
-    KnowledgeBaseUploadUrlRequest:
-      properties:
-        language_code:
-          $ref: '#/components/schemas/Language'
-        filename:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filename
-        content_type:
-          type: string
-          title: Content Type
-          default: text/plain; charset=utf-8
-      type: object
-      required:
-      - language_code
-      title: KnowledgeBaseUploadUrlRequest
     PreSignedUrlResponse:
       properties:
         upload_url:
@@ -374,92 +290,6 @@ components:
       - upload_url
       - file_key
       title: PreSignedUrlResponse
-    ConfirmUploadRequest:
-      properties:
-        language_code:
-          $ref: '#/components/schemas/Language'
-        file_key:
-          type: string
-          maxLength: 2048
-          minLength: 1
-          title: File Key
-        byte_size:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Byte Size
-        character_count:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Character Count
-        filename:
-          anyOf:
-          - type: string
-            maxLength: 1024
-          - type: 'null'
-          title: Filename
-      type: object
-      required:
-      - language_code
-      - file_key
-      - byte_size
-      - character_count
-      title: ConfirmUploadRequest
-    ListKnowledgeBasesResponse:
-      properties:
-        knowledge_bases:
-          items:
-            $ref: '#/components/schemas/KnowledgeBaseListItem'
-          type: array
-          title: Knowledge Bases
-        cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cursor
-        prev_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prev Cursor
-      type: object
-      required:
-      - knowledge_bases
-      title: ListKnowledgeBasesResponse
-    UpsertKnowledgeBase:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        organization_id:
-          type: string
-          title: Organization Id
-        title:
-          anyOf:
-          - type: string
-            maxLength: 200
-            minLength: 1
-          - type: 'null'
-          title: Title
-        description:
-          anyOf:
-          - type: string
-            maxLength: 500
-          - type: 'null'
-          title: Description
-      type: object
-      required:
-      - organization_id
-      title: UpsertKnowledgeBase
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
     KnowledgeBaseWithFiles:
       properties:
         id:
@@ -498,6 +328,38 @@ components:
       - updated_at
       - files
       title: KnowledgeBaseWithFiles
+    KnowledgeBase:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        title:
+          type: string
+          title: Title
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - organization_id
+      - title
+      - created_at
+      - updated_at
+      title: KnowledgeBase
     KnowledgeBaseListItem:
       properties:
         id:
@@ -550,6 +412,24 @@ components:
       - created_at
       - updated_at
       title: KnowledgeBaseListItem
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DownloadUrlResponse:
+      properties:
+        download_url:
+          type: string
+          title: Download Url
+      type: object
+      required:
+      - download_url
+      title: DownloadUrlResponse
     KnowledgeBaseFile:
       properties:
         id:
@@ -606,12 +486,132 @@ components:
       - created_at
       - updated_at
       title: KnowledgeBaseFile
-    DownloadUrlResponse:
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    UpsertKnowledgeBase:
       properties:
-        download_url:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        organization_id:
           type: string
-          title: Download Url
+          title: Organization Id
+        title:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+          - type: 'null'
+          title: Title
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
       type: object
       required:
-      - download_url
-      title: DownloadUrlResponse
+      - organization_id
+      title: UpsertKnowledgeBase
+    KnowledgeBaseUploadUrlRequest:
+      properties:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+        content_type:
+          type: string
+          title: Content Type
+          default: text/plain; charset=utf-8
+      type: object
+      required:
+      - language_code
+      title: KnowledgeBaseUploadUrlRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ListKnowledgeBasesResponse:
+      properties:
+        knowledge_bases:
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseListItem'
+          type: array
+          title: Knowledge Bases
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - knowledge_bases
+      title: ListKnowledgeBasesResponse
+    ConfirmUploadRequest:
+      properties:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        file_key:
+          type: string
+          maxLength: 2048
+          minLength: 1
+          title: File Key
+        byte_size:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Byte Size
+        character_count:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Character Count
+        filename:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Filename
+      type: object
+      required:
+      - language_code
+      - file_key
+      - byte_size
+      - character_count
+      title: ConfirmUploadRequest

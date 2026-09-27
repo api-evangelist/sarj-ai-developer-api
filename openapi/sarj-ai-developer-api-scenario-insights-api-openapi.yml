@@ -83,15 +83,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    InsightCategory:
-      type: string
-      enum:
-      - tool
-      - prompt
-      - knowledge
-      - platform
-      title: InsightCategory
-      description: What kind of change to the agent resolves the insight.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     InsightCall:
       properties:
         id:
@@ -125,15 +125,6 @@ components:
       - status
       - duration_seconds
       title: InsightCall
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -160,6 +151,15 @@ components:
       - msg
       - type
       title: ValidationError
+    InsightCategory:
+      type: string
+      enum:
+      - tool
+      - prompt
+      - knowledge
+      - platform
+      title: InsightCategory
+      description: What kind of change to the agent resolves the insight.
     ScenarioInsightWithCallCount:
       properties:
         id:

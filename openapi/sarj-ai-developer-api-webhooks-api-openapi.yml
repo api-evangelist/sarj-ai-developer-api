@@ -101,44 +101,38 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    TestWebhookSuccessResponse:
+    TestWebhookErrorResponse:
       properties:
         success:
           type: boolean
-          const: true
+          const: false
           title: Success
-        status:
-          type: integer
-          title: Status
-        body:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - items: {}
-            type: array
-          - type: string
-          - type: 'null'
-          title: Body
+        error:
+          type: string
+          title: Error
       type: object
       required:
       - success
-      - status
-      - body
-      title: TestWebhookSuccessResponse
-    DeleteWebhookResponse:
+      - error
+      title: TestWebhookErrorResponse
+    HTTPValidationError:
       properties:
-        status:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UpsertWebhookRequestInput:
+      properties:
+        url:
           type: string
-          const: success
-          title: Status
-        message:
-          type: string
-          title: Message
+          title: Url
       type: object
       required:
-      - status
-      - message
-      title: DeleteWebhookResponse
+      - url
+      title: UpsertWebhookRequestInput
     Webhook:
       properties:
         id:
@@ -170,6 +164,30 @@ components:
       - creator_id
       - url
       title: Webhook
+    TestWebhookSuccessResponse:
+      properties:
+        success:
+          type: boolean
+          const: true
+          title: Success
+        status:
+          type: integer
+          title: Status
+        body:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - items: {}
+            type: array
+          - type: string
+          - type: 'null'
+          title: Body
+      type: object
+      required:
+      - success
+      - status
+      - body
+      title: TestWebhookSuccessResponse
     TestWebhookInput:
       properties:
         test_url:
@@ -182,38 +200,20 @@ components:
       required:
       - test_url
       title: TestWebhookInput
-    UpsertWebhookRequestInput:
+    DeleteWebhookResponse:
       properties:
-        url:
+        status:
           type: string
-          title: Url
+          const: success
+          title: Status
+        message:
+          type: string
+          title: Message
       type: object
       required:
-      - url
-      title: UpsertWebhookRequestInput
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TestWebhookErrorResponse:
-      properties:
-        success:
-          type: boolean
-          const: false
-          title: Success
-        error:
-          type: string
-          title: Error
-      type: object
-      required:
-      - success
-      - error
-      title: TestWebhookErrorResponse
+      - status
+      - message
+      title: DeleteWebhookResponse
     ValidationError:
       properties:
         loc:

@@ -209,41 +209,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    TrunkUsage:
-      properties:
-        is_global_default:
-          type: boolean
-          title: Is Global Default
-          default: false
-        assigned_organizations:
-          items:
-            $ref: '#/components/schemas/OrganizationSummary'
-          type: array
-          title: Assigned Organizations
-          default: []
-        is_in_use:
-          type: boolean
-          title: Is In Use
-          readOnly: true
-      type: object
-      required:
-      - is_in_use
-      title: TrunkUsage
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SIPTrunkDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      title: SIPTrunkDirection
     TrunkWithUsage:
       properties:
         sip_trunk_id:
@@ -289,20 +254,44 @@ components:
       - usage
       - provider
       title: TrunkWithUsage
-    OrganizationSummary:
+    HTTPValidationError:
       properties:
-        id:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SetDefaultTrunkRequest:
+      properties:
+        sip_trunk_id:
           type: string
-          title: Id
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
+          title: Sip Trunk Id
       type: object
       required:
-      - id
-      title: OrganizationSummary
+      - sip_trunk_id
+      title: SetDefaultTrunkRequest
+    TrunkUsage:
+      properties:
+        is_global_default:
+          type: boolean
+          title: Is Global Default
+          default: false
+        assigned_organizations:
+          items:
+            $ref: '#/components/schemas/OrganizationSummary'
+          type: array
+          title: Assigned Organizations
+          default: []
+        is_in_use:
+          type: boolean
+          title: Is In Use
+          readOnly: true
+      type: object
+      required:
+      - is_in_use
+      title: TrunkUsage
     AssignTrunkRequest:
       properties:
         organization_id:
@@ -317,15 +306,26 @@ components:
       - organization_id
       - sip_trunk_id
       title: AssignTrunkRequest
-    SetDefaultTrunkRequest:
+    OrganizationSummary:
       properties:
-        sip_trunk_id:
+        id:
           type: string
-          title: Sip Trunk Id
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
       type: object
       required:
-      - sip_trunk_id
-      title: SetDefaultTrunkRequest
+      - id
+      title: OrganizationSummary
+    SIPTrunkDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: SIPTrunkDirection
     ValidationError:
       properties:
         loc:

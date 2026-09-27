@@ -85,272 +85,57 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CerebrasLLMSettings:
-      properties:
-        provider:
-          type: string
-          const: cerebras
-          title: Provider
-          default: cerebras
-        model:
-          $ref: '#/components/schemas/CerebrasLLMModel'
-      type: object
-      required:
-      - model
-      title: CerebrasLLMSettings
-    OpenAITTSSettings:
-      properties:
-        provider:
-          type: string
-          const: openai
-          title: Provider
-        model:
-          $ref: '#/components/schemas/OpenAITTSModels'
-          default: gpt-4o-mini-tts
-        voice:
-          $ref: '#/components/schemas/OpenAITTSVoices'
-          default: ash
-        speed:
-          type: number
-          maximum: 4.0
-          minimum: 0.25
-          title: Speed
-          description: Speech speed (0.25-4.0)
-          default: 1.0
-        instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Instructions
-      type: object
-      required:
-      - provider
-      title: OpenAITTSSettings
-    OrganizationSettings:
-      properties:
-        id:
-          type: string
-          title: Id
-        organization_id:
-          type: string
-          title: Organization Id
-        settings:
-          additionalProperties:
-            $ref: '#/components/schemas/GlobalSettings'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Settings
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        updated_by:
-          type: string
-          title: Updated By
-      type: object
-      required:
-      - id
-      - organization_id
-      - settings
-      - created_at
-      - updated_at
-      - updated_by
-      title: OrganizationSettings
-    OpenAISTTSettings:
-      properties:
-        provider:
-          type: string
-          const: openai
-          title: Provider
-        model:
-          type: string
-          enum:
-          - gpt-4o-transcribe
-          - gpt-4o-mini-transcribe
-          title: Model
-        region:
-          type: string
-          const: default
-          title: Region
-          default: default
-      type: object
-      required:
-      - provider
-      - model
-      title: OpenAISTTSettings
-    AzureOpenAILLMSettings:
-      properties:
-        provider:
-          type: string
-          const: azure_openai
-          title: Provider
-        model:
-          $ref: '#/components/schemas/AzureOpenAIModel'
-      type: object
-      required:
-      - provider
-      - model
-      title: AzureOpenAILLMSettings
-    BackChannelConfig:
+    SarjEouTurnDetection:
       properties:
         type:
           type: string
-          const: freq
+          const: sarj_eou
           title: Type
-          default: freq
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-      type: object
-      title: BackChannelConfig
-    BackChannelMixConfig:
-      properties:
-        type:
-          type: string
-          const: mix
-          title: Type
-          default: mix
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        word_probability:
+          default: sarj_eou
+        threshold:
           type: number
           maximum: 1.0
           minimum: 0.0
-          title: Word Probability
-          default: 0.7
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-        sounds:
-          items:
-            $ref: '#/components/schemas/BackchannelAudioConfig'
-          type: array
-          minItems: 1
-          title: Sounds
-      type: object
-      required:
-      - sounds
-      title: BackChannelMixConfig
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+          title: Threshold
+          default: 0.5
+        prediction_timeout:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BackChannelSoundConfig:
-      properties:
-        type:
-          type: string
-          const: sound
-          title: Type
-          default: sound
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        sounds:
-          items:
-            $ref: '#/components/schemas/BackchannelAudioConfig'
-          type: array
-          minItems: 1
-          title: Sounds
-      type: object
-      required:
-      - sounds
-      title: BackChannelSoundConfig
-    CartesiaModels:
-      type: string
-      enum:
-      - sonic-3
-      - sonic-2
-      - sonic
-      title: CartesiaModels
-    LiveKitTurnDetection:
-      properties:
-        type:
-          type: string
-          const: livekit_v1_mini
-          title: Type
-          default: livekit_v1_mini
-        unlikely_threshold:
-          anyOf:
-          - type: number
-            maximum: 1.0
-            minimum: 0.0
-          - type: 'null'
-          title: Unlikely Threshold
+          format: duration
+          title: Prediction Timeout
+          default: PT0.5S
         min_endpointing_delay:
           type: string
           format: duration
           title: Min Endpointing Delay
-          default: PT0.3S
+          default: PT0.5S
         max_endpointing_delay:
           type: string
           format: duration
           title: Max Endpointing Delay
-          default: PT2.5S
+          default: PT3S
+        targeted_stt_providers:
+          items:
+            $ref: '#/components/schemas/STTProvider'
+          type: array
+          title: Targeted Stt Providers
       type: object
-      title: LiveKitTurnDetection
-    OrpheusArabicVoice:
-      type: string
-      enum:
-      - fahad
-      - sultan
-      - lulwa
-      - noura
-      - aisha
-      - abdullah
-      title: OrpheusArabicVoice
+      title: SarjEouTurnDetection
+    HamsaTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: hamsa
+          title: Provider
+        speaker:
+          $ref: '#/components/schemas/HamsaTTSSpeaker'
+          default: Hiba
+        dialect:
+          $ref: '#/components/schemas/HamsaTTSDialect'
+          default: ksa
+      type: object
+      required:
+      - provider
+      title: HamsaTTSSettings
     SpeechmaticsSTTSettings:
       properties:
         provider:
@@ -368,379 +153,19 @@ components:
       required:
       - provider
       title: SpeechmaticsSTTSettings
-    GroqSTTModels:
-      type: string
-      enum:
-      - whisper-large-v3
-      - whisper-large-v3-turbo
-      - distil-whisper-large-v3-en
-      title: GroqSTTModels
-    AzureTTSSettings:
+    SarjF5TTSSettings:
       properties:
         provider:
           type: string
-          const: azure
+          const: sarj_f5
           title: Provider
-        region:
-          type: string
-          enum:
-          - eastus
-          - germanywestcentral
-          title: Region
-          default: eastus
         voice:
-          type: string
-          title: Voice
-          default: en-US-JennyNeural
+          $ref: '#/components/schemas/SarjF5TTSVoice'
+          default: Male
       type: object
       required:
       - provider
-      title: AzureTTSSettings
-    ElevenLabsTTSSettings:
-      properties:
-        model:
-          $ref: '#/components/schemas/ElevenLabsModels'
-        provider:
-          type: string
-          const: 11labs
-          title: Provider
-        arabic_voice_id:
-          type: string
-          title: Arabic Voice Id
-        english_voice_id:
-          type: string
-          title: English Voice Id
-          default: 21m00Tcm4TlvDq8ikWAM
-        urdu_voice_id:
-          type: string
-          title: Urdu Voice Id
-          default: 9cI5mhBtM4WtQ9Fo6jWQ
-        region:
-          $ref: '#/components/schemas/ElevenLabsRegion'
-          default: eu
-        speed:
-          type: number
-          maximum: 1.2
-          minimum: 0.7
-          title: Speed
-          description: Speech speed (0.7-1.2)
-          default: 1.0
-      type: object
-      required:
-      - model
-      - provider
-      - arabic_voice_id
-      title: ElevenLabsTTSSettings
-    AzureSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: azure
-          title: Provider
-        region:
-          type: string
-          enum:
-          - eastus
-          - germanywestcentral
-          title: Region
-          default: eastus
-      type: object
-      required:
-      - provider
-      title: AzureSTTSettings
-    AWSTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: aws
-          title: Provider
-        region:
-          type: string
-          enum:
-          - eu-central-1
-          - us-east-1
-          title: Region
-          default: eu-central-1
-      type: object
-      required:
-      - provider
-      title: AWSTTSSettings
-    OpenAIServiceTier:
-      type: string
-      enum:
-      - default
-      - fast
-      title: OpenAIServiceTier
-    CartesiaTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: cartesia
-          title: Provider
-        model:
-          $ref: '#/components/schemas/CartesiaModels'
-          default: sonic-3
-        voice:
-          type: string
-          title: Voice
-          default: f257d7af-eb60-4ef0-8815-b78701006c2c
-        speed:
-          type: number
-          maximum: 1.5
-          minimum: 0.6
-          title: Speed
-          description: Speech speed (0.6-1.5)
-          default: 1.0
-        emotion:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Emotion
-      type: object
-      required:
-      - provider
-      title: CartesiaTTSSettings
-    SarjGroqSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_groq
-          title: Provider
-      type: object
-      required:
-      - provider
-      title: SarjGroqSTTSettings
-    GroqSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: groq
-          title: Provider
-        model:
-          $ref: '#/components/schemas/GroqSTTModels'
-      type: object
-      required:
-      - provider
-      - model
-      title: GroqSTTSettings
-    DeepgramTTSModel:
-      type: string
-      enum:
-      - aura-2
-      title: DeepgramTTSModel
-    OpenAIModel:
-      type: string
-      enum:
-      - gpt-5.5
-      - gpt-5.4
-      - gpt-5.4-mini
-      - gpt-5.4-nano
-      - gpt-5.2
-      - gpt-5.1
-      - gpt-5
-      - gpt-5-mini
-      - gpt-5-nano
-      - gpt-4.1
-      - gpt-4.1-nano
-      - gpt-4o
-      - gpt-4o-mini
-      - o3
-      - o3-mini
-      - o4-mini
-      title: OpenAIModel
-    ElevenLabsModels:
-      type: string
-      enum:
-      - eleven_multilingual_v2
-      - eleven_flash_v2_5
-      - eleven_turbo_v2_5
-      title: ElevenLabsModels
-    DeepgramSTTModel:
-      type: string
-      enum:
-      - nova-3
-      - nova-2
-      - flux
-      title: DeepgramSTTModel
-    BackchannelAudioConfig:
-      properties:
-        sound_id:
-          $ref: '#/components/schemas/SoundId'
-        volume:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Volume
-          default: 1.0
-        probability:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Probability
-          default: 1.0
-      type: object
-      required:
-      - sound_id
-      title: BackchannelAudioConfig
-    Gender:
-      type: string
-      enum:
-      - male
-      - female
-      title: Gender
-    AzureOpenAIModel:
-      type: string
-      enum:
-      - gpt-4.1
-      title: AzureOpenAIModel
-    TTSVoice:
-      properties:
-        id:
-          type: string
-          title: Id
-        display_name:
-          type: string
-          title: Display Name
-        provider:
-          type: string
-          title: Provider
-        language:
-          $ref: '#/components/schemas/Language'
-        gender:
-          $ref: '#/components/schemas/Gender'
-        tts_settings:
-          anyOf:
-          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
-          - $ref: '#/components/schemas/AzureTTSSettings'
-          - $ref: '#/components/schemas/OpenAITTSSettings'
-          - $ref: '#/components/schemas/AWSTTSSettings'
-          - $ref: '#/components/schemas/GroqTTSSettings'
-          - $ref: '#/components/schemas/HamsaTTSSettings'
-          - $ref: '#/components/schemas/CartesiaTTSSettings'
-          - $ref: '#/components/schemas/DeepgramTTSSettings'
-          - $ref: '#/components/schemas/SarjF5TTSSettings'
-          - $ref: '#/components/schemas/SarjOmniTTSSettings'
-          title: Tts Settings
-        is_active:
-          type: boolean
-          title: Is Active
-          default: true
-        vibe:
-          type: string
-          title: Vibe
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-      type: object
-      required:
-      - id
-      - display_name
-      - provider
-      - language
-      - gender
-      - tts_settings
-      - vibe
-      - created_at
-      - updated_at
-      title: TTSVoice
-    ElevenLabsSTTModel:
-      type: string
-      enum:
-      - scribe_v1
-      - scribe_v2
-      - scribe_v2_realtime
-      title: ElevenLabsSTTModel
-    CerebrasLLMModel:
-      type: string
-      enum:
-      - llama-3.1-8b-instruct
-      title: CerebrasLLMModel
-    ElevenLabsRegion:
-      type: string
-      enum:
-      - us
-      - eu
-      title: ElevenLabsRegion
-    GroqLLMModel:
-      type: string
-      enum:
-      - llama-3.1-405b-reasoning
-      - llama-3.1-8b-instant
-      - llama-3.3-70b-versatile
-      - llama3-groq-70b-8192-tool-use-preview
-      - llama3-groq-8b-8192-tool-use-preview
-      - llama-guard-3-8b
-      - llama3-70b-8192
-      - llama3-8b-8192
-      - mixtral-8x7b-32768
-      - gemma-7b-it
-      - gemma2-9b-it
-      - meta-llama/llama-4-scout-17b-16e-instruct
-      - meta-llama/llama-4-maverick-17b-128e-instruct
-      - openai/gpt-oss-20b
-      - openai/gpt-oss-120b
-      - qwen/qwen3-32b
-      title: GroqLLMModel
-    STTProvider:
-      type: string
-      enum:
-      - google
-      - azure
-      - aws
-      - openai
-      - elevenlabs
-      - groq
-      - speechmatics
-      - hamsa
-      - sarj_groq
-      - sarj_custom
-      - deepgram
-      title: STTProvider
-    GroqLLMSettings:
-      properties:
-        provider:
-          type: string
-          const: groq
-          title: Provider
-          default: groq
-        model:
-          $ref: '#/components/schemas/GroqLLMModel'
-      type: object
-      required:
-      - model
-      title: GroqLLMSettings
-    GoogleSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: google
-          title: Provider
-        model:
-          type: string
-          enum:
-          - long
-          - short
-          - telephony
-          - chirp_2
-          - chirp_3
-          title: Model
-        region:
-          type: string
-          enum:
-          - us
-          - eu
-          title: Region
-      type: object
-      required:
-      - provider
-      - model
-      - region
-      title: GoogleSTTSettings
+      title: SarjF5TTSSettings
     GeminiLLMSettings:
       properties:
         provider:
@@ -769,6 +194,38 @@ components:
       required:
       - provider
       title: GeminiLLMSettings
+    AWSSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSSTTSettings
+    DisableBackChanneling:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackChanneling
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      title: Gender
     TimeoutSettings:
       properties:
         type:
@@ -789,6 +246,148 @@ components:
           default: 5
       type: object
       title: TimeoutSettings
+    BackchannelAudioConfig:
+      properties:
+        sound_id:
+          $ref: '#/components/schemas/SoundId'
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 1.0
+        probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Probability
+          default: 1.0
+      type: object
+      required:
+      - sound_id
+      title: BackchannelAudioConfig
+    OpenAISTTSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        model:
+          type: string
+          enum:
+          - gpt-4o-transcribe
+          - gpt-4o-mini-transcribe
+          title: Model
+        region:
+          type: string
+          const: default
+          title: Region
+          default: default
+      type: object
+      required:
+      - provider
+      - model
+      title: OpenAISTTSettings
+    DisableTurnDetection:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTurnDetection
+    HamsaTTSDialect:
+      type: string
+      enum:
+      - pls
+      - egy
+      - syr
+      - irq
+      - jor
+      - leb
+      - ksa
+      - uae
+      - bah
+      - qat
+      - msa
+      title: HamsaTTSDialect
+    AzureOpenAIModel:
+      type: string
+      enum:
+      - gpt-4.1
+      title: AzureOpenAIModel
+    ElevenLabsSTTModel:
+      type: string
+      enum:
+      - scribe_v1
+      - scribe_v2
+      - scribe_v2_realtime
+      title: ElevenLabsSTTModel
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DisableSTTFallback:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableSTTFallback
+    STTFallbackConfig:
+      properties:
+        type:
+          type: string
+          const: enable
+          title: Type
+          default: enable
+        models:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GoogleSTTSettings'
+            - $ref: '#/components/schemas/AzureSTTSettings'
+            - $ref: '#/components/schemas/AWSSTTSettings'
+            - $ref: '#/components/schemas/GroqSTTSettings'
+            - $ref: '#/components/schemas/OpenAISTTSettings'
+            - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+            - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+            - $ref: '#/components/schemas/DeepgramSTTSettings'
+          type: array
+          maxItems: 2
+          title: Models
+      type: object
+      title: STTFallbackConfig
+    OpenAIServiceTier:
+      type: string
+      enum:
+      - default
+      - fast
+      title: OpenAIServiceTier
     GlobalModelConfig:
       properties:
         stt:
@@ -844,6 +443,231 @@ components:
       - voice_details
       - voice_id
       title: GlobalModelConfig
+    CartesiaModels:
+      type: string
+      enum:
+      - sonic-3
+      - sonic-2
+      - sonic
+      title: CartesiaModels
+    ElevenLabsRegion:
+      type: string
+      enum:
+      - us
+      - eu
+      title: ElevenLabsRegion
+    DeepgramSTTModel:
+      type: string
+      enum:
+      - nova-3
+      - nova-2
+      - flux
+      title: DeepgramSTTModel
+    AzureOpenAILLMSettings:
+      properties:
+        provider:
+          type: string
+          const: azure_openai
+          title: Provider
+        model:
+          $ref: '#/components/schemas/AzureOpenAIModel'
+      type: object
+      required:
+      - provider
+      - model
+      title: AzureOpenAILLMSettings
+    OrganizationSettings:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          type: string
+          title: Organization Id
+        settings:
+          additionalProperties:
+            $ref: '#/components/schemas/GlobalSettings'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Settings
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          type: string
+          title: Updated By
+      type: object
+      required:
+      - id
+      - organization_id
+      - settings
+      - created_at
+      - updated_at
+      - updated_by
+      title: OrganizationSettings
+    CerebrasLLMModel:
+      type: string
+      enum:
+      - llama-3.1-8b-instruct
+      title: CerebrasLLMModel
+    BackChannelMixConfig:
+      properties:
+        type:
+          type: string
+          const: mix
+          title: Type
+          default: mix
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        word_probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Word Probability
+          default: 0.7
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelMixConfig
+    ElevenLabsSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: elevenlabs
+          title: Provider
+        model:
+          $ref: '#/components/schemas/ElevenLabsSTTModel'
+          default: scribe_v1
+        region:
+          $ref: '#/components/schemas/ElevenLabsRegion'
+          default: eu
+      type: object
+      required:
+      - provider
+      title: ElevenLabsSTTSettings
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroqSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+        model:
+          $ref: '#/components/schemas/GroqSTTModels'
+      type: object
+      required:
+      - provider
+      - model
+      title: GroqSTTSettings
+    OpenAIModel:
+      type: string
+      enum:
+      - gpt-5.5
+      - gpt-5.4
+      - gpt-5.4-mini
+      - gpt-5.4-nano
+      - gpt-5.2
+      - gpt-5.1
+      - gpt-5
+      - gpt-5-mini
+      - gpt-5-nano
+      - gpt-4.1
+      - gpt-4.1-nano
+      - gpt-4o
+      - gpt-4o-mini
+      - o3
+      - o3-mini
+      - o4-mini
+      title: OpenAIModel
+    ElevenLabsModels:
+      type: string
+      enum:
+      - eleven_multilingual_v2
+      - eleven_flash_v2_5
+      - eleven_turbo_v2_5
+      title: ElevenLabsModels
+    GroqLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+          default: groq
+        model:
+          $ref: '#/components/schemas/GroqLLMModel'
+      type: object
+      required:
+      - model
+      title: GroqLLMSettings
+    DisableTimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTimeoutSettings
+    AWSTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSTTSSettings
+    OpenAITTSVoices:
+      type: string
+      enum:
+      - alloy
+      - ash
+      - ballad
+      - coral
+      - echo
+      - fable
+      - onyx
+      - nova
+      - sage
+      - shimmer
+      title: OpenAITTSVoices
     HamsaTTSSpeaker:
       type: string
       enum:
@@ -884,6 +708,43 @@ components:
       - Hasan
       - Sayed
       title: HamsaTTSSpeaker
+    GoogleSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: google
+          title: Provider
+        model:
+          type: string
+          enum:
+          - long
+          - short
+          - telephony
+          - chirp_2
+          - chirp_3
+          title: Model
+        region:
+          type: string
+          enum:
+          - us
+          - eu
+          title: Region
+      type: object
+      required:
+      - provider
+      - model
+      - region
+      title: GoogleSTTSettings
+    SarjGroqSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_groq
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjGroqSTTSettings
     OpenAILLMSettings:
       properties:
         provider:
@@ -905,20 +766,54 @@ components:
       - provider
       - model
       title: OpenAILLMSettings
-    OpenAITTSVoices:
+    DeepgramSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: deepgram
+          title: Provider
+        model:
+          $ref: '#/components/schemas/DeepgramSTTModel'
+          default: nova-3
+        endpointing_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Endpointing Ms
+        eot_timeout_ms:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Eot Timeout Ms
+        eot_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Eot Threshold
+        eager_eot_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Eager Eot Threshold
+      type: object
+      required:
+      - provider
+      title: DeepgramSTTSettings
+    STTProvider:
       type: string
       enum:
-      - alloy
-      - ash
-      - ballad
-      - coral
-      - echo
-      - fable
-      - onyx
-      - nova
-      - sage
-      - shimmer
-      title: OpenAITTSVoices
+      - google
+      - azure
+      - aws
+      - openai
+      - elevenlabs
+      - groq
+      - speechmatics
+      - hamsa
+      - sarj_groq
+      - sarj_custom
+      - deepgram
+      title: STTProvider
     GlobalSettings:
       properties:
         models:
@@ -961,102 +856,100 @@ components:
       - allow_interruptions
       - timeout
       title: GlobalSettings
-    DeepgramSTTSettings:
+    OrpheusArabicVoice:
+      type: string
+      enum:
+      - fahad
+      - sultan
+      - lulwa
+      - noura
+      - aisha
+      - abdullah
+      title: OrpheusArabicVoice
+    OpenAITTSSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        model:
+          $ref: '#/components/schemas/OpenAITTSModels'
+          default: gpt-4o-mini-tts
+        voice:
+          $ref: '#/components/schemas/OpenAITTSVoices'
+          default: ash
+        speed:
+          type: number
+          maximum: 4.0
+          minimum: 0.25
+          title: Speed
+          description: Speech speed (0.25-4.0)
+          default: 1.0
+        instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Instructions
+      type: object
+      required:
+      - provider
+      title: OpenAITTSSettings
+    HamsaSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: hamsa
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+      type: object
+      required:
+      - provider
+      title: HamsaSTTSettings
+    DeepgramTTSModel:
+      type: string
+      enum:
+      - aura-2
+      title: DeepgramTTSModel
+    DeepgramTTSSettings:
       properties:
         provider:
           type: string
           const: deepgram
           title: Provider
         model:
-          $ref: '#/components/schemas/DeepgramSTTModel'
-          default: nova-3
-        endpointing_ms:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Endpointing Ms
-        eot_timeout_ms:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Eot Timeout Ms
-        eot_threshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Eot Threshold
-        eager_eot_threshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Eager Eot Threshold
+          $ref: '#/components/schemas/DeepgramTTSModel'
+          default: aura-2
+        voice:
+          type: string
+          title: Voice
       type: object
       required:
       - provider
-      title: DeepgramSTTSettings
-    DisableTurnDetection:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableTurnDetection
-    HamsaTTSSettings:
+      - voice
+      title: DeepgramTTSSettings
+    AzureTTSSettings:
       properties:
         provider:
           type: string
-          const: hamsa
+          const: azure
           title: Provider
-        speaker:
-          $ref: '#/components/schemas/HamsaTTSSpeaker'
-          default: Hiba
-        dialect:
-          $ref: '#/components/schemas/HamsaTTSDialect'
-          default: ksa
+        region:
+          type: string
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+        voice:
+          type: string
+          title: Voice
+          default: en-US-JennyNeural
       type: object
       required:
       - provider
-      title: HamsaTTSSettings
-    HamsaTTSDialect:
-      type: string
-      enum:
-      - pls
-      - egy
-      - syr
-      - irq
-      - jor
-      - leb
-      - ksa
-      - uae
-      - bah
-      - qat
-      - msa
-      title: HamsaTTSDialect
-    STTFallbackConfig:
-      properties:
-        type:
-          type: string
-          const: enable
-          title: Type
-          default: enable
-        models:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/GoogleSTTSettings'
-            - $ref: '#/components/schemas/AzureSTTSettings'
-            - $ref: '#/components/schemas/AWSSTTSettings'
-            - $ref: '#/components/schemas/GroqSTTSettings'
-            - $ref: '#/components/schemas/OpenAISTTSettings'
-            - $ref: '#/components/schemas/ElevenLabsSTTSettings'
-            - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
-            - $ref: '#/components/schemas/DeepgramSTTSettings'
-          type: array
-          maxItems: 2
-          title: Models
-      type: object
-      title: STTFallbackConfig
+      title: AzureTTSSettings
     OpenAITTSModels:
       type: string
       enum:
@@ -1064,35 +957,97 @@ components:
       - tts-1
       - tts-1-hd
       title: OpenAITTSModels
-    DisableSTTFallback:
+    LiveKitTurnDetection:
       properties:
         type:
           type: string
-          const: disable
+          const: livekit_v1_mini
           title: Type
-          default: disable
+          default: livekit_v1_mini
+        unlikely_threshold:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.0
+          - type: 'null'
+          title: Unlikely Threshold
+        min_endpointing_delay:
+          type: string
+          format: duration
+          title: Min Endpointing Delay
+          default: PT0.3S
+        max_endpointing_delay:
+          type: string
+          format: duration
+          title: Max Endpointing Delay
+          default: PT2.5S
       type: object
-      title: DisableSTTFallback
-    BackChannelWordConfig:
+      title: LiveKitTurnDetection
+    SarjCustomSTTSettings:
       properties:
-        type:
+        provider:
           type: string
-          const: word
-          title: Type
-          default: word
-        value:
+          const: sarj_custom
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjCustomSTTSettings
+    ElevenLabsTTSSettings:
+      properties:
+        model:
+          $ref: '#/components/schemas/ElevenLabsModels'
+        provider:
+          type: string
+          const: 11labs
+          title: Provider
+        arabic_voice_id:
+          type: string
+          title: Arabic Voice Id
+        english_voice_id:
+          type: string
+          title: English Voice Id
+          default: 21m00Tcm4TlvDq8ikWAM
+        urdu_voice_id:
+          type: string
+          title: Urdu Voice Id
+          default: 9cI5mhBtM4WtQ9Fo6jWQ
+        region:
+          $ref: '#/components/schemas/ElevenLabsRegion'
+          default: eu
+        speed:
           type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
+          maximum: 1.2
+          minimum: 0.7
+          title: Speed
+          description: Speech speed (0.7-1.2)
+          default: 1.0
       type: object
-      title: BackChannelWordConfig
+      required:
+      - model
+      - provider
+      - arabic_voice_id
+      title: ElevenLabsTTSSettings
+    GroqLLMModel:
+      type: string
+      enum:
+      - llama-3.1-405b-reasoning
+      - llama-3.1-8b-instant
+      - llama-3.3-70b-versatile
+      - llama3-groq-70b-8192-tool-use-preview
+      - llama3-groq-8b-8192-tool-use-preview
+      - llama-guard-3-8b
+      - llama3-70b-8192
+      - llama3-8b-8192
+      - mixtral-8x7b-32768
+      - gemma-7b-it
+      - gemma2-9b-it
+      - meta-llama/llama-4-scout-17b-16e-instruct
+      - meta-llama/llama-4-maverick-17b-128e-instruct
+      - openai/gpt-oss-20b
+      - openai/gpt-oss-120b
+      - qwen/qwen3-32b
+      title: GroqLLMModel
     SarjOmniTTSSettings:
       properties:
         provider:
@@ -1116,151 +1071,45 @@ components:
       required:
       - provider
       title: SarjOmniTTSSettings
-    SarjF5TTSSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_f5
-          title: Provider
-        voice:
-          $ref: '#/components/schemas/SarjF5TTSVoice'
-          default: Male
-      type: object
-      required:
-      - provider
-      title: SarjF5TTSSettings
-    SoundId:
+    SarjF5TTSVoice:
       type: string
       enum:
-      - keyboard_typing
-      title: SoundId
-    HamsaSTTSettings:
+      - Male
+      - Female
+      title: SarjF5TTSVoice
+    CerebrasLLMSettings:
       properties:
         provider:
           type: string
-          const: hamsa
+          const: cerebras
           title: Provider
-        language:
-          $ref: '#/components/schemas/Language'
-          default: ar
+          default: cerebras
+        model:
+          $ref: '#/components/schemas/CerebrasLLMModel'
       type: object
       required:
-      - provider
-      title: HamsaSTTSettings
-    SarjEouTurnDetection:
+      - model
+      title: CerebrasLLMSettings
+    BackChannelConfig:
       properties:
         type:
           type: string
-          const: sarj_eou
+          const: freq
           title: Type
-          default: sarj_eou
-        threshold:
+          default: freq
+        value:
           type: number
           maximum: 1.0
-          minimum: 0.0
-          title: Threshold
-          default: 0.5
-        prediction_timeout:
-          type: string
-          format: duration
-          title: Prediction Timeout
-          default: PT0.5S
-        min_endpointing_delay:
-          type: string
-          format: duration
-          title: Min Endpointing Delay
-          default: PT0.5S
-        max_endpointing_delay:
-          type: string
-          format: duration
-          title: Max Endpointing Delay
-          default: PT3S
-        targeted_stt_providers:
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
           items:
-            $ref: '#/components/schemas/STTProvider'
+            type: string
           type: array
-          title: Targeted Stt Providers
+          title: Whitelist
       type: object
-      title: SarjEouTurnDetection
-    DisableBackChanneling:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableBackChanneling
-    SarjCustomSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_custom
-          title: Provider
-      type: object
-      required:
-      - provider
-      title: SarjCustomSTTSettings
-    OrpheusEnglishVoice:
-      type: string
-      enum:
-      - autumn
-      - diana
-      - hannah
-      - austin
-      - daniel
-      - troy
-      title: OrpheusEnglishVoice
-    ElevenLabsSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: elevenlabs
-          title: Provider
-        model:
-          $ref: '#/components/schemas/ElevenLabsSTTModel'
-          default: scribe_v1
-        region:
-          $ref: '#/components/schemas/ElevenLabsRegion'
-          default: eu
-      type: object
-      required:
-      - provider
-      title: ElevenLabsSTTSettings
-    AWSSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: aws
-          title: Provider
-        region:
-          type: string
-          enum:
-          - eu-central-1
-          - us-east-1
-          title: Region
-          default: eu-central-1
-      type: object
-      required:
-      - provider
-      title: AWSSTTSettings
-    DisableTimeoutSettings:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableTimeoutSettings
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
+      title: BackChannelConfig
     GroqTTSSettings:
       properties:
         provider:
@@ -1277,29 +1126,6 @@ components:
       - provider
       - voice
       title: GroqTTSSettings
-    DeepgramTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: deepgram
-          title: Provider
-        model:
-          $ref: '#/components/schemas/DeepgramTTSModel'
-          default: aura-2
-        voice:
-          type: string
-          title: Voice
-      type: object
-      required:
-      - provider
-      - voice
-      title: DeepgramTTSSettings
-    SarjF5TTSVoice:
-      type: string
-      enum:
-      - Male
-      - Female
-      title: SarjF5TTSVoice
     UpdateOrganizationSettingsRequest:
       properties:
         data:
@@ -1313,3 +1139,177 @@ components:
       required:
       - data
       title: UpdateOrganizationSettingsRequest
+    BackChannelWordConfig:
+      properties:
+        type:
+          type: string
+          const: word
+          title: Type
+          default: word
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelWordConfig
+    SoundId:
+      type: string
+      enum:
+      - keyboard_typing
+      title: SoundId
+    CartesiaTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: cartesia
+          title: Provider
+        model:
+          $ref: '#/components/schemas/CartesiaModels'
+          default: sonic-3
+        voice:
+          type: string
+          title: Voice
+          default: f257d7af-eb60-4ef0-8815-b78701006c2c
+        speed:
+          type: number
+          maximum: 1.5
+          minimum: 0.6
+          title: Speed
+          description: Speech speed (0.6-1.5)
+          default: 1.0
+        emotion:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emotion
+      type: object
+      required:
+      - provider
+      title: CartesiaTTSSettings
+    GroqSTTModels:
+      type: string
+      enum:
+      - whisper-large-v3
+      - whisper-large-v3-turbo
+      - distil-whisper-large-v3-en
+      title: GroqSTTModels
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    OrpheusEnglishVoice:
+      type: string
+      enum:
+      - autumn
+      - diana
+      - hannah
+      - austin
+      - daniel
+      - troy
+      title: OrpheusEnglishVoice
+    TTSVoice:
+      properties:
+        id:
+          type: string
+          title: Id
+        display_name:
+          type: string
+          title: Display Name
+        provider:
+          type: string
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+        gender:
+          $ref: '#/components/schemas/Gender'
+        tts_settings:
+          anyOf:
+          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
+          - $ref: '#/components/schemas/AzureTTSSettings'
+          - $ref: '#/components/schemas/OpenAITTSSettings'
+          - $ref: '#/components/schemas/AWSTTSSettings'
+          - $ref: '#/components/schemas/GroqTTSSettings'
+          - $ref: '#/components/schemas/HamsaTTSSettings'
+          - $ref: '#/components/schemas/CartesiaTTSSettings'
+          - $ref: '#/components/schemas/DeepgramTTSSettings'
+          - $ref: '#/components/schemas/SarjF5TTSSettings'
+          - $ref: '#/components/schemas/SarjOmniTTSSettings'
+          title: Tts Settings
+        is_active:
+          type: boolean
+          title: Is Active
+          default: true
+        vibe:
+          type: string
+          title: Vibe
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - display_name
+      - provider
+      - language
+      - gender
+      - tts_settings
+      - vibe
+      - created_at
+      - updated_at
+      title: TTSVoice
+    BackChannelSoundConfig:
+      properties:
+        type:
+          type: string
+          const: sound
+          title: Type
+          default: sound
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelSoundConfig
+    AzureSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: azure
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+      type: object
+      required:
+      - provider
+      title: AzureSTTSettings

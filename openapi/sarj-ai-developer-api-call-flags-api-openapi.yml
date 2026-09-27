@@ -148,16 +148,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    IssueType:
-      type: string
-      enum:
-      - pronunciation
-      - connectivity
-      - flow
-      - silence
-      - latency
-      - other
-      title: IssueType
     FlagExportParams:
       properties:
         call_id:
@@ -247,6 +237,16 @@ components:
       - created_at
       - updated_at
       title: CallFlag
+    IssueType:
+      type: string
+      enum:
+      - pronunciation
+      - connectivity
+      - flow
+      - silence
+      - latency
+      - other
+      title: IssueType
     HTTPValidationError:
       properties:
         detail:
@@ -256,13 +256,68 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    FlagStatus:
-      type: string
-      enum:
-      - open
-      - in_progress
-      - resolved
-      title: FlagStatus
+    FlagListParams:
+      properties:
+        call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Id
+        statuses:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/FlagStatus'
+            type: array
+          - type: 'null'
+          title: Statuses
+        issue_types:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/IssueType'
+            type: array
+          - type: 'null'
+          title: Issue Types
+        start_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Start Date
+        end_date:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: End Date
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 50
+      type: object
+      title: FlagListParams
+    UpdateFlagStatusRequest:
+      properties:
+        status:
+          $ref: '#/components/schemas/FlagStatus'
+      type: object
+      required:
+      - status
+      title: UpdateFlagStatusRequest
     CallFlagWithContext:
       properties:
         id:
@@ -318,14 +373,6 @@ components:
       - reporter_email
       - organization_name
       title: CallFlagWithContext
-    UpdateFlagStatusRequest:
-      properties:
-        status:
-          $ref: '#/components/schemas/FlagStatus'
-      type: object
-      required:
-      - status
-      title: UpdateFlagStatusRequest
     ValidationError:
       properties:
         loc:
@@ -352,6 +399,13 @@ components:
       - msg
       - type
       title: ValidationError
+    FlagStatus:
+      type: string
+      enum:
+      - open
+      - in_progress
+      - resolved
+      title: FlagStatus
     FlagListResponse:
       properties:
         flags:
@@ -394,57 +448,3 @@ components:
       - timestamp_ms
       - issue_type
       title: CallFlagCreate
-    FlagListParams:
-      properties:
-        call_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Call Id
-        statuses:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/FlagStatus'
-            type: array
-          - type: 'null'
-          title: Statuses
-        issue_types:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/IssueType'
-            type: array
-          - type: 'null'
-          title: Issue Types
-        start_date:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Start Date
-        end_date:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: End Date
-        organization_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Organization Ids
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Cursor
-        limit:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-          default: 50
-      type: object
-      title: FlagListParams

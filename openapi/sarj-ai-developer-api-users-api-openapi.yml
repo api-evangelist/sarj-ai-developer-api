@@ -203,26 +203,6 @@ paths:
                 title: Response Organizationslistuserswithnoorganization
 components:
   schemas:
-    GetManyRequest:
-      properties:
-        ids:
-          items:
-            type: string
-          type: array
-          title: Ids
-      type: object
-      required:
-      - ids
-      title: GetManyRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     CreateUserRequest:
       properties:
         email:
@@ -237,6 +217,41 @@ components:
       required:
       - email
       title: CreateUserRequest
+    UserRole:
+      type: string
+      enum:
+      - user
+      - admin
+      - superadmin
+      title: UserRole
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UpdateUserRole:
+      properties:
+        role:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+      required:
+      - role
+      title: UpdateUserRole
+    GetManyRequest:
+      properties:
+        ids:
+          items:
+            type: string
+          type: array
+          title: Ids
+      type: object
+      required:
+      - ids
+      title: GetManyRequest
     User:
       properties:
         id:
@@ -258,21 +273,6 @@ components:
       - email
       - role
       title: User
-    AddUsersToOrganization:
-      properties:
-        organization_id:
-          type: string
-          title: Organization Id
-        user_ids:
-          items:
-            type: string
-          type: array
-          title: User Ids
-      type: object
-      required:
-      - organization_id
-      - user_ids
-      title: AddUsersToOrganization
     ValidationError:
       properties:
         loc:
@@ -299,18 +299,18 @@ components:
       - msg
       - type
       title: ValidationError
-    UserRole:
-      type: string
-      enum:
-      - user
-      - admin
-      - superadmin
-      title: UserRole
-    UpdateUserRole:
+    AddUsersToOrganization:
       properties:
-        role:
-          $ref: '#/components/schemas/UserRole'
+        organization_id:
+          type: string
+          title: Organization Id
+        user_ids:
+          items:
+            type: string
+          type: array
+          title: User Ids
       type: object
       required:
-      - role
-      title: UpdateUserRole
+      - organization_id
+      - user_ids
+      title: AddUsersToOrganization

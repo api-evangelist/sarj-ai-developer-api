@@ -169,75 +169,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    SallaPayloadField:
-      properties:
-        path:
-          type: string
-          title: Path
-        type:
-          type: string
-          enum:
-          - string
-          - number
-          title: Type
-        label:
-          type: string
-          title: Label
-      additionalProperties: false
-      type: object
-      required:
-      - path
-      - type
-      - label
-      title: SallaPayloadField
-    SallaAutomatableEvent:
-      properties:
-        event_type:
-          $ref: '#/components/schemas/SallaEvent'
-        label:
-          type: string
-          title: Label
-        description:
-          type: string
-          title: Description
-      additionalProperties: false
-      type: object
-      required:
-      - event_type
-      - label
-      - description
-      title: SallaAutomatableEvent
-    SallaAutomationUpsertRequest:
-      properties:
-        enabled:
-          type: boolean
-          title: Enabled
-        scenario_id:
-          type: string
-          title: Scenario Id
-        language:
-          $ref: '#/components/schemas/Language'
-          default: ar
-        variable_mapping:
-          additionalProperties:
-            type: string
-          type: object
-          title: Variable Mapping
-      type: object
-      required:
-      - enabled
-      - scenario_id
-      - variable_mapping
-      title: SallaAutomationUpsertRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     SallaEventAutomation:
       properties:
         organization_id:
@@ -290,12 +221,6 @@ components:
       - created_at
       - updated_at
       title: SallaEventAutomation
-    SallaIntegrationStatus:
-      type: string
-      enum:
-      - COMPLETED
-      - INCOMPLETE
-      title: SallaIntegrationStatus
     SallaEvent:
       type: string
       enum:
@@ -304,40 +229,81 @@ components:
       - abandoned.cart
       title: SallaEvent
       description: For the full list, see https://docs.salla.dev/421413m0?nav=01HNA8M216X4HFNGWM9TWSTCKQ and https://docs.salla.dev/doc-421119#list-of-salla-store-events.
-    Language:
+    SallaIntegrationStatus:
       type: string
       enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
-    ValidationError:
+      - COMPLETED
+      - INCOMPLETE
+      title: SallaIntegrationStatus
+    SallaPayloadField:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        path:
           type: string
-          title: Message
+          title: Path
         type:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          enum:
+          - string
+          - number
+          title: Type
+        label:
+          type: string
+          title: Label
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
+      - path
       - type
-      title: ValidationError
+      - label
+      title: SallaPayloadField
+    SallaAutomationUpsertRequest:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+        scenario_id:
+          type: string
+          title: Scenario Id
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+        variable_mapping:
+          additionalProperties:
+            type: string
+          type: object
+          title: Variable Mapping
+      type: object
+      required:
+      - enabled
+      - scenario_id
+      - variable_mapping
+      title: SallaAutomationUpsertRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SallaAutomatableEvent:
+      properties:
+        event_type:
+          $ref: '#/components/schemas/SallaEvent'
+        label:
+          type: string
+          title: Label
+        description:
+          type: string
+          title: Description
+      additionalProperties: false
+      type: object
+      required:
+      - event_type
+      - label
+      - description
+      title: SallaAutomatableEvent
     SallaMerchantInfo:
       properties:
         merchant_id:
@@ -377,6 +343,14 @@ components:
       - created_at
       - updated_at
       title: SallaMerchantInfo
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
     SallaEventTrigger:
       properties:
         event:
@@ -398,3 +372,29 @@ components:
       - created_at
       - data
       title: SallaEventTrigger
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

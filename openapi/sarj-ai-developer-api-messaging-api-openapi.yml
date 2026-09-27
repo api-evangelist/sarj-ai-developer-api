@@ -152,87 +152,13 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    EndSessionRequest:
-      properties:
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reason
-      type: object
-      title: EndSessionRequest
-    SocialbotSkipped:
-      properties:
-        status:
-          type: string
-          const: skipped
-          title: Status
-        reason:
-          type: string
-          title: Reason
-      type: object
-      required:
-      - status
-      - reason
-      title: SocialbotSkipped
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    MessagingProvider:
+    MessagingSessionStatus:
       type: string
       enum:
-      - socialbot_whatsapp
-      title: MessagingProvider
-    SocialbotAccepted:
-      properties:
-        status:
-          type: string
-          const: accepted
-          title: Status
-        organization_id:
-          type: string
-          title: Organization Id
-        task_id:
-          type: string
-          title: Task Id
-      type: object
-      required:
-      - status
-      - organization_id
-      - task_id
-      title: SocialbotAccepted
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - active
+      - ended
+      - error
+      title: MessagingSessionStatus
     MessagingSessionList:
       properties:
         sessions:
@@ -254,56 +180,6 @@ components:
       required:
       - sessions
       title: MessagingSessionList
-    ListSessionInput:
-      properties:
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/MessagingSessionStatus'
-          - type: 'null'
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cursor
-        limit:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-          default: 20
-      type: object
-      title: ListSessionInput
-    MessagingSessionStatus:
-      type: string
-      enum:
-      - active
-      - ended
-      - error
-      title: MessagingSessionStatus
-    EndSessionResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-        session_id:
-          type: string
-          title: Session Id
-        ended_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ended At
-      type: object
-      required:
-      - status
-      - session_id
-      - ended_at
-      title: EndSessionResponse
     MessagingMessage:
       properties:
         id:
@@ -333,12 +209,66 @@ components:
       - direction
       - content
       title: MessagingMessage
-    MessageDirection:
+    EndSessionResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        session_id:
+          type: string
+          title: Session Id
+        ended_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ended At
+      type: object
+      required:
+      - status
+      - session_id
+      - ended_at
+      title: EndSessionResponse
+    SocialbotAccepted:
+      properties:
+        status:
+          type: string
+          const: accepted
+          title: Status
+        organization_id:
+          type: string
+          title: Organization Id
+        task_id:
+          type: string
+          title: Task Id
+      type: object
+      required:
+      - status
+      - organization_id
+      - task_id
+      title: SocialbotAccepted
+    EndSessionRequest:
+      properties:
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      title: EndSessionRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    MessagingProvider:
       type: string
       enum:
-      - inbound
-      - outbound
-      title: MessageDirection
+      - socialbot_whatsapp
+      title: MessagingProvider
     MessagingSession:
       properties:
         id:
@@ -396,3 +326,73 @@ components:
       - provider
       - external_id
       title: MessagingSession
+    MessageDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: MessageDirection
+    ListSessionInput:
+      properties:
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/MessagingSessionStatus'
+          - type: 'null'
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 20
+      type: object
+      title: ListSessionInput
+    SocialbotSkipped:
+      properties:
+        status:
+          type: string
+          const: skipped
+          title: Status
+        reason:
+          type: string
+          title: Reason
+      type: object
+      required:
+      - status
+      - reason
+      title: SocialbotSkipped
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

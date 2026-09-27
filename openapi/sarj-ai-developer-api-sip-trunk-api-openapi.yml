@@ -95,10 +95,17 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    DeleteResponse:
-      properties: {}
+    ListSipTrunksResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SipTrunk'
+          type: array
+          title: Items
       type: object
-      title: DeleteResponse
+      required:
+      - items
+      title: ListSipTrunksResponse
     Provider:
       type: string
       enum:
@@ -107,34 +114,6 @@ components:
       - twilio
       - maqsam
       title: Provider
-    SipTrunk:
-      properties:
-        id:
-          type: string
-          title: Id
-        trunk_id:
-          type: string
-          title: Trunk Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        provider:
-          $ref: '#/components/schemas/Provider'
-        trunk_name:
-          type: string
-          title: Trunk Name
-        caller_id_numbers:
-          $ref: '#/components/schemas/CallerIdNumbers'
-      type: object
-      required:
-      - id
-      - trunk_id
-      - created_at
-      - provider
-      - trunk_name
-      - caller_id_numbers
-      title: SipTrunk
     UpsertSipTrunk:
       properties:
         id:
@@ -168,6 +147,44 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    SipTrunk:
+      properties:
+        id:
+          type: string
+          title: Id
+        trunk_id:
+          type: string
+          title: Trunk Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        provider:
+          $ref: '#/components/schemas/Provider'
+        trunk_name:
+          type: string
+          title: Trunk Name
+        caller_id_numbers:
+          $ref: '#/components/schemas/CallerIdNumbers'
+      type: object
+      required:
+      - id
+      - trunk_id
+      - created_at
+      - provider
+      - trunk_name
+      - caller_id_numbers
+      title: SipTrunk
+    CallerIdNumbers:
+      properties:
+        numbers:
+          items:
+            type: string
+          type: array
+          title: Numbers
+          default: []
+      type: object
+      title: CallerIdNumbers
     ValidationError:
       properties:
         loc:
@@ -194,24 +211,7 @@ components:
       - msg
       - type
       title: ValidationError
-    ListSipTrunksResponse:
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/SipTrunk'
-          type: array
-          title: Items
+    DeleteResponse:
+      properties: {}
       type: object
-      required:
-      - items
-      title: ListSipTrunksResponse
-    CallerIdNumbers:
-      properties:
-        numbers:
-          items:
-            type: string
-          type: array
-          title: Numbers
-          default: []
-      type: object
-      title: CallerIdNumbers
+      title: DeleteResponse

@@ -51,9 +51,10 @@ tags:
 - Text-to-Speech
 - Voice Cloning
 - MCP
-- agent-native
+- Agent-Native
 - Saudi Arabia
 - MENA
+- A2A
 tags_raw:
 - voice AI
 - voice agents
@@ -68,6 +69,7 @@ tags_raw:
 - agent-native
 - Saudi Arabia
 - MENA
+- A2A
 apis:
 - aid: sarj-ai-developer-api:sarj-ai-developer-api-agent-profiles-api
   name: Sarj AI Developer API Agent Profiles API
@@ -1234,3 +1236,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 7
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://platform-docs.sarj.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

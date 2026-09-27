@@ -92,87 +92,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ProvisionSipConnectionRequest:
-      properties:
-        spec:
-          anyOf:
-          - oneOf:
-            - $ref: '#/components/schemas/IpEndpointSpec'
-            - $ref: '#/components/schemas/DigestEndpointSpec'
-            discriminator:
-              propertyName: auth_kind
-              mapping:
-                digest: '#/components/schemas/DigestEndpointSpec'
-                ip: '#/components/schemas/IpEndpointSpec'
-          - type: 'null'
-          title: Spec
-      additionalProperties: false
-      type: object
-      title: ProvisionSipConnectionRequest
-    SipVerificationResponse:
-      properties:
-        status:
-          $ref: '#/components/schemas/SipConnectionStatus'
-        checks:
-          items:
-            $ref: '#/components/schemas/VerificationCheck'
-          type: array
-          title: Checks
-      additionalProperties: false
-      type: object
-      required:
-      - status
-      - checks
-      title: SipVerificationResponse
-    DispatcherDestination:
-      properties:
-        uri:
-          type: string
-          title: Uri
-        flags:
-          type: integer
-          minimum: 0.0
-          title: Flags
-          default: 0
-        priority:
-          type: integer
-          minimum: 0.0
-          title: Priority
-          default: 0
-        attrs:
-          type: string
-          title: Attrs
-          default: ''
-      additionalProperties: false
-      type: object
-      required:
-      - uri
-      title: DispatcherDestination
-    SipConnectionStatus:
-      type: string
-      enum:
-      - pending_verification
-      - active
-      - disabled
-      title: SipConnectionStatus
-    DigestEndpointSpec:
-      properties:
-        auth_kind:
-          type: string
-          const: digest
-          title: Auth Kind
-          default: digest
-        outbound_destination:
-          anyOf:
-          - $ref: '#/components/schemas/DispatcherDestination'
-          - type: 'null'
-        digest_credentials:
-          $ref: '#/components/schemas/DigestCredentials'
-      additionalProperties: false
-      type: object
-      required:
-      - digest_credentials
-      title: DigestEndpointSpec
     InboundSignalingAddress:
       properties:
         ip:
@@ -199,6 +118,58 @@ components:
       required:
       - ip
       title: InboundSignalingAddress
+    SipVerificationResponse:
+      properties:
+        status:
+          $ref: '#/components/schemas/SipConnectionStatus'
+        checks:
+          items:
+            $ref: '#/components/schemas/VerificationCheck'
+          type: array
+          title: Checks
+      additionalProperties: false
+      type: object
+      required:
+      - status
+      - checks
+      title: SipVerificationResponse
+    ProvisionSipConnectionRequest:
+      properties:
+        spec:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/IpEndpointSpec'
+            - $ref: '#/components/schemas/DigestEndpointSpec'
+            discriminator:
+              propertyName: auth_kind
+              mapping:
+                digest: '#/components/schemas/DigestEndpointSpec'
+                ip: '#/components/schemas/IpEndpointSpec'
+          - type: 'null'
+          title: Spec
+      additionalProperties: false
+      type: object
+      title: ProvisionSipConnectionRequest
+    EndpointCheckResult:
+      properties:
+        existing_claim:
+          anyOf:
+          - $ref: '#/components/schemas/ExistingClaim'
+          - type: 'null'
+        platform_signaling_addresses:
+          items:
+            type: string
+          type: array
+          title: Platform Signaling Addresses
+        username_availability:
+          $ref: '#/components/schemas/UsernameAvailability'
+      additionalProperties: false
+      type: object
+      required:
+      - existing_claim
+      - platform_signaling_addresses
+      - username_availability
+      title: EndpointCheckResult
     DigestCredentials:
       properties:
         username:
@@ -215,6 +186,19 @@ components:
       - username
       - password
       title: DigestCredentials
+    VerificationCheckName:
+      type: string
+      enum:
+      - dispatcher_destinations_active
+      - inbound_addresses_whitelisted
+      - digest_registration
+      title: VerificationCheckName
+    ProviderType:
+      type: string
+      enum:
+      - carrier
+      - client_endpoint
+      title: ProviderType
     HTTPValidationError:
       properties:
         detail:
@@ -224,44 +208,53 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ProviderType:
-      type: string
-      enum:
-      - carrier
-      - client_endpoint
-      title: ProviderType
+    DispatcherDestination:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        flags:
+          type: integer
+          minimum: 0.0
+          title: Flags
+          default: 0
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+          default: 0
+        attrs:
+          type: string
+          title: Attrs
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - uri
+      title: DispatcherDestination
+    VerificationCheck:
+      properties:
+        name:
+          $ref: '#/components/schemas/VerificationCheckName'
+        status:
+          $ref: '#/components/schemas/VerificationCheckStatus'
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - status
+      title: VerificationCheck
     VerificationCheckStatus:
       type: string
       enum:
       - passed
       - pending
       title: VerificationCheckStatus
-    VerificationCheckName:
-      type: string
-      enum:
-      - dispatcher_destinations_active
-      - inbound_addresses_whitelisted
-      - digest_registration
-      title: VerificationCheckName
-    IpEndpointSpec:
-      properties:
-        auth_kind:
-          type: string
-          const: ip
-          title: Auth Kind
-          default: ip
-        outbound_destination:
-          anyOf:
-          - $ref: '#/components/schemas/DispatcherDestination'
-          - type: 'null'
-        inbound_addresses:
-          items:
-            $ref: '#/components/schemas/InboundSignalingAddress'
-          type: array
-          title: Inbound Addresses
-      additionalProperties: false
-      type: object
-      title: IpEndpointSpec
     ExistingClaim:
       properties:
         connection_id:
@@ -283,6 +276,53 @@ components:
       - provider_name
       - provider_type
       title: ExistingClaim
+    UsernameAvailability:
+      type: string
+      enum:
+      - taken
+      - platform_free
+      title: UsernameAvailability
+    IpEndpointSpec:
+      properties:
+        auth_kind:
+          type: string
+          const: ip
+          title: Auth Kind
+          default: ip
+        outbound_destination:
+          anyOf:
+          - $ref: '#/components/schemas/DispatcherDestination'
+          - type: 'null'
+        inbound_addresses:
+          items:
+            $ref: '#/components/schemas/InboundSignalingAddress'
+          type: array
+          title: Inbound Addresses
+      additionalProperties: false
+      type: object
+      title: IpEndpointSpec
+    EndpointCheckInput:
+      properties:
+        auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Username
+        signaling_addresses:
+          items:
+            $ref: '#/components/schemas/InboundSignalingAddress'
+          type: array
+          title: Signaling Addresses
+      additionalProperties: false
+      type: object
+      title: EndpointCheckInput
+    SipConnectionStatus:
+      type: string
+      enum:
+      - pending_verification
+      - active
+      - disabled
+      title: SipConnectionStatus
     ValidationError:
       properties:
         loc:
@@ -309,61 +349,21 @@ components:
       - msg
       - type
       title: ValidationError
-    EndpointCheckInput:
+    DigestEndpointSpec:
       properties:
-        auth_username:
+        auth_kind:
+          type: string
+          const: digest
+          title: Auth Kind
+          default: digest
+        outbound_destination:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/DispatcherDestination'
           - type: 'null'
-          title: Auth Username
-        signaling_addresses:
-          items:
-            $ref: '#/components/schemas/InboundSignalingAddress'
-          type: array
-          title: Signaling Addresses
-      additionalProperties: false
-      type: object
-      title: EndpointCheckInput
-    UsernameAvailability:
-      type: string
-      enum:
-      - taken
-      - platform_free
-      title: UsernameAvailability
-    EndpointCheckResult:
-      properties:
-        existing_claim:
-          anyOf:
-          - $ref: '#/components/schemas/ExistingClaim'
-          - type: 'null'
-        platform_signaling_addresses:
-          items:
-            type: string
-          type: array
-          title: Platform Signaling Addresses
-        username_availability:
-          $ref: '#/components/schemas/UsernameAvailability'
+        digest_credentials:
+          $ref: '#/components/schemas/DigestCredentials'
       additionalProperties: false
       type: object
       required:
-      - existing_claim
-      - platform_signaling_addresses
-      - username_availability
-      title: EndpointCheckResult
-    VerificationCheck:
-      properties:
-        name:
-          $ref: '#/components/schemas/VerificationCheckName'
-        status:
-          $ref: '#/components/schemas/VerificationCheckStatus'
-        detail:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Detail
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - status
-      title: VerificationCheck
+      - digest_credentials
+      title: DigestEndpointSpec
