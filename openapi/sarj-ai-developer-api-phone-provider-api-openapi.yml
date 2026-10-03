@@ -76,12 +76,57 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    PhoneProviderListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneProviderListItem'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: PhoneProviderListResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ProviderStatus:
       type: string
       enum:
       - active
       - deprecated
       title: ProviderStatus
+    PhoneProviderListItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/ProviderType'
+        status:
+          $ref: '#/components/schemas/ProviderStatus'
+        connection_count:
+          type: integer
+          title: Connection Count
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - status
+      - connection_count
+      title: PhoneProviderListItem
     CreatePhoneProviderRequest:
       properties:
         provider_name:
@@ -112,51 +157,21 @@ components:
       - carrier
       - client_endpoint
       title: ProviderType
-    HTTPValidationError:
+    UpdatePhoneProviderRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PhoneProviderListItem:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-        type:
-          $ref: '#/components/schemas/ProviderType'
+        provider_name:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+          title: Provider Name
         status:
-          $ref: '#/components/schemas/ProviderStatus'
-        connection_count:
-          type: integer
-          title: Connection Count
+          anyOf:
+          - $ref: '#/components/schemas/ProviderStatus'
+          - type: 'null'
       additionalProperties: false
       type: object
-      required:
-      - id
-      - name
-      - type
-      - status
-      - connection_count
-      title: PhoneProviderListItem
-    PhoneProviderListResponse:
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/PhoneProviderListItem'
-          type: array
-          title: Items
-      additionalProperties: false
-      type: object
-      required:
-      - items
-      title: PhoneProviderListResponse
+      title: UpdatePhoneProviderRequest
     ValidationError:
       properties:
         loc:
@@ -183,18 +198,3 @@ components:
       - msg
       - type
       title: ValidationError
-    UpdatePhoneProviderRequest:
-      properties:
-        provider_name:
-          anyOf:
-          - type: string
-            minLength: 1
-          - type: 'null'
-          title: Provider Name
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/ProviderStatus'
-          - type: 'null'
-      additionalProperties: false
-      type: object
-      title: UpdatePhoneProviderRequest

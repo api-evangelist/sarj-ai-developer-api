@@ -89,6 +89,54 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    UpdateOrganizationBatchSettingsRequest:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationBatchCallDefaults'
+      type: object
+      required:
+      - data
+      title: UpdateOrganizationBatchSettingsRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TimeWindow:
+      properties:
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
+      additionalProperties: false
+      type: object
+      required:
+      - start_edge
+      - end_edge
+      title: TimeWindow
+    RetrySettings:
+      properties:
+        retry_interval_seconds:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Retry Interval Seconds
+        max_retry_attempts:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Max Retry Attempts
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+      type: object
+      required:
+      - retry_interval_seconds
+      - max_retry_attempts
+      title: RetrySettings
     OrganizationBatchCallDefaults:
       properties:
         calling_window:
@@ -112,18 +160,24 @@ components:
         Subclasses the stored shape so a value that passes here is always readable
 
         back, never the reverse.'
-    TimeWindow:
+    TimeEdge:
       properties:
-        start_edge:
-          $ref: '#/components/schemas/TimeEdge'
-        end_edge:
-          $ref: '#/components/schemas/TimeEdge'
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
       additionalProperties: false
       type: object
       required:
-      - start_edge
-      - end_edge
-      title: TimeWindow
+      - hour
+      - minute
+      title: TimeEdge
     StoredBatchCallDefaults:
       properties:
         calling_window:
@@ -163,60 +217,25 @@ components:
         Every write goes through `OrganizationBatchCallDefaults` below, so a row
 
         only lands out of contract when the contract itself tightens.'
-    TimeEdge:
+    OrganizationBatchSettingsResponse:
       properties:
-        hour:
-          type: integer
-          maximum: 23.0
-          minimum: 0.0
-          title: Hour
-        minute:
-          type: integer
-          maximum: 59.0
-          minimum: 0.0
-          title: Minute
-      additionalProperties: false
-      type: object
-      required:
-      - hour
-      - minute
-      title: TimeEdge
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    RetrySettings:
-      properties:
-        retry_interval_seconds:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Retry Interval Seconds
-        max_retry_attempts:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Max Retry Attempts
-        retry_window:
+        settings:
+          $ref: '#/components/schemas/StoredBatchCallDefaults'
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by_email:
           anyOf:
-          - $ref: '#/components/schemas/TimeWindow'
+          - type: string
           - type: 'null'
+          title: Updated By Email
       type: object
       required:
-      - retry_interval_seconds
-      - max_retry_attempts
-      title: RetrySettings
-    UpdateOrganizationBatchSettingsRequest:
-      properties:
-        data:
-          $ref: '#/components/schemas/OrganizationBatchCallDefaults'
-      type: object
-      required:
-      - data
-      title: UpdateOrganizationBatchSettingsRequest
+      - settings
+      - updated_at
+      - updated_by_email
+      title: OrganizationBatchSettingsResponse
     ValidationError:
       properties:
         loc:
@@ -243,22 +262,3 @@ components:
       - msg
       - type
       title: ValidationError
-    OrganizationBatchSettingsResponse:
-      properties:
-        settings:
-          $ref: '#/components/schemas/StoredBatchCallDefaults'
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        updated_by_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Email
-      type: object
-      required:
-      - settings
-      - updated_at
-      - updated_by_email
-      title: OrganizationBatchSettingsResponse

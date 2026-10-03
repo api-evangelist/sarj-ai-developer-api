@@ -164,6 +164,22 @@ components:
       required:
       - file
       title: Body_debug_decode_endpoint_debug_decode_post
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DecodingMode:
+      type: string
+      enum:
+      - hybrid
+      - rnnt
+      - ctc
+      title: DecodingMode
     ValidationError:
       properties:
         loc:
@@ -190,22 +206,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DecodingMode:
-      type: string
-      enum:
-      - hybrid
-      - rnnt
-      - ctc
-      title: DecodingMode
   securitySchemes:
     BearerAuth:
       type: http

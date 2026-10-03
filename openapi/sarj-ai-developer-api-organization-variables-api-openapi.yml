@@ -148,28 +148,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CreateOrganizationVariableRequest:
+    HTTPValidationError:
       properties:
-        key:
-          type: string
-          title: Key
-        value:
-          type: string
-          title: Value
-        is_secret:
-          type: boolean
-          title: Is Secret
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - key
-      - value
-      - is_secret
-      title: CreateOrganizationVariableRequest
+      title: HTTPValidationError
     PlaintextOrganizationVariable:
       properties:
         organization_id:
@@ -220,15 +207,6 @@ components:
       - created_at
       - updated_at
       title: PlaintextOrganizationVariable
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     UpdateOrganizationVariableRequest:
       properties:
         value:
@@ -243,6 +221,28 @@ components:
           title: Description
       type: object
       title: UpdateOrganizationVariableRequest
+    CreateOrganizationVariableRequest:
+      properties:
+        key:
+          type: string
+          title: Key
+        value:
+          type: string
+          title: Value
+        is_secret:
+          type: boolean
+          title: Is Secret
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - key
+      - value
+      - is_secret
+      title: CreateOrganizationVariableRequest
     ListOrganizationVariablesResponse:
       properties:
         items:

@@ -169,6 +169,135 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SallaMerchantInfo:
+      properties:
+        merchant_id:
+          type: integer
+          title: Merchant Id
+        merchant_name:
+          type: string
+          title: Merchant Name
+        organization_id:
+          type: string
+          title: Organization Id
+        integration_status:
+          $ref: '#/components/schemas/SallaIntegrationStatus'
+          default: INCOMPLETE
+        merchant_calls:
+          items:
+            type: string
+          type: array
+          title: Merchant Calls
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - merchant_id
+      - merchant_name
+      - organization_id
+      - id
+      - created_at
+      - updated_at
+      title: SallaMerchantInfo
+    SallaEvent:
+      type: string
+      enum:
+      - app.store.authorize
+      - app.uninstalled
+      - abandoned.cart
+      title: SallaEvent
+      description: For the full list, see https://docs.salla.dev/421413m0?nav=01HNA8M216X4HFNGWM9TWSTCKQ and https://docs.salla.dev/doc-421119#list-of-salla-store-events.
+    SallaPayloadField:
+      properties:
+        path:
+          type: string
+          title: Path
+        type:
+          type: string
+          enum:
+          - string
+          - number
+          title: Type
+        label:
+          type: string
+          title: Label
+      additionalProperties: false
+      type: object
+      required:
+      - path
+      - type
+      - label
+      title: SallaPayloadField
+    SallaEventTrigger:
+      properties:
+        event:
+          type: string
+          title: Event
+        merchant:
+          type: integer
+          title: Merchant
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        data:
+          title: Data
+      type: object
+      required:
+      - event
+      - merchant
+      - created_at
+      - data
+      title: SallaEventTrigger
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    SallaAutomatableEvent:
+      properties:
+        event_type:
+          $ref: '#/components/schemas/SallaEvent'
+        label:
+          type: string
+          title: Label
+        description:
+          type: string
+          title: Description
+      additionalProperties: false
+      type: object
+      required:
+      - event_type
+      - label
+      - description
+      title: SallaAutomatableEvent
+    SallaIntegrationStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - INCOMPLETE
+      title: SallaIntegrationStatus
     SallaEventAutomation:
       properties:
         organization_id:
@@ -221,41 +350,6 @@ components:
       - created_at
       - updated_at
       title: SallaEventAutomation
-    SallaEvent:
-      type: string
-      enum:
-      - app.store.authorize
-      - app.uninstalled
-      - abandoned.cart
-      title: SallaEvent
-      description: For the full list, see https://docs.salla.dev/421413m0?nav=01HNA8M216X4HFNGWM9TWSTCKQ and https://docs.salla.dev/doc-421119#list-of-salla-store-events.
-    SallaIntegrationStatus:
-      type: string
-      enum:
-      - COMPLETED
-      - INCOMPLETE
-      title: SallaIntegrationStatus
-    SallaPayloadField:
-      properties:
-        path:
-          type: string
-          title: Path
-        type:
-          type: string
-          enum:
-          - string
-          - number
-          title: Type
-        label:
-          type: string
-          title: Label
-      additionalProperties: false
-      type: object
-      required:
-      - path
-      - type
-      - label
-      title: SallaPayloadField
     SallaAutomationUpsertRequest:
       properties:
         enabled:
@@ -278,100 +372,6 @@ components:
       - scenario_id
       - variable_mapping
       title: SallaAutomationUpsertRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SallaAutomatableEvent:
-      properties:
-        event_type:
-          $ref: '#/components/schemas/SallaEvent'
-        label:
-          type: string
-          title: Label
-        description:
-          type: string
-          title: Description
-      additionalProperties: false
-      type: object
-      required:
-      - event_type
-      - label
-      - description
-      title: SallaAutomatableEvent
-    SallaMerchantInfo:
-      properties:
-        merchant_id:
-          type: integer
-          title: Merchant Id
-        merchant_name:
-          type: string
-          title: Merchant Name
-        organization_id:
-          type: string
-          title: Organization Id
-        integration_status:
-          $ref: '#/components/schemas/SallaIntegrationStatus'
-          default: INCOMPLETE
-        merchant_calls:
-          items:
-            type: string
-          type: array
-          title: Merchant Calls
-        id:
-          type: string
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-      type: object
-      required:
-      - merchant_id
-      - merchant_name
-      - organization_id
-      - id
-      - created_at
-      - updated_at
-      title: SallaMerchantInfo
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
-    SallaEventTrigger:
-      properties:
-        event:
-          type: string
-          title: Event
-        merchant:
-          type: integer
-          title: Merchant
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        data:
-          title: Data
-      type: object
-      required:
-      - event
-      - merchant
-      - created_at
-      - data
-      title: SallaEventTrigger
     ValidationError:
       properties:
         loc:

@@ -195,6 +195,115 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BackChannelWordConfig:
+      properties:
+        type:
+          type: string
+          const: word
+          title: Type
+          default: word
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelWordConfig
+    BackChannelConfig:
+      properties:
+        type:
+          type: string
+          const: freq
+          title: Type
+          default: freq
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelConfig
+    BackChannelMixConfig:
+      properties:
+        type:
+          type: string
+          const: mix
+          title: Type
+          default: mix
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        word_probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Word Probability
+          default: 0.7
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelMixConfig
+    CreateAgentProfileRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        language:
+          $ref: '#/components/schemas/Language'
+        voice_id:
+          type: string
+          title: Voice Id
+        gender:
+          $ref: '#/components/schemas/Gender'
+        settings:
+          $ref: '#/components/schemas/AgentProfileSettingsRequest'
+        persona_prompt:
+          type: string
+          title: Persona Prompt
+          default: ''
+      type: object
+      required:
+      - name
+      - language
+      - voice_id
+      - gender
+      - settings
+      title: CreateAgentProfileRequest
     UpdateAgentProfileRequest:
       properties:
         name:
@@ -226,6 +335,138 @@ components:
       required:
       - voice_id
       title: UpdateAgentProfileRequest
+    EnableBackgroundNoise:
+      properties:
+        type:
+          type: string
+          const: enable
+          title: Type
+          default: enable
+        noise_type:
+          $ref: '#/components/schemas/BackgroundNoiseType'
+          default: crowded_room
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 0.05
+      type: object
+      title: EnableBackgroundNoise
+    TurnTimingSettings:
+      properties:
+        min_endpointing_delay:
+          type: string
+          format: duration
+          title: Min Endpointing Delay
+        max_endpointing_delay:
+          type: string
+          format: duration
+          title: Max Endpointing Delay
+      type: object
+      required:
+      - min_endpointing_delay
+      - max_endpointing_delay
+      title: TurnTimingSettings
+    DisableTimeoutSettings:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableTimeoutSettings
+    BackchannelAudioConfig:
+      properties:
+        sound_id:
+          $ref: '#/components/schemas/SoundId'
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 1.0
+        probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Probability
+          default: 1.0
+      type: object
+      required:
+      - sound_id
+      title: BackchannelAudioConfig
+    AgentProfileSettingsRequest:
+      properties:
+        back_channeling:
+          anyOf:
+          - $ref: '#/components/schemas/BackChannelConfig'
+          - $ref: '#/components/schemas/BackChannelWordConfig'
+          - $ref: '#/components/schemas/BackChannelSoundConfig'
+          - $ref: '#/components/schemas/BackChannelMixConfig'
+          - $ref: '#/components/schemas/DisableBackChanneling'
+          title: Back Channeling
+        background_noise:
+          anyOf:
+          - $ref: '#/components/schemas/EnableBackgroundNoise'
+          - $ref: '#/components/schemas/DisableBackgroundNoise'
+          title: Background Noise
+          default:
+            type: enable
+            noise_type: crowded_room
+            volume: 0.05
+        timeout:
+          anyOf:
+          - $ref: '#/components/schemas/TimeoutSettings'
+          - $ref: '#/components/schemas/DisableTimeoutSettings'
+          title: Timeout
+        voice_speed:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Voice Speed
+        turn_timing:
+          anyOf:
+          - $ref: '#/components/schemas/TurnTimingSettings'
+          - type: 'null'
+      type: object
+      required:
+      - back_channeling
+      - timeout
+      title: AgentProfileSettingsRequest
+    ListAgentProfilesResponse:
+      properties:
+        profiles:
+          items:
+            $ref: '#/components/schemas/AgentProfile'
+          type: array
+          title: Profiles
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - profiles
+      title: ListAgentProfilesResponse
+    DisableBackChanneling:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackChanneling
     AgentProfile:
       properties:
         id:
@@ -274,61 +515,6 @@ components:
       - created_at
       - updated_at
       title: AgentProfile
-    DisableBackChanneling:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableBackChanneling
-    Gender:
-      type: string
-      enum:
-      - male
-      - female
-      title: Gender
-    BackchannelAudioConfig:
-      properties:
-        sound_id:
-          $ref: '#/components/schemas/SoundId'
-        volume:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Volume
-          default: 1.0
-        probability:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Probability
-          default: 1.0
-      type: object
-      required:
-      - sound_id
-      title: BackchannelAudioConfig
-    TimeoutSettings:
-      properties:
-        type:
-          type: string
-          const: enabled
-          title: Type
-          default: enabled
-        duration:
-          anyOf:
-          - type: string
-            format: duration
-          - type: integer
-          title: Duration
-          default: 15
-        max_retries:
-          type: integer
-          title: Max Retries
-          default: 5
-      type: object
-      title: TimeoutSettings
     ValidationError:
       properties:
         loc:
@@ -355,58 +541,41 @@ components:
       - msg
       - type
       title: ValidationError
-    BackChannelMixConfig:
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      title: Gender
+    TimeoutSettings:
       properties:
         type:
           type: string
-          const: mix
+          const: enabled
           title: Type
-          default: mix
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        word_probability:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Word Probability
-          default: 0.7
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-        sounds:
-          items:
-            $ref: '#/components/schemas/BackchannelAudioConfig'
-          type: array
-          minItems: 1
-          title: Sounds
+          default: enabled
+        duration:
+          anyOf:
+          - type: string
+            format: duration
+          - type: integer
+          title: Duration
+          default: 15
+        max_retries:
+          type: integer
+          title: Max Retries
+          default: 5
       type: object
-      required:
-      - sounds
-      title: BackChannelMixConfig
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BackgroundNoiseType:
+      title: TimeoutSettings
+    Language:
       type: string
       enum:
-      - office_ambience
-      - city_ambience
-      - forest_ambience
-      - crowded_room
-      title: BackgroundNoiseType
-    DisableTimeoutSettings:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    DisableBackgroundNoise:
       properties:
         type:
           type: string
@@ -414,7 +583,30 @@ components:
           title: Type
           default: disable
       type: object
-      title: DisableTimeoutSettings
+      title: DisableBackgroundNoise
+    ListAgentProfilesRequest:
+      properties:
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        limit:
+          type: integer
+          title: Limit
+          default: 10
+        language:
+          anyOf:
+          - $ref: '#/components/schemas/Language'
+          - type: 'null'
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      type: object
+      title: ListAgentProfilesRequest
     AgentProfileSettings:
       properties:
         back_channeling:
@@ -459,211 +651,14 @@ components:
       - back_channeling
       - timeout
       title: AgentProfileSettings
-    DisableBackgroundNoise:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableBackgroundNoise
-    ListAgentProfilesResponse:
-      properties:
-        profiles:
-          items:
-            $ref: '#/components/schemas/AgentProfile'
-          type: array
-          title: Profiles
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Cursor
-        prev_cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Prev Cursor
-      type: object
-      required:
-      - profiles
-      title: ListAgentProfilesResponse
-    AgentProfileSettingsRequest:
-      properties:
-        back_channeling:
-          anyOf:
-          - $ref: '#/components/schemas/BackChannelConfig'
-          - $ref: '#/components/schemas/BackChannelWordConfig'
-          - $ref: '#/components/schemas/BackChannelSoundConfig'
-          - $ref: '#/components/schemas/BackChannelMixConfig'
-          - $ref: '#/components/schemas/DisableBackChanneling'
-          title: Back Channeling
-        background_noise:
-          anyOf:
-          - $ref: '#/components/schemas/EnableBackgroundNoise'
-          - $ref: '#/components/schemas/DisableBackgroundNoise'
-          title: Background Noise
-          default:
-            type: enable
-            noise_type: crowded_room
-            volume: 0.05
-        timeout:
-          anyOf:
-          - $ref: '#/components/schemas/TimeoutSettings'
-          - $ref: '#/components/schemas/DisableTimeoutSettings'
-          title: Timeout
-        voice_speed:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Voice Speed
-        turn_timing:
-          anyOf:
-          - $ref: '#/components/schemas/TurnTimingSettings'
-          - type: 'null'
-      type: object
-      required:
-      - back_channeling
-      - timeout
-      title: AgentProfileSettingsRequest
-    EnableBackgroundNoise:
-      properties:
-        type:
-          type: string
-          const: enable
-          title: Type
-          default: enable
-        noise_type:
-          $ref: '#/components/schemas/BackgroundNoiseType'
-          default: crowded_room
-        volume:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Volume
-          default: 0.05
-      type: object
-      title: EnableBackgroundNoise
-    BackChannelConfig:
-      properties:
-        type:
-          type: string
-          const: freq
-          title: Type
-          default: freq
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-      type: object
-      title: BackChannelConfig
-    TurnTimingSettings:
-      properties:
-        min_endpointing_delay:
-          type: string
-          format: duration
-          title: Min Endpointing Delay
-        max_endpointing_delay:
-          type: string
-          format: duration
-          title: Max Endpointing Delay
-      type: object
-      required:
-      - min_endpointing_delay
-      - max_endpointing_delay
-      title: TurnTimingSettings
-    ListAgentProfilesRequest:
-      properties:
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Cursor
-        limit:
-          type: integer
-          title: Limit
-          default: 10
-        language:
-          anyOf:
-          - $ref: '#/components/schemas/Language'
-          - type: 'null'
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-      type: object
-      title: ListAgentProfilesRequest
-    CreateAgentProfileRequest:
-      properties:
-        name:
-          type: string
-          title: Name
-        language:
-          $ref: '#/components/schemas/Language'
-        voice_id:
-          type: string
-          title: Voice Id
-        gender:
-          $ref: '#/components/schemas/Gender'
-        settings:
-          $ref: '#/components/schemas/AgentProfileSettingsRequest'
-        persona_prompt:
-          type: string
-          title: Persona Prompt
-          default: ''
-      type: object
-      required:
-      - name
-      - language
-      - voice_id
-      - gender
-      - settings
-      title: CreateAgentProfileRequest
-    BackChannelWordConfig:
-      properties:
-        type:
-          type: string
-          const: word
-          title: Type
-          default: word
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-      type: object
-      title: BackChannelWordConfig
-    SoundId:
+    BackgroundNoiseType:
       type: string
       enum:
-      - keyboard_typing
-      title: SoundId
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
+      - office_ambience
+      - city_ambience
+      - forest_ambience
+      - crowded_room
+      title: BackgroundNoiseType
     BackChannelSoundConfig:
       properties:
         type:
@@ -687,3 +682,8 @@ components:
       required:
       - sounds
       title: BackChannelSoundConfig
+    SoundId:
+      type: string
+      enum:
+      - keyboard_typing
+      title: SoundId

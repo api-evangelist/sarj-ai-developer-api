@@ -96,36 +96,6 @@ paths:
       - Audio
 components:
   schemas:
-    ScriptSegment:
-      properties:
-        speaker:
-          type: string
-          maxLength: 64
-          minLength: 1
-          title: Speaker
-        text:
-          type: string
-          maxLength: 10000
-          minLength: 1
-          title: Text
-        voice:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Voice
-        speed:
-          anyOf:
-          - type: number
-            maximum: 4.0
-            minimum: 0.25
-          - type: 'null'
-          title: Speed
-      type: object
-      required:
-      - speaker
-      - text
-      title: ScriptSegment
-      description: Single segment in a multi-speaker script.
     HTTPValidationError:
       properties:
         detail:
@@ -135,18 +105,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    VoiceObject:
-      properties:
-        id:
-          type: string
-          maxLength: 128
-          minLength: 1
-          title: Id
-      type: object
-      required:
-      - id
-      title: VoiceObject
-      description: 'OpenAI custom voice object: {"id": "..."}.'
     SpeechRequest:
       properties:
         model:
@@ -305,6 +263,36 @@ components:
       - input
       title: SpeechRequest
       description: Sarj TTS request body with an OpenAI SDK-compatible shape.
+    ScriptSegment:
+      properties:
+        speaker:
+          type: string
+          maxLength: 64
+          minLength: 1
+          title: Speaker
+        text:
+          type: string
+          maxLength: 10000
+          minLength: 1
+          title: Text
+        voice:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Voice
+        speed:
+          anyOf:
+          - type: number
+            maximum: 4.0
+            minimum: 0.25
+          - type: 'null'
+          title: Speed
+      type: object
+      required:
+      - speaker
+      - text
+      title: ScriptSegment
+      description: Single segment in a multi-speaker script.
     ScriptRequest:
       properties:
         script:
@@ -491,6 +479,18 @@ components:
       - text
       - ref_audio
       title: Body_create_speech_clone_v1_audio_speech_clone_post
+    VoiceObject:
+      properties:
+        id:
+          type: string
+          maxLength: 128
+          minLength: 1
+          title: Id
+      type: object
+      required:
+      - id
+      title: VoiceObject
+      description: 'OpenAI custom voice object: {"id": "..."}.'
     ValidationError:
       properties:
         loc:

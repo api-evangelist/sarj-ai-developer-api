@@ -152,13 +152,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    MessagingSessionStatus:
-      type: string
-      enum:
-      - active
-      - ended
-      - error
-      title: MessagingSessionStatus
     MessagingSessionList:
       properties:
         sessions:
@@ -180,95 +173,6 @@ components:
       required:
       - sessions
       title: MessagingSessionList
-    MessagingMessage:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        session_id:
-          type: string
-          format: uuid
-          title: Session Id
-        direction:
-          $ref: '#/components/schemas/MessageDirection'
-        content:
-          type: string
-          title: Content
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-      type: object
-      required:
-      - session_id
-      - direction
-      - content
-      title: MessagingMessage
-    EndSessionResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-        session_id:
-          type: string
-          title: Session Id
-        ended_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Ended At
-      type: object
-      required:
-      - status
-      - session_id
-      - ended_at
-      title: EndSessionResponse
-    SocialbotAccepted:
-      properties:
-        status:
-          type: string
-          const: accepted
-          title: Status
-        organization_id:
-          type: string
-          title: Organization Id
-        task_id:
-          type: string
-          title: Task Id
-      type: object
-      required:
-      - status
-      - organization_id
-      - task_id
-      title: SocialbotAccepted
-    EndSessionRequest:
-      properties:
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reason
-      type: object
-      title: EndSessionRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    MessagingProvider:
-      type: string
-      enum:
-      - socialbot_whatsapp
-      title: MessagingProvider
     MessagingSession:
       properties:
         id:
@@ -326,12 +230,29 @@ components:
       - provider
       - external_id
       title: MessagingSession
-    MessageDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      title: MessageDirection
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SocialbotSkipped:
+      properties:
+        status:
+          type: string
+          const: skipped
+          title: Status
+        reason:
+          type: string
+          title: Reason
+      type: object
+      required:
+      - status
+      - reason
+      title: SocialbotSkipped
     ListSessionInput:
       properties:
         status:
@@ -356,20 +277,99 @@ components:
           default: 20
       type: object
       title: ListSessionInput
-    SocialbotSkipped:
+    SocialbotAccepted:
       properties:
         status:
           type: string
-          const: skipped
+          const: accepted
           title: Status
-        reason:
+        organization_id:
           type: string
-          title: Reason
+          title: Organization Id
+        task_id:
+          type: string
+          title: Task Id
       type: object
       required:
       - status
-      - reason
-      title: SocialbotSkipped
+      - organization_id
+      - task_id
+      title: SocialbotAccepted
+    EndSessionRequest:
+      properties:
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      title: EndSessionRequest
+    EndSessionResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        session_id:
+          type: string
+          title: Session Id
+        ended_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ended At
+      type: object
+      required:
+      - status
+      - session_id
+      - ended_at
+      title: EndSessionResponse
+    MessagingSessionStatus:
+      type: string
+      enum:
+      - active
+      - ended
+      - error
+      title: MessagingSessionStatus
+    MessagingMessage:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        session_id:
+          type: string
+          format: uuid
+          title: Session Id
+        direction:
+          $ref: '#/components/schemas/MessageDirection'
+        content:
+          type: string
+          title: Content
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - session_id
+      - direction
+      - content
+      title: MessagingMessage
+    MessageDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: MessageDirection
+    MessagingProvider:
+      type: string
+      enum:
+      - socialbot_whatsapp
+      title: MessagingProvider
     ValidationError:
       properties:
         loc:

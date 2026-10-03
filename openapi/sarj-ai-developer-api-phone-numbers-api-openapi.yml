@@ -500,37 +500,216 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrgPhoneNumberListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/OrgPhoneNumberListItem'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: OrgPhoneNumberListResponse
     OrgPhoneNumberType:
       type: string
       enum:
       - dedicated
       - shared
       title: OrgPhoneNumberType
-    LinkSipConnectionRequest:
+    PhoneNumberProvider:
       properties:
-        sip_connection_id:
+        id:
           type: string
-          format: uuid
-          title: Sip Connection Id
+          title: Id
+        name:
+          type: string
+          title: Name
       additionalProperties: false
       type: object
       required:
-      - sip_connection_id
-      title: LinkSipConnectionRequest
-    AssignInboundRequest:
+      - id
+      - name
+      title: PhoneNumberProvider
+    OrgPhoneNumberListItem:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+        phone_number:
+          type: string
+          title: Phone Number
+        type:
+          $ref: '#/components/schemas/OrgPhoneNumberType'
+        scenario:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberScenario'
+          - type: 'null'
+        registered_at:
+          type: string
+          format: date-time
+          title: Registered At
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      - phone_number
+      - type
+      - scenario
+      - registered_at
+      title: OrgPhoneNumberListItem
+    ChangeOrganizationRequest:
       properties:
         organization_id:
           type: string
           title: Organization Id
-        inbound_scenario_id:
-          type: string
-          title: Inbound Scenario Id
       additionalProperties: false
       type: object
       required:
       - organization_id
-      - inbound_scenario_id
-      title: AssignInboundRequest
+      title: ChangeOrganizationRequest
+    SarjDedicatedAllocation:
+      properties:
+        kind:
+          type: string
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        organization:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberOrganization'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - organization
+      title: SarjDedicatedAllocation
+    PhoneNumberMutationResponse:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      title: PhoneNumberMutationResponse
+    PhoneNumberProviderListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneNumberProvider'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: PhoneNumberProviderListResponse
+    PhoneStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      title: PhoneStatus
+    NumberDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - both
+      title: NumberDirection
+    ChangeToSharedRequest:
+      properties:
+        kind:
+          type: string
+          const: shared
+          title: Kind
+          default: shared
+      additionalProperties: false
+      type: object
+      title: ChangeToSharedRequest
+    PhoneNumberListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/PhoneNumberListItem'
+          type: array
+          title: Items
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      - next_cursor
+      title: PhoneNumberListResponse
+    RegisterSarjDedicatedRequest:
+      properties:
+        kind:
+          type: string
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        phone_number:
+          type: string
+          title: Phone Number
+        provider_id:
+          type: string
+          title: Provider Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        is_extension:
+          type: boolean
+          title: Is Extension
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - phone_number
+      - provider_id
+      - sip_trunk_id
+      title: RegisterSarjDedicatedRequest
+    SharedAllocation:
+      properties:
+        kind:
+          type: string
+          const: shared
+          title: Kind
+          default: shared
+      additionalProperties: false
+      type: object
+      title: SharedAllocation
+    ClientOwnedAllocation:
+      properties:
+        kind:
+          type: string
+          const: client_owned
+          title: Kind
+          default: client_owned
+        organization:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneNumberOrganization'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      required:
+      - organization
+      title: ClientOwnedAllocation
     RegisterSharedRequest:
       properties:
         kind:
@@ -563,30 +742,21 @@ components:
       - provider_id
       - sip_trunk_id
       title: RegisterSharedRequest
-    UpdateTrunkRequest:
+    ChangeToSarjDedicatedRequest:
       properties:
-        sip_trunk_id:
+        kind:
           type: string
-          title: Sip Trunk Id
-        provider_id:
+          const: sarj_dedicated
+          title: Kind
+          default: sarj_dedicated
+        organization_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Provider Id
+          title: Organization Id
       additionalProperties: false
       type: object
-      required:
-      - sip_trunk_id
-      title: UpdateTrunkRequest
-    SetDirectionRequest:
-      properties:
-        direction:
-          $ref: '#/components/schemas/NumberDirection'
-      additionalProperties: false
-      type: object
-      required:
-      - direction
-      title: SetDirectionRequest
+      title: ChangeToSarjDedicatedRequest
     ValidationError:
       properties:
         loc:
@@ -613,142 +783,55 @@ components:
       - msg
       - type
       title: ValidationError
-    PhoneNumberMutationResponse:
+    SetDirectionRequest:
       properties:
-        provisioned_number_id:
-          type: string
-          title: Provisioned Number Id
+        direction:
+          $ref: '#/components/schemas/NumberDirection'
       additionalProperties: false
       type: object
       required:
-      - provisioned_number_id
-      title: PhoneNumberMutationResponse
-    HTTPValidationError:
+      - direction
+      title: SetDirectionRequest
+    AssignInboundRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        organization_id:
+          type: string
+          title: Organization Id
+        inbound_scenario_id:
+          type: string
+          title: Inbound Scenario Id
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
-    RegisterClientOwnedRequest:
+      required:
+      - organization_id
+      - inbound_scenario_id
+      title: AssignInboundRequest
+    LinkSipConnectionRequest:
       properties:
-        kind:
+        sip_connection_id:
           type: string
-          const: client_owned
-          title: Kind
-          default: client_owned
-        phone_number:
-          type: string
-          title: Phone Number
-        provider_id:
-          type: string
-          title: Provider Id
+          format: uuid
+          title: Sip Connection Id
+      additionalProperties: false
+      type: object
+      required:
+      - sip_connection_id
+      title: LinkSipConnectionRequest
+    UpdateTrunkRequest:
+      properties:
         sip_trunk_id:
           type: string
           title: Sip Trunk Id
-        owner_organization_id:
-          type: string
-          title: Owner Organization Id
-        is_extension:
-          type: boolean
-          title: Is Extension
-          default: false
-      additionalProperties: false
-      type: object
-      required:
-      - phone_number
-      - provider_id
-      - sip_trunk_id
-      - owner_organization_id
-      title: RegisterClientOwnedRequest
-    PhoneNumberProviderListResponse:
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/PhoneNumberProvider'
-          type: array
-          title: Items
-      additionalProperties: false
-      type: object
-      required:
-      - items
-      title: PhoneNumberProviderListResponse
-    ChangeToSarjDedicatedRequest:
-      properties:
-        kind:
-          type: string
-          const: sarj_dedicated
-          title: Kind
-          default: sarj_dedicated
-        organization_id:
+        provider_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Organization Id
-      additionalProperties: false
-      type: object
-      title: ChangeToSarjDedicatedRequest
-    OrgPhoneNumberListItem:
-      properties:
-        provisioned_number_id:
-          type: string
-          title: Provisioned Number Id
-        phone_number:
-          type: string
-          title: Phone Number
-        type:
-          $ref: '#/components/schemas/OrgPhoneNumberType'
-        scenario:
-          anyOf:
-          - $ref: '#/components/schemas/PhoneNumberScenario'
-          - type: 'null'
-        registered_at:
-          type: string
-          format: date-time
-          title: Registered At
+          title: Provider Id
       additionalProperties: false
       type: object
       required:
-      - provisioned_number_id
-      - phone_number
-      - type
-      - scenario
-      - registered_at
-      title: OrgPhoneNumberListItem
-    ClientOwnedAllocation:
-      properties:
-        kind:
-          type: string
-          const: client_owned
-          title: Kind
-          default: client_owned
-        organization:
-          anyOf:
-          - $ref: '#/components/schemas/PhoneNumberOrganization'
-          - type: 'null'
-      additionalProperties: false
-      type: object
-      required:
-      - organization
-      title: ClientOwnedAllocation
-    PhoneStatus:
-      type: string
-      enum:
-      - active
-      - inactive
-      title: PhoneStatus
-    SetOutboundOrganizationsRequest:
-      properties:
-        organization_ids:
-          items:
-            type: string
-          type: array
-          title: Organization Ids
-      additionalProperties: false
-      type: object
-      title: SetOutboundOrganizationsRequest
+      - sip_trunk_id
+      title: UpdateTrunkRequest
     ChangeToClientOwnedRequest:
       properties:
         kind:
@@ -764,54 +847,6 @@ components:
       additionalProperties: false
       type: object
       title: ChangeToClientOwnedRequest
-    ChangeOrganizationRequest:
-      properties:
-        organization_id:
-          type: string
-          title: Organization Id
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      title: ChangeOrganizationRequest
-    SharedAllocation:
-      properties:
-        kind:
-          type: string
-          const: shared
-          title: Kind
-          default: shared
-      additionalProperties: false
-      type: object
-      title: SharedAllocation
-    PhoneNumberOrganization:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - name
-      title: PhoneNumberOrganization
-    PhoneNumberScenario:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - name
-      title: PhoneNumberScenario
     PhoneNumberListItem:
       properties:
         provisioned_number_id:
@@ -878,79 +913,17 @@ components:
       - is_extension
       - registered_at
       title: PhoneNumberListItem
-    ChangeToSharedRequest:
+    SetOutboundOrganizationsRequest:
       properties:
-        kind:
-          type: string
-          const: shared
-          title: Kind
-          default: shared
-      additionalProperties: false
-      type: object
-      title: ChangeToSharedRequest
-    NumberDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      - both
-      title: NumberDirection
-    SarjDedicatedAllocation:
-      properties:
-        kind:
-          type: string
-          const: sarj_dedicated
-          title: Kind
-          default: sarj_dedicated
-        organization:
-          anyOf:
-          - $ref: '#/components/schemas/PhoneNumberOrganization'
-          - type: 'null'
-      additionalProperties: false
-      type: object
-      required:
-      - organization
-      title: SarjDedicatedAllocation
-    OrgPhoneNumberListResponse:
-      properties:
-        items:
+        organization_ids:
           items:
-            $ref: '#/components/schemas/OrgPhoneNumberListItem'
+            type: string
           type: array
-          title: Items
+          title: Organization Ids
       additionalProperties: false
       type: object
-      required:
-      - items
-      title: OrgPhoneNumberListResponse
-    RegisterSarjDedicatedRequest:
-      properties:
-        kind:
-          type: string
-          const: sarj_dedicated
-          title: Kind
-          default: sarj_dedicated
-        phone_number:
-          type: string
-          title: Phone Number
-        provider_id:
-          type: string
-          title: Provider Id
-        sip_trunk_id:
-          type: string
-          title: Sip Trunk Id
-        is_extension:
-          type: boolean
-          title: Is Extension
-          default: false
-      additionalProperties: false
-      type: object
-      required:
-      - phone_number
-      - provider_id
-      - sip_trunk_id
-      title: RegisterSarjDedicatedRequest
-    PhoneNumberProvider:
+      title: SetOutboundOrganizationsRequest
+    PhoneNumberOrganization:
       properties:
         id:
           type: string
@@ -963,22 +936,49 @@ components:
       required:
       - id
       - name
-      title: PhoneNumberProvider
-    PhoneNumberListResponse:
+      title: PhoneNumberOrganization
+    RegisterClientOwnedRequest:
       properties:
-        items:
-          items:
-            $ref: '#/components/schemas/PhoneNumberListItem'
-          type: array
-          title: Items
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
+        kind:
+          type: string
+          const: client_owned
+          title: Kind
+          default: client_owned
+        phone_number:
+          type: string
+          title: Phone Number
+        provider_id:
+          type: string
+          title: Provider Id
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        owner_organization_id:
+          type: string
+          title: Owner Organization Id
+        is_extension:
+          type: boolean
+          title: Is Extension
+          default: false
       additionalProperties: false
       type: object
       required:
-      - items
-      - next_cursor
-      title: PhoneNumberListResponse
+      - phone_number
+      - provider_id
+      - sip_trunk_id
+      - owner_organization_id
+      title: RegisterClientOwnedRequest
+    PhoneNumberScenario:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      title: PhoneNumberScenario

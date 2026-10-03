@@ -125,6 +125,20 @@ paths:
                 title: Response Systemwebhooktest
 components:
   schemas:
+    ResponseMeta:
+      properties:
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
+          examples:
+          - 550e8400-e29b-41d4-a716-446655440000
+      additionalProperties: false
+      type: object
+      title: ResponseMeta
+      description: Contains request-level metadata included with every public API response.
     HealthStatus:
       properties:
         status:
@@ -140,20 +154,6 @@ components:
       - status
       title: HealthStatus
       description: Represents the operational status of the API.
-    ResponseMeta:
-      properties:
-        request_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Request Id
-          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
-          examples:
-          - 550e8400-e29b-41d4-a716-446655440000
-      additionalProperties: false
-      type: object
-      title: ResponseMeta
-      description: Contains request-level metadata included with every public API response.
     ApiResponse_HealthStatus_:
       properties:
         data:

@@ -252,31 +252,62 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ListKnowledgeBasesFilter:
+    KnowledgeBaseFile:
       properties:
+        id:
+          type: string
+          title: Id
+        knowledge_base_id:
+          type: string
+          title: Knowledge Base Id
         organization_id:
           type: string
           title: Organization Id
-        search:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Search
-        limit:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        filename:
+          type: string
+          title: Filename
+        storage_path:
+          type: string
+          title: Storage Path
+        byte_size:
           type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-          default: 10
-        cursor:
+          title: Byte Size
+        character_count:
+          type: integer
+          title: Character Count
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by:
           anyOf:
           - type: string
           - type: 'null'
-          title: Cursor
+          title: Created By
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
       type: object
       required:
+      - id
+      - knowledge_base_id
       - organization_id
-      title: ListKnowledgeBasesFilter
+      - language_code
+      - filename
+      - storage_path
+      - byte_size
+      - character_count
+      - created_at
+      - updated_at
+      title: KnowledgeBaseFile
     PreSignedUrlResponse:
       properties:
         upload_url:
@@ -290,6 +321,15 @@ components:
       - upload_url
       - file_key
       title: PreSignedUrlResponse
+    DownloadUrlResponse:
+      properties:
+        download_url:
+          type: string
+          title: Download Url
+      type: object
+      required:
+      - download_url
+      title: DownloadUrlResponse
     KnowledgeBaseWithFiles:
       properties:
         id:
@@ -360,6 +400,45 @@ components:
       - created_at
       - updated_at
       title: KnowledgeBase
+    ConfirmUploadRequest:
+      properties:
+        language_code:
+          $ref: '#/components/schemas/Language'
+        file_key:
+          type: string
+          maxLength: 2048
+          minLength: 1
+          title: File Key
+        byte_size:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Byte Size
+        character_count:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Character Count
+        filename:
+          anyOf:
+          - type: string
+            maxLength: 1024
+          - type: 'null'
+          title: Filename
+      type: object
+      required:
+      - language_code
+      - file_key
+      - byte_size
+      - character_count
+      title: ConfirmUploadRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     KnowledgeBaseListItem:
       properties:
         id:
@@ -412,88 +491,27 @@ components:
       - created_at
       - updated_at
       title: KnowledgeBaseListItem
-    HTTPValidationError:
+    ListKnowledgeBasesResponse:
       properties:
-        detail:
+        knowledge_bases:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/KnowledgeBaseListItem'
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DownloadUrlResponse:
-      properties:
-        download_url:
-          type: string
-          title: Download Url
-      type: object
-      required:
-      - download_url
-      title: DownloadUrlResponse
-    KnowledgeBaseFile:
-      properties:
-        id:
-          type: string
-          title: Id
-        knowledge_base_id:
-          type: string
-          title: Knowledge Base Id
-        organization_id:
-          type: string
-          title: Organization Id
-        language_code:
-          $ref: '#/components/schemas/Language'
-        filename:
-          type: string
-          title: Filename
-        storage_path:
-          type: string
-          title: Storage Path
-        byte_size:
-          type: integer
-          title: Byte Size
-        character_count:
-          type: integer
-          title: Character Count
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        created_by:
+          title: Knowledge Bases
+        cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: Created By
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        updated_by:
+          title: Cursor
+        prev_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: Updated By
+          title: Prev Cursor
       type: object
       required:
-      - id
-      - knowledge_base_id
-      - organization_id
-      - language_code
-      - filename
-      - storage_path
-      - byte_size
-      - character_count
-      - created_at
-      - updated_at
-      title: KnowledgeBaseFile
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
+      - knowledge_bases
+      title: ListKnowledgeBasesResponse
     UpsertKnowledgeBase:
       properties:
         id:
@@ -521,6 +539,14 @@ components:
       required:
       - organization_id
       title: UpsertKnowledgeBase
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
     KnowledgeBaseUploadUrlRequest:
       properties:
         language_code:
@@ -538,6 +564,31 @@ components:
       required:
       - language_code
       title: KnowledgeBaseUploadUrlRequest
+    ListKnowledgeBasesFilter:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        search:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Search
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 10
+        cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+      type: object
+      required:
+      - organization_id
+      title: ListKnowledgeBasesFilter
     ValidationError:
       properties:
         loc:
@@ -564,54 +615,3 @@ components:
       - msg
       - type
       title: ValidationError
-    ListKnowledgeBasesResponse:
-      properties:
-        knowledge_bases:
-          items:
-            $ref: '#/components/schemas/KnowledgeBaseListItem'
-          type: array
-          title: Knowledge Bases
-        cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Cursor
-        prev_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prev Cursor
-      type: object
-      required:
-      - knowledge_bases
-      title: ListKnowledgeBasesResponse
-    ConfirmUploadRequest:
-      properties:
-        language_code:
-          $ref: '#/components/schemas/Language'
-        file_key:
-          type: string
-          maxLength: 2048
-          minLength: 1
-          title: File Key
-        byte_size:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Byte Size
-        character_count:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Character Count
-        filename:
-          anyOf:
-          - type: string
-            maxLength: 1024
-          - type: 'null'
-          title: Filename
-      type: object
-      required:
-      - language_code
-      - file_key
-      - byte_size
-      - character_count
-      title: ConfirmUploadRequest

@@ -203,27 +203,6 @@ paths:
                 title: Response Organizationslistuserswithnoorganization
 components:
   schemas:
-    CreateUserRequest:
-      properties:
-        email:
-          type: string
-          title: Email
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-      type: object
-      required:
-      - email
-      title: CreateUserRequest
-    UserRole:
-      type: string
-      enum:
-      - user
-      - admin
-      - superadmin
-      title: UserRole
     HTTPValidationError:
       properties:
         detail:
@@ -252,6 +231,27 @@ components:
       required:
       - ids
       title: GetManyRequest
+    UserRole:
+      type: string
+      enum:
+      - user
+      - admin
+      - superadmin
+      title: UserRole
+    CreateUserRequest:
+      properties:
+        email:
+          type: string
+          title: Email
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      type: object
+      required:
+      - email
+      title: CreateUserRequest
     User:
       properties:
         id:
@@ -273,6 +273,21 @@ components:
       - email
       - role
       title: User
+    AddUsersToOrganization:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        user_ids:
+          items:
+            type: string
+          type: array
+          title: User Ids
+      type: object
+      required:
+      - organization_id
+      - user_ids
+      title: AddUsersToOrganization
     ValidationError:
       properties:
         loc:
@@ -299,18 +314,3 @@ components:
       - msg
       - type
       title: ValidationError
-    AddUsersToOrganization:
-      properties:
-        organization_id:
-          type: string
-          title: Organization Id
-        user_ids:
-          items:
-            type: string
-          type: array
-          title: User Ids
-      type: object
-      required:
-      - organization_id
-      - user_ids
-      title: AddUsersToOrganization

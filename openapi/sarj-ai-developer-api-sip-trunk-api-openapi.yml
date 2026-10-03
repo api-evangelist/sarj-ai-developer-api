@@ -95,17 +95,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ListSipTrunksResponse:
+    HTTPValidationError:
       properties:
-        items:
+        detail:
           items:
-            $ref: '#/components/schemas/SipTrunk'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Items
+          title: Detail
       type: object
-      required:
-      - items
-      title: ListSipTrunksResponse
+      title: HTTPValidationError
     Provider:
       type: string
       enum:
@@ -114,6 +112,16 @@ components:
       - twilio
       - maqsam
       title: Provider
+    CallerIdNumbers:
+      properties:
+        numbers:
+          items:
+            type: string
+          type: array
+          title: Numbers
+          default: []
+      type: object
+      title: CallerIdNumbers
     UpsertSipTrunk:
       properties:
         id:
@@ -138,15 +146,10 @@ components:
       - trunk_name
       - caller_id_numbers
       title: UpsertSipTrunk
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+    DeleteResponse:
+      properties: {}
       type: object
-      title: HTTPValidationError
+      title: DeleteResponse
     SipTrunk:
       properties:
         id:
@@ -175,16 +178,17 @@ components:
       - trunk_name
       - caller_id_numbers
       title: SipTrunk
-    CallerIdNumbers:
+    ListSipTrunksResponse:
       properties:
-        numbers:
+        items:
           items:
-            type: string
+            $ref: '#/components/schemas/SipTrunk'
           type: array
-          title: Numbers
-          default: []
+          title: Items
       type: object
-      title: CallerIdNumbers
+      required:
+      - items
+      title: ListSipTrunksResponse
     ValidationError:
       properties:
         loc:
@@ -211,7 +215,3 @@ components:
       - msg
       - type
       title: ValidationError
-    DeleteResponse:
-      properties: {}
-      type: object
-      title: DeleteResponse
