@@ -70,350 +70,33 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CallDispatchPriority:
-      type: string
-      enum:
-      - normal
-      title: CallDispatchPriority
-    AzureOpenAILLMSettings:
+    GroqSTTSettings:
       properties:
         provider:
           type: string
-          const: azure_openai
+          const: groq
           title: Provider
         model:
-          $ref: '#/components/schemas/AzureOpenAIModel'
+          $ref: '#/components/schemas/GroqSTTModels'
       type: object
       required:
       - provider
       - model
-      title: AzureOpenAILLMSettings
-    Custom:
+      title: GroqSTTSettings
+    CallQueuedHealthCheckMessage:
       properties:
         type:
           type: string
-          const: custom
+          const: call_queued_health_check
           title: Type
-          default: custom
-        scenario:
-          $ref: '#/components/schemas/CustomScenario'
-      type: object
-      required:
-      - scenario
-      title: Custom
-    CallOutcomeMessage:
-      properties:
-        type:
-          type: string
-          const: call_outcome
-          title: Type
-          default: call_outcome
+          default: call_queued_health_check
         call_id:
           type: string
           title: Call Id
-        is_retry:
-          type: boolean
-          title: Is Retry
-          default: false
       type: object
       required:
       - call_id
-      title: CallOutcomeMessage
-    HamsaTTSSpeaker:
-      type: string
-      enum:
-      - Hiba
-      - Khadija
-      - Jasem
-      - Fahd
-      - Salma
-      - Noor
-      - Lana
-      - Fatma
-      - Mariam
-      - Nada
-      - Samir
-      - Dalal
-      - Mais
-      - Alia
-      - Faiza
-      - Dima
-      - Lyali
-      - Carla
-      - Hind
-      - Safa
-      - Somaya
-      - Ali
-      - Ahmed
-      - Mazen
-      - Majd
-      - Amjad
-      - Layan
-      - Talin
-      - Rema
-      - Rami
-      - Hamdan
-      - Maher
-      - Majid
-      - Mansour
-      - Hasan
-      - Sayed
-      title: HamsaTTSSpeaker
-    GeminiLLMSettings:
-      properties:
-        provider:
-          type: string
-          const: gemini
-          title: Provider
-        region:
-          type: string
-          enum:
-          - us-central1
-          - me-central2
-          - us-east1
-          - europe-west1
-          - europe-west3
-          title: Region
-          default: europe-west3
-        model:
-          type: string
-          enum:
-          - flash
-          - pro
-          - flash-lite-3.1
-          title: Model
-          default: flash
-      type: object
-      required:
-      - provider
-      title: GeminiLLMSettings
-    OutboundDispatchTickMessage:
-      properties:
-        type:
-          type: string
-          const: outbound_dispatch_tick
-          title: Type
-          default: outbound_dispatch_tick
-        tick_id:
-          type: string
-          title: Tick Id
-      type: object
-      title: OutboundDispatchTickMessage
-    CartesiaModels:
-      type: string
-      enum:
-      - sonic-3
-      - sonic-2
-      - sonic
-      title: CartesiaModels
-    HamsaTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: hamsa
-          title: Provider
-        speaker:
-          $ref: '#/components/schemas/HamsaTTSSpeaker'
-          default: Hiba
-        dialect:
-          $ref: '#/components/schemas/HamsaTTSDialect'
-          default: ksa
-      type: object
-      required:
-      - provider
-      title: HamsaTTSSettings
-    NoOpMessage:
-      properties:
-        type:
-          type: string
-          const: no_op
-          title: Type
-          default: no_op
-      type: object
-      title: NoOpMessage
-    AzureOpenAIModel:
-      type: string
-      enum:
-      - gpt-4.1
-      title: AzureOpenAIModel
-    ZohoCRMRecordUpdateMessage:
-      properties:
-        type:
-          type: string
-          const: zoho_crm_record_update
-          title: Type
-          default: zoho_crm_record_update
-        call_id:
-          type: string
-          title: Call Id
-        record_id:
-          type: string
-          title: Record Id
-        module:
-          type: string
-          pattern: ^[A-Za-z][A-Za-z0-9_]{0,79}$
-          title: Module
-          default: Leads
-      type: object
-      required:
-      - call_id
-      - record_id
-      title: ZohoCRMRecordUpdateMessage
-    SarjOmniTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_omni
-          title: Provider
-        voice:
-          type: string
-          pattern: ^(?:clone:)?[A-Za-z0-9][A-Za-z0-9_-]{0,63}$
-          title: Voice
-          description: Built-in voice ID or clone:<profile_id>
-          default: ars_male
-        speed:
-          type: number
-          maximum: 1.2
-          minimum: 0.8
-          title: Speed
-          description: Speech speed (0.8-1.2)
-          default: 1.0
-      type: object
-      required:
-      - provider
-      title: SarjOmniTTSSettings
-    NumberFormat:
-      type: string
-      enum:
-      - e164
-      - no_plus
-      title: NumberFormat
-    TimeoutSettings:
-      properties:
-        type:
-          type: string
-          const: enabled
-          title: Type
-          default: enabled
-        duration:
-          anyOf:
-          - type: string
-            format: duration
-          - type: integer
-          title: Duration
-          default: 15
-        max_retries:
-          type: integer
-          title: Max Retries
-          default: 5
-      type: object
-      title: TimeoutSettings
-    OpenAITTSVoices:
-      type: string
-      enum:
-      - alloy
-      - ash
-      - ballad
-      - coral
-      - echo
-      - fable
-      - onyx
-      - nova
-      - sage
-      - shimmer
-      title: OpenAITTSVoices
-    OpenAISTTSettings:
-      properties:
-        provider:
-          type: string
-          const: openai
-          title: Provider
-        model:
-          type: string
-          enum:
-          - gpt-4o-transcribe
-          - gpt-4o-mini-transcribe
-          title: Model
-        region:
-          type: string
-          const: default
-          title: Region
-          default: default
-      type: object
-      required:
-      - provider
-      - model
-      title: OpenAISTTSettings
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
-    TaskStatus:
-      type: string
-      enum:
-      - pending
-      - running
-      - completed
-      - failed
-      - cancelled
-      title: TaskStatus
-    GoogleSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: google
-          title: Provider
-        model:
-          type: string
-          enum:
-          - long
-          - short
-          - telephony
-          - chirp_2
-          - chirp_3
-          title: Model
-        region:
-          type: string
-          enum:
-          - us
-          - eu
-          title: Region
-      type: object
-      required:
-      - provider
-      - model
-      - region
-      title: GoogleSTTSettings
-    AzureTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: azure
-          title: Provider
-        region:
-          type: string
-          enum:
-          - eastus
-          - germanywestcentral
-          title: Region
-          default: eastus
-        voice:
-          type: string
-          title: Voice
-          default: en-US-JennyNeural
-      type: object
-      required:
-      - provider
-      title: AzureTTSSettings
-    CerebrasLLMModel:
-      type: string
-      enum:
-      - llama-3.1-8b-instruct
-      title: CerebrasLLMModel
+      title: CallQueuedHealthCheckMessage
     ProcessMessagingMessage:
       properties:
         type:
@@ -438,32 +121,227 @@ components:
       - payload
       - organization_id
       title: ProcessMessagingMessage
-    LiveKitTurnDetection:
+    TaskPagination:
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+          title: Tasks
+        has_next:
+          type: boolean
+          title: Has Next
+        next_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Cursor
+      type: object
+      required:
+      - tasks
+      - has_next
+      title: TaskPagination
+    OrpheusArabicVoice:
+      type: string
+      enum:
+      - fahad
+      - sultan
+      - lulwa
+      - noura
+      - aisha
+      - abdullah
+      title: OrpheusArabicVoice
+    GlobalDefaultSettings:
       properties:
         type:
           type: string
-          const: livekit_v1_mini
+          const: default
           title: Type
-          default: livekit_v1_mini
-        unlikely_threshold:
-          anyOf:
-          - type: number
-            maximum: 1.0
-            minimum: 0.0
-          - type: 'null'
-          title: Unlikely Threshold
-        min_endpointing_delay:
-          type: string
-          format: duration
-          title: Min Endpointing Delay
-          default: PT0.3S
-        max_endpointing_delay:
-          type: string
-          format: duration
-          title: Max Endpointing Delay
-          default: PT2.5S
+          default: default
       type: object
-      title: LiveKitTurnDetection
+      title: GlobalDefaultSettings
+    ElevenLabsSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: elevenlabs
+          title: Provider
+        model:
+          $ref: '#/components/schemas/ElevenLabsSTTModel'
+          default: scribe_v1
+        region:
+          $ref: '#/components/schemas/ElevenLabsRegion'
+          default: eu
+      type: object
+      required:
+      - provider
+      title: ElevenLabsSTTSettings
+    CallRetryMessage:
+      properties:
+        type:
+          type: string
+          const: call_retry
+          title: Type
+          default: call_retry
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: CallRetryMessage
+    NumberFormat:
+      type: string
+      enum:
+      - e164
+      - no_plus
+      title: NumberFormat
+    OutboundDispatchTickMessage:
+      properties:
+        type:
+          type: string
+          const: outbound_dispatch_tick
+          title: Type
+          default: outbound_dispatch_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: OutboundDispatchTickMessage
+    GlobalSettings:
+      properties:
+        models:
+          $ref: '#/components/schemas/GlobalModelConfig'
+        back_channel:
+          anyOf:
+          - $ref: '#/components/schemas/BackChannelConfig'
+          - $ref: '#/components/schemas/BackChannelWordConfig'
+          - $ref: '#/components/schemas/BackChannelSoundConfig'
+          - $ref: '#/components/schemas/BackChannelMixConfig'
+          - $ref: '#/components/schemas/DisableBackChanneling'
+          title: Back Channel
+        allow_interruptions:
+          type: boolean
+          title: Allow Interruptions
+        timeout:
+          anyOf:
+          - $ref: '#/components/schemas/TimeoutSettings'
+          - $ref: '#/components/schemas/DisableTimeoutSettings'
+          title: Timeout
+        agent_name:
+          type: string
+          title: Agent Name
+          default: ''
+        turn_detection:
+          anyOf:
+          - $ref: '#/components/schemas/DisableTurnDetection'
+          - $ref: '#/components/schemas/SarjEouTurnDetection'
+          - $ref: '#/components/schemas/LiveKitTurnDetection'
+          title: Turn Detection
+        max_duration_end_call_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Max Duration End Call Message
+      type: object
+      required:
+      - models
+      - back_channel
+      - allow_interruptions
+      - timeout
+      title: GlobalSettings
+    AWSSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSSTTSettings
+    SlackAlertMessage:
+      properties:
+        type:
+          type: string
+          const: slack_alert
+          title: Type
+          default: slack_alert
+        payload:
+          $ref: '#/components/schemas/GenericSlackAlert'
+      type: object
+      required:
+      - payload
+      title: SlackAlertMessage
+    OpenAITTSModels:
+      type: string
+      enum:
+      - gpt-4o-mini-tts
+      - tts-1
+      - tts-1-hd
+      title: OpenAITTSModels
+    GlobalModelConfig:
+      properties:
+        stt:
+          anyOf:
+          - $ref: '#/components/schemas/GoogleSTTSettings'
+          - $ref: '#/components/schemas/AzureSTTSettings'
+          - $ref: '#/components/schemas/AWSSTTSettings'
+          - $ref: '#/components/schemas/GroqSTTSettings'
+          - $ref: '#/components/schemas/OpenAISTTSettings'
+          - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+          - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+          - $ref: '#/components/schemas/HamsaSTTSettings'
+          - $ref: '#/components/schemas/SarjGroqSTTSettings'
+          - $ref: '#/components/schemas/SarjCustomSTTSettings'
+          - $ref: '#/components/schemas/DeepgramSTTSettings'
+          title: Stt
+        stt_fallback:
+          anyOf:
+          - $ref: '#/components/schemas/DisableSTTFallback'
+          - $ref: '#/components/schemas/STTFallbackConfig'
+          title: Stt Fallback
+        tts:
+          anyOf:
+          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
+          - $ref: '#/components/schemas/AzureTTSSettings'
+          - $ref: '#/components/schemas/OpenAITTSSettings'
+          - $ref: '#/components/schemas/AWSTTSSettings'
+          - $ref: '#/components/schemas/GroqTTSSettings'
+          - $ref: '#/components/schemas/HamsaTTSSettings'
+          - $ref: '#/components/schemas/CartesiaTTSSettings'
+          - $ref: '#/components/schemas/DeepgramTTSSettings'
+          - $ref: '#/components/schemas/SarjF5TTSSettings'
+          - $ref: '#/components/schemas/SarjOmniTTSSettings'
+          title: Tts
+        llm:
+          anyOf:
+          - $ref: '#/components/schemas/OpenAILLMSettings'
+          - $ref: '#/components/schemas/GeminiLLMSettings'
+          - $ref: '#/components/schemas/GroqLLMSettings'
+          - $ref: '#/components/schemas/AzureOpenAILLMSettings'
+          - $ref: '#/components/schemas/CerebrasLLMSettings'
+          title: Llm
+        voice_details:
+          $ref: '#/components/schemas/TTSVoice'
+        voice_id:
+          type: string
+          title: Voice Id
+      type: object
+      required:
+      - stt
+      - tts
+      - llm
+      - voice_details
+      - voice_id
+      title: GlobalModelConfig
     OpenAITTSSettings:
       properties:
         provider:
@@ -492,228 +370,247 @@ components:
       required:
       - provider
       title: OpenAITTSSettings
-    DeleteOldTasksTickMessage:
+    EnhancedTranscriptionMessage:
       properties:
         type:
           type: string
-          const: delete_old_tasks_tick
+          const: enhanced_transcription
           title: Type
-          default: delete_old_tasks_tick
-        tick_id:
-          type: string
-          title: Tick Id
-      type: object
-      title: DeleteOldTasksTickMessage
-    CallRetryMessage:
-      properties:
-        type:
-          type: string
-          const: call_retry
-          title: Type
-          default: call_retry
+          default: enhanced_transcription
         call_id:
           type: string
           title: Call Id
       type: object
       required:
       - call_id
-      title: CallRetryMessage
-    CallOutcomeStatus:
-      type: string
-      enum:
-      - success
-      - failure
-      - error
-      title: CallOutcomeStatus
-    SarjEouTurnDetection:
+      title: EnhancedTranscriptionMessage
+    CustomScenario:
       properties:
         type:
           type: string
-          const: sarj_eou
+          const: custom
           title: Type
-          default: sarj_eou
-        threshold:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Threshold
-          default: 0.5
-        prediction_timeout:
+        id:
           type: string
-          format: duration
-          title: Prediction Timeout
-          default: PT0.5S
+          title: Id
+        variables:
+          additionalProperties: true
+          type: object
+          title: Variables
+          default: {}
+        scenario_settings_override:
+          anyOf:
+          - $ref: '#/components/schemas/ScenarioSettingsOverride'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      - id
+      title: CustomScenario
+    LiveKitTurnDetection:
+      properties:
+        type:
+          type: string
+          const: livekit_v1_mini
+          title: Type
+          default: livekit_v1_mini
+        unlikely_threshold:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.0
+          - type: 'null'
+          title: Unlikely Threshold
         min_endpointing_delay:
           type: string
           format: duration
           title: Min Endpointing Delay
-          default: PT0.5S
+          default: PT0.3S
         max_endpointing_delay:
           type: string
           format: duration
           title: Max Endpointing Delay
-          default: PT3S
-        targeted_stt_providers:
-          items:
-            $ref: '#/components/schemas/STTProvider'
-          type: array
-          title: Targeted Stt Providers
+          default: PT2.5S
       type: object
-      title: SarjEouTurnDetection
-    BackChannelConfig:
+      title: LiveKitTurnDetection
+    CreateBatchCallsMessage:
       properties:
         type:
           type: string
-          const: freq
+          const: create_batch_calls
           title: Type
-          default: freq
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
-      type: object
-      title: BackChannelConfig
-    HamsaTTSDialect:
-      type: string
-      enum:
-      - pls
-      - egy
-      - syr
-      - irq
-      - jor
-      - leb
-      - ksa
-      - uae
-      - bah
-      - qat
-      - msa
-      title: HamsaTTSDialect
-    SarjF5TTSVoice:
-      type: string
-      enum:
-      - Male
-      - Female
-      title: SarjF5TTSVoice
-    VoiceMigrationMessage:
-      properties:
-        type:
-          type: string
-          const: voice_migration
-          title: Type
-          default: voice_migration
-      type: object
-      title: VoiceMigrationMessage
-    DeepgramTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: deepgram
-          title: Provider
-        model:
-          $ref: '#/components/schemas/DeepgramTTSModel'
-          default: aura-2
-        voice:
-          type: string
-          title: Voice
-      type: object
-      required:
-      - provider
-      - voice
-      title: DeepgramTTSSettings
-    ScenarioInsightAnalysisMessage:
-      properties:
-        type:
-          type: string
-          const: scenario_insight_analysis
-          title: Type
-          default: scenario_insight_analysis
-        call_id:
-          type: string
-          title: Call Id
-      type: object
-      required:
-      - call_id
-      title: ScenarioInsightAnalysisMessage
-    SpeechmaticsSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: speechmatics
-          title: Provider
-        language:
-          $ref: '#/components/schemas/Language'
-          default: en
-        operating_point:
-          type: string
-          title: Operating Point
-          default: enhanced
-      type: object
-      required:
-      - provider
-      title: SpeechmaticsSTTSettings
-    BatchCallsRetryMessage:
-      properties:
-        type:
-          type: string
-          const: batch_calls_retry
-          title: Type
-          default: batch_calls_retry
+          default: create_batch_calls
         batch_id:
           type: string
           title: Batch Id
       type: object
       required:
       - batch_id
-      title: BatchCallsRetryMessage
-    GlobalDefaultSettings:
+      title: CreateBatchCallsMessage
+    GlobalOverriddenSettings:
       properties:
         type:
           type: string
-          const: default
+          const: override
           title: Type
-          default: default
+          default: override
+        settings:
+          additionalProperties:
+            $ref: '#/components/schemas/GlobalSettings'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Settings
       type: object
-      title: GlobalDefaultSettings
-    UpdateScenarioAgentMessage:
+      required:
+      - settings
+      title: GlobalOverriddenSettings
+    CallCreationSettings:
       properties:
-        type:
+        identity:
           type: string
-          const: update_scenario_agent
-          title: Type
-          default: update_scenario_agent
+          title: Identity
+        language:
+          $ref: '#/components/schemas/Language'
+        scenario:
+          $ref: '#/components/schemas/CustomScenario'
+        callee:
+          anyOf:
+          - $ref: '#/components/schemas/CallSubject'
+          - type: 'null'
+        call_id:
+          type: string
+          title: Call Id
+        origin:
+          anyOf:
+          - $ref: '#/components/schemas/ApiCall'
+          - $ref: '#/components/schemas/SipCall'
+          - type: 'null'
+          title: Origin
+        scenario_config:
+          $ref: '#/components/schemas/Custom'
+        interaction_type:
+          $ref: '#/components/schemas/InteractionType'
+          default: voice
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        app_settings:
+          anyOf:
+          - $ref: '#/components/schemas/GlobalOverriddenSettings'
+          - $ref: '#/components/schemas/GlobalDefaultSettings'
+          title: App Settings
         organization_id:
           type: string
           title: Organization Id
-        deleted_agent_id:
-          type: string
-          title: Deleted Agent Id
-        language:
-          type: string
-          title: Language
+        sip_account_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sip Account Id
       type: object
       required:
-      - organization_id
-      - deleted_agent_id
+      - identity
       - language
-      title: UpdateScenarioAgentMessage
-    OrpheusArabicVoice:
+      - scenario
+      - call_id
+      - scenario_config
+      - app_settings
+      - organization_id
+      title: CallCreationSettings
+    ZohoCallActivityMessage:
+      properties:
+        type:
+          type: string
+          const: zoho_call_activity
+          title: Type
+          default: zoho_call_activity
+        call_id:
+          type: string
+          title: Call Id
+        record_id:
+          type: string
+          title: Record Id
+        module:
+          type: string
+          pattern: ^[A-Za-z][A-Za-z0-9_]{0,79}$
+          title: Module
+          default: Leads
+      type: object
+      required:
+      - call_id
+      - record_id
+      title: ZohoCallActivityMessage
+    CallDispatchPriority:
       type: string
       enum:
-      - fahad
-      - sultan
-      - lulwa
-      - noura
-      - aisha
-      - abdullah
-      title: OrpheusArabicVoice
-    DisableBackChanneling:
+      - normal
+      title: CallDispatchPriority
+    SipCall:
+      properties:
+        type:
+          type: string
+          const: sip
+          title: Type
+          default: sip
+      type: object
+      title: SipCall
+    OpenAIModel:
+      type: string
+      enum:
+      - gpt-5.5
+      - gpt-5.4
+      - gpt-5.4-mini
+      - gpt-5.4-nano
+      - gpt-5.2
+      - gpt-5.1
+      - gpt-5
+      - gpt-5-mini
+      - gpt-5-nano
+      - gpt-4.1
+      - gpt-4.1-nano
+      - gpt-4o
+      - gpt-4o-mini
+      - o3
+      - o3-mini
+      - o4-mini
+      title: OpenAIModel
+    TaskStatus:
+      type: string
+      enum:
+      - pending
+      - running
+      - completed
+      - failed
+      - cancelled
+      title: TaskStatus
+    OrpheusEnglishVoice:
+      type: string
+      enum:
+      - autumn
+      - diana
+      - hannah
+      - austin
+      - daniel
+      - troy
+      title: OrpheusEnglishVoice
+    ElevenLabsSTTModel:
+      type: string
+      enum:
+      - scribe_v1
+      - scribe_v2
+      - scribe_v2_realtime
+      title: ElevenLabsSTTModel
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    DisableTurnDetection:
       properties:
         type:
           type: string
@@ -721,42 +618,27 @@ components:
           title: Type
           default: disable
       type: object
-      title: DisableBackChanneling
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    DownloadResponse:
-      properties:
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - url
-      title: DownloadResponse
+      title: DisableTurnDetection
+    GroqLLMModel:
+      type: string
+      enum:
+      - llama-3.1-405b-reasoning
+      - llama-3.1-8b-instant
+      - llama-3.3-70b-versatile
+      - llama3-groq-70b-8192-tool-use-preview
+      - llama3-groq-8b-8192-tool-use-preview
+      - llama-guard-3-8b
+      - llama3-70b-8192
+      - llama3-8b-8192
+      - mixtral-8x7b-32768
+      - gemma-7b-it
+      - gemma2-9b-it
+      - meta-llama/llama-4-scout-17b-16e-instruct
+      - meta-llama/llama-4-maverick-17b-128e-instruct
+      - openai/gpt-oss-20b
+      - openai/gpt-oss-120b
+      - qwen/qwen3-32b
+      title: GroqLLMModel
     BatchReportGenerationMessage:
       properties:
         type:
@@ -793,127 +675,211 @@ components:
       required:
       - batch_id
       title: BatchReportGenerationMessage
-    OrpheusEnglishVoice:
-      type: string
-      enum:
-      - autumn
-      - diana
-      - hannah
-      - austin
-      - daniel
-      - troy
-      title: OrpheusEnglishVoice
-    StartBatchCallsTickMessage:
+    HamsaTTSSettings:
       properties:
-        type:
+        provider:
           type: string
-          const: start_batch_calls_tick
-          title: Type
-          default: start_batch_calls_tick
-        tick_id:
-          type: string
-          title: Tick Id
-      type: object
-      title: StartBatchCallsTickMessage
-    CallReportsEnqueueMessage:
-      properties:
-        type:
-          type: string
-          const: call_reports_enqueue
-          title: Type
-          default: call_reports_enqueue
-      type: object
-      title: CallReportsEnqueueMessage
-    ApiCall:
-      properties:
-        type:
-          type: string
-          const: api
-          title: Type
-          default: api
-        call_id:
-          type: string
-          title: Call Id
-        identity:
-          type: string
-          title: Identity
+          const: hamsa
+          title: Provider
+        speaker:
+          $ref: '#/components/schemas/HamsaTTSSpeaker'
+          default: Hiba
+        dialect:
+          $ref: '#/components/schemas/HamsaTTSDialect'
+          default: ksa
       type: object
       required:
-      - call_id
-      - identity
-      title: ApiCall
-    ElevenLabsSTTModel:
+      - provider
+      title: HamsaTTSSettings
+    DisableBackChanneling:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableBackChanneling
+    PhoneDirection:
       type: string
       enum:
-      - scribe_v1
-      - scribe_v2
-      - scribe_v2_realtime
-      title: ElevenLabsSTTModel
-    TaskPagination:
-      properties:
-        tasks:
-          items:
-            $ref: '#/components/schemas/Task'
-          type: array
-          title: Tasks
-        has_next:
-          type: boolean
-          title: Has Next
-        next_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Cursor
-      type: object
-      required:
-      - tasks
-      - has_next
-      title: TaskPagination
+      - inbound
+      - outbound
+      title: PhoneDirection
     SoundId:
       type: string
       enum:
       - keyboard_typing
       title: SoundId
-    GroqLLMModel:
-      type: string
-      enum:
-      - llama-3.1-405b-reasoning
-      - llama-3.1-8b-instant
-      - llama-3.3-70b-versatile
-      - llama3-groq-70b-8192-tool-use-preview
-      - llama3-groq-8b-8192-tool-use-preview
-      - llama-guard-3-8b
-      - llama3-70b-8192
-      - llama3-8b-8192
-      - mixtral-8x7b-32768
-      - gemma-7b-it
-      - gemma2-9b-it
-      - meta-llama/llama-4-scout-17b-16e-instruct
-      - meta-llama/llama-4-maverick-17b-128e-instruct
-      - openai/gpt-oss-20b
-      - openai/gpt-oss-120b
-      - qwen/qwen3-32b
-      title: GroqLLMModel
-    SlackAlertMessage:
+    DispatchOutboundCallMessage:
       properties:
         type:
           type: string
-          const: slack_alert
+          const: dispatch_outbound_call
           title: Type
-          default: slack_alert
-        payload:
-          $ref: '#/components/schemas/GenericSlackAlert'
+          default: dispatch_outbound_call
+        call_id:
+          type: string
+          title: Call Id
+        call_creation_settings:
+          $ref: '#/components/schemas/CallCreationSettings'
+        priority:
+          $ref: '#/components/schemas/CallDispatchPriority'
+          default: normal
       type: object
       required:
-      - payload
-      title: SlackAlertMessage
-    OpenAITTSModels:
-      type: string
-      enum:
-      - gpt-4o-mini-tts
-      - tts-1
-      - tts-1-hd
-      title: OpenAITTSModels
+      - call_id
+      - call_creation_settings
+      title: DispatchOutboundCallMessage
+    SarjEouTurnDetection:
+      properties:
+        type:
+          type: string
+          const: sarj_eou
+          title: Type
+          default: sarj_eou
+        threshold:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Threshold
+          default: 0.5
+        prediction_timeout:
+          type: string
+          format: duration
+          title: Prediction Timeout
+          default: PT0.5S
+        min_endpointing_delay:
+          type: string
+          format: duration
+          title: Min Endpointing Delay
+          default: PT0.5S
+        max_endpointing_delay:
+          type: string
+          format: duration
+          title: Max Endpointing Delay
+          default: PT3S
+        targeted_stt_providers:
+          items:
+            $ref: '#/components/schemas/STTProvider'
+          type: array
+          title: Targeted Stt Providers
+      type: object
+      title: SarjEouTurnDetection
+    AzureOpenAILLMSettings:
+      properties:
+        provider:
+          type: string
+          const: azure_openai
+          title: Provider
+        model:
+          $ref: '#/components/schemas/AzureOpenAIModel'
+      type: object
+      required:
+      - provider
+      - model
+      title: AzureOpenAILLMSettings
+    ListCallsInput:
+      properties:
+        call_outcome:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Call Outcome
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          - type: 'null'
+          title: Cursor
+        date_from:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Date From
+        date_to:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Date To
+        direction:
+          anyOf:
+          - $ref: '#/components/schemas/PhoneDirection'
+          - type: 'null'
+        duration_max:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Max
+        duration_min:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Min
+        exclude_scheduled:
+          type: boolean
+          title: Exclude Scheduled
+          default: false
+        limit:
+          type: integer
+          title: Limit
+          default: 10
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        status:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CallStatus'
+            type: array
+          - type: 'null'
+          title: Status
+        report:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CallOutcomeStatus'
+            type: array
+          - type: 'null'
+          title: Report
+        scenario:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scenario
+      type: object
+      title: ListCallsInput
+    BackChannelConfig:
+      properties:
+        type:
+          type: string
+          const: freq
+          title: Type
+          default: freq
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelConfig
     OpenAILLMSettings:
       properties:
         provider:
@@ -935,109 +901,78 @@ components:
       - provider
       - model
       title: OpenAILLMSettings
-    CallSubject:
-      properties:
-        phone_number:
-          type: string
-          title: Phone Number
-        sip_trunk_id:
-          type: string
-          title: Sip Trunk Id
-        trunk_phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Trunk Phone Number
-        number_format:
-          anyOf:
-          - $ref: '#/components/schemas/NumberFormat'
-          - type: 'null'
-      type: object
-      required:
-      - phone_number
-      - sip_trunk_id
-      title: CallSubject
-    OpenAIServiceTier:
-      type: string
-      enum:
-      - default
-      - fast
-      title: OpenAIServiceTier
-    BackChannelWordConfig:
+    DeleteExpiredOrgDataTickMessage:
       properties:
         type:
           type: string
-          const: word
+          const: delete_expired_org_data_tick
           title: Type
-          default: word
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
+          default: delete_expired_org_data_tick
+        tick_id:
+          type: string
+          title: Tick Id
       type: object
-      title: BackChannelWordConfig
-    WebhookNotificationMessage:
+      title: DeleteExpiredOrgDataTickMessage
+    DownloadResponse:
       properties:
-        type:
+        url:
           type: string
-          const: webhook_notification
-          title: Type
-          default: webhook_notification
-        call_id:
-          type: string
-          title: Call Id
+          title: Url
       type: object
       required:
-      - call_id
-      title: WebhookNotificationMessage
-    AWSTTSSettings:
+      - url
+      title: DownloadResponse
+    GroqTTSSettings:
       properties:
         provider:
           type: string
-          const: aws
+          const: groq
           title: Provider
-        region:
-          type: string
-          enum:
-          - eu-central-1
-          - us-east-1
-          title: Region
-          default: eu-central-1
+        voice:
+          anyOf:
+          - $ref: '#/components/schemas/OrpheusArabicVoice'
+          - $ref: '#/components/schemas/OrpheusEnglishVoice'
+          title: Voice
       type: object
       required:
       - provider
-      title: AWSTTSSettings
-    BackChannelMixConfig:
+      - voice
+      title: GroqTTSSettings
+    VoiceMigrationMessage:
       properties:
         type:
           type: string
-          const: mix
+          const: voice_migration
           title: Type
-          default: mix
+          default: voice_migration
+      type: object
+      title: VoiceMigrationMessage
+    Custom:
+      properties:
+        type:
+          type: string
+          const: custom
+          title: Type
+          default: custom
+        scenario:
+          $ref: '#/components/schemas/CustomScenario'
+      type: object
+      required:
+      - scenario
+      title: Custom
+    BackChannelSoundConfig:
+      properties:
+        type:
+          type: string
+          const: sound
+          title: Type
+          default: sound
         value:
           type: number
           maximum: 1.0
           exclusiveMinimum: 0.0
           title: Value
           default: 0.6
-        word_probability:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Word Probability
-          default: 0.7
-        whitelist:
-          items:
-            type: string
-          type: array
-          title: Whitelist
         sounds:
           items:
             $ref: '#/components/schemas/BackchannelAudioConfig'
@@ -1047,7 +982,43 @@ components:
       type: object
       required:
       - sounds
-      title: BackChannelMixConfig
+      title: BackChannelSoundConfig
+    ScenarioGenerationMessage:
+      properties:
+        type:
+          type: string
+          const: scenario_generation
+          title: Type
+          default: scenario_generation
+        generation_log_id:
+          type: string
+          title: Generation Log Id
+      type: object
+      required:
+      - generation_log_id
+      title: ScenarioGenerationMessage
+    STTProvider:
+      type: string
+      enum:
+      - google
+      - azure
+      - aws
+      - openai
+      - elevenlabs
+      - groq
+      - speechmatics
+      - hamsa
+      - sarj_groq
+      - sarj_custom
+      - deepgram
+      title: STTProvider
+    GroqSTTModels:
+      type: string
+      enum:
+      - whisper-large-v3
+      - whisper-large-v3-turbo
+      - distil-whisper-large-v3-en
+      title: GroqSTTModels
     TTSVoice:
       properties:
         id:
@@ -1138,310 +1109,68 @@ components:
       required:
       - filters
       title: ConversationExportMessage
-    InteractionType:
+    HamsaTTSSpeaker:
       type: string
       enum:
-      - voice
-      - chat
-      title: InteractionType
-    ElevenLabsModels:
-      type: string
-      enum:
-      - eleven_multilingual_v2
-      - eleven_flash_v2_5
-      - eleven_turbo_v2_5
-      title: ElevenLabsModels
-    CerebrasLLMSettings:
+      - Hiba
+      - Khadija
+      - Jasem
+      - Fahd
+      - Salma
+      - Noor
+      - Lana
+      - Fatma
+      - Mariam
+      - Nada
+      - Samir
+      - Dalal
+      - Mais
+      - Alia
+      - Faiza
+      - Dima
+      - Lyali
+      - Carla
+      - Hind
+      - Safa
+      - Somaya
+      - Ali
+      - Ahmed
+      - Mazen
+      - Majd
+      - Amjad
+      - Layan
+      - Talin
+      - Rema
+      - Rami
+      - Hamdan
+      - Maher
+      - Majid
+      - Mansour
+      - Hasan
+      - Sayed
+      title: HamsaTTSSpeaker
+    DeepgramTTSSettings:
       properties:
         provider:
           type: string
-          const: cerebras
+          const: deepgram
           title: Provider
-          default: cerebras
         model:
-          $ref: '#/components/schemas/CerebrasLLMModel'
-      type: object
-      required:
-      - model
-      title: CerebrasLLMSettings
-    ZohoCallActivityMessage:
-      properties:
-        type:
-          type: string
-          const: zoho_call_activity
-          title: Type
-          default: zoho_call_activity
-        call_id:
-          type: string
-          title: Call Id
-        record_id:
-          type: string
-          title: Record Id
-        module:
-          type: string
-          pattern: ^[A-Za-z][A-Za-z0-9_]{0,79}$
-          title: Module
-          default: Leads
-      type: object
-      required:
-      - call_id
-      - record_id
-      title: ZohoCallActivityMessage
-    StaleCallCleanupMessage:
-      properties:
-        type:
-          type: string
-          const: stale_call_cleanup
-          title: Type
-          default: stale_call_cleanup
-      type: object
-      title: StaleCallCleanupMessage
-    ScenarioGenerationMessage:
-      properties:
-        type:
-          type: string
-          const: scenario_generation
-          title: Type
-          default: scenario_generation
-        generation_log_id:
-          type: string
-          title: Generation Log Id
-      type: object
-      required:
-      - generation_log_id
-      title: ScenarioGenerationMessage
-    STTProvider:
-      type: string
-      enum:
-      - google
-      - azure
-      - aws
-      - openai
-      - elevenlabs
-      - groq
-      - speechmatics
-      - hamsa
-      - sarj_groq
-      - sarj_custom
-      - deepgram
-      title: STTProvider
-    SarjF5TTSSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_f5
-          title: Provider
+          $ref: '#/components/schemas/DeepgramTTSModel'
+          default: aura-2
         voice:
-          $ref: '#/components/schemas/SarjF5TTSVoice'
-          default: Male
+          type: string
+          title: Voice
       type: object
       required:
       - provider
-      title: SarjF5TTSSettings
-    ElevenLabsSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: elevenlabs
-          title: Provider
-        model:
-          $ref: '#/components/schemas/ElevenLabsSTTModel'
-          default: scribe_v1
-        region:
-          $ref: '#/components/schemas/ElevenLabsRegion'
-          default: eu
-      type: object
-      required:
-      - provider
-      title: ElevenLabsSTTSettings
-    BackchannelAudioConfig:
-      properties:
-        sound_id:
-          $ref: '#/components/schemas/SoundId'
-        volume:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Volume
-          default: 1.0
-        probability:
-          type: number
-          maximum: 1.0
-          minimum: 0.0
-          title: Probability
-          default: 1.0
-      type: object
-      required:
-      - sound_id
-      title: BackchannelAudioConfig
-    ElevenLabsRegion:
+      - voice
+      title: DeepgramTTSSettings
+    CerebrasLLMModel:
       type: string
       enum:
-      - us
-      - eu
-      title: ElevenLabsRegion
-    ListCallsInput:
-      properties:
-        call_outcome:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Call Outcome
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: string
-          - type: 'null'
-          title: Cursor
-        date_from:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Date From
-        date_to:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Date To
-        direction:
-          anyOf:
-          - $ref: '#/components/schemas/PhoneDirection'
-          - type: 'null'
-        duration_max:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Duration Max
-        duration_min:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Duration Min
-        exclude_scheduled:
-          type: boolean
-          title: Exclude Scheduled
-          default: false
-        limit:
-          type: integer
-          title: Limit
-          default: 10
-        organization_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Organization Ids
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        status:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CallStatus'
-            type: array
-          - type: 'null'
-          title: Status
-        report:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CallOutcomeStatus'
-            type: array
-          - type: 'null'
-          title: Report
-        scenario:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scenario
-      type: object
-      title: ListCallsInput
-    GroqSTTModels:
-      type: string
-      enum:
-      - whisper-large-v3
-      - whisper-large-v3-turbo
-      - distil-whisper-large-v3-en
-      title: GroqSTTModels
-    Gender:
-      type: string
-      enum:
-      - male
-      - female
-      title: Gender
-    GroqLLMSettings:
-      properties:
-        provider:
-          type: string
-          const: groq
-          title: Provider
-          default: groq
-        model:
-          $ref: '#/components/schemas/GroqLLMModel'
-      type: object
-      required:
-      - model
-      title: GroqLLMSettings
-    CallQueuedHealthCheckMessage:
-      properties:
-        type:
-          type: string
-          const: call_queued_health_check
-          title: Type
-          default: call_queued_health_check
-        call_id:
-          type: string
-          title: Call Id
-      type: object
-      required:
-      - call_id
-      title: CallQueuedHealthCheckMessage
-    GlobalOverriddenSettings:
-      properties:
-        type:
-          type: string
-          const: override
-          title: Type
-          default: override
-        settings:
-          additionalProperties:
-            $ref: '#/components/schemas/GlobalSettings'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Settings
-      type: object
-      required:
-      - settings
-      title: GlobalOverriddenSettings
-    STTFallbackConfig:
-      properties:
-        type:
-          type: string
-          const: enable
-          title: Type
-          default: enable
-        models:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/GoogleSTTSettings'
-            - $ref: '#/components/schemas/AzureSTTSettings'
-            - $ref: '#/components/schemas/AWSSTTSettings'
-            - $ref: '#/components/schemas/GroqSTTSettings'
-            - $ref: '#/components/schemas/OpenAISTTSettings'
-            - $ref: '#/components/schemas/ElevenLabsSTTSettings'
-            - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
-            - $ref: '#/components/schemas/DeepgramSTTSettings'
-          type: array
-          maxItems: 2
-          title: Models
-      type: object
-      title: STTFallbackConfig
+      - llama-3.1-8b-instruct
+      title: CerebrasLLMModel
     Task:
       properties:
         id:
@@ -1553,6 +1282,58 @@ components:
       - created_at
       - updated_at
       title: Task
+    ScenarioInsightAnalysisMessage:
+      properties:
+        type:
+          type: string
+          const: scenario_insight_analysis
+          title: Type
+          default: scenario_insight_analysis
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: ScenarioInsightAnalysisMessage
+    CallReportsEnqueueMessage:
+      properties:
+        type:
+          type: string
+          const: call_reports_enqueue
+          title: Type
+          default: call_reports_enqueue
+      type: object
+      title: CallReportsEnqueueMessage
+    CallInProgressHealthCheckMessage:
+      properties:
+        type:
+          type: string
+          const: call_in_progress_health_check
+          title: Type
+          default: call_in_progress_health_check
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: CallInProgressHealthCheckMessage
+    SarjCustomSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_custom
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjCustomSTTSettings
+    DeepgramTTSModel:
+      type: string
+      enum:
+      - aura-2
+      title: DeepgramTTSModel
     ElevenLabsTTSSettings:
       properties:
         model:
@@ -1588,60 +1369,344 @@ components:
       - provider
       - arabic_voice_id
       title: ElevenLabsTTSSettings
-    CallCreationSettings:
+    AzureTTSSettings:
       properties:
-        identity:
+        provider:
           type: string
-          title: Identity
-        language:
-          $ref: '#/components/schemas/Language'
-        scenario:
-          $ref: '#/components/schemas/CustomScenario'
-        callee:
-          anyOf:
-          - $ref: '#/components/schemas/CallSubject'
-          - type: 'null'
-        call_id:
+          const: azure
+          title: Provider
+        region:
           type: string
-          title: Call Id
-        origin:
-          anyOf:
-          - $ref: '#/components/schemas/ApiCall'
-          - $ref: '#/components/schemas/SipCall'
-          - type: 'null'
-          title: Origin
-        scenario_config:
-          $ref: '#/components/schemas/Custom'
-        interaction_type:
-          $ref: '#/components/schemas/InteractionType'
-          default: voice
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        app_settings:
-          anyOf:
-          - $ref: '#/components/schemas/GlobalOverriddenSettings'
-          - $ref: '#/components/schemas/GlobalDefaultSettings'
-          title: App Settings
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+        voice:
+          type: string
+          title: Voice
+          default: en-US-JennyNeural
+      type: object
+      required:
+      - provider
+      title: AzureTTSSettings
+    HamsaTTSDialect:
+      type: string
+      enum:
+      - pls
+      - egy
+      - syr
+      - irq
+      - jor
+      - leb
+      - ksa
+      - uae
+      - bah
+      - qat
+      - msa
+      title: HamsaTTSDialect
+    StaleCallCleanupMessage:
+      properties:
+        type:
+          type: string
+          const: stale_call_cleanup
+          title: Type
+          default: stale_call_cleanup
+      type: object
+      title: StaleCallCleanupMessage
+    DisableSTTFallback:
+      properties:
+        type:
+          type: string
+          const: disable
+          title: Type
+          default: disable
+      type: object
+      title: DisableSTTFallback
+    UpdateScenarioAgentMessage:
+      properties:
+        type:
+          type: string
+          const: update_scenario_agent
+          title: Type
+          default: update_scenario_agent
         organization_id:
           type: string
           title: Organization Id
-        sip_account_id:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Sip Account Id
+        deleted_agent_id:
+          type: string
+          title: Deleted Agent Id
+        language:
+          type: string
+          title: Language
       type: object
       required:
-      - identity
-      - language
-      - scenario
-      - call_id
-      - scenario_config
-      - app_settings
       - organization_id
-      title: CallCreationSettings
+      - deleted_agent_id
+      - language
+      title: UpdateScenarioAgentMessage
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ZohoCRMRecordUpdateMessage:
+      properties:
+        type:
+          type: string
+          const: zoho_crm_record_update
+          title: Type
+          default: zoho_crm_record_update
+        call_id:
+          type: string
+          title: Call Id
+        record_id:
+          type: string
+          title: Record Id
+        module:
+          type: string
+          pattern: ^[A-Za-z][A-Za-z0-9_]{0,79}$
+          title: Module
+          default: Leads
+      type: object
+      required:
+      - call_id
+      - record_id
+      title: ZohoCRMRecordUpdateMessage
+    InteractionType:
+      type: string
+      enum:
+      - voice
+      - chat
+      title: InteractionType
+    CartesiaModels:
+      type: string
+      enum:
+      - sonic-3
+      - sonic-2
+      - sonic
+      title: CartesiaModels
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BatchCallsRetryMessage:
+      properties:
+        type:
+          type: string
+          const: batch_calls_retry
+          title: Type
+          default: batch_calls_retry
+        batch_id:
+          type: string
+          title: Batch Id
+      type: object
+      required:
+      - batch_id
+      title: BatchCallsRetryMessage
+    SarjGroqSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: sarj_groq
+          title: Provider
+      type: object
+      required:
+      - provider
+      title: SarjGroqSTTSettings
+    OpenAITTSVoices:
+      type: string
+      enum:
+      - alloy
+      - ash
+      - ballad
+      - coral
+      - echo
+      - fable
+      - onyx
+      - nova
+      - sage
+      - shimmer
+      title: OpenAITTSVoices
+    HamsaSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: hamsa
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+          default: ar
+      type: object
+      required:
+      - provider
+      title: HamsaSTTSettings
+    NoOpMessage:
+      properties:
+        type:
+          type: string
+          const: no_op
+          title: Type
+          default: no_op
+      type: object
+      title: NoOpMessage
+    CallOutcomeStatus:
+      type: string
+      enum:
+      - success
+      - failure
+      - error
+      title: CallOutcomeStatus
+    ScenarioSettingsOverride:
+      properties:
+        agent_profile_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Profile Id
+      type: object
+      title: ScenarioSettingsOverride
+    OpenAIServiceTier:
+      type: string
+      enum:
+      - default
+      - fast
+      title: OpenAIServiceTier
+    ReportColumn:
+      properties:
+        source:
+          type: string
+          enum:
+          - standard
+          - variable
+          - collected_data
+          title: Source
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - source
+      - key
+      title: ReportColumn
+    AWSTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: aws
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eu-central-1
+          - us-east-1
+          title: Region
+          default: eu-central-1
+      type: object
+      required:
+      - provider
+      title: AWSTTSSettings
+    Gender:
+      type: string
+      enum:
+      - male
+      - female
+      title: Gender
+    CartesiaTTSSettings:
+      properties:
+        provider:
+          type: string
+          const: cartesia
+          title: Provider
+        model:
+          $ref: '#/components/schemas/CartesiaModels'
+          default: sonic-3
+        voice:
+          type: string
+          title: Voice
+          default: f257d7af-eb60-4ef0-8815-b78701006c2c
+        speed:
+          type: number
+          maximum: 1.5
+          minimum: 0.6
+          title: Speed
+          description: Speech speed (0.6-1.5)
+          default: 1.0
+        emotion:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Emotion
+      type: object
+      required:
+      - provider
+      title: CartesiaTTSSettings
+    WebhookNotificationMessage:
+      properties:
+        type:
+          type: string
+          const: webhook_notification
+          title: Type
+          default: webhook_notification
+        call_id:
+          type: string
+          title: Call Id
+      type: object
+      required:
+      - call_id
+      title: WebhookNotificationMessage
+    SpeechmaticsSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: speechmatics
+          title: Provider
+        language:
+          $ref: '#/components/schemas/Language'
+          default: en
+        operating_point:
+          type: string
+          title: Operating Point
+          default: enhanced
+      type: object
+      required:
+      - provider
+      title: SpeechmaticsSTTSettings
+    ElevenLabsRegion:
+      type: string
+      enum:
+      - us
+      - eu
+      title: ElevenLabsRegion
     GenericSlackAlert:
       properties:
         alert_type:
@@ -1660,7 +1725,7 @@ components:
       - title
       - body
       title: GenericSlackAlert
-    DisableTurnDetection:
+    DisableTimeoutSettings:
       properties:
         type:
           type: string
@@ -1668,25 +1733,261 @@ components:
           title: Type
           default: disable
       type: object
-      title: DisableTurnDetection
-    HamsaSTTSettings:
+      title: DisableTimeoutSettings
+    BackChannelMixConfig:
+      properties:
+        type:
+          type: string
+          const: mix
+          title: Type
+          default: mix
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        word_probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Word Probability
+          default: 0.7
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+        sounds:
+          items:
+            $ref: '#/components/schemas/BackchannelAudioConfig'
+          type: array
+          minItems: 1
+          title: Sounds
+      type: object
+      required:
+      - sounds
+      title: BackChannelMixConfig
+    AzureOpenAIModel:
+      type: string
+      enum:
+      - gpt-4.1
+      title: AzureOpenAIModel
+    BackChannelWordConfig:
+      properties:
+        type:
+          type: string
+          const: word
+          title: Type
+          default: word
+        value:
+          type: number
+          maximum: 1.0
+          exclusiveMinimum: 0.0
+          title: Value
+          default: 0.6
+        whitelist:
+          items:
+            type: string
+          type: array
+          title: Whitelist
+      type: object
+      title: BackChannelWordConfig
+    ApiCall:
+      properties:
+        type:
+          type: string
+          const: api
+          title: Type
+          default: api
+        call_id:
+          type: string
+          title: Call Id
+        identity:
+          type: string
+          title: Identity
+      type: object
+      required:
+      - call_id
+      - identity
+      title: ApiCall
+    ElevenLabsModels:
+      type: string
+      enum:
+      - eleven_multilingual_v2
+      - eleven_flash_v2_5
+      - eleven_turbo_v2_5
+      title: ElevenLabsModels
+    STTFallbackConfig:
+      properties:
+        type:
+          type: string
+          const: enable
+          title: Type
+          default: enable
+        models:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GoogleSTTSettings'
+            - $ref: '#/components/schemas/AzureSTTSettings'
+            - $ref: '#/components/schemas/AWSSTTSettings'
+            - $ref: '#/components/schemas/GroqSTTSettings'
+            - $ref: '#/components/schemas/OpenAISTTSettings'
+            - $ref: '#/components/schemas/ElevenLabsSTTSettings'
+            - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
+            - $ref: '#/components/schemas/DeepgramSTTSettings'
+          type: array
+          maxItems: 2
+          title: Models
+      type: object
+      title: STTFallbackConfig
+    SarjOmniTTSSettings:
       properties:
         provider:
           type: string
-          const: hamsa
+          const: sarj_omni
           title: Provider
-        language:
-          $ref: '#/components/schemas/Language'
-          default: ar
+        voice:
+          type: string
+          pattern: ^(?:clone:)?[A-Za-z0-9][A-Za-z0-9_-]{0,63}$
+          title: Voice
+          description: Built-in voice ID or clone:<profile_id>
+          default: ars_male
+        speed:
+          type: number
+          maximum: 1.2
+          minimum: 0.8
+          title: Speed
+          description: Speech speed (0.8-1.2)
+          default: 1.0
       type: object
       required:
       - provider
-      title: HamsaSTTSettings
-    DeepgramTTSModel:
+      title: SarjOmniTTSSettings
+    StartBatchCallsTickMessage:
+      properties:
+        type:
+          type: string
+          const: start_batch_calls_tick
+          title: Type
+          default: start_batch_calls_tick
+        tick_id:
+          type: string
+          title: Tick Id
+      type: object
+      title: StartBatchCallsTickMessage
+    CallStatus:
       type: string
       enum:
-      - aura-2
-      title: DeepgramTTSModel
+      - queued
+      - in_progress
+      - transferring
+      - transferred
+      - completed
+      - timeout
+      - user_rejected
+      - max_duration_reached
+      - failed
+      - ringing
+      - voicemail
+      - dialing
+      - cancelled
+      - expired
+      - scheduled
+      title: CallStatus
+    GeminiLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: gemini
+          title: Provider
+        region:
+          type: string
+          enum:
+          - us-central1
+          - me-central2
+          - us-east1
+          - europe-west1
+          - europe-west3
+          title: Region
+          default: europe-west3
+        model:
+          type: string
+          enum:
+          - flash
+          - pro
+          - flash-lite-3.1
+          title: Model
+          default: flash
+      type: object
+      required:
+      - provider
+      title: GeminiLLMSettings
+    CerebrasLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: cerebras
+          title: Provider
+          default: cerebras
+        model:
+          $ref: '#/components/schemas/CerebrasLLMModel'
+      type: object
+      required:
+      - model
+      title: CerebrasLLMSettings
+    AzureSTTSettings:
+      properties:
+        provider:
+          type: string
+          const: azure
+          title: Provider
+        region:
+          type: string
+          enum:
+          - eastus
+          - germanywestcentral
+          title: Region
+          default: eastus
+      type: object
+      required:
+      - provider
+      title: AzureSTTSettings
+    OpenAISTTSettings:
+      properties:
+        provider:
+          type: string
+          const: openai
+          title: Provider
+        model:
+          type: string
+          enum:
+          - gpt-4o-transcribe
+          - gpt-4o-mini-transcribe
+          title: Model
+        region:
+          type: string
+          const: default
+          title: Region
+          default: default
+      type: object
+      required:
+      - provider
+      - model
+      title: OpenAISTTSettings
+    GroqLLMSettings:
+      properties:
+        provider:
+          type: string
+          const: groq
+          title: Provider
+          default: groq
+        model:
+          $ref: '#/components/schemas/GroqLLMModel'
+      type: object
+      required:
+      - model
+      title: GroqLLMSettings
     DeepgramSTTSettings:
       properties:
         provider:
@@ -1720,102 +2021,33 @@ components:
       required:
       - provider
       title: DeepgramSTTSettings
-    SarjGroqSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_groq
-          title: Provider
-      type: object
-      required:
-      - provider
-      title: SarjGroqSTTSettings
-    SipCall:
+    TimeoutSettings:
       properties:
         type:
           type: string
-          const: sip
+          const: enabled
           title: Type
-          default: sip
-      type: object
-      title: SipCall
-    DispatchOutboundCallMessage:
-      properties:
-        type:
-          type: string
-          const: dispatch_outbound_call
-          title: Type
-          default: dispatch_outbound_call
-        call_id:
-          type: string
-          title: Call Id
-        call_creation_settings:
-          $ref: '#/components/schemas/CallCreationSettings'
-        priority:
-          $ref: '#/components/schemas/CallDispatchPriority'
-          default: normal
-      type: object
-      required:
-      - call_id
-      - call_creation_settings
-      title: DispatchOutboundCallMessage
-    GroqTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: groq
-          title: Provider
-        voice:
+          default: enabled
+        duration:
           anyOf:
-          - $ref: '#/components/schemas/OrpheusArabicVoice'
-          - $ref: '#/components/schemas/OrpheusEnglishVoice'
-          title: Voice
+          - type: string
+            format: duration
+          - type: integer
+          title: Duration
+          default: 15
+        max_retries:
+          type: integer
+          title: Max Retries
+          default: 5
       type: object
-      required:
-      - provider
-      - voice
-      title: GroqTTSSettings
-    BackChannelSoundConfig:
-      properties:
-        type:
-          type: string
-          const: sound
-          title: Type
-          default: sound
-        value:
-          type: number
-          maximum: 1.0
-          exclusiveMinimum: 0.0
-          title: Value
-          default: 0.6
-        sounds:
-          items:
-            $ref: '#/components/schemas/BackchannelAudioConfig'
-          type: array
-          minItems: 1
-          title: Sounds
-      type: object
-      required:
-      - sounds
-      title: BackChannelSoundConfig
-    DisableSTTFallback:
-      properties:
-        type:
-          type: string
-          const: disable
-          title: Type
-          default: disable
-      type: object
-      title: DisableSTTFallback
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: TimeoutSettings
+    DeepgramSTTModel:
+      type: string
+      enum:
+      - nova-3
+      - nova-2
+      - flux
+      title: DeepgramSTTModel
     CreateDefaultAgentsMessage:
       properties:
         type:
@@ -1825,312 +2057,105 @@ components:
           default: create_default_agents
       type: object
       title: CreateDefaultAgentsMessage
-    CallStatus:
-      type: string
-      enum:
-      - queued
-      - in_progress
-      - transferring
-      - transferred
-      - completed
-      - timeout
-      - user_rejected
-      - max_duration_reached
-      - failed
-      - ringing
-      - voicemail
-      - dialing
-      - cancelled
-      - expired
-      - scheduled
-      title: CallStatus
-    GroqSTTSettings:
+    BackchannelAudioConfig:
+      properties:
+        sound_id:
+          $ref: '#/components/schemas/SoundId'
+        volume:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Volume
+          default: 1.0
+        probability:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Probability
+          default: 1.0
+      type: object
+      required:
+      - sound_id
+      title: BackchannelAudioConfig
+    CallSubject:
+      properties:
+        phone_number:
+          type: string
+          title: Phone Number
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+        trunk_phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trunk Phone Number
+        number_format:
+          anyOf:
+          - $ref: '#/components/schemas/NumberFormat'
+          - type: 'null'
+      type: object
+      required:
+      - phone_number
+      - sip_trunk_id
+      title: CallSubject
+    GoogleSTTSettings:
       properties:
         provider:
           type: string
-          const: groq
+          const: google
           title: Provider
         model:
-          $ref: '#/components/schemas/GroqSTTModels'
+          type: string
+          enum:
+          - long
+          - short
+          - telephony
+          - chirp_2
+          - chirp_3
+          title: Model
+        region:
+          type: string
+          enum:
+          - us
+          - eu
+          title: Region
       type: object
       required:
       - provider
       - model
-      title: GroqSTTSettings
-    CartesiaTTSSettings:
-      properties:
-        provider:
-          type: string
-          const: cartesia
-          title: Provider
-        model:
-          $ref: '#/components/schemas/CartesiaModels'
-          default: sonic-3
-        voice:
-          type: string
-          title: Voice
-          default: f257d7af-eb60-4ef0-8815-b78701006c2c
-        speed:
-          type: number
-          maximum: 1.5
-          minimum: 0.6
-          title: Speed
-          description: Speech speed (0.6-1.5)
-          default: 1.0
-        emotion:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Emotion
-      type: object
-      required:
-      - provider
-      title: CartesiaTTSSettings
-    PhoneDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      title: PhoneDirection
-    AzureSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: azure
-          title: Provider
-        region:
-          type: string
-          enum:
-          - eastus
-          - germanywestcentral
-          title: Region
-          default: eastus
-      type: object
-      required:
-      - provider
-      title: AzureSTTSettings
-    DisableTimeoutSettings:
+      - region
+      title: GoogleSTTSettings
+    CallOutcomeMessage:
       properties:
         type:
           type: string
-          const: disable
+          const: call_outcome
           title: Type
-          default: disable
-      type: object
-      title: DisableTimeoutSettings
-    ScenarioSettingsOverride:
-      properties:
-        agent_profile_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Profile Id
-      type: object
-      title: ScenarioSettingsOverride
-    CustomScenario:
-      properties:
-        type:
-          type: string
-          const: custom
-          title: Type
-        id:
-          type: string
-          title: Id
-        variables:
-          additionalProperties: true
-          type: object
-          title: Variables
-          default: {}
-        scenario_settings_override:
-          anyOf:
-          - $ref: '#/components/schemas/ScenarioSettingsOverride'
-          - type: 'null'
-      type: object
-      required:
-      - type
-      - id
-      title: CustomScenario
-    EnhancedTranscriptionMessage:
-      properties:
-        type:
-          type: string
-          const: enhanced_transcription
-          title: Type
-          default: enhanced_transcription
+          default: call_outcome
         call_id:
           type: string
           title: Call Id
-      type: object
-      required:
-      - call_id
-      title: EnhancedTranscriptionMessage
-    GlobalModelConfig:
-      properties:
-        stt:
-          anyOf:
-          - $ref: '#/components/schemas/GoogleSTTSettings'
-          - $ref: '#/components/schemas/AzureSTTSettings'
-          - $ref: '#/components/schemas/AWSSTTSettings'
-          - $ref: '#/components/schemas/GroqSTTSettings'
-          - $ref: '#/components/schemas/OpenAISTTSettings'
-          - $ref: '#/components/schemas/ElevenLabsSTTSettings'
-          - $ref: '#/components/schemas/SpeechmaticsSTTSettings'
-          - $ref: '#/components/schemas/HamsaSTTSettings'
-          - $ref: '#/components/schemas/SarjGroqSTTSettings'
-          - $ref: '#/components/schemas/SarjCustomSTTSettings'
-          - $ref: '#/components/schemas/DeepgramSTTSettings'
-          title: Stt
-        stt_fallback:
-          anyOf:
-          - $ref: '#/components/schemas/DisableSTTFallback'
-          - $ref: '#/components/schemas/STTFallbackConfig'
-          title: Stt Fallback
-        tts:
-          anyOf:
-          - $ref: '#/components/schemas/ElevenLabsTTSSettings'
-          - $ref: '#/components/schemas/AzureTTSSettings'
-          - $ref: '#/components/schemas/OpenAITTSSettings'
-          - $ref: '#/components/schemas/AWSTTSSettings'
-          - $ref: '#/components/schemas/GroqTTSSettings'
-          - $ref: '#/components/schemas/HamsaTTSSettings'
-          - $ref: '#/components/schemas/CartesiaTTSSettings'
-          - $ref: '#/components/schemas/DeepgramTTSSettings'
-          - $ref: '#/components/schemas/SarjF5TTSSettings'
-          - $ref: '#/components/schemas/SarjOmniTTSSettings'
-          title: Tts
-        llm:
-          anyOf:
-          - $ref: '#/components/schemas/OpenAILLMSettings'
-          - $ref: '#/components/schemas/GeminiLLMSettings'
-          - $ref: '#/components/schemas/GroqLLMSettings'
-          - $ref: '#/components/schemas/AzureOpenAILLMSettings'
-          - $ref: '#/components/schemas/CerebrasLLMSettings'
-          title: Llm
-        voice_details:
-          $ref: '#/components/schemas/TTSVoice'
-        voice_id:
-          type: string
-          title: Voice Id
-      type: object
-      required:
-      - stt
-      - tts
-      - llm
-      - voice_details
-      - voice_id
-      title: GlobalModelConfig
-    CreateBatchCallsMessage:
-      properties:
-        type:
-          type: string
-          const: create_batch_calls
-          title: Type
-          default: create_batch_calls
-        batch_id:
-          type: string
-          title: Batch Id
-      type: object
-      required:
-      - batch_id
-      title: CreateBatchCallsMessage
-    OpenAIModel:
-      type: string
-      enum:
-      - gpt-5.5
-      - gpt-5.4
-      - gpt-5.4-mini
-      - gpt-5.4-nano
-      - gpt-5.2
-      - gpt-5.1
-      - gpt-5
-      - gpt-5-mini
-      - gpt-5-nano
-      - gpt-4.1
-      - gpt-4.1-nano
-      - gpt-4o
-      - gpt-4o-mini
-      - o3
-      - o3-mini
-      - o4-mini
-      title: OpenAIModel
-    SarjCustomSTTSettings:
-      properties:
-        provider:
-          type: string
-          const: sarj_custom
-          title: Provider
-      type: object
-      required:
-      - provider
-      title: SarjCustomSTTSettings
-    CallInProgressHealthCheckMessage:
-      properties:
-        type:
-          type: string
-          const: call_in_progress_health_check
-          title: Type
-          default: call_in_progress_health_check
-        call_id:
-          type: string
-          title: Call Id
-      type: object
-      required:
-      - call_id
-      title: CallInProgressHealthCheckMessage
-    GlobalSettings:
-      properties:
-        models:
-          $ref: '#/components/schemas/GlobalModelConfig'
-        back_channel:
-          anyOf:
-          - $ref: '#/components/schemas/BackChannelConfig'
-          - $ref: '#/components/schemas/BackChannelWordConfig'
-          - $ref: '#/components/schemas/BackChannelSoundConfig'
-          - $ref: '#/components/schemas/BackChannelMixConfig'
-          - $ref: '#/components/schemas/DisableBackChanneling'
-          title: Back Channel
-        allow_interruptions:
+        is_retry:
           type: boolean
-          title: Allow Interruptions
-        timeout:
-          anyOf:
-          - $ref: '#/components/schemas/TimeoutSettings'
-          - $ref: '#/components/schemas/DisableTimeoutSettings'
-          title: Timeout
-        agent_name:
-          type: string
-          title: Agent Name
-          default: ''
-        turn_detection:
-          anyOf:
-          - $ref: '#/components/schemas/DisableTurnDetection'
-          - $ref: '#/components/schemas/SarjEouTurnDetection'
-          - $ref: '#/components/schemas/LiveKitTurnDetection'
-          title: Turn Detection
-        max_duration_end_call_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Max Duration End Call Message
+          title: Is Retry
+          default: false
       type: object
       required:
-      - models
-      - back_channel
-      - allow_interruptions
-      - timeout
-      title: GlobalSettings
-    DeleteExpiredOrgDataTickMessage:
+      - call_id
+      title: CallOutcomeMessage
+    DeleteOldTasksTickMessage:
       properties:
         type:
           type: string
-          const: delete_expired_org_data_tick
+          const: delete_old_tasks_tick
           title: Type
-          default: delete_expired_org_data_tick
+          default: delete_old_tasks_tick
         tick_id:
           type: string
           title: Tick Id
       type: object
-      title: DeleteExpiredOrgDataTickMessage
+      title: DeleteOldTasksTickMessage
     TaskType:
       type: string
       enum:
@@ -2162,47 +2187,22 @@ components:
       - delete_expired_org_data_tick
       - no_op
       title: TaskType
-    ReportColumn:
-      properties:
-        source:
-          type: string
-          enum:
-          - standard
-          - variable
-          - collected_data
-          title: Source
-        key:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: Key
-      additionalProperties: false
-      type: object
-      required:
-      - source
-      - key
-      title: ReportColumn
-    AWSSTTSettings:
+    SarjF5TTSVoice:
+      type: string
+      enum:
+      - Male
+      - Female
+      title: SarjF5TTSVoice
+    SarjF5TTSSettings:
       properties:
         provider:
           type: string
-          const: aws
+          const: sarj_f5
           title: Provider
-        region:
-          type: string
-          enum:
-          - eu-central-1
-          - us-east-1
-          title: Region
-          default: eu-central-1
+        voice:
+          $ref: '#/components/schemas/SarjF5TTSVoice'
+          default: Male
       type: object
       required:
       - provider
-      title: AWSSTTSettings
-    DeepgramSTTModel:
-      type: string
-      enum:
-      - nova-3
-      - nova-2
-      - flux
-      title: DeepgramSTTModel
+      title: SarjF5TTSSettings

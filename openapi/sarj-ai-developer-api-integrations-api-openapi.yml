@@ -146,29 +146,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    IntegrationProvider:
-      type: string
-      enum:
-      - zoho
-      - salla
-      - salesforce
-      title: IntegrationProvider
-      description: "Available integration providers.\n\n`salla-tools` and `zoho-desk-create-ticket` require external OAuth setup and are\nNEVER auto-generated in the output tool config, connected or not - suggest them\ninstead (see `Suggestion Categorization for Integration Tools` below).\n\n**Suggestion Categorization for Integration Tools:**\n\n   **Use `verification_needed`** (shows in \"Action Required\" section):\n   - When user EXPLICITLY mentions needing Salla/Zoho in their business requirements\n   - Example: User says \"We use Salla for orders\" but Salla not in active integrations\n   - This is a REQUIREMENT the user stated - they need to set it up\n\n   **Use `resource_linking`** (shows in \"Opportunities\" section):\n   - When LLM SUGGESTS an integration that could enhance the scenario\n   - User did NOT ask for this; LLM thinks it would be helpful\n   - Example: For a restaurant scenario, LLM suggests Salla could help with order tracking\n\n**Examples:**\n\nUser prompt: \"We need Salla for order management\"\nActive integrations: None connected\n→ DO NOT add a salla-tools entry to the tool config\n→ ADD `verification_needed` suggestion: \"Connect Salla Store\" with action_url=\"/integrations\"\n\nUser prompt: \"Restaurant delivery agent\" (no mention of Salla/Zoho)\nActive integrations: zoho\n→ DO NOT add a zoho-desk-create-ticket entry to the tool config\n→ Can suggest salla as `resource_linking` (optional enhancement)"
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AuthType:
-      type: string
-      enum:
-      - oauth
-      - api_key
-      title: AuthType
     ProviderItem:
       properties:
         provider:
@@ -228,6 +205,12 @@ components:
       - created_at
       - updated_at
       title: CredentialPublic
+    AuthType:
+      type: string
+      enum:
+      - oauth
+      - api_key
+      title: AuthType
     RefreshAllTokensResponse:
       properties:
         provider_stats:
@@ -247,6 +230,23 @@ components:
           default: 0
       type: object
       title: RefreshAllTokensResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    IntegrationProvider:
+      type: string
+      enum:
+      - zoho
+      - salla
+      - salesforce
+      title: IntegrationProvider
+      description: "Available integration providers.\n\n`salla-tools` and `zoho-desk-create-ticket` require external OAuth setup and are\nNEVER auto-generated in the output tool config, connected or not - suggest them\ninstead (see `Suggestion Categorization for Integration Tools` below).\n\n**Suggestion Categorization for Integration Tools:**\n\n   **Use `verification_needed`** (shows in \"Action Required\" section):\n   - When user EXPLICITLY mentions needing Salla/Zoho in their business requirements\n   - Example: User says \"We use Salla for orders\" but Salla not in active integrations\n   - This is a REQUIREMENT the user stated - they need to set it up\n\n   **Use `resource_linking`** (shows in \"Opportunities\" section):\n   - When LLM SUGGESTS an integration that could enhance the scenario\n   - User did NOT ask for this; LLM thinks it would be helpful\n   - Example: For a restaurant scenario, LLM suggests Salla could help with order tracking\n\n**Examples:**\n\nUser prompt: \"We need Salla for order management\"\nActive integrations: None connected\n→ DO NOT add a salla-tools entry to the tool config\n→ ADD `verification_needed` suggestion: \"Connect Salla Store\" with action_url=\"/integrations\"\n\nUser prompt: \"Restaurant delivery agent\" (no mention of Salla/Zoho)\nActive integrations: zoho\n→ DO NOT add a zoho-desk-create-ticket entry to the tool config\n→ Can suggest salla as `resource_linking` (optional enhancement)"
     ValidationError:
       properties:
         loc:
@@ -273,17 +273,21 @@ components:
       - msg
       - type
       title: ValidationError
-    _NotificationDetails:
+    EmptyCondition:
       properties:
-        events:
-          items:
-            $ref: '#/components/schemas/_NotificationEvent'
-          type: array
-          title: Events
+        condition_type:
+          type: string
+          const: empty
+          title: Condition Type
+          default: empty
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
       type: object
       required:
-      - events
-      title: _NotificationDetails
+      - evaluated_field_name
+      title: EmptyCondition
     ZohoNotificationEvent:
       type: string
       enum:
@@ -292,6 +296,76 @@ components:
       - Contacts.create
       - Contacts.edit
       title: ZohoNotificationEvent
+    _NotificationResponseCreate:
+      properties:
+        code:
+          type: string
+          const: SUCCESS
+          title: Code
+        details:
+          $ref: '#/components/schemas/_NotificationDetails'
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - code
+      - details
+      - message
+      title: _NotificationResponseCreate
+    ZohoCRMModules:
+      type: string
+      enum:
+      - Leads
+      - Contacts
+      - Calls
+      title: ZohoCRMModules
+    _NotificationEvent:
+      properties:
+        channel_expiry:
+          type: string
+          format: date-time
+          title: Channel Expiry
+        resource_uri:
+          type: string
+          title: Resource Uri
+        resource_id:
+          type: string
+          title: Resource Id
+        resource_name:
+          type: string
+          title: Resource Name
+        channel_id:
+          type: string
+          title: Channel Id
+      type: object
+      required:
+      - channel_expiry
+      - resource_uri
+      - resource_id
+      - resource_name
+      - channel_id
+      title: _NotificationEvent
+    LikenessCondition:
+      properties:
+        condition_type:
+          type: string
+          const: likeness
+          title: Condition Type
+          default: likeness
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
+        expected_field_value:
+          type: string
+          minLength: 1
+          title: Expected Field Value
+      type: object
+      required:
+      - evaluated_field_name
+      - expected_field_value
+      title: LikenessCondition
     ZohoWebhookQueryParams:
       properties:
         scenario_id:
@@ -322,6 +396,74 @@ components:
       - organization_id
       title: ZohoWebhookQueryParams
       description: The query params retrieved from Zoho webhooks
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    ZohoNotificationCreateResponse:
+      properties:
+        watch:
+          items:
+            $ref: '#/components/schemas/_NotificationResponseCreate'
+          type: array
+          title: Watch
+      type: object
+      title: ZohoNotificationCreateResponse
+    _NotificationDetails:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/_NotificationEvent'
+          type: array
+          title: Events
+      type: object
+      required:
+      - events
+      title: _NotificationDetails
+    EqualityCondition:
+      properties:
+        condition_type:
+          type: string
+          const: equality
+          title: Condition Type
+          default: equality
+        evaluated_field_name:
+          type: string
+          minLength: 1
+          title: Evaluated Field Name
+        expected_field_value:
+          type: string
+          minLength: 1
+          title: Expected Field Value
+      type: object
+      required:
+      - evaluated_field_name
+      - expected_field_value
+      title: EqualityCondition
+    ZohoWebhookData:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/ZohoNotificationEvent'
+          type: array
+          title: Events
+        query_params:
+          $ref: '#/components/schemas/ZohoWebhookQueryParams'
+        extra_conditions:
+          anyOf:
+          - $ref: '#/components/schemas/EventEvaluationConditions'
+          - type: 'null'
+          description: Extra conditions that may be injected in the webhook configuration. Allows fine-tuning routing different cases to scenarios.
+      type: object
+      required:
+      - events
+      - query_params
+      title: ZohoWebhookData
+      description: Required payload to create a new Zoho webhook
     EventEvaluationConditions:
       properties:
         module_type:
@@ -346,148 +488,6 @@ components:
       - module_type
       - conditions
       title: EventEvaluationConditions
-    EqualityCondition:
-      properties:
-        condition_type:
-          type: string
-          const: equality
-          title: Condition Type
-          default: equality
-        evaluated_field_name:
-          type: string
-          minLength: 1
-          title: Evaluated Field Name
-        expected_field_value:
-          type: string
-          minLength: 1
-          title: Expected Field Value
-      type: object
-      required:
-      - evaluated_field_name
-      - expected_field_value
-      title: EqualityCondition
-    _NotificationResponseCreate:
-      properties:
-        code:
-          type: string
-          const: SUCCESS
-          title: Code
-        details:
-          $ref: '#/components/schemas/_NotificationDetails'
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - code
-      - details
-      - message
-      title: _NotificationResponseCreate
-    LikenessCondition:
-      properties:
-        condition_type:
-          type: string
-          const: likeness
-          title: Condition Type
-          default: likeness
-        evaluated_field_name:
-          type: string
-          minLength: 1
-          title: Evaluated Field Name
-        expected_field_value:
-          type: string
-          minLength: 1
-          title: Expected Field Value
-      type: object
-      required:
-      - evaluated_field_name
-      - expected_field_value
-      title: LikenessCondition
-    _NotificationEvent:
-      properties:
-        channel_expiry:
-          type: string
-          format: date-time
-          title: Channel Expiry
-        resource_uri:
-          type: string
-          title: Resource Uri
-        resource_id:
-          type: string
-          title: Resource Id
-        resource_name:
-          type: string
-          title: Resource Name
-        channel_id:
-          type: string
-          title: Channel Id
-      type: object
-      required:
-      - channel_expiry
-      - resource_uri
-      - resource_id
-      - resource_name
-      - channel_id
-      title: _NotificationEvent
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
-    ZohoCRMModules:
-      type: string
-      enum:
-      - Leads
-      - Contacts
-      - Calls
-      title: ZohoCRMModules
-    ZohoNotificationCreateResponse:
-      properties:
-        watch:
-          items:
-            $ref: '#/components/schemas/_NotificationResponseCreate'
-          type: array
-          title: Watch
-      type: object
-      title: ZohoNotificationCreateResponse
-    ZohoWebhookData:
-      properties:
-        events:
-          items:
-            $ref: '#/components/schemas/ZohoNotificationEvent'
-          type: array
-          title: Events
-        query_params:
-          $ref: '#/components/schemas/ZohoWebhookQueryParams'
-        extra_conditions:
-          anyOf:
-          - $ref: '#/components/schemas/EventEvaluationConditions'
-          - type: 'null'
-          description: Extra conditions that may be injected in the webhook configuration. Allows fine-tuning routing different cases to scenarios.
-      type: object
-      required:
-      - events
-      - query_params
-      title: ZohoWebhookData
-      description: Required payload to create a new Zoho webhook
-    EmptyCondition:
-      properties:
-        condition_type:
-          type: string
-          const: empty
-          title: Condition Type
-          default: empty
-        evaluated_field_name:
-          type: string
-          minLength: 1
-          title: Evaluated Field Name
-      type: object
-      required:
-      - evaluated_field_name
-      title: EmptyCondition
 x-refined-from:
 - sarj-ai-developer-api-voice-platform-openapi.json
 - sarj-ai-developer-api-integrations-api-openapi.yml

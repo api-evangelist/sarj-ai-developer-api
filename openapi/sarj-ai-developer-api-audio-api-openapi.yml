@@ -96,15 +96,74 @@ paths:
       - Audio
 components:
   schemas:
-    HTTPValidationError:
+    VoiceObject:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        id:
+          type: string
+          maxLength: 128
+          minLength: 1
+          title: Id
       type: object
-      title: HTTPValidationError
+      required:
+      - id
+      title: VoiceObject
+      description: 'OpenAI custom voice object: {"id": "..."}.'
+    ScriptRequest:
+      properties:
+        script:
+          items:
+            $ref: '#/components/schemas/ScriptSegment'
+          type: array
+          maxItems: 100
+          minItems: 1
+          title: Script
+        default_voice:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Voice
+        speed:
+          type: number
+          maximum: 4.0
+          minimum: 0.25
+          title: Speed
+          default: 1.0
+        response_format:
+          type: string
+          enum:
+          - mp3
+          - opus
+          - aac
+          - flac
+          - wav
+          - pcm
+          title: Response Format
+          default: wav
+        output_format:
+          type: string
+          enum:
+          - single_track
+          - multi_track
+          title: Output Format
+          default: single_track
+        pause_between_speakers:
+          type: number
+          maximum: 5.0
+          minimum: 0.0
+          title: Pause Between Speakers
+          default: 0.5
+        on_error:
+          type: string
+          enum:
+          - abort
+          - skip
+          title: On Error
+          default: abort
+      type: object
+      required:
+      - script
+      title: ScriptRequest
+      description: Request body for /v1/audio/script endpoint.
     SpeechRequest:
       properties:
         model:
@@ -293,62 +352,15 @@ components:
       - text
       title: ScriptSegment
       description: Single segment in a multi-speaker script.
-    ScriptRequest:
+    HTTPValidationError:
       properties:
-        script:
+        detail:
           items:
-            $ref: '#/components/schemas/ScriptSegment'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          maxItems: 100
-          minItems: 1
-          title: Script
-        default_voice:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Voice
-        speed:
-          type: number
-          maximum: 4.0
-          minimum: 0.25
-          title: Speed
-          default: 1.0
-        response_format:
-          type: string
-          enum:
-          - mp3
-          - opus
-          - aac
-          - flac
-          - wav
-          - pcm
-          title: Response Format
-          default: wav
-        output_format:
-          type: string
-          enum:
-          - single_track
-          - multi_track
-          title: Output Format
-          default: single_track
-        pause_between_speakers:
-          type: number
-          maximum: 5.0
-          minimum: 0.0
-          title: Pause Between Speakers
-          default: 0.5
-        on_error:
-          type: string
-          enum:
-          - abort
-          - skip
-          title: On Error
-          default: abort
+          title: Detail
       type: object
-      required:
-      - script
-      title: ScriptRequest
-      description: Request body for /v1/audio/script endpoint.
+      title: HTTPValidationError
     Body_create_speech_clone_v1_audio_speech_clone_post:
       properties:
         text:
@@ -479,18 +491,6 @@ components:
       - text
       - ref_audio
       title: Body_create_speech_clone_v1_audio_speech_clone_post
-    VoiceObject:
-      properties:
-        id:
-          type: string
-          maxLength: 128
-          minLength: 1
-          title: Id
-      type: object
-      required:
-      - id
-      title: VoiceObject
-      description: 'OpenAI custom voice object: {"id": "..."}.'
     ValidationError:
       properties:
         loc:

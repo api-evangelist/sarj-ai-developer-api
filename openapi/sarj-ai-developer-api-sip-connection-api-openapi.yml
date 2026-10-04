@@ -180,6 +180,316 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    VerificationCheckName:
+      type: string
+      enum:
+      - dispatcher_destinations_active
+      - inbound_addresses_whitelisted
+      - digest_registration
+      title: VerificationCheckName
+    CustomProviderChoice:
+      properties:
+        kind:
+          type: string
+          const: custom
+          title: Kind
+          default: custom
+        provider_name:
+          type: string
+          title: Provider Name
+      additionalProperties: false
+      type: object
+      required:
+      - provider_name
+      title: CustomProviderChoice
+    PhoneStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+      title: PhoneStatus
+    ProviderStatus:
+      type: string
+      enum:
+      - active
+      - deprecated
+      title: ProviderStatus
+    VerificationCheck:
+      properties:
+        name:
+          $ref: '#/components/schemas/VerificationCheckName'
+        status:
+          $ref: '#/components/schemas/VerificationCheckStatus'
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - status
+      title: VerificationCheck
+    CreateSipConnectionRequest:
+      properties:
+        draft:
+          $ref: '#/components/schemas/ConnectionDraft'
+        spec:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/IpEndpointSpec'
+            - $ref: '#/components/schemas/DigestEndpointSpec'
+            discriminator:
+              propertyName: auth_kind
+              mapping:
+                digest: '#/components/schemas/DigestEndpointSpec'
+                ip: '#/components/schemas/IpEndpointSpec'
+          - type: 'null'
+          title: Spec
+      additionalProperties: false
+      type: object
+      required:
+      - draft
+      title: CreateSipConnectionRequest
+    DigestCredentials:
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          format: password
+          title: Password
+          writeOnly: true
+      additionalProperties: false
+      type: object
+      required:
+      - username
+      - password
+      title: DigestCredentials
+    UpdateSipConnectionRequest:
+      properties:
+        number_format:
+          $ref: '#/components/schemas/NumberFormat'
+      additionalProperties: false
+      type: object
+      required:
+      - number_format
+      title: UpdateSipConnectionRequest
+    CatalogProviderChoice:
+      properties:
+        kind:
+          type: string
+          const: catalog
+          title: Kind
+          default: catalog
+        provider_id:
+          type: string
+          title: Provider Id
+      additionalProperties: false
+      type: object
+      required:
+      - provider_id
+      title: CatalogProviderChoice
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SipConnectionNumber:
+      properties:
+        provisioned_number_id:
+          type: string
+          title: Provisioned Number Id
+        phone_number:
+          type: string
+          title: Phone Number
+        status:
+          $ref: '#/components/schemas/PhoneStatus'
+        direction:
+          $ref: '#/components/schemas/NumberDirection'
+        is_shared:
+          type: boolean
+          title: Is Shared
+      additionalProperties: false
+      type: object
+      required:
+      - provisioned_number_id
+      - phone_number
+      - status
+      - direction
+      - is_shared
+      title: SipConnectionNumber
+    ProviderType:
+      type: string
+      enum:
+      - carrier
+      - client_endpoint
+      title: ProviderType
+    SipConnectionStatus:
+      type: string
+      enum:
+      - pending_verification
+      - active
+      - disabled
+      title: SipConnectionStatus
+    InboundSignalingAddress:
+      properties:
+        ip:
+          type: string
+          title: Ip
+        mask:
+          type: integer
+          maximum: 128.0
+          minimum: 0.0
+          title: Mask
+          default: 32
+        port:
+          type: integer
+          maximum: 65535.0
+          minimum: 0.0
+          title: Port
+          default: 0
+        tag:
+          type: string
+          title: Tag
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - ip
+      title: InboundSignalingAddress
+    NumberFormat:
+      type: string
+      enum:
+      - e164
+      - no_plus
+      title: NumberFormat
+    SipConnectionListResponse:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SipConnectionListItem'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      title: SipConnectionListResponse
+    CreateSipConnectionResponse:
+      properties:
+        sip_connection_id:
+          type: string
+          title: Sip Connection Id
+        verification:
+          $ref: '#/components/schemas/SipVerificationResponse'
+      additionalProperties: false
+      type: object
+      required:
+      - sip_connection_id
+      - verification
+      title: CreateSipConnectionResponse
+    SipConnectionListItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        provider:
+          $ref: '#/components/schemas/SipConnectionProvider'
+        organization:
+          $ref: '#/components/schemas/SipConnectionOrganization'
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformSipConnectionConfig'
+          - $ref: '#/components/schemas/LivekitDirectConnectionConfig'
+          title: Config
+          discriminator:
+            propertyName: path
+            mapping:
+              livekit_direct: '#/components/schemas/LivekitDirectConnectionConfig'
+              platform_sip: '#/components/schemas/PlatformSipConnectionConfig'
+        transport:
+          $ref: '#/components/schemas/Transport'
+        number_format:
+          $ref: '#/components/schemas/NumberFormat'
+        status:
+          $ref: '#/components/schemas/SipConnectionStatus'
+        number_count:
+          type: integer
+          title: Number Count
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - provider
+      - organization
+      - config
+      - transport
+      - number_format
+      - status
+      - number_count
+      - created_at
+      - updated_at
+      title: SipConnectionListItem
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    IpEndpointSpec:
+      properties:
+        auth_kind:
+          type: string
+          const: ip
+          title: Auth Kind
+          default: ip
+        outbound_destination:
+          anyOf:
+          - $ref: '#/components/schemas/DispatcherDestination'
+          - type: 'null'
+        inbound_addresses:
+          items:
+            $ref: '#/components/schemas/InboundSignalingAddress'
+          type: array
+          title: Inbound Addresses
+      additionalProperties: false
+      type: object
+      title: IpEndpointSpec
     SipConnectionDetailResponse:
       properties:
         id:
@@ -236,431 +546,6 @@ components:
       - updated_at
       - numbers
       title: SipConnectionDetailResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SipConnectionMutationResponse:
-      properties:
-        sip_connection_id:
-          type: string
-          title: Sip Connection Id
-      additionalProperties: false
-      type: object
-      required:
-      - sip_connection_id
-      title: SipConnectionMutationResponse
-    VerificationCheckName:
-      type: string
-      enum:
-      - dispatcher_destinations_active
-      - inbound_addresses_whitelisted
-      - digest_registration
-      title: VerificationCheckName
-    IpEndpointSpec:
-      properties:
-        auth_kind:
-          type: string
-          const: ip
-          title: Auth Kind
-          default: ip
-        outbound_destination:
-          anyOf:
-          - $ref: '#/components/schemas/DispatcherDestination'
-          - type: 'null'
-        inbound_addresses:
-          items:
-            $ref: '#/components/schemas/InboundSignalingAddress'
-          type: array
-          title: Inbound Addresses
-      additionalProperties: false
-      type: object
-      title: IpEndpointSpec
-    VerificationCheckStatus:
-      type: string
-      enum:
-      - passed
-      - pending
-      title: VerificationCheckStatus
-    ConnectionDraft:
-      properties:
-        organization_id:
-          type: string
-          title: Organization Id
-        provider:
-          oneOf:
-          - $ref: '#/components/schemas/CatalogProviderChoice'
-          - $ref: '#/components/schemas/CustomProviderChoice'
-          title: Provider
-          discriminator:
-            propertyName: kind
-            mapping:
-              catalog: '#/components/schemas/CatalogProviderChoice'
-              custom: '#/components/schemas/CustomProviderChoice'
-        provisioned_number_ids:
-          items:
-            type: string
-          type: array
-          title: Provisioned Number Ids
-        transport:
-          $ref: '#/components/schemas/Transport'
-          default: udp
-        number_format:
-          $ref: '#/components/schemas/NumberFormat'
-          default: e164
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      - provider
-      title: ConnectionDraft
-    PhoneStatus:
-      type: string
-      enum:
-      - active
-      - inactive
-      title: PhoneStatus
-    Transport:
-      type: string
-      enum:
-      - udp
-      - tcp
-      - tls
-      title: Transport
-    NumberDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      - both
-      title: NumberDirection
-    UpdateSipConnectionRequest:
-      properties:
-        number_format:
-          $ref: '#/components/schemas/NumberFormat'
-      additionalProperties: false
-      type: object
-      required:
-      - number_format
-      title: UpdateSipConnectionRequest
-    DigestCredentials:
-      properties:
-        username:
-          type: string
-          title: Username
-        password:
-          type: string
-          format: password
-          title: Password
-          writeOnly: true
-      additionalProperties: false
-      type: object
-      required:
-      - username
-      - password
-      title: DigestCredentials
-    CreateSipConnectionRequest:
-      properties:
-        draft:
-          $ref: '#/components/schemas/ConnectionDraft'
-        spec:
-          anyOf:
-          - oneOf:
-            - $ref: '#/components/schemas/IpEndpointSpec'
-            - $ref: '#/components/schemas/DigestEndpointSpec'
-            discriminator:
-              propertyName: auth_kind
-              mapping:
-                digest: '#/components/schemas/DigestEndpointSpec'
-                ip: '#/components/schemas/IpEndpointSpec'
-          - type: 'null'
-          title: Spec
-      additionalProperties: false
-      type: object
-      required:
-      - draft
-      title: CreateSipConnectionRequest
-    SipConnectionListResponse:
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/SipConnectionListItem'
-          type: array
-          title: Items
-      additionalProperties: false
-      type: object
-      required:
-      - items
-      title: SipConnectionListResponse
-    DispatcherDestination:
-      properties:
-        uri:
-          type: string
-          title: Uri
-        flags:
-          type: integer
-          minimum: 0.0
-          title: Flags
-          default: 0
-        priority:
-          type: integer
-          minimum: 0.0
-          title: Priority
-          default: 0
-        attrs:
-          type: string
-          title: Attrs
-          default: ''
-      additionalProperties: false
-      type: object
-      required:
-      - uri
-      title: DispatcherDestination
-    SipConnectionStatus:
-      type: string
-      enum:
-      - pending_verification
-      - active
-      - disabled
-      title: SipConnectionStatus
-    CustomProviderChoice:
-      properties:
-        kind:
-          type: string
-          const: custom
-          title: Kind
-          default: custom
-        provider_name:
-          type: string
-          title: Provider Name
-      additionalProperties: false
-      type: object
-      required:
-      - provider_name
-      title: CustomProviderChoice
-    SipConnectionListItem:
-      properties:
-        id:
-          type: string
-          title: Id
-        provider:
-          $ref: '#/components/schemas/SipConnectionProvider'
-        organization:
-          $ref: '#/components/schemas/SipConnectionOrganization'
-        config:
-          oneOf:
-          - $ref: '#/components/schemas/PlatformSipConnectionConfig'
-          - $ref: '#/components/schemas/LivekitDirectConnectionConfig'
-          title: Config
-          discriminator:
-            propertyName: path
-            mapping:
-              livekit_direct: '#/components/schemas/LivekitDirectConnectionConfig'
-              platform_sip: '#/components/schemas/PlatformSipConnectionConfig'
-        transport:
-          $ref: '#/components/schemas/Transport'
-        number_format:
-          $ref: '#/components/schemas/NumberFormat'
-        status:
-          $ref: '#/components/schemas/SipConnectionStatus'
-        number_count:
-          type: integer
-          title: Number Count
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - provider
-      - organization
-      - config
-      - transport
-      - number_format
-      - status
-      - number_count
-      - created_at
-      - updated_at
-      title: SipConnectionListItem
-    InboundSignalingAddress:
-      properties:
-        ip:
-          type: string
-          title: Ip
-        mask:
-          type: integer
-          maximum: 128.0
-          minimum: 0.0
-          title: Mask
-          default: 32
-        port:
-          type: integer
-          maximum: 65535.0
-          minimum: 0.0
-          title: Port
-          default: 0
-        tag:
-          type: string
-          title: Tag
-          default: ''
-      additionalProperties: false
-      type: object
-      required:
-      - ip
-      title: InboundSignalingAddress
-    CatalogProviderChoice:
-      properties:
-        kind:
-          type: string
-          const: catalog
-          title: Kind
-          default: catalog
-        provider_id:
-          type: string
-          title: Provider Id
-      additionalProperties: false
-      type: object
-      required:
-      - provider_id
-      title: CatalogProviderChoice
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ProviderStatus:
-      type: string
-      enum:
-      - active
-      - deprecated
-      title: ProviderStatus
-    NumberFormat:
-      type: string
-      enum:
-      - e164
-      - no_plus
-      title: NumberFormat
-    LivekitDirectConnectionConfig:
-      properties:
-        path:
-          type: string
-          const: livekit_direct
-          title: Path
-          default: livekit_direct
-        livekit_inbound_trunk_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Livekit Inbound Trunk Id
-        livekit_outbound_trunk_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Livekit Outbound Trunk Id
-      additionalProperties: false
-      type: object
-      required:
-      - livekit_inbound_trunk_id
-      - livekit_outbound_trunk_id
-      title: LivekitDirectConnectionConfig
-    CreateSipConnectionResponse:
-      properties:
-        sip_connection_id:
-          type: string
-          title: Sip Connection Id
-        verification:
-          $ref: '#/components/schemas/SipVerificationResponse'
-      additionalProperties: false
-      type: object
-      required:
-      - sip_connection_id
-      - verification
-      title: CreateSipConnectionResponse
-    SipVerificationResponse:
-      properties:
-        status:
-          $ref: '#/components/schemas/SipConnectionStatus'
-        checks:
-          items:
-            $ref: '#/components/schemas/VerificationCheck'
-          type: array
-          title: Checks
-      additionalProperties: false
-      type: object
-      required:
-      - status
-      - checks
-      title: SipVerificationResponse
-    DigestEndpointSpec:
-      properties:
-        auth_kind:
-          type: string
-          const: digest
-          title: Auth Kind
-          default: digest
-        outbound_destination:
-          anyOf:
-          - $ref: '#/components/schemas/DispatcherDestination'
-          - type: 'null'
-        digest_credentials:
-          $ref: '#/components/schemas/DigestCredentials'
-      additionalProperties: false
-      type: object
-      required:
-      - digest_credentials
-      title: DigestEndpointSpec
-    SipConnectionOrganization:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - name
-      title: SipConnectionOrganization
-    ProviderType:
-      type: string
-      enum:
-      - carrier
-      - client_endpoint
-      title: ProviderType
     SipConnectionProvider:
       properties:
         id:
@@ -681,30 +566,12 @@ components:
       - type
       - status
       title: SipConnectionProvider
-    SipConnectionNumber:
-      properties:
-        provisioned_number_id:
-          type: string
-          title: Provisioned Number Id
-        phone_number:
-          type: string
-          title: Phone Number
-        status:
-          $ref: '#/components/schemas/PhoneStatus'
-        direction:
-          $ref: '#/components/schemas/NumberDirection'
-        is_shared:
-          type: boolean
-          title: Is Shared
-      additionalProperties: false
-      type: object
-      required:
-      - provisioned_number_id
-      - phone_number
-      - status
-      - direction
-      - is_shared
-      title: SipConnectionNumber
+    VerificationCheckStatus:
+      type: string
+      enum:
+      - passed
+      - pending
+      title: VerificationCheckStatus
     PlatformSipConnectionConfig:
       properties:
         path:
@@ -744,20 +611,153 @@ components:
       - inbound_group_id
       - inbound_auth_username
       title: PlatformSipConnectionConfig
-    VerificationCheck:
+    LivekitDirectConnectionConfig:
       properties:
-        name:
-          $ref: '#/components/schemas/VerificationCheckName'
-        status:
-          $ref: '#/components/schemas/VerificationCheckStatus'
-        detail:
+        path:
+          type: string
+          const: livekit_direct
+          title: Path
+          default: livekit_direct
+        livekit_inbound_trunk_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Detail
+          title: Livekit Inbound Trunk Id
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
       additionalProperties: false
       type: object
       required:
+      - livekit_inbound_trunk_id
+      - livekit_outbound_trunk_id
+      title: LivekitDirectConnectionConfig
+    DispatcherDestination:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        flags:
+          type: integer
+          minimum: 0.0
+          title: Flags
+          default: 0
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+          default: 0
+        attrs:
+          type: string
+          title: Attrs
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - uri
+      title: DispatcherDestination
+    ConnectionDraft:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/CatalogProviderChoice'
+          - $ref: '#/components/schemas/CustomProviderChoice'
+          title: Provider
+          discriminator:
+            propertyName: kind
+            mapping:
+              catalog: '#/components/schemas/CatalogProviderChoice'
+              custom: '#/components/schemas/CustomProviderChoice'
+        provisioned_number_ids:
+          items:
+            type: string
+          type: array
+          title: Provisioned Number Ids
+        transport:
+          $ref: '#/components/schemas/Transport'
+          default: udp
+        number_format:
+          $ref: '#/components/schemas/NumberFormat'
+          default: e164
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - provider
+      title: ConnectionDraft
+    DigestEndpointSpec:
+      properties:
+        auth_kind:
+          type: string
+          const: digest
+          title: Auth Kind
+          default: digest
+        outbound_destination:
+          anyOf:
+          - $ref: '#/components/schemas/DispatcherDestination'
+          - type: 'null'
+        digest_credentials:
+          $ref: '#/components/schemas/DigestCredentials'
+      additionalProperties: false
+      type: object
+      required:
+      - digest_credentials
+      title: DigestEndpointSpec
+    SipConnectionOrganization:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - id
       - name
+      title: SipConnectionOrganization
+    Transport:
+      type: string
+      enum:
+      - udp
+      - tcp
+      - tls
+      title: Transport
+    SipConnectionMutationResponse:
+      properties:
+        sip_connection_id:
+          type: string
+          title: Sip Connection Id
+      additionalProperties: false
+      type: object
+      required:
+      - sip_connection_id
+      title: SipConnectionMutationResponse
+    NumberDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - both
+      title: NumberDirection
+    SipVerificationResponse:
+      properties:
+        status:
+          $ref: '#/components/schemas/SipConnectionStatus'
+        checks:
+          items:
+            $ref: '#/components/schemas/VerificationCheck'
+          type: array
+          title: Checks
+      additionalProperties: false
+      type: object
+      required:
       - status
-      title: VerificationCheck
+      - checks
+      title: SipVerificationResponse

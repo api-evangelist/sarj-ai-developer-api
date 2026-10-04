@@ -203,15 +203,6 @@ paths:
                 title: Response Organizationslistuserswithnoorganization
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     UpdateUserRole:
       properties:
         role:
@@ -220,59 +211,6 @@ components:
       required:
       - role
       title: UpdateUserRole
-    GetManyRequest:
-      properties:
-        ids:
-          items:
-            type: string
-          type: array
-          title: Ids
-      type: object
-      required:
-      - ids
-      title: GetManyRequest
-    UserRole:
-      type: string
-      enum:
-      - user
-      - admin
-      - superadmin
-      title: UserRole
-    CreateUserRequest:
-      properties:
-        email:
-          type: string
-          title: Email
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-      type: object
-      required:
-      - email
-      title: CreateUserRequest
-    User:
-      properties:
-        id:
-          type: string
-          title: Id
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-        email:
-          type: string
-          title: Email
-        role:
-          $ref: '#/components/schemas/UserRole'
-      type: object
-      required:
-      - id
-      - email
-      - role
-      title: User
     AddUsersToOrganization:
       properties:
         organization_id:
@@ -288,6 +226,47 @@ components:
       - organization_id
       - user_ids
       title: AddUsersToOrganization
+    UserRole:
+      type: string
+      enum:
+      - user
+      - admin
+      - superadmin
+      title: UserRole
+    GetManyRequest:
+      properties:
+        ids:
+          items:
+            type: string
+          type: array
+          title: Ids
+      type: object
+      required:
+      - ids
+      title: GetManyRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CreateUserRequest:
+      properties:
+        email:
+          type: string
+          title: Email
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      type: object
+      required:
+      - email
+      title: CreateUserRequest
     ValidationError:
       properties:
         loc:
@@ -314,3 +293,24 @@ components:
       - msg
       - type
       title: ValidationError
+    User:
+      properties:
+        id:
+          type: string
+          title: Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        email:
+          type: string
+          title: Email
+        role:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+      required:
+      - id
+      - email
+      - role
+      title: User

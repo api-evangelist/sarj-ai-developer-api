@@ -83,57 +83,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    InsightCall:
-      properties:
-        id:
-          type: string
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        phone_number:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Phone Number
-        status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Status
-        duration_seconds:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Duration Seconds
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - created_at
-      - phone_number
-      - status
-      - duration_seconds
-      title: InsightCall
-    InsightCategory:
-      type: string
-      enum:
-      - tool
-      - prompt
-      - knowledge
-      - platform
-      title: InsightCategory
-      description: What kind of change to the agent resolves the insight.
     ScenarioInsightWithCallCount:
       properties:
         id:
@@ -182,6 +131,57 @@ components:
       - updated_at
       - call_count
       title: ScenarioInsightWithCallCount
+    InsightCall:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        phone_number:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phone Number
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+        duration_seconds:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Duration Seconds
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - created_at
+      - phone_number
+      - status
+      - duration_seconds
+      title: InsightCall
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    InsightCategory:
+      type: string
+      enum:
+      - tool
+      - prompt
+      - knowledge
+      - platform
+      title: InsightCategory
+      description: What kind of change to the agent resolves the insight.
     ValidationError:
       properties:
         loc:

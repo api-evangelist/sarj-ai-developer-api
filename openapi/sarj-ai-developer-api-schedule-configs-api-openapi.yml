@@ -162,76 +162,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    UnauthorizedPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: unauthorized
-          title: Type
-          default: unauthorized
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: UnauthorizedPayload
-    NotFoundPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: not_found
-          title: Type
-          default: not_found
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: NotFoundPayload
-    CallNotFoundPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: call_not_found
-          title: Type
-          default: call_not_found
-        call_id:
-          type: string
-          title: Call Id
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - call_id
-      title: CallNotFoundPayload
-    TimeEdge:
-      properties:
-        hour:
-          type: integer
-          maximum: 23.0
-          minimum: 0.0
-          title: Hour
-        minute:
-          type: integer
-          maximum: 59.0
-          minimum: 0.0
-          title: Minute
-      additionalProperties: false
-      type: object
-      required:
-      - hour
-      - minute
-      title: TimeEdge
     OauthInvalidRedirectUriPayload:
       properties:
         message:
@@ -252,6 +182,29 @@ components:
       - message
       - redirect_uri
       title: OauthInvalidRedirectUriPayload
+    ValidationErrorPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: validation_error
+          title: Type
+          default: validation_error
+        field_violations:
+          items:
+            $ref: '#/components/schemas/FieldViolation'
+          type: array
+          title: Field Violations
+          description: Per-field validation details.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - field_violations
+      title: ValidationErrorPayload
     FieldViolation:
       properties:
         field:
@@ -272,7 +225,7 @@ components:
       - field
       - message
       title: FieldViolation
-    OutboundCallFailedPayload:
+    InvalidScheduleTimePayload:
       properties:
         message:
           type: string
@@ -280,45 +233,34 @@ components:
           description: Human-readable summary. Do not parse programmatically — branch on `type`.
         type:
           type: string
-          const: outbound_call_failed
+          const: invalid_schedule_time
           title: Type
-          default: outbound_call_failed
-        reason:
-          type: string
-          title: Reason
-          description: Stable-ish reason string from the call service.
+          default: invalid_schedule_time
       additionalProperties: false
       type: object
       required:
       - message
-      - reason
-      title: OutboundCallFailedPayload
-    TimeWindow:
+      title: InvalidScheduleTimePayload
+    ScenarioInvalidConfigPayload:
       properties:
-        start_edge:
-          $ref: '#/components/schemas/TimeEdge'
-        end_edge:
-          $ref: '#/components/schemas/TimeEdge'
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_invalid_config
+          title: Type
+          default: scenario_invalid_config
+        scenario_id:
+          type: string
+          title: Scenario Id
       additionalProperties: false
       type: object
       required:
-      - start_edge
-      - end_edge
-      title: TimeWindow
-    ResponseMeta:
-      properties:
-        request_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Request Id
-          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
-          examples:
-          - 550e8400-e29b-41d4-a716-446655440000
-      additionalProperties: false
-      type: object
-      title: ResponseMeta
-      description: Contains request-level metadata included with every public API response.
+      - message
+      - scenario_id
+      title: ScenarioInvalidConfigPayload
     CreateScheduleConfigRequest:
       properties:
         enabled:
@@ -369,6 +311,206 @@ components:
       - max_retries
       - wait_between
       title: CreateScheduleConfigRequest
+    PhoneNumberBlockedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: phone_number_blocked
+          title: Type
+          default: phone_number_blocked
+        phone_number:
+          type: string
+          title: Phone Number
+          description: The phone number that is blocked.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - phone_number
+      title: PhoneNumberBlockedPayload
+    OutboundCallFailedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: outbound_call_failed
+          title: Type
+          default: outbound_call_failed
+        reason:
+          type: string
+          title: Reason
+          description: Stable-ish reason string from the call service.
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - reason
+      title: OutboundCallFailedPayload
+    ScenarioForbiddenPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_forbidden
+          title: Type
+          default: scenario_forbidden
+        scenario_id:
+          type: string
+          title: Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - scenario_id
+      title: ScenarioForbiddenPayload
+    CallNotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: call_not_found
+          title: Type
+          default: call_not_found
+        call_id:
+          type: string
+          title: Call Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - call_id
+      title: CallNotFoundPayload
+    NotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: not_found
+          title: Type
+          default: not_found
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: NotFoundPayload
+    UnauthorizedPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: unauthorized
+          title: Type
+          default: unauthorized
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: UnauthorizedPayload
+    SchedulingDisabledPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scheduling_disabled
+          title: Type
+          default: scheduling_disabled
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: SchedulingDisabledPayload
+    TimeEdge:
+      properties:
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
+      additionalProperties: false
+      type: object
+      required:
+      - hour
+      - minute
+      title: TimeEdge
+    ScenarioNotFoundPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: scenario_not_found
+          title: Type
+          default: scenario_not_found
+        scenario_id:
+          type: string
+          title: Scenario Id
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - scenario_id
+      title: ScenarioNotFoundPayload
+    InternalErrorPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: internal_error
+          title: Type
+          default: internal_error
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: InternalErrorPayload
+    NoOrganizationPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: no_organization
+          title: Type
+          default: no_organization
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: NoOrganizationPayload
     PublicScheduleConfig:
       properties:
         id:
@@ -479,26 +621,32 @@ components:
         variant-specific fields. Clients MUST treat unknown `type` values as
 
         retryable internal errors to preserve forward compatibility.'
-    ScenarioForbiddenPayload:
+    TimeWindow:
       properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: scenario_forbidden
-          title: Type
-          default: scenario_forbidden
-        scenario_id:
-          type: string
-          title: Scenario Id
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
       additionalProperties: false
       type: object
       required:
-      - message
-      - scenario_id
-      title: ScenarioForbiddenPayload
+      - start_edge
+      - end_edge
+      title: TimeWindow
+    ResponseMeta:
+      properties:
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+          description: Unique identifier for this request, mirrored in the `X-Request-ID` response header. Supply your own via the `X-Request-ID` request header (max 128 chars, ASCII printable); otherwise the server generates a UUID v4. Include in support tickets.
+          examples:
+          - 550e8400-e29b-41d4-a716-446655440000
+      additionalProperties: false
+      type: object
+      title: ResponseMeta
+      description: Contains request-level metadata included with every public API response.
     ApiResponse_PublicScheduleConfig_:
       properties:
         data:
@@ -510,6 +658,28 @@ components:
       required:
       - data
       title: ApiResponse[PublicScheduleConfig]
+    CallNotPendingPayload:
+      properties:
+        message:
+          type: string
+          title: Message
+          description: Human-readable summary. Do not parse programmatically — branch on `type`.
+        type:
+          type: string
+          const: call_not_pending
+          title: Type
+          default: call_not_pending
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      - status
+      title: CallNotPendingPayload
     CallLimitExceededPayload:
       properties:
         message:
@@ -556,185 +726,6 @@ components:
       - message
       - schedule_config_id
       title: ScheduleConfigNotFoundPayload
-    InvalidScheduleTimePayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: invalid_schedule_time
-          title: Type
-          default: invalid_schedule_time
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: InvalidScheduleTimePayload
-    ScenarioNotFoundPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: scenario_not_found
-          title: Type
-          default: scenario_not_found
-        scenario_id:
-          type: string
-          title: Scenario Id
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - scenario_id
-      title: ScenarioNotFoundPayload
-    ScenarioInvalidConfigPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: scenario_invalid_config
-          title: Type
-          default: scenario_invalid_config
-        scenario_id:
-          type: string
-          title: Scenario Id
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - scenario_id
-      title: ScenarioInvalidConfigPayload
-    SchedulingDisabledPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: scheduling_disabled
-          title: Type
-          default: scheduling_disabled
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: SchedulingDisabledPayload
-    PhoneNumberBlockedPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: phone_number_blocked
-          title: Type
-          default: phone_number_blocked
-        phone_number:
-          type: string
-          title: Phone Number
-          description: The phone number that is blocked.
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - phone_number
-      title: PhoneNumberBlockedPayload
-    CallNotPendingPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: call_not_pending
-          title: Type
-          default: call_not_pending
-        status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Status
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - status
-      title: CallNotPendingPayload
-    NoOrganizationPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: no_organization
-          title: Type
-          default: no_organization
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: NoOrganizationPayload
-    ValidationErrorPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: validation_error
-          title: Type
-          default: validation_error
-        field_violations:
-          items:
-            $ref: '#/components/schemas/FieldViolation'
-          type: array
-          title: Field Violations
-          description: Per-field validation details.
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      - field_violations
-      title: ValidationErrorPayload
-    InternalErrorPayload:
-      properties:
-        message:
-          type: string
-          title: Message
-          description: Human-readable summary. Do not parse programmatically — branch on `type`.
-        type:
-          type: string
-          const: internal_error
-          title: Type
-          default: internal_error
-      additionalProperties: false
-      type: object
-      required:
-      - message
-      title: InternalErrorPayload
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     Outcome:
       type: string
       enum:
@@ -757,43 +748,15 @@ components:
         reasons). Kept separate from `DisconnectionReason` because most of that enum is
 
         meaningless as a retry rule — nobody writes `retry_on: [user_hangup]`.'
-    CreateScheduleConfigPolicy:
+    HTTPValidationError:
       properties:
-        max_retries:
-          type: integer
-          maximum: 10.0
-          minimum: 1.0
-          title: Max Retries
-        wait_between:
-          type: string
-          format: duration
-          title: Wait Between
-        retry_window:
-          anyOf:
-          - $ref: '#/components/schemas/TimeWindow'
-          - type: 'null'
-        timezone:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Timezone
-        expire_after:
-          anyOf:
-          - type: string
-            format: duration
-          - type: 'null'
-          title: Expire After
-        enabled:
-          type: boolean
-          title: Enabled
-          default: true
-      additionalProperties: false
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - max_retries
-      - wait_between
-      title: CreateScheduleConfigPolicy
-      description: A policy the editor has just written is on unless it says otherwise.
+      title: HTTPValidationError
     SchedulingAvailability:
       properties:
         enabled:
@@ -926,6 +889,43 @@ components:
         of `True` here would let a body that simply omitted the field un-retire a policy
 
         its owner had switched off.'
+    CreateScheduleConfigPolicy:
+      properties:
+        max_retries:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Retries
+        wait_between:
+          type: string
+          format: duration
+          title: Wait Between
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+        timezone:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timezone
+        expire_after:
+          anyOf:
+          - type: string
+            format: duration
+          - type: 'null'
+          title: Expire After
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      additionalProperties: false
+      type: object
+      required:
+      - max_retries
+      - wait_between
+      title: CreateScheduleConfigPolicy
+      description: A policy the editor has just written is on unless it says otherwise.
     ValidationError:
       properties:
         loc:

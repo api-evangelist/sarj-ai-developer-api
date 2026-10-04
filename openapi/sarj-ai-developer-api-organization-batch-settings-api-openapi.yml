@@ -97,46 +97,24 @@ components:
       required:
       - data
       title: UpdateOrganizationBatchSettingsRequest
-    HTTPValidationError:
+    TimeEdge:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TimeWindow:
-      properties:
-        start_edge:
-          $ref: '#/components/schemas/TimeEdge'
-        end_edge:
-          $ref: '#/components/schemas/TimeEdge'
+        hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour
+        minute:
+          type: integer
+          maximum: 59.0
+          minimum: 0.0
+          title: Minute
       additionalProperties: false
       type: object
       required:
-      - start_edge
-      - end_edge
-      title: TimeWindow
-    RetrySettings:
-      properties:
-        retry_interval_seconds:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Retry Interval Seconds
-        max_retry_attempts:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Max Retry Attempts
-        retry_window:
-          anyOf:
-          - $ref: '#/components/schemas/TimeWindow'
-          - type: 'null'
-      type: object
-      required:
-      - retry_interval_seconds
-      - max_retry_attempts
-      title: RetrySettings
+      - hour
+      - minute
+      title: TimeEdge
     OrganizationBatchCallDefaults:
       properties:
         calling_window:
@@ -160,24 +138,15 @@ components:
         Subclasses the stored shape so a value that passes here is always readable
 
         back, never the reverse.'
-    TimeEdge:
+    HTTPValidationError:
       properties:
-        hour:
-          type: integer
-          maximum: 23.0
-          minimum: 0.0
-          title: Hour
-        minute:
-          type: integer
-          maximum: 59.0
-          minimum: 0.0
-          title: Minute
-      additionalProperties: false
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - hour
-      - minute
-      title: TimeEdge
+      title: HTTPValidationError
     StoredBatchCallDefaults:
       properties:
         calling_window:
@@ -236,6 +205,25 @@ components:
       - updated_at
       - updated_by_email
       title: OrganizationBatchSettingsResponse
+    RetrySettings:
+      properties:
+        retry_interval_seconds:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Retry Interval Seconds
+        max_retry_attempts:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Max Retry Attempts
+        retry_window:
+          anyOf:
+          - $ref: '#/components/schemas/TimeWindow'
+          - type: 'null'
+      type: object
+      required:
+      - retry_interval_seconds
+      - max_retry_attempts
+      title: RetrySettings
     ValidationError:
       properties:
         loc:
@@ -262,3 +250,15 @@ components:
       - msg
       - type
       title: ValidationError
+    TimeWindow:
+      properties:
+        start_edge:
+          $ref: '#/components/schemas/TimeEdge'
+        end_edge:
+          $ref: '#/components/schemas/TimeEdge'
+      additionalProperties: false
+      type: object
+      required:
+      - start_edge
+      - end_edge
+      title: TimeWindow

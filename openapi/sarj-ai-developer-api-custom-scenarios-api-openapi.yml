@@ -253,171 +253,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    WeekDay:
-      type: integer
-      enum:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      title: WeekDay
-    ZohoDeskCreateTicketToolParameters:
-      properties:
-        tool_slug:
-          type: string
-          const: zoho-desk-create-ticket
-          title: Tool Slug
-        ticket_creation_cases:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Ticket Creation Cases
-          description: List of cases when a ticket should be created.
-          examples:
-          - - When the request needs follow-up
-            - When there is a technical complaint
-            - When the customer requests a callback
-        ticket_formatting_instructions:
-          type: string
-          title: Ticket Formatting Instructions
-          description: Instructions for formatting the ticket content
-          examples:
-          - Include customer name, issue description, and requested resolution
-        can_read_previous_tickets:
-          type: boolean
-          title: Can Read Previous Tickets
-          description: When enabled, exposes a companion tool that searches the customer's previous Zoho Desk tickets so the agent can identify existing clients and reference prior context.
-          default: false
-      type: object
-      required:
-      - tool_slug
-      - ticket_creation_cases
-      - ticket_formatting_instructions
-      title: ZohoDeskCreateTicketToolParameters
-      description: 'Creates a support ticket in Zoho Desk for follow-up actions.
-
-
-        WHEN TO USE: When an issue needs to be tracked or followed up by the support team.
-
-        BEST PRACTICES:
-
-        - Define specific cases that warrant ticket creation
-
-        - Provide clear formatting instructions for ticket content
-
-        - Include instructions on what data to capture in the ticket
-
-
-        NOTE: Requires a functional Zoho Desk integration configured for the organization.'
-    CustomScenarioStatus:
-      type: string
-      enum:
-      - active
-      - draft
-      - archived
-      title: CustomScenarioStatus
-    ConnectionSettings:
-      properties:
-        timeout:
-          type: integer
-          maximum: 300.0
-          minimum: 1.0
-          title: Timeout
-        retry_count:
-          type: integer
-          maximum: 10.0
-          minimum: 0.0
-          title: Retry Count
-      type: object
-      required:
-      - timeout
-      - retry_count
-      title: ConnectionSettings
-    EndCallToolParameters:
-      properties:
-        tool_slug:
-          type: string
-          const: end-call
-          title: Tool Slug
-        end_call_conditions:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: End Call Conditions
-          description: List of cases that trigger ending the call
-          examples:
-          - - When the call objective is successfully completed
-            - When the customer confirms satisfaction
-            - When the customer requests to end the call
-        end_call_messages:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: End Call Messages
-          description: Optional message to play to the user before ending call. Supports multiple-languages
-          examples:
-          - ar: شكراً لوقتك. يعطيك العافيَه
-            en: Thank you for calling. Have a great day!
-            ur: کال کرنے کا شکریہ۔ آپ کا دن اچھا گزرے!
-      type: object
-      required:
-      - tool_slug
-      - end_call_conditions
-      title: EndCallToolParameters
-      description: 'Ends the call gracefully when the conversation objective is complete.
-
-
-        WHEN TO USE: Every scenario MUST include this tool to define how calls end.
-
-        BEST PRACTICES:
-
-        - Define 2-4 clear end call conditions covering success and edge cases
-
-        - Use culturally appropriate closing messages with proper tashkeel
-
-        - Include a condition for when the user explicitly wants to end the call'
-    IVRNavigationToolParameters:
-      properties:
-        tool_slug:
-          type: string
-          const: ivr-navigation
-          title: Tool Slug
-        cooldown_seconds:
-          type: number
-          minimum: 0.0
-          title: Cooldown Seconds
-          description: The minimum wait time (in seconds) required between sending distinct DTMF codes to prevent signal flooding.
-          default: 1.0
-          examples:
-          - 1.5
-      type: object
-      required:
-      - tool_slug
-      title: IVRNavigationToolParameters
-      description: 'Enables the agent to navigate Interactive Voice Response (IVR) phone menus.
-
-
-        This tool allows the agent to press keys (send DTMF tones) when prompted by
-
-        a call recipient (e.g., "Press 1 for Sales", "Enter extension number").'
     CustomScenarioSaveResponse:
       properties:
         id:
@@ -472,30 +307,977 @@ components:
       - status
       - config
       title: CustomScenarioSaveResponse
-    ScheduleConfiguration:
+    KeyValueVariable:
       properties:
-        timezone:
+        key:
           type: string
-          title: Timezone
-          description: IANA timezone (e.g., 'America/New_York')
-        schedule:
-          additionalProperties:
-            $ref: '#/components/schemas/TimeRangeDayConfiguration'
-          propertyNames:
-            $ref: '#/components/schemas/WeekDay'
-          type: object
-          title: Schedule
+          minLength: 1
+          title: Key
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/StringVariable'
+          - $ref: '#/components/schemas/NumberVariable'
+          - $ref: '#/components/schemas/BooleanVariable'
+          - $ref: '#/components/schemas/ArrayVariable'
+          title: Value
+          discriminator:
+            propertyName: type
+            mapping:
+              array: '#/components/schemas/ArrayVariable'
+              boolean: '#/components/schemas/BooleanVariable'
+              number: '#/components/schemas/NumberVariable'
+              string: '#/components/schemas/StringVariable'
       type: object
       required:
-      - timezone
-      - schedule
-      title: ScheduleConfiguration
-    KbRetrievalMode:
+      - key
+      - value
+      title: KeyValueVariable
+    TransferMode:
       type: string
       enum:
-      - inline
-      - llm_tool
-      title: KbRetrievalMode
+      - cold
+      - warm
+      title: TransferMode
+      description: 'How a transfer-to-human hands the caller over.
+
+
+        COLD: dial the human into the caller''s room and step out (current default).
+
+        WARM: agent-assisted — caller on hold, human dialed into a private room,
+
+        AI summarizes context, then the two are merged.'
+    Schema:
+      properties:
+        fields:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/GlobalVariableField'
+            - $ref: '#/components/schemas/ScenarioRequiredField'
+            - $ref: '#/components/schemas/ScenarioOptionalField'
+          type: array
+          title: Fields
+      type: object
+      required:
+      - fields
+      title: Schema
+    NumberVariable:
+      properties:
+        type:
+          type: string
+          const: number
+          title: Type
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/FixedValue_Union_int__float__'
+          - $ref: '#/components/schemas/ScenarioVariable'
+          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__number___'
+          title: Config
+      type: object
+      required:
+      - type
+      - name
+      - config
+      title: NumberVariable
+    ScheduleCallbackToolParameters:
+      properties:
+        tool_slug:
+          type: string
+          const: schedule-callback
+          title: Tool Slug
+        trigger_conditions:
+          items:
+            type: string
+            minLength: 1
+          type: array
+          minItems: 1
+          title: Trigger Conditions
+          description: The single list of cases when a callback should be offered or recorded. The agent reads it during the call to decide whether to offer one, and the post-call analyst reads the same list to infer one when follow_up_inference is set. Callbacks, whether agreed during the call or created by the call report afterwards, can be at most max_wait ahead (the scenario's max_wait, never more than 29 days). A condition that implies a later date (for example a reminder the day before a payment due next quarter) is not supported and will be refused.
+          examples:
+          - - When the customer asks to be called back later
+            - When the customer says now is not a good time
+            - When the person who can decide is unavailable
+        confirmation_messages:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Confirmation Messages
+          description: 'Optional message confirming the agreed callback time, per language. Use {time} as the placeholder: it renders as the bare day and clock phrase ("3:30 PM", "tomorrow 3:30 PM"), so the template supplies the approximation word itself ("around {time}"). A bare {time} promises a minute-exact call the scheduler does not guarantee.'
+          examples:
+          - ar: تمام، بنتواصل معك {time} تقريباً
+            en: Great, we'll call you back around {time}.
+            ur: ٹھیک ہے، ہم آپ کو {time} کے قریب کال کریں گے۔
+        offer_callbacks_in_call:
+          type: boolean
+          title: Offer Callbacks In Call
+          description: Whether the agent can agree a callback time during the call. When off, the tool is never registered with the agent (the agent never offers or promises live, and the scenario prompt handles the conversation normally); a customer's explicit request is still caught by the post-call analyst and booked.
+          default: true
+        requires_human_support:
+          type: boolean
+          title: Requires Human Support
+          description: Whether a human must be reachable during the callback. The AI still places the callback; enabling this constrains callback times to the transfer-to-human tool's working hours so an escalation mid-callback can succeed.
+          default: false
+        max_reschedule_attempts:
+          type: integer
+          maximum: 10.0
+          exclusiveMinimum: 0.0
+          title: Max Reschedule Attempts
+          description: How many times a callback may be rescheduled across its lifetime (the customer answers a callback and asks to move it again). Changes of mind within one call do not count.
+          default: 3
+          examples:
+          - 3
+        min_wait:
+          type: string
+          format: duration
+          title: Min Wait
+          description: 'Shortest wait between now and a callback. Requests sooner than this are moved to now plus this wait, and the agent confirms the moved time. The same wait is re-applied after the call: a promise made early in a long call can fall under the platform''s minimum booking lead by the time the callback is booked, and the booker moves it to now plus this wait rather than dropping it.'
+          default: PT15M
+          examples:
+          - PT15M
+        max_wait:
+          type: string
+          format: duration
+          title: Max Wait
+          description: Longest wait between now and a callback. Requests beyond this are refused rather than clamped, and the agent asks for a nearer time. The ceiling sits below the platform's booking horizon, and booking time only moves closer to the promised time, so a promise at the ceiling stays inside the horizon.
+          default: P29D
+          examples:
+          - P29D
+        default_callback_hour:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Default Callback Hour
+          description: Local hour used when the analyst derives a callback time from a day-only anchor
+          default: 10
+          examples:
+          - 10
+        follow_up_inference:
+          anyOf:
+          - $ref: '#/components/schemas/FollowUpInference'
+          - type: 'null'
+          description: When set, the post-call analyst may also infer follow-up callbacks from the transcript. Leave unset to record only what the agent agreed in the call.
+      additionalProperties: false
+      type: object
+      required:
+      - tool_slug
+      - trigger_conditions
+      title: ScheduleCallbackToolParameters
+      description: "Records a request to call the customer back later, during or after the call.\n\nWHEN TO USE: Only when the prompt mentions calling the customer back at a later time\n(customer asks for a callback, the right person is unavailable, a follow-up was\npromised). Never add it by default.\nBEST PRACTICES:\n- Define 2-4 trigger conditions in English; they are evaluation signals, not spoken text\n- Phrase confirmations as an approximate time (\"around 3:30\"): the exact dial time is\n  decided later by the scheduler, so never promise a minute-exact call\n- Use `{time}` in the confirmation messages as the placeholder for the agreed time.\n  It is substituted with the bare day and clock phrase only (\"3:30 PM\", \"tomorrow\n  3:30 PM\"), so the template itself must carry the approximation word: write\n  \"around {time}\", never a bare \"{time}\"\n- Set `requires_human_support` when the callback needs a human to be available too;\n  it requires a transfer-to-human tool with working hours configured\n- Configure `follow_up_inference` only when the business also wants callbacks the\n  customer never asked for\n- Set `default_callback_hour` to the local hour the analyst should book when the\n  call fixes only a day (\"call me tomorrow\"), not a time of day\n\nCALLING WINDOW: the callback calling window is the scenario's schedule configuration\n(the `ScheduleConfig` row behind `schedule_config_id`, resolved through\n`ScheduleConfigStore.resolve_scenario_default`). That is a single daily start/end\nwindow with a timezone that may be null, in which case the scenario's own timezone\napplies. The scenario may have no schedule configuration, a disabled one, or one with\nno retry_window: all three mean no window, and only min/max wait apply. There is no\nper-weekday map here, unlike the transfer tool's working hours (adding one is a\ntracked follow-up). The tool carries no window and no timezone of its own.\n\nNOTE: This tool only records the request; scheduling and dialing happen after the call."
+    CustomScenarioConfig:
+      properties:
+        for_language_settings:
+          items:
+            $ref: '#/components/schemas/ForLanguageSettings'
+          type: array
+          minItems: 1
+          title: For Language Settings
+          description: Language-specific settings including prompt and first message. MUST have at least 1 entry.
+        template_schema:
+          $ref: '#/components/schemas/Schema'
+          description: Schema defining variables that can be passed to the scenario (e.g., customer_name)
+        success_criteria:
+          items:
+            $ref: '#/components/schemas/SuccessCriterion'
+          type: array
+          title: Success Criteria
+          description: List of criteria to evaluate call success. At least one should have is_primary=True.
+          default: []
+        tools:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/EndCallToolParameters'
+            - $ref: '#/components/schemas/TransferToHumanToolParameters'
+            - $ref: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
+            - $ref: '#/components/schemas/CustomApiToolParameters'
+            - $ref: '#/components/schemas/CodeSwitchToolParameters'
+            - $ref: '#/components/schemas/SallaToolsBundleConfiguration'
+            - $ref: '#/components/schemas/IVRNavigationToolParameters'
+            - $ref: '#/components/schemas/VoicemailDetectionToolParameters'
+            - $ref: '#/components/schemas/CollectDigitsToolParameters'
+            - $ref: '#/components/schemas/ScheduleCallbackToolParameters'
+            discriminator:
+              propertyName: tool_slug
+              mapping:
+                code-switching: '#/components/schemas/CodeSwitchToolParameters'
+                collect-digits: '#/components/schemas/CollectDigitsToolParameters'
+                custom-api: '#/components/schemas/CustomApiToolParameters'
+                end-call: '#/components/schemas/EndCallToolParameters'
+                ivr-navigation: '#/components/schemas/IVRNavigationToolParameters'
+                salla-tools: '#/components/schemas/SallaToolsBundleConfiguration'
+                schedule-callback: '#/components/schemas/ScheduleCallbackToolParameters'
+                transfer-to-human: '#/components/schemas/TransferToHumanToolParameters'
+                voicemail-detection: '#/components/schemas/VoicemailDetectionToolParameters'
+                zoho-desk-create-ticket: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
+          type: array
+          title: Tools
+          description: List of tools the AI can use during the call (end-call, transfer, etc.)
+        data_extraction_settings:
+          oneOf:
+          - $ref: '#/components/schemas/DataExtractionEnabled'
+          - $ref: '#/components/schemas/DataExtractionDisabled'
+          title: Data Extraction Settings
+          description: Configuration for extracting structured data from the call
+          default:
+            type: disabled
+          discriminator:
+            propertyName: type
+            mapping:
+              disabled: '#/components/schemas/DataExtractionDisabled'
+              enabled: '#/components/schemas/DataExtractionEnabled'
+        record_sinks:
+          $ref: '#/components/schemas/RecordingSinkSettings'
+          description: Destinations that receive the call record (e.g. its recording) after the call, independent of data extraction.
+        knowledge_base_ids:
+          items:
+            type: string
+          type: array
+          title: Knowledge Base Ids
+          description: IDs of knowledge bases to attach
+        kb_retrieval_mode:
+          $ref: '#/components/schemas/KbRetrievalMode'
+          description: 'How attached knowledge bases reach the agent: inlined into the system prompt, or queried on demand via an LLM retrieval tool. llm_tool engages the retriever only when the knowledge base exceeds the inline prompt budget; smaller knowledge bases stay inline for latency.'
+          default: inline
+        tz:
+          type: string
+          title: Tz
+          description: The timezone used by the scenario to derive the correct current time at runtime.
+          default: Asia/Riyadh
+        schedule_config_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Schedule Config Id
+          description: The scenario's default schedule_config (retry/scheduling policy), resolved for calls that don't carry their own.
+      type: object
+      required:
+      - for_language_settings
+      - template_schema
+      title: CustomScenarioConfig
+      description: "Complete configuration for a voice bot scenario.\n\nThis is the FULL structure the scenario generator must produce.\nOutput ONLY raw JSON - no markdown code blocks, no explanatory text.\n\nCOMPLETE OUTPUT EXAMPLE:\n```json\n{\n  \"config\": {\n    \"data_extraction_settings\": {\n      \"type\": \"enabled\",\n      \"json_schema\": {\n        \"type\": \"object\",\n        \"title\": \"Customer Feedback\",\n        \"description\": \"Data collected from customer feedback call\",\n        \"required\": [\"satisfaction_rating\"],\n        \"properties\": {\n          \"satisfaction_rating\": {\n            \"type\": \"integer\",\n            \"title\": \"Satisfaction Rating\",\n            \"description\": \"Customer satisfaction from 1-5\",\n            \"minimum\": 1,\n            \"maximum\": 5\n          },\n          \"preferred_contact_method\": {\n            \"type\": \"string\",\n            \"title\": \"Preferred Contact Method\",\n            \"enum\": [\"phone\", \"email\", \"whatsapp\", \"sms\"]\n          }\n        }\n      },\n      \"advanced_settings\": {\"additional_sinks\": []}\n    },\n    \"for_language_settings\": [\n      {\n        \"back_channeling\": {\n          \"type\": \"word\",\n          \"value\": 0.6,\n          \"whitelist\": [\"تمام\", \"حاضر\", \"ممتاز\", \"زين\", \"نعم\"]\n        },\n        \"default\": true,\n        \"first_message\": \"السلام عليكم، معك نور من {{company_name}}. كيف حالك؟\",\n        \"language_settings\": {\"language\": \"ar\"},\n        \"prompt\": \"[Business-focused prompt with sections and hardcoded messages]\",\n        \"removed\": false,\n        \"timeout_settings\": {\"duration\": 15, \"max_retries\": 5, \"type\": \"enabled\"},\n        \"voice\": null\n      },\n      {\n        \"back_channeling\": {\n          \"type\": \"word\",\n          \"value\": 0.6,\n          \"whitelist\": [\"hmm\", \"I see\", \"mm-hmm\", \"uh-huh\"]\n        },\n        \"default\": false,\n        \"first_message\": \"Hello, this is Nour from {{company_name}}. How are you?\",\n        \"language_settings\": {\"language\": \"en\"},\n        \"prompt\": \"[English version with cultural adaptations]\",\n        \"removed\": false,\n        \"timeout_settings\": {\"duration\": 15, \"max_retries\": 5, \"type\": \"enabled\"},\n        \"voice\": null\n      }\n    ],\n    \"success_criteria\": [\n      {\n        \"is_primary\": true,\n        \"text\": \"- Collected customer feedback\\n- Confirmed satisfaction rating\\n- Offered follow-up if needed\"\n      },\n      {\n        \"is_primary\": false,\n        \"text\": \"Agent offered loyalty discount to retain customer\"\n      }\n    ],\n    \"template_schema\": {\n      \"fields\": [\n        {\"id\": \"customer_name\", \"type\": \"text\"},\n        {\"id\": \"company_name\", \"type\": \"text\"}\n      ]\n    },\n    \"tools\": [\n      {\n        \"tool_slug\": \"end-call\",\n        \"end_call_conditions\": [\n          \"When conversation objective is complete\",\n          \"When customer confirms satisfaction\"\n        ],\n        \"end_call_messages\": {\n          \"ar\": \"شكراً لوقتك. في أمان الله\",\n          \"en\": \"Thank you for your time. Have a great day!\"\n        }\n      },\n      {\n        \"tool_slug\": \"transfer-to-human\",\n        \"dtmf_triggers\": [\"*\"],\n        \"transfer_cases\": [\n          \"User explicitly requests human\",\n          \"Issue complexity exceeds capability\"\n        ],\n        \"transfer_messages\": {\n          \"ar\": \"بحوّلّك الحين لأحد المختصين\",\n          \"en\": \"I'll connect you with a specialist\"\n        },\n        \"transfer_to\": \"+966501234567\",\n        \"working_hours\": null\n      },\n    ]\n  },\n  \"suggestions\": [\n    {\n      \"type\": \"assumption_made\",\n      \"section\": \"tools\",\n      \"title\": \"Support Team Transfer\",\n      \"message\": \"Set transfer to support team (not sales)\",\n      \"tool_slug\": \"transfer-to-human\"\n    },\n    {\n      \"type\": \"verification_needed\",\n      \"section\": \"tools\",\n      \"title\": \"Update Transfer Number\",\n      \"message\": \"Update transfer phone number with your actual number\",\n      \"current_value\": \"+966501234567\",\n      \"fix_type\": \"phone\",\n      \"tool_slug\": \"transfer-to-human\"\n    },\n    {\n      \"type\": \"resource_linking\",\n      \"section\": \"knowledge_bases\",\n      \"title\": \"Add Product FAQs\",\n      \"message\": \"Create a knowledge base with your product FAQs\",\n      \"action_label\": \"Create Knowledge Base\",\n      \"action_url\": \"/knowledge-bases\"\n    }\n  ],\n  \"name\": \"Customer Feedback Collection\",\n  \"status\": \"active\"\n}\n```\n\nFIELD NOTES:\n- data_extraction_settings: Optional. Include when client needs structured data capture.\n- knowledge_base_ids: Optional. Only use IDs from available_knowledge_bases input.\n- voice: Always set to null - voice selection happens in UI.\n- tools: Core tools (end-call, transfer-to-human, code-switching) enabled by default. Integration tools require OAuth setup.\n- first_message: Use {{variable}} format for pre-existing variables.\n- success_criteria: Exactly ONE with is_primary=true (can have multiple points via \\n)."
+    ListCustomScenarioResponse:
+      properties:
+        scenarios:
+          items:
+            $ref: '#/components/schemas/CustomScenarioRecord'
+          type: array
+          title: Scenarios
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        prev_cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Prev Cursor
+      type: object
+      required:
+      - scenarios
+      title: ListCustomScenarioResponse
+    ArrayVariable:
+      properties:
+        type:
+          type: string
+          const: array
+          title: Type
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/FixedValue_list_object__'
+          - $ref: '#/components/schemas/ScenarioVariable'
+          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__array___'
+          title: Config
+        array_item_type:
+          type: string
+          enum:
+          - string
+          - number
+          - boolean
+          title: Array Item Type
+      type: object
+      required:
+      - type
+      - name
+      - config
+      - array_item_type
+      title: ArrayVariable
+    ZohoCRMRecordSink:
+      properties:
+        type:
+          type: string
+          const: zoho_crm_update_record
+          title: Type
+          default: zoho_crm_update_record
+      type: object
+      title: ZohoCRMRecordSink
+    FixedValue_Union_int__float__:
+      properties:
+        source:
+          type: string
+          const: fixed
+          title: Source
+        value:
+          anyOf:
+          - type: integer
+          - type: number
+          title: Value
+        is_encrypted:
+          type: boolean
+          title: Is Encrypted
+          default: false
+      type: object
+      required:
+      - source
+      - value
+      title: FixedValue[Union[int, float]]
+    Instructions:
+      properties:
+        pre_processing_message:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Pre Processing Message
+        failure_message:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Failure Message
+        response_processing:
+          type: string
+          title: Response Processing
+      type: object
+      required:
+      - response_processing
+      title: Instructions
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TransferToHumanToolParameters:
+      properties:
+        tool_slug:
+          type: string
+          const: transfer-to-human
+          title: Tool Slug
+        transfer_to:
+          type: string
+          minLength: 1
+          title: Transfer To
+          description: Phone number to transfer to
+          examples:
+          - '+966500000000'
+        dtmf_triggers:
+          items:
+            type: string
+          type: array
+          title: Dtmf Triggers
+          description: DTMF digits that trigger transfer (e.g., pressing 0)
+          default: []
+          examples:
+          - - '0'
+            - '#'
+        transfer_cases:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Transfer Cases
+          description: List of cases when transfer should occur.
+          examples:
+          - - When the customer requests to speak with a human
+            - When the AI cannot resolve the issue
+            - When there is a complaint that needs escalation
+        transfer_messages:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Transfer Messages
+          description: Optional message to play to the user before transferring. Supports multiple-languages
+          examples:
+          - ar: بحوّلك الحين لأحد المختصين. لحظة وحدة
+            en: Transferring you now. Please hold.
+            ur: آپ کو ابھی منتقل کر رہا ہوں۔ براہ کرم انتظار کریں۔
+        working_hours:
+          oneOf:
+          - $ref: '#/components/schemas/WorkingHoursEnabledV2'
+          - $ref: '#/components/schemas/WorkingHoursDisabled'
+          title: Working Hours
+          description: Working hours configuration. Transfer only occurs within this time range when enabled.
+          discriminator:
+            propertyName: enabled
+            mapping:
+              'False': '#/components/schemas/WorkingHoursDisabled'
+              'True': '#/components/schemas/WorkingHoursEnabledV2'
+        outside_working_hours_messages:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: Outside Working Hours Messages
+          description: Optional message to play to the user when calls are attempted outside of working hours
+        transfer_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Transfer Trunk Id
+          description: Specific SIP trunk ID for transfers. If unset, auto-selects from available outbound trunks.
+        caller_id_passthrough:
+          type: boolean
+          title: Caller Id Passthrough
+          description: 'When enabled, the transfer call presents the customer''s number as caller ID (inbound: the caller''s number; outbound: the dialed number), subject to carrier acceptance. Falls back to the trunk default when the number is unavailable.'
+          default: false
+        transfer_mode:
+          $ref: '#/components/schemas/TransferMode'
+          description: How the transfer leg is established. 'cold' dials the human straight into the caller's room (default). 'warm' puts the caller on hold while the AI briefs the human, then merges the calls.
+          default: cold
+        warm_summary_prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Warm Summary Prompt
+          description: Extra instructions appended to the warm-transfer briefing the AI gives the human agent before connecting. Only used when transfer_mode is 'warm'.
+      type: object
+      required:
+      - tool_slug
+      - transfer_to
+      - transfer_cases
+      title: TransferToHumanToolParameters
+      description: 'Transfers the call to a human agent when the AI cannot handle the situation.
+
+
+        WHEN TO USE: When users need human assistance for complex issues, complaints,
+
+        or situations the AI is not equipped to handle.
+
+        BEST PRACTICES:
+
+        - Define 3-5 specific transfer scenarios
+
+        - Include both customer-initiated (requests human) and agent-initiated (complex issue) cases
+
+        - Use reassuring transfer messages
+
+        - Configure DTMF trigger (usually "*") for instant human access
+
+        - Set appropriate working hours if the transfer destination has limited availability'
+    FollowUpInference:
+      properties:
+        default_delay:
+          type: string
+          format: duration
+          title: Default Delay
+          description: How far after the call an inferred follow-up is scheduled when the transcript names no time. Must lie within the tool's min_wait..max_wait bounds.
+          default: P1D
+          examples:
+          - P1D
+        confidence_threshold:
+          type: number
+          maximum: 1.0
+          minimum: 0.5
+          title: Confidence Threshold
+          description: Minimum analyst confidence required before an inferred follow-up is recorded. Uncalibrated pilot knob.
+          default: 0.8
+          examples:
+          - 0.8
+      additionalProperties: false
+      type: object
+      title: FollowUpInference
+      description: "Lets the post-call analyst propose a callback the agent never explicitly booked.\n\nWHEN TO USE: When the business wants follow-ups on calls where the customer did not\nask for one out loud (unresolved issue, promised update, missed decision maker).\nBEST PRACTICES:\n- The conditions live on the tool's `trigger_conditions`: one list, read by the agent\n  during the call and by the analyst after it. There is no separate inference list\n- Keep the threshold high enough that ambiguous calls are dropped rather than dialed\n- Leave this unset when only explicit customer requests should produce a callback"
+    CustomScenarioStatus:
+      type: string
+      enum:
+      - active
+      - draft
+      - archived
+      title: CustomScenarioStatus
+    WeekDay:
+      type: integer
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      title: WeekDay
+    ScenarioOptionalField:
+      properties:
+        id:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Id
+        source:
+          type: string
+          const: scenario
+          title: Source
+          default: scenario
+        type:
+          type: string
+          enum:
+          - text
+          - number
+          - boolean
+          title: Type
+        required:
+          type: boolean
+          const: false
+          title: Required
+          default: false
+        default:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Default
+      type: object
+      required:
+      - id
+      - type
+      title: ScenarioOptionalField
+    ListCustomScenarioInput:
+      properties:
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+          default: 100
+        cursor:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Cursor
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomScenarioStatus'
+          - type: 'null'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        organization_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Organization Ids
+      type: object
+      title: ListCustomScenarioInput
+    ForLanguageSettings:
+      properties:
+        default:
+          type: boolean
+          title: Default
+          description: Whether this is the default language. Exactly one should be True.
+          default: false
+        language_settings:
+          $ref: '#/components/schemas/LanguageSettings'
+          description: Language configuration including the language code (ar, en)
+        first_message:
+          type: string
+          title: First Message
+          description: Opening message the AI says when call starts.
+          examples:
+          - مرحباً {{customer_name}}، معك نور. كيف أقدر أساعدك؟
+        disable_first_message:
+          type: boolean
+          title: Disable First Message
+          description: Prevents the agent from uttering the first message.
+          default: false
+        prompt:
+          type: string
+          title: Prompt
+          description: Full system prompt for the AI. Should include role, objectives, and instructions.
+        agent_profile_id:
+          type: string
+          title: Agent Profile Id
+          description: ID of the agent profile to use for voice and behavior settings
+          default: ''
+      type: object
+      required:
+      - language_settings
+      - first_message
+      - prompt
+      title: ForLanguageSettings
+      description: 'Language-specific configuration for the scenario.
+
+
+        Each scenario must have at least one language setting. The prompt and first_message
+
+        should be in the specified language with proper tashkeel for Arabic.'
+    AgentProvidedVariable_Literal__array___:
+      properties:
+        source:
+          type: string
+          const: agent_provided
+          title: Source
+        description:
+          type: string
+          title: Description
+        type:
+          type: string
+          const: array
+          title: Type
+        required:
+          type: boolean
+          title: Required
+        allowed_values:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Values
+      type: object
+      required:
+      - source
+      - description
+      - type
+      - required
+      title: AgentProvidedVariable[Literal['array']]
+    SallaToolsBundleConfiguration:
+      properties:
+        tool_slug:
+          type: string
+          const: salla-tools
+          title: Tool Slug
+        functionalities_enabled_map:
+          additionalProperties:
+            type: boolean
+          propertyNames:
+            $ref: '#/components/schemas/SallaCustomerFacingFunctionality'
+          type: object
+          title: Functionalities Enabled Map
+          description: 'Important: all functionalities must be mapped to a True/False value. Missing parameters are ambiguous and could cause errors.'
+          examples:
+          - browse-logistics: true
+            browse-products: true
+            read-previous-orders: true
+      type: object
+      required:
+      - tool_slug
+      - functionalities_enabled_map
+      title: SallaToolsBundleConfiguration
+      description: 'Enables Salla e-commerce platform integration for the voice agent.
+
+
+        NOTE: Requires a functional Salla integration configured for the organization.'
+    FixedValue_str_:
+      properties:
+        source:
+          type: string
+          const: fixed
+          title: Source
+        value:
+          type: string
+          title: Value
+        is_encrypted:
+          type: boolean
+          title: Is Encrypted
+          default: false
+      type: object
+      required:
+      - source
+      - value
+      title: FixedValue[str]
+    DataExtractionDisabled:
+      properties:
+        type:
+          type: string
+          const: disabled
+          title: Type
+          default: disabled
+      type: object
+      title: DataExtractionDisabled
+    RecordingSinkSettings:
+      properties:
+        recording_lifetime:
+          type: string
+          format: duration
+          title: Recording Lifetime
+          description: How long a recording URL delivered to a record sink stays valid.
+          default: P7D
+        sinks:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ZohoCallActivitySink'
+            discriminator:
+              propertyName: type
+              mapping:
+                zoho_crm_call_activity: '#/components/schemas/ZohoCallActivitySink'
+          type: array
+          title: Sinks
+      type: object
+      title: RecordingSinkSettings
+    AdvancedDataExtractionSettings:
+      properties:
+        additional_sinks:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ZohoCRMRecordSink'
+            discriminator:
+              propertyName: type
+              mapping:
+                zoho_crm_update_record: '#/components/schemas/ZohoCRMRecordSink'
+          type: array
+          title: Additional Sinks
+      type: object
+      title: AdvancedDataExtractionSettings
+    SuccessCriterion:
+      properties:
+        is_primary:
+          type: boolean
+          title: Is Primary
+          description: Whether this is the primary success criterion. Exactly one should be True.
+          default: false
+        text:
+          type: string
+          title: Text
+          description: Description of what constitutes success. Use bullet points with \n for multiple items in primary criteria.
+          examples:
+          - Customer confirmed their order details
+          - '- Collected payment information\n- Confirmed payment date\n- Sent confirmation'
+          - Agent successfully created support ticket with all required fields
+      type: object
+      required:
+      - text
+      title: SuccessCriterion
+      description: "Defines a success criterion for evaluating call outcomes.\n\nSuccess criteria determine whether a call achieved its business objectives.\nThey are used for analytics and quality monitoring.\n\n- Could be tool-related: \"Agent transferred to specialist when customer requested human advisor\"\n- Could be business-related: \"Offered loyalty program benefits to retain customer\"\n\nSTRUCTURE:\n- PRIMARY (is_primary=True): Exactly ONE criterion that determines call success/failure.\n  The text field can contain multiple points separated by newlines.\n  Format: \"- Point 1\\n- Point 2\\n- Point 3\"\n    - Single point: \"Successfully collected customer feedback and confirmed satisfaction\"\n    - Multiple points: \"- Collected customer payment information\\\\n- Confirmed scheduled payment date\\\\n- Sent payment confirmation\"\n    - With tool call: \"- Collected issue details\\\\n- Created support ticket\\\\n- Confirmed ticket number\"\n  ALL points must be met for the call to be marked as successful.\n\n- SECONDARY (is_primary=False): Zero or more additional criteria.\n  Each secondary is a separate object. These are nice-to-have objectives\n  that don't affect overall call success/failure status.\n\nTOOL CALLS IN SUCCESS CRITERIA:\n- As Primary: When tool call IS the main business objective\n  Example: \"Agent successfully created support ticket with all required fields\"\n- As Secondary: When tool usage is optional/supplementary\n  Example: \"Agent transferred to specialist when loan exceeded $100K\"\n- Not in Criteria: When it's standard operation (e.g., end-call is expected behavior)\n\nCRITICAL DISTINCTION:\n- Tool CONFIGURATION (messages, conditions) → Define in \"tools\" array\n- Tool USAGE EVALUATION → Define here ONLY when it's a business objective"
+    HTTPMethod:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      title: HTTPMethod
+    UpsertCustomScenario:
+      properties:
+        organization_id:
+          type: string
+          title: Organization Id
+        creator_id:
+          type: string
+          title: Creator Id
+        name:
+          type: string
+          title: Name
+        config:
+          $ref: '#/components/schemas/UpsertCustomScenarioConfig'
+        status:
+          $ref: '#/components/schemas/CustomScenarioStatus'
+      type: object
+      required:
+      - organization_id
+      - creator_id
+      - name
+      - config
+      - status
+      title: UpsertCustomScenario
+    EndCallToolParameters:
+      properties:
+        tool_slug:
+          type: string
+          const: end-call
+          title: Tool Slug
+        end_call_conditions:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: End Call Conditions
+          description: List of cases that trigger ending the call
+          examples:
+          - - When the call objective is successfully completed
+            - When the customer confirms satisfaction
+            - When the customer requests to end the call
+        end_call_messages:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          propertyNames:
+            $ref: '#/components/schemas/Language'
+          type: object
+          title: End Call Messages
+          description: Optional message to play to the user before ending call. Supports multiple-languages
+          examples:
+          - ar: شكراً لوقتك. يعطيك العافيَه
+            en: Thank you for calling. Have a great day!
+            ur: کال کرنے کا شکریہ۔ آپ کا دن اچھا گزرے!
+      type: object
+      required:
+      - tool_slug
+      - end_call_conditions
+      title: EndCallToolParameters
+      description: 'Ends the call gracefully when the conversation objective is complete.
+
+
+        WHEN TO USE: Every scenario MUST include this tool to define how calls end.
+
+        BEST PRACTICES:
+
+        - Define 2-4 clear end call conditions covering success and edge cases
+
+        - Use culturally appropriate closing messages with proper tashkeel
+
+        - Include a condition for when the user explicitly wants to end the call'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SallaCustomerFacingFunctionality:
+      type: string
+      enum:
+      - browse-products
+      - browse-logistics
+      - create-update-order
+      - read-previous-orders
+      title: SallaCustomerFacingFunctionality
+      description: Enum for functionalities exposed via the integration APIs. Simplifies UI/UX and bundles required tools under a single functionality.
+    ConnectionSettings:
+      properties:
+        timeout:
+          type: integer
+          maximum: 300.0
+          minimum: 1.0
+          title: Timeout
+        retry_count:
+          type: integer
+          maximum: 10.0
+          minimum: 0.0
+          title: Retry Count
+      type: object
+      required:
+      - timeout
+      - retry_count
+      title: ConnectionSettings
+    TimeRangeDayConfiguration:
+      properties:
+        start_time:
+          type: string
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          title: Start Time
+          description: Start time in HH:MM format (24-hour)
+        end_time:
+          type: string
+          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
+          title: End Time
+          description: End time in HH:MM format (24-hour)
+      type: object
+      required:
+      - start_time
+      - end_time
+      title: TimeRangeDayConfiguration
+    WorkingHoursDisabled:
+      properties:
+        enabled:
+          type: boolean
+          const: false
+          title: Enabled
+          default: false
+      type: object
+      title: WorkingHoursDisabled
+    FixedValue_list_object__:
+      properties:
+        source:
+          type: string
+          const: fixed
+          title: Source
+        value:
+          items: {}
+          type: array
+          title: Value
+        is_encrypted:
+          type: boolean
+          title: Is Encrypted
+          default: false
+      type: object
+      required:
+      - source
+      - value
+      title: FixedValue[list[object]]
+    BooleanVariable:
+      properties:
+        type:
+          type: string
+          const: boolean
+          title: Type
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/FixedValue_bool_'
+          - $ref: '#/components/schemas/ScenarioVariable'
+          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__boolean___'
+          title: Config
+      type: object
+      required:
+      - type
+      - name
+      - config
+      title: BooleanVariable
     DataExtractionEnabled:
       properties:
         type:
@@ -578,118 +1360,7 @@ components:
         NOTE: Only include data extraction when the client needs structured data
 
         capture. Not all scenarios require this feature.'
-    FixedValue_str_:
-      properties:
-        source:
-          type: string
-          const: fixed
-          title: Source
-        value:
-          type: string
-          title: Value
-        is_encrypted:
-          type: boolean
-          title: Is Encrypted
-          default: false
-      type: object
-      required:
-      - source
-      - value
-      title: FixedValue[str]
-    AgentProvidedVariable_Literal__boolean___:
-      properties:
-        source:
-          type: string
-          const: agent_provided
-          title: Source
-        description:
-          type: string
-          title: Description
-        type:
-          type: string
-          const: boolean
-          title: Type
-        required:
-          type: boolean
-          title: Required
-        allowed_values:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Values
-      type: object
-      required:
-      - source
-      - description
-      - type
-      - required
-      title: AgentProvidedVariable[Literal['boolean']]
-    GetScenariosByIdsRequest:
-      properties:
-        ids:
-          items:
-            type: string
-          type: array
-          title: Ids
-      type: object
-      required:
-      - ids
-      title: GetScenariosByIdsRequest
-    UpdateCustomScenario:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/UpsertCustomScenarioConfig'
-          - type: 'null'
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomScenarioStatus'
-          - type: 'null'
-        last_updater_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Last Updater Id
-      type: object
-      required:
-      - id
-      title: UpdateCustomScenario
-    KeyValueVariable:
-      properties:
-        key:
-          type: string
-          minLength: 1
-          title: Key
-        value:
-          oneOf:
-          - $ref: '#/components/schemas/StringVariable'
-          - $ref: '#/components/schemas/NumberVariable'
-          - $ref: '#/components/schemas/BooleanVariable'
-          - $ref: '#/components/schemas/ArrayVariable'
-          title: Value
-          discriminator:
-            propertyName: type
-            mapping:
-              array: '#/components/schemas/ArrayVariable'
-              boolean: '#/components/schemas/BooleanVariable'
-              number: '#/components/schemas/NumberVariable'
-              string: '#/components/schemas/StringVariable'
-      type: object
-      required:
-      - key
-      - value
-      title: KeyValueVariable
-    ScenarioOptionalField:
+    GlobalVariableField:
       properties:
         id:
           type: string
@@ -698,9 +1369,9 @@ components:
           title: Id
         source:
           type: string
-          const: scenario
+          const: global
           title: Source
-          default: scenario
+          default: global
         type:
           type: string
           enum:
@@ -708,277 +1379,11 @@ components:
           - number
           - boolean
           title: Type
-        required:
-          type: boolean
-          const: false
-          title: Required
-          default: false
-        default:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Default
+          default: text
       type: object
       required:
       - id
-      - type
-      title: ScenarioOptionalField
-    StringVariable:
-      properties:
-        type:
-          type: string
-          const: string
-          title: Type
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/FixedValue_str_'
-          - $ref: '#/components/schemas/ScenarioVariable'
-          - $ref: '#/components/schemas/GlobalVariable'
-          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__string___'
-          title: Config
-      type: object
-      required:
-      - type
-      - name
-      - config
-      title: StringVariable
-    ListCustomScenarioInput:
-      properties:
-        limit:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-          default: 100
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Cursor
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/CustomScenarioStatus'
-          - type: 'null'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        organization_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Organization Ids
-      type: object
-      title: ListCustomScenarioInput
-    SallaToolsBundleConfiguration:
-      properties:
-        tool_slug:
-          type: string
-          const: salla-tools
-          title: Tool Slug
-        functionalities_enabled_map:
-          additionalProperties:
-            type: boolean
-          propertyNames:
-            $ref: '#/components/schemas/SallaCustomerFacingFunctionality'
-          type: object
-          title: Functionalities Enabled Map
-          description: 'Important: all functionalities must be mapped to a True/False value. Missing parameters are ambiguous and could cause errors.'
-          examples:
-          - browse-logistics: true
-            browse-products: true
-            read-previous-orders: true
-      type: object
-      required:
-      - tool_slug
-      - functionalities_enabled_map
-      title: SallaToolsBundleConfiguration
-      description: 'Enables Salla e-commerce platform integration for the voice agent.
-
-
-        NOTE: Requires a functional Salla integration configured for the organization.'
-    VoicemailDetectionToolParameters:
-      properties:
-        tool_slug:
-          type: string
-          const: voicemail-detection
-          title: Tool Slug
-        hangup_when_voicemail_detected:
-          type: boolean
-          title: Hangup When Voicemail Detected
-          default: true
-        message_before_hangup:
-          anyOf:
-          - $ref: '#/components/schemas/LLMInstruction'
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - type: 'null'
-            propertyNames:
-              $ref: '#/components/schemas/Language'
-            type: object
-          - type: 'null'
-          title: Message Before Hangup
-      type: object
-      required:
-      - tool_slug
-      title: VoicemailDetectionToolParameters
-      description: 'Detects when the call has reached a voicemail or answering machine and responds appropriately.
-
-
-        WHEN TO USE: Include in outbound call scenarios where the agent may reach voicemail.
-
-        BEST PRACTICES:
-
-        - Set hangup_when_voicemail_detected to true to end the call immediately on detection
-
-        - Use message_before_hangup with a MultiLingualMessage for a fixed recorded message
-
-        - Use message_before_hangup with an LLMInstruction to let the agent generate the message'
-    FixedValue_Union_int__float__:
-      properties:
-        source:
-          type: string
-          const: fixed
-          title: Source
-        value:
-          anyOf:
-          - type: integer
-          - type: number
-          title: Value
-        is_encrypted:
-          type: boolean
-          title: Is Encrypted
-          default: false
-      type: object
-      required:
-      - source
-      - value
-      title: FixedValue[Union[int, float]]
-    AgentProvidedVariable_Literal__number___:
-      properties:
-        source:
-          type: string
-          const: agent_provided
-          title: Source
-        description:
-          type: string
-          title: Description
-        type:
-          type: string
-          const: number
-          title: Type
-        required:
-          type: boolean
-          title: Required
-        allowed_values:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Values
-      type: object
-      required:
-      - source
-      - description
-      - type
-      - required
-      title: AgentProvidedVariable[Literal['number']]
-    ListCustomScenarioResponse:
-      properties:
-        scenarios:
-          items:
-            $ref: '#/components/schemas/CustomScenarioRecord'
-          type: array
-          title: Scenarios
-        cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Cursor
-        prev_cursor:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Prev Cursor
-      type: object
-      required:
-      - scenarios
-      title: ListCustomScenarioResponse
-    TransferMode:
-      type: string
-      enum:
-      - cold
-      - warm
-      title: TransferMode
-      description: 'How a transfer-to-human hands the caller over.
-
-
-        COLD: dial the human into the caller''s room and step out (current default).
-
-        WARM: agent-assisted — caller on hold, human dialed into a private room,
-
-        AI summarizes context, then the two are merged.'
-    BooleanVariable:
-      properties:
-        type:
-          type: string
-          const: boolean
-          title: Type
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/FixedValue_bool_'
-          - $ref: '#/components/schemas/ScenarioVariable'
-          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__boolean___'
-          title: Config
-      type: object
-      required:
-      - type
-      - name
-      - config
-      title: BooleanVariable
-    LLMInstruction:
-      properties:
-        instruction:
-          type: string
-          title: Instruction
-          description: Instructions for the agent on what to say or do when voicemail is detected
-          examples:
-          - Leave a brief message introducing yourself and asking them to call back at their earliest convenience.
-      type: object
-      required:
-      - instruction
-      title: LLMInstruction
-    GlobalVariable:
-      properties:
-        source:
-          type: string
-          const: global_variable
-          title: Source
-        variable_id:
-          type: string
-          minLength: 1
-          title: Variable Id
-      type: object
-      required:
-      - source
-      - variable_id
-      title: GlobalVariable
+      title: GlobalVariableField
     CustomApiToolParameters:
       properties:
         tool_slug:
@@ -1136,729 +1541,64 @@ components:
       - type
       - required
       title: AgentProvidedVariable[Literal['string']]
-    CustomScenarioRecord:
+    ScheduleConfiguration:
       properties:
-        id:
+        timezone:
           type: string
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        organization_id:
-          type: string
-          title: Organization Id
-        creator_id:
-          type: string
-          title: Creator Id
-        name:
-          type: string
-          title: Name
-        status:
-          $ref: '#/components/schemas/CustomScenarioStatus'
-        config:
-          $ref: '#/components/schemas/CustomScenarioConfig'
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        last_modified_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Last Modified By
-        deleted_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Deleted At
-      type: object
-      required:
-      - id
-      - created_at
-      - organization_id
-      - creator_id
-      - name
-      - status
-      - config
-      title: CustomScenarioRecord
-    SallaCustomerFacingFunctionality:
-      type: string
-      enum:
-      - browse-products
-      - browse-logistics
-      - create-update-order
-      - read-previous-orders
-      title: SallaCustomerFacingFunctionality
-      description: Enum for functionalities exposed via the integration APIs. Simplifies UI/UX and bundles required tools under a single functionality.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    LanguageSettings:
-      properties:
-        language:
-          $ref: '#/components/schemas/Language'
-      type: object
-      required:
-      - language
-      title: LanguageSettings
-    TransferOwnershipRequest:
-      properties:
-        target_organization_id:
-          type: string
-          title: Target Organization Id
-      type: object
-      required:
-      - target_organization_id
-      title: TransferOwnershipRequest
-    PayloadConfiguration:
-      properties:
-        template:
-          type: string
-          title: Template
-        variables:
+          title: Timezone
+          description: IANA timezone (e.g., 'America/New_York')
+        schedule:
           additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/StringVariable'
-            - $ref: '#/components/schemas/NumberVariable'
-            - $ref: '#/components/schemas/BooleanVariable'
-            - $ref: '#/components/schemas/ArrayVariable'
-            discriminator:
-              propertyName: type
-              mapping:
-                array: '#/components/schemas/ArrayVariable'
-                boolean: '#/components/schemas/BooleanVariable'
-                number: '#/components/schemas/NumberVariable'
-                string: '#/components/schemas/StringVariable'
+            $ref: '#/components/schemas/TimeRangeDayConfiguration'
+          propertyNames:
+            $ref: '#/components/schemas/WeekDay'
           type: object
-          title: Variables
+          title: Schedule
       type: object
       required:
-      - template
-      - variables
-      title: PayloadConfiguration
-    ForLanguageSettings:
-      properties:
-        default:
-          type: boolean
-          title: Default
-          description: Whether this is the default language. Exactly one should be True.
-          default: false
-        language_settings:
-          $ref: '#/components/schemas/LanguageSettings'
-          description: Language configuration including the language code (ar, en)
-        first_message:
-          type: string
-          title: First Message
-          description: Opening message the AI says when call starts.
-          examples:
-          - مرحباً {{customer_name}}، معك نور. كيف أقدر أساعدك؟
-        disable_first_message:
-          type: boolean
-          title: Disable First Message
-          description: Prevents the agent from uttering the first message.
-          default: false
-        prompt:
-          type: string
-          title: Prompt
-          description: Full system prompt for the AI. Should include role, objectives, and instructions.
-        agent_profile_id:
-          type: string
-          title: Agent Profile Id
-          description: ID of the agent profile to use for voice and behavior settings
-          default: ''
-      type: object
-      required:
-      - language_settings
-      - first_message
-      - prompt
-      title: ForLanguageSettings
-      description: 'Language-specific configuration for the scenario.
-
-
-        Each scenario must have at least one language setting. The prompt and first_message
-
-        should be in the specified language with proper tashkeel for Arabic.'
-    CustomScenarioConfig:
-      properties:
-        for_language_settings:
-          items:
-            $ref: '#/components/schemas/ForLanguageSettings'
-          type: array
-          minItems: 1
-          title: For Language Settings
-          description: Language-specific settings including prompt and first message. MUST have at least 1 entry.
-        template_schema:
-          $ref: '#/components/schemas/Schema'
-          description: Schema defining variables that can be passed to the scenario (e.g., customer_name)
-        success_criteria:
-          items:
-            $ref: '#/components/schemas/SuccessCriterion'
-          type: array
-          title: Success Criteria
-          description: List of criteria to evaluate call success. At least one should have is_primary=True.
-          default: []
-        tools:
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/EndCallToolParameters'
-            - $ref: '#/components/schemas/TransferToHumanToolParameters'
-            - $ref: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
-            - $ref: '#/components/schemas/CustomApiToolParameters'
-            - $ref: '#/components/schemas/CodeSwitchToolParameters'
-            - $ref: '#/components/schemas/SallaToolsBundleConfiguration'
-            - $ref: '#/components/schemas/IVRNavigationToolParameters'
-            - $ref: '#/components/schemas/VoicemailDetectionToolParameters'
-            - $ref: '#/components/schemas/CollectDigitsToolParameters'
-            - $ref: '#/components/schemas/ScheduleCallbackToolParameters'
-            discriminator:
-              propertyName: tool_slug
-              mapping:
-                code-switching: '#/components/schemas/CodeSwitchToolParameters'
-                collect-digits: '#/components/schemas/CollectDigitsToolParameters'
-                custom-api: '#/components/schemas/CustomApiToolParameters'
-                end-call: '#/components/schemas/EndCallToolParameters'
-                ivr-navigation: '#/components/schemas/IVRNavigationToolParameters'
-                salla-tools: '#/components/schemas/SallaToolsBundleConfiguration'
-                schedule-callback: '#/components/schemas/ScheduleCallbackToolParameters'
-                transfer-to-human: '#/components/schemas/TransferToHumanToolParameters'
-                voicemail-detection: '#/components/schemas/VoicemailDetectionToolParameters'
-                zoho-desk-create-ticket: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
-          type: array
-          title: Tools
-          description: List of tools the AI can use during the call (end-call, transfer, etc.)
-        data_extraction_settings:
-          oneOf:
-          - $ref: '#/components/schemas/DataExtractionEnabled'
-          - $ref: '#/components/schemas/DataExtractionDisabled'
-          title: Data Extraction Settings
-          description: Configuration for extracting structured data from the call
-          default:
-            type: disabled
-          discriminator:
-            propertyName: type
-            mapping:
-              disabled: '#/components/schemas/DataExtractionDisabled'
-              enabled: '#/components/schemas/DataExtractionEnabled'
-        record_sinks:
-          $ref: '#/components/schemas/RecordingSinkSettings'
-          description: Destinations that receive the call record (e.g. its recording) after the call, independent of data extraction.
-        knowledge_base_ids:
-          items:
-            type: string
-          type: array
-          title: Knowledge Base Ids
-          description: IDs of knowledge bases to attach
-        kb_retrieval_mode:
-          $ref: '#/components/schemas/KbRetrievalMode'
-          description: 'How attached knowledge bases reach the agent: inlined into the system prompt, or queried on demand via an LLM retrieval tool. llm_tool engages the retriever only when the knowledge base exceeds the inline prompt budget; smaller knowledge bases stay inline for latency.'
-          default: inline
-        tz:
-          type: string
-          title: Tz
-          description: The timezone used by the scenario to derive the correct current time at runtime.
-          default: Asia/Riyadh
-        schedule_config_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Schedule Config Id
-          description: The scenario's default schedule_config (retry/scheduling policy), resolved for calls that don't carry their own.
-      type: object
-      required:
-      - for_language_settings
-      - template_schema
-      title: CustomScenarioConfig
-      description: "Complete configuration for a voice bot scenario.\n\nThis is the FULL structure the scenario generator must produce.\nOutput ONLY raw JSON - no markdown code blocks, no explanatory text.\n\nCOMPLETE OUTPUT EXAMPLE:\n```json\n{\n  \"config\": {\n    \"data_extraction_settings\": {\n      \"type\": \"enabled\",\n      \"json_schema\": {\n        \"type\": \"object\",\n        \"title\": \"Customer Feedback\",\n        \"description\": \"Data collected from customer feedback call\",\n        \"required\": [\"satisfaction_rating\"],\n        \"properties\": {\n          \"satisfaction_rating\": {\n            \"type\": \"integer\",\n            \"title\": \"Satisfaction Rating\",\n            \"description\": \"Customer satisfaction from 1-5\",\n            \"minimum\": 1,\n            \"maximum\": 5\n          },\n          \"preferred_contact_method\": {\n            \"type\": \"string\",\n            \"title\": \"Preferred Contact Method\",\n            \"enum\": [\"phone\", \"email\", \"whatsapp\", \"sms\"]\n          }\n        }\n      },\n      \"advanced_settings\": {\"additional_sinks\": []}\n    },\n    \"for_language_settings\": [\n      {\n        \"back_channeling\": {\n          \"type\": \"word\",\n          \"value\": 0.6,\n          \"whitelist\": [\"تمام\", \"حاضر\", \"ممتاز\", \"زين\", \"نعم\"]\n        },\n        \"default\": true,\n        \"first_message\": \"السلام عليكم، معك نور من {{company_name}}. كيف حالك؟\",\n        \"language_settings\": {\"language\": \"ar\"},\n        \"prompt\": \"[Business-focused prompt with sections and hardcoded messages]\",\n        \"removed\": false,\n        \"timeout_settings\": {\"duration\": 15, \"max_retries\": 5, \"type\": \"enabled\"},\n        \"voice\": null\n      },\n      {\n        \"back_channeling\": {\n          \"type\": \"word\",\n          \"value\": 0.6,\n          \"whitelist\": [\"hmm\", \"I see\", \"mm-hmm\", \"uh-huh\"]\n        },\n        \"default\": false,\n        \"first_message\": \"Hello, this is Nour from {{company_name}}. How are you?\",\n        \"language_settings\": {\"language\": \"en\"},\n        \"prompt\": \"[English version with cultural adaptations]\",\n        \"removed\": false,\n        \"timeout_settings\": {\"duration\": 15, \"max_retries\": 5, \"type\": \"enabled\"},\n        \"voice\": null\n      }\n    ],\n    \"success_criteria\": [\n      {\n        \"is_primary\": true,\n        \"text\": \"- Collected customer feedback\\n- Confirmed satisfaction rating\\n- Offered follow-up if needed\"\n      },\n      {\n        \"is_primary\": false,\n        \"text\": \"Agent offered loyalty discount to retain customer\"\n      }\n    ],\n    \"template_schema\": {\n      \"fields\": [\n        {\"id\": \"customer_name\", \"type\": \"text\"},\n        {\"id\": \"company_name\", \"type\": \"text\"}\n      ]\n    },\n    \"tools\": [\n      {\n        \"tool_slug\": \"end-call\",\n        \"end_call_conditions\": [\n          \"When conversation objective is complete\",\n          \"When customer confirms satisfaction\"\n        ],\n        \"end_call_messages\": {\n          \"ar\": \"شكراً لوقتك. في أمان الله\",\n          \"en\": \"Thank you for your time. Have a great day!\"\n        }\n      },\n      {\n        \"tool_slug\": \"transfer-to-human\",\n        \"dtmf_triggers\": [\"*\"],\n        \"transfer_cases\": [\n          \"User explicitly requests human\",\n          \"Issue complexity exceeds capability\"\n        ],\n        \"transfer_messages\": {\n          \"ar\": \"بحوّلّك الحين لأحد المختصين\",\n          \"en\": \"I'll connect you with a specialist\"\n        },\n        \"transfer_to\": \"+966501234567\",\n        \"working_hours\": null\n      },\n    ]\n  },\n  \"suggestions\": [\n    {\n      \"type\": \"assumption_made\",\n      \"section\": \"tools\",\n      \"title\": \"Support Team Transfer\",\n      \"message\": \"Set transfer to support team (not sales)\",\n      \"tool_slug\": \"transfer-to-human\"\n    },\n    {\n      \"type\": \"verification_needed\",\n      \"section\": \"tools\",\n      \"title\": \"Update Transfer Number\",\n      \"message\": \"Update transfer phone number with your actual number\",\n      \"current_value\": \"+966501234567\",\n      \"fix_type\": \"phone\",\n      \"tool_slug\": \"transfer-to-human\"\n    },\n    {\n      \"type\": \"resource_linking\",\n      \"section\": \"knowledge_bases\",\n      \"title\": \"Add Product FAQs\",\n      \"message\": \"Create a knowledge base with your product FAQs\",\n      \"action_label\": \"Create Knowledge Base\",\n      \"action_url\": \"/knowledge-bases\"\n    }\n  ],\n  \"name\": \"Customer Feedback Collection\",\n  \"status\": \"active\"\n}\n```\n\nFIELD NOTES:\n- data_extraction_settings: Optional. Include when client needs structured data capture.\n- knowledge_base_ids: Optional. Only use IDs from available_knowledge_bases input.\n- voice: Always set to null - voice selection happens in UI.\n- tools: Core tools (end-call, transfer-to-human, code-switching) enabled by default. Integration tools require OAuth setup.\n- first_message: Use {{variable}} format for pre-existing variables.\n- success_criteria: Exactly ONE with is_primary=true (can have multiple points via \\n)."
-    TimeRangeDayConfiguration:
-      properties:
-        start_time:
-          type: string
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          title: Start Time
-          description: Start time in HH:MM format (24-hour)
-        end_time:
-          type: string
-          pattern: ^([01]\d|2[0-3]):([0-5]\d)$
-          title: End Time
-          description: End time in HH:MM format (24-hour)
-      type: object
-      required:
-      - start_time
-      - end_time
-      title: TimeRangeDayConfiguration
-    Language:
-      type: string
-      enum:
-      - en
-      - ar
-      - ur
-      title: Language
-      description: Language codes in ISO 639-1
-    RecordingSinkSettings:
-      properties:
-        recording_lifetime:
-          type: string
-          format: duration
-          title: Recording Lifetime
-          description: How long a recording URL delivered to a record sink stays valid.
-          default: P7D
-        sinks:
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ZohoCallActivitySink'
-            discriminator:
-              propertyName: type
-              mapping:
-                zoho_crm_call_activity: '#/components/schemas/ZohoCallActivitySink'
-          type: array
-          title: Sinks
-      type: object
-      title: RecordingSinkSettings
-    WorkingHoursDisabled:
-      properties:
-        enabled:
-          type: boolean
-          const: false
-          title: Enabled
-          default: false
-      type: object
-      title: WorkingHoursDisabled
-    Schema:
-      properties:
-        fields:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/GlobalVariableField'
-            - $ref: '#/components/schemas/ScenarioRequiredField'
-            - $ref: '#/components/schemas/ScenarioOptionalField'
-          type: array
-          title: Fields
-      type: object
-      required:
-      - fields
-      title: Schema
-    ArrayVariable:
-      properties:
-        type:
-          type: string
-          const: array
-          title: Type
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/FixedValue_list_object__'
-          - $ref: '#/components/schemas/ScenarioVariable'
-          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__array___'
-          title: Config
-        array_item_type:
-          type: string
-          enum:
-          - string
-          - number
-          - boolean
-          title: Array Item Type
-      type: object
-      required:
-      - type
-      - name
-      - config
-      - array_item_type
-      title: ArrayVariable
-    GlobalVariableField:
-      properties:
-        id:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: Id
-        source:
-          type: string
-          const: global
-          title: Source
-          default: global
-        type:
-          type: string
-          enum:
-          - text
-          - number
-          - boolean
-          title: Type
-          default: text
-      type: object
-      required:
-      - id
-      title: GlobalVariableField
-    ZohoCRMRecordSink:
-      properties:
-        type:
-          type: string
-          const: zoho_crm_update_record
-          title: Type
-          default: zoho_crm_update_record
-      type: object
-      title: ZohoCRMRecordSink
-    NumberVariable:
-      properties:
-        type:
-          type: string
-          const: number
-          title: Type
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        config:
-          anyOf:
-          - $ref: '#/components/schemas/FixedValue_Union_int__float__'
-          - $ref: '#/components/schemas/ScenarioVariable'
-          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__number___'
-          title: Config
-      type: object
-      required:
-      - type
-      - name
-      - config
-      title: NumberVariable
-    TransferToHumanToolParameters:
+      - timezone
+      - schedule
+      title: ScheduleConfiguration
+    IVRNavigationToolParameters:
       properties:
         tool_slug:
           type: string
-          const: transfer-to-human
+          const: ivr-navigation
           title: Tool Slug
-        transfer_to:
-          type: string
-          minLength: 1
-          title: Transfer To
-          description: Phone number to transfer to
+        cooldown_seconds:
+          type: number
+          minimum: 0.0
+          title: Cooldown Seconds
+          description: The minimum wait time (in seconds) required between sending distinct DTMF codes to prevent signal flooding.
+          default: 1.0
           examples:
-          - '+966500000000'
-        dtmf_triggers:
-          items:
-            type: string
-          type: array
-          title: Dtmf Triggers
-          description: DTMF digits that trigger transfer (e.g., pressing 0)
-          default: []
-          examples:
-          - - '0'
-            - '#'
-        transfer_cases:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Transfer Cases
-          description: List of cases when transfer should occur.
-          examples:
-          - - When the customer requests to speak with a human
-            - When the AI cannot resolve the issue
-            - When there is a complaint that needs escalation
-        transfer_messages:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Transfer Messages
-          description: Optional message to play to the user before transferring. Supports multiple-languages
-          examples:
-          - ar: بحوّلك الحين لأحد المختصين. لحظة وحدة
-            en: Transferring you now. Please hold.
-            ur: آپ کو ابھی منتقل کر رہا ہوں۔ براہ کرم انتظار کریں۔
-        working_hours:
-          oneOf:
-          - $ref: '#/components/schemas/WorkingHoursEnabledV2'
-          - $ref: '#/components/schemas/WorkingHoursDisabled'
-          title: Working Hours
-          description: Working hours configuration. Transfer only occurs within this time range when enabled.
-          discriminator:
-            propertyName: enabled
-            mapping:
-              'False': '#/components/schemas/WorkingHoursDisabled'
-              'True': '#/components/schemas/WorkingHoursEnabledV2'
-        outside_working_hours_messages:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Outside Working Hours Messages
-          description: Optional message to play to the user when calls are attempted outside of working hours
-        transfer_trunk_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Transfer Trunk Id
-          description: Specific SIP trunk ID for transfers. If unset, auto-selects from available outbound trunks.
-        caller_id_passthrough:
-          type: boolean
-          title: Caller Id Passthrough
-          description: 'When enabled, the transfer call presents the customer''s number as caller ID (inbound: the caller''s number; outbound: the dialed number), subject to carrier acceptance. Falls back to the trunk default when the number is unavailable.'
-          default: false
-        transfer_mode:
-          $ref: '#/components/schemas/TransferMode'
-          description: How the transfer leg is established. 'cold' dials the human straight into the caller's room (default). 'warm' puts the caller on hold while the AI briefs the human, then merges the calls.
-          default: cold
-        warm_summary_prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Warm Summary Prompt
-          description: Extra instructions appended to the warm-transfer briefing the AI gives the human agent before connecting. Only used when transfer_mode is 'warm'.
+          - 1.5
       type: object
       required:
       - tool_slug
-      - transfer_to
-      - transfer_cases
-      title: TransferToHumanToolParameters
-      description: 'Transfers the call to a human agent when the AI cannot handle the situation.
+      title: IVRNavigationToolParameters
+      description: 'Enables the agent to navigate Interactive Voice Response (IVR) phone menus.
 
 
-        WHEN TO USE: When users need human assistance for complex issues, complaints,
+        This tool allows the agent to press keys (send DTMF tones) when prompted by
 
-        or situations the AI is not equipped to handle.
-
-        BEST PRACTICES:
-
-        - Define 3-5 specific transfer scenarios
-
-        - Include both customer-initiated (requests human) and agent-initiated (complex issue) cases
-
-        - Use reassuring transfer messages
-
-        - Configure DTMF trigger (usually "*") for instant human access
-
-        - Set appropriate working hours if the transfer destination has limited availability'
-    ScenarioRequiredField:
-      properties:
-        id:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: Id
-        source:
-          type: string
-          const: scenario
-          title: Source
-          default: scenario
-        type:
-          type: string
-          enum:
-          - text
-          - number
-          - boolean
-          title: Type
-        required:
-          type: boolean
-          const: true
-          title: Required
-          default: true
-      type: object
-      required:
-      - id
-      - type
-      title: ScenarioRequiredField
-    WorkingHoursEnabledV2:
-      properties:
-        enabled:
-          type: boolean
-          const: true
-          title: Enabled
-          default: true
-        schedule_configuration:
-          $ref: '#/components/schemas/ScheduleConfiguration'
-      type: object
-      required:
-      - schedule_configuration
-      title: WorkingHoursEnabledV2
-    UpsertCustomScenarioConfig:
-      properties:
-        for_language_settings:
-          items:
-            $ref: '#/components/schemas/ForLanguageSettings'
-          type: array
-          minItems: 1
-          title: For Language Settings
-        template_schema:
-          $ref: '#/components/schemas/Schema'
-        success_criteria:
-          items:
-            $ref: '#/components/schemas/SuccessCriterion'
-          type: array
-          title: Success Criteria
-          default: []
-        tools:
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/EndCallToolParameters'
-            - $ref: '#/components/schemas/TransferToHumanToolParameters'
-            - $ref: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
-            - $ref: '#/components/schemas/CustomApiToolParameters'
-            - $ref: '#/components/schemas/CodeSwitchToolParameters'
-            - $ref: '#/components/schemas/SallaToolsBundleConfiguration'
-            - $ref: '#/components/schemas/IVRNavigationToolParameters'
-            - $ref: '#/components/schemas/VoicemailDetectionToolParameters'
-            - $ref: '#/components/schemas/CollectDigitsToolParameters'
-            - $ref: '#/components/schemas/ScheduleCallbackToolParameters'
-            discriminator:
-              propertyName: tool_slug
-              mapping:
-                code-switching: '#/components/schemas/CodeSwitchToolParameters'
-                collect-digits: '#/components/schemas/CollectDigitsToolParameters'
-                custom-api: '#/components/schemas/CustomApiToolParameters'
-                end-call: '#/components/schemas/EndCallToolParameters'
-                ivr-navigation: '#/components/schemas/IVRNavigationToolParameters'
-                salla-tools: '#/components/schemas/SallaToolsBundleConfiguration'
-                schedule-callback: '#/components/schemas/ScheduleCallbackToolParameters'
-                transfer-to-human: '#/components/schemas/TransferToHumanToolParameters'
-                voicemail-detection: '#/components/schemas/VoicemailDetectionToolParameters'
-                zoho-desk-create-ticket: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
-          type: array
-          title: Tools
-        data_extraction_settings:
-          oneOf:
-          - $ref: '#/components/schemas/DataExtractionEnabled'
-          - $ref: '#/components/schemas/DataExtractionDisabled'
-          title: Data Extraction Settings
-          default:
-            type: disabled
-          discriminator:
-            propertyName: type
-            mapping:
-              disabled: '#/components/schemas/DataExtractionDisabled'
-              enabled: '#/components/schemas/DataExtractionEnabled'
-        record_sinks:
-          $ref: '#/components/schemas/RecordingSinkSettings'
-        knowledge_base_ids:
-          items:
-            type: string
-          type: array
-          title: Knowledge Base Ids
-        kb_retrieval_mode:
-          $ref: '#/components/schemas/KbRetrievalMode'
-          default: inline
-        tz:
-          type: string
-          title: Tz
-          default: Asia/Riyadh
-        schedule_config_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Schedule Config Id
-      type: object
-      required:
-      - for_language_settings
-      - template_schema
-      title: UpsertCustomScenarioConfig
-    AdvancedDataExtractionSettings:
-      properties:
-        additional_sinks:
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ZohoCRMRecordSink'
-            discriminator:
-              propertyName: type
-              mapping:
-                zoho_crm_update_record: '#/components/schemas/ZohoCRMRecordSink'
-          type: array
-          title: Additional Sinks
-      type: object
-      title: AdvancedDataExtractionSettings
-    DataExtractionDisabled:
+        a call recipient (e.g., "Press 1 for Sales", "Enter extension number").'
+    KbRetrievalMode:
+      type: string
+      enum:
+      - inline
+      - llm_tool
+      title: KbRetrievalMode
+    ZohoCallActivitySink:
       properties:
         type:
           type: string
-          const: disabled
+          const: zoho_crm_call_activity
           title: Type
-          default: disabled
+          default: zoho_crm_call_activity
       type: object
-      title: DataExtractionDisabled
-    FollowUpInference:
-      properties:
-        default_delay:
-          type: string
-          format: duration
-          title: Default Delay
-          description: How far after the call an inferred follow-up is scheduled when the transcript names no time. Must lie within the tool's min_wait..max_wait bounds.
-          default: P1D
-          examples:
-          - P1D
-        confidence_threshold:
-          type: number
-          maximum: 1.0
-          minimum: 0.5
-          title: Confidence Threshold
-          description: Minimum analyst confidence required before an inferred follow-up is recorded. Uncalibrated pilot knob.
-          default: 0.8
-          examples:
-          - 0.8
-      additionalProperties: false
-      type: object
-      title: FollowUpInference
-      description: "Lets the post-call analyst propose a callback the agent never explicitly booked.\n\nWHEN TO USE: When the business wants follow-ups on calls where the customer did not\nask for one out loud (unresolved issue, promised update, missed decision maker).\nBEST PRACTICES:\n- The conditions live on the tool's `trigger_conditions`: one list, read by the agent\n  during the call and by the analyst after it. There is no separate inference list\n- Keep the threshold high enough that ambiguous calls are dropped rather than dialed\n- Leave this unset when only explicit customer requests should produce a callback"
-    Instructions:
-      properties:
-        pre_processing_message:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Pre Processing Message
-        failure_message:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Failure Message
-        response_processing:
-          type: string
-          title: Response Processing
-      type: object
-      required:
-      - response_processing
-      title: Instructions
-    AgentProvidedVariable_Literal__array___:
+      title: ZohoCallActivitySink
+    AgentProvidedVariable_Literal__number___:
       properties:
         source:
           type: string
@@ -1869,7 +1609,7 @@ components:
           title: Description
         type:
           type: string
-          const: array
+          const: number
           title: Type
         required:
           type: boolean
@@ -1887,40 +1627,43 @@ components:
       - description
       - type
       - required
-      title: AgentProvidedVariable[Literal['array']]
-    ScenarioVariable:
+      title: AgentProvidedVariable[Literal['number']]
+    WorkingHoursEnabledV2:
       properties:
-        source:
+        enabled:
+          type: boolean
+          const: true
+          title: Enabled
+          default: true
+        schedule_configuration:
+          $ref: '#/components/schemas/ScheduleConfiguration'
+      type: object
+      required:
+      - schedule_configuration
+      title: WorkingHoursEnabledV2
+    StringVariable:
+      properties:
+        type:
           type: string
-          const: scenario_variable
-          title: Source
-        variable_id:
+          const: string
+          title: Type
+        name:
           type: string
           minLength: 1
-          title: Variable Id
+          title: Name
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/FixedValue_str_'
+          - $ref: '#/components/schemas/ScenarioVariable'
+          - $ref: '#/components/schemas/GlobalVariable'
+          - $ref: '#/components/schemas/AgentProvidedVariable_Literal__string___'
+          title: Config
       type: object
       required:
-      - source
-      - variable_id
-      title: ScenarioVariable
-    FixedValue_bool_:
-      properties:
-        source:
-          type: string
-          const: fixed
-          title: Source
-        value:
-          type: boolean
-          title: Value
-        is_encrypted:
-          type: boolean
-          title: Is Encrypted
-          default: false
-      type: object
-      required:
-      - source
-      - value
-      title: FixedValue[bool]
+      - type
+      - name
+      - config
+      title: StringVariable
     CollectDigitsToolParameters:
       properties:
         tool_slug:
@@ -2004,173 +1747,221 @@ components:
       - field_description
       title: CollectDigitsToolParameters
       description: "Collects digits from the caller via DTMF keypad and/or spoken digit sequences.\n\nWHEN TO USE: National ID / Iqama, phone numbers, OTP codes, account numbers—any numeric capture\nwhere keypad input reduces recognition errors versus free-form transcription.\n\nTwo length modes, mutually exclusive:\n- Fixed: `num_digits` set — capture exactly that many digits (IDs, fixed OTPs).\n- Variable: `num_digits` unset — capture until the stop key, `max_digits`, or an\n  inter-digit pause once at least `min_digits` arrived (amounts, order numbers)."
-    ZohoCallActivitySink:
+    ScenarioRequiredField:
       properties:
+        id:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Id
+        source:
+          type: string
+          const: scenario
+          title: Source
+          default: scenario
         type:
           type: string
-          const: zoho_crm_call_activity
+          enum:
+          - text
+          - number
+          - boolean
           title: Type
-          default: zoho_crm_call_activity
-      type: object
-      title: ZohoCallActivitySink
-    UpsertCustomScenario:
-      properties:
-        organization_id:
-          type: string
-          title: Organization Id
-        creator_id:
-          type: string
-          title: Creator Id
-        name:
-          type: string
-          title: Name
-        config:
-          $ref: '#/components/schemas/UpsertCustomScenarioConfig'
-        status:
-          $ref: '#/components/schemas/CustomScenarioStatus'
+        required:
+          type: boolean
+          const: true
+          title: Required
+          default: true
       type: object
       required:
-      - organization_id
-      - creator_id
-      - name
-      - config
-      - status
-      title: UpsertCustomScenario
-    FixedValue_list_object__:
+      - id
+      - type
+      title: ScenarioRequiredField
+    PayloadConfiguration:
+      properties:
+        template:
+          type: string
+          title: Template
+        variables:
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/StringVariable'
+            - $ref: '#/components/schemas/NumberVariable'
+            - $ref: '#/components/schemas/BooleanVariable'
+            - $ref: '#/components/schemas/ArrayVariable'
+            discriminator:
+              propertyName: type
+              mapping:
+                array: '#/components/schemas/ArrayVariable'
+                boolean: '#/components/schemas/BooleanVariable'
+                number: '#/components/schemas/NumberVariable'
+                string: '#/components/schemas/StringVariable'
+          type: object
+          title: Variables
+      type: object
+      required:
+      - template
+      - variables
+      title: PayloadConfiguration
+    AgentProvidedVariable_Literal__boolean___:
       properties:
         source:
           type: string
-          const: fixed
+          const: agent_provided
           title: Source
-        value:
-          items: {}
-          type: array
-          title: Value
-        is_encrypted:
+        description:
+          type: string
+          title: Description
+        type:
+          type: string
+          const: boolean
+          title: Type
+        required:
           type: boolean
-          title: Is Encrypted
-          default: false
+          title: Required
+        allowed_values:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Values
       type: object
       required:
       - source
-      - value
-      title: FixedValue[list[object]]
-    HTTPMethod:
-      type: string
-      enum:
-      - GET
-      - POST
-      - PUT
-      - DELETE
-      title: HTTPMethod
-    SuccessCriterion:
+      - description
+      - type
+      - required
+      title: AgentProvidedVariable[Literal['boolean']]
+    GlobalVariable:
       properties:
-        is_primary:
-          type: boolean
-          title: Is Primary
-          description: Whether this is the primary success criterion. Exactly one should be True.
-          default: false
-        text:
+        source:
           type: string
-          title: Text
-          description: Description of what constitutes success. Use bullet points with \n for multiple items in primary criteria.
-          examples:
-          - Customer confirmed their order details
-          - '- Collected payment information\n- Confirmed payment date\n- Sent confirmation'
-          - Agent successfully created support ticket with all required fields
+          const: global_variable
+          title: Source
+        variable_id:
+          type: string
+          minLength: 1
+          title: Variable Id
       type: object
       required:
-      - text
-      title: SuccessCriterion
-      description: "Defines a success criterion for evaluating call outcomes.\n\nSuccess criteria determine whether a call achieved its business objectives.\nThey are used for analytics and quality monitoring.\n\n- Could be tool-related: \"Agent transferred to specialist when customer requested human advisor\"\n- Could be business-related: \"Offered loyalty program benefits to retain customer\"\n\nSTRUCTURE:\n- PRIMARY (is_primary=True): Exactly ONE criterion that determines call success/failure.\n  The text field can contain multiple points separated by newlines.\n  Format: \"- Point 1\\n- Point 2\\n- Point 3\"\n    - Single point: \"Successfully collected customer feedback and confirmed satisfaction\"\n    - Multiple points: \"- Collected customer payment information\\\\n- Confirmed scheduled payment date\\\\n- Sent payment confirmation\"\n    - With tool call: \"- Collected issue details\\\\n- Created support ticket\\\\n- Confirmed ticket number\"\n  ALL points must be met for the call to be marked as successful.\n\n- SECONDARY (is_primary=False): Zero or more additional criteria.\n  Each secondary is a separate object. These are nice-to-have objectives\n  that don't affect overall call success/failure status.\n\nTOOL CALLS IN SUCCESS CRITERIA:\n- As Primary: When tool call IS the main business objective\n  Example: \"Agent successfully created support ticket with all required fields\"\n- As Secondary: When tool usage is optional/supplementary\n  Example: \"Agent transferred to specialist when loan exceeded $100K\"\n- Not in Criteria: When it's standard operation (e.g., end-call is expected behavior)\n\nCRITICAL DISTINCTION:\n- Tool CONFIGURATION (messages, conditions) → Define in \"tools\" array\n- Tool USAGE EVALUATION → Define here ONLY when it's a business objective"
-    ScheduleCallbackToolParameters:
+      - source
+      - variable_id
+      title: GlobalVariable
+    LLMInstruction:
       properties:
-        tool_slug:
+        instruction:
           type: string
-          const: schedule-callback
-          title: Tool Slug
-        trigger_conditions:
+          title: Instruction
+          description: Instructions for the agent on what to say or do when voicemail is detected
+          examples:
+          - Leave a brief message introducing yourself and asking them to call back at their earliest convenience.
+      type: object
+      required:
+      - instruction
+      title: LLMInstruction
+    LanguageSettings:
+      properties:
+        language:
+          $ref: '#/components/schemas/Language'
+      type: object
+      required:
+      - language
+      title: LanguageSettings
+    UpsertCustomScenarioConfig:
+      properties:
+        for_language_settings:
           items:
-            type: string
-            minLength: 1
+            $ref: '#/components/schemas/ForLanguageSettings'
           type: array
           minItems: 1
-          title: Trigger Conditions
-          description: The single list of cases when a callback should be offered or recorded. The agent reads it during the call to decide whether to offer one, and the post-call analyst reads the same list to infer one when follow_up_inference is set. Callbacks, whether agreed during the call or created by the call report afterwards, can be at most max_wait ahead (the scenario's max_wait, never more than 29 days). A condition that implies a later date (for example a reminder the day before a payment due next quarter) is not supported and will be refused.
-          examples:
-          - - When the customer asks to be called back later
-            - When the customer says now is not a good time
-            - When the person who can decide is unavailable
-        confirmation_messages:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - type: 'null'
-          propertyNames:
-            $ref: '#/components/schemas/Language'
-          type: object
-          title: Confirmation Messages
-          description: 'Optional message confirming the agreed callback time, per language. Use {time} as the placeholder: it renders as the bare day and clock phrase ("3:30 PM", "tomorrow 3:30 PM"), so the template supplies the approximation word itself ("around {time}"). A bare {time} promises a minute-exact call the scheduler does not guarantee.'
-          examples:
-          - ar: تمام، بنتواصل معك {time} تقريباً
-            en: Great, we'll call you back around {time}.
-            ur: ٹھیک ہے، ہم آپ کو {time} کے قریب کال کریں گے۔
-        offer_callbacks_in_call:
-          type: boolean
-          title: Offer Callbacks In Call
-          description: Whether the agent can agree a callback time during the call. When off, the tool is never registered with the agent (the agent never offers or promises live, and the scenario prompt handles the conversation normally); a customer's explicit request is still caught by the post-call analyst and booked.
-          default: true
-        requires_human_support:
-          type: boolean
-          title: Requires Human Support
-          description: Whether a human must be reachable during the callback. The AI still places the callback; enabling this constrains callback times to the transfer-to-human tool's working hours so an escalation mid-callback can succeed.
-          default: false
-        max_reschedule_attempts:
-          type: integer
-          maximum: 10.0
-          exclusiveMinimum: 0.0
-          title: Max Reschedule Attempts
-          description: How many times a callback may be rescheduled across its lifetime (the customer answers a callback and asks to move it again). Changes of mind within one call do not count.
-          default: 3
-          examples:
-          - 3
-        min_wait:
+          title: For Language Settings
+        template_schema:
+          $ref: '#/components/schemas/Schema'
+        success_criteria:
+          items:
+            $ref: '#/components/schemas/SuccessCriterion'
+          type: array
+          title: Success Criteria
+          default: []
+        tools:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/EndCallToolParameters'
+            - $ref: '#/components/schemas/TransferToHumanToolParameters'
+            - $ref: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
+            - $ref: '#/components/schemas/CustomApiToolParameters'
+            - $ref: '#/components/schemas/CodeSwitchToolParameters'
+            - $ref: '#/components/schemas/SallaToolsBundleConfiguration'
+            - $ref: '#/components/schemas/IVRNavigationToolParameters'
+            - $ref: '#/components/schemas/VoicemailDetectionToolParameters'
+            - $ref: '#/components/schemas/CollectDigitsToolParameters'
+            - $ref: '#/components/schemas/ScheduleCallbackToolParameters'
+            discriminator:
+              propertyName: tool_slug
+              mapping:
+                code-switching: '#/components/schemas/CodeSwitchToolParameters'
+                collect-digits: '#/components/schemas/CollectDigitsToolParameters'
+                custom-api: '#/components/schemas/CustomApiToolParameters'
+                end-call: '#/components/schemas/EndCallToolParameters'
+                ivr-navigation: '#/components/schemas/IVRNavigationToolParameters'
+                salla-tools: '#/components/schemas/SallaToolsBundleConfiguration'
+                schedule-callback: '#/components/schemas/ScheduleCallbackToolParameters'
+                transfer-to-human: '#/components/schemas/TransferToHumanToolParameters'
+                voicemail-detection: '#/components/schemas/VoicemailDetectionToolParameters'
+                zoho-desk-create-ticket: '#/components/schemas/ZohoDeskCreateTicketToolParameters'
+          type: array
+          title: Tools
+        data_extraction_settings:
+          oneOf:
+          - $ref: '#/components/schemas/DataExtractionEnabled'
+          - $ref: '#/components/schemas/DataExtractionDisabled'
+          title: Data Extraction Settings
+          default:
+            type: disabled
+          discriminator:
+            propertyName: type
+            mapping:
+              disabled: '#/components/schemas/DataExtractionDisabled'
+              enabled: '#/components/schemas/DataExtractionEnabled'
+        record_sinks:
+          $ref: '#/components/schemas/RecordingSinkSettings'
+        knowledge_base_ids:
+          items:
+            type: string
+          type: array
+          title: Knowledge Base Ids
+        kb_retrieval_mode:
+          $ref: '#/components/schemas/KbRetrievalMode'
+          default: inline
+        tz:
           type: string
-          format: duration
-          title: Min Wait
-          description: 'Shortest wait between now and a callback. Requests sooner than this are moved to now plus this wait, and the agent confirms the moved time. The same wait is re-applied after the call: a promise made early in a long call can fall under the platform''s minimum booking lead by the time the callback is booked, and the booker moves it to now plus this wait rather than dropping it.'
-          default: PT15M
-          examples:
-          - PT15M
-        max_wait:
-          type: string
-          format: duration
-          title: Max Wait
-          description: Longest wait between now and a callback. Requests beyond this are refused rather than clamped, and the agent asks for a nearer time. The ceiling sits below the platform's booking horizon, and booking time only moves closer to the promised time, so a promise at the ceiling stays inside the horizon.
-          default: P29D
-          examples:
-          - P29D
-        default_callback_hour:
-          type: integer
-          maximum: 23.0
-          minimum: 0.0
-          title: Default Callback Hour
-          description: Local hour used when the analyst derives a callback time from a day-only anchor
-          default: 10
-          examples:
-          - 10
-        follow_up_inference:
+          title: Tz
+          default: Asia/Riyadh
+        schedule_config_id:
           anyOf:
-          - $ref: '#/components/schemas/FollowUpInference'
+          - type: string
           - type: 'null'
-          description: When set, the post-call analyst may also infer follow-up callbacks from the transcript. Leave unset to record only what the agent agreed in the call.
-      additionalProperties: false
+          title: Schedule Config Id
       type: object
       required:
-      - tool_slug
-      - trigger_conditions
-      title: ScheduleCallbackToolParameters
-      description: "Records a request to call the customer back later, during or after the call.\n\nWHEN TO USE: Only when the prompt mentions calling the customer back at a later time\n(customer asks for a callback, the right person is unavailable, a follow-up was\npromised). Never add it by default.\nBEST PRACTICES:\n- Define 2-4 trigger conditions in English; they are evaluation signals, not spoken text\n- Phrase confirmations as an approximate time (\"around 3:30\"): the exact dial time is\n  decided later by the scheduler, so never promise a minute-exact call\n- Use `{time}` in the confirmation messages as the placeholder for the agreed time.\n  It is substituted with the bare day and clock phrase only (\"3:30 PM\", \"tomorrow\n  3:30 PM\"), so the template itself must carry the approximation word: write\n  \"around {time}\", never a bare \"{time}\"\n- Set `requires_human_support` when the callback needs a human to be available too;\n  it requires a transfer-to-human tool with working hours configured\n- Configure `follow_up_inference` only when the business also wants callbacks the\n  customer never asked for\n- Set `default_callback_hour` to the local hour the analyst should book when the\n  call fixes only a day (\"call me tomorrow\"), not a time of day\n\nCALLING WINDOW: the callback calling window is the scenario's schedule configuration\n(the `ScheduleConfig` row behind `schedule_config_id`, resolved through\n`ScheduleConfigStore.resolve_scenario_default`). That is a single daily start/end\nwindow with a timezone that may be null, in which case the scenario's own timezone\napplies. The scenario may have no schedule configuration, a disabled one, or one with\nno retry_window: all three mean no window, and only min/max wait apply. There is no\nper-weekday map here, unlike the transfer tool's working hours (adding one is a\ntracked follow-up). The tool carries no window and no timezone of its own.\n\nNOTE: This tool only records the request; scheduling and dialing happen after the call."
+      - for_language_settings
+      - template_schema
+      title: UpsertCustomScenarioConfig
+    ScenarioVariable:
+      properties:
+        source:
+          type: string
+          const: scenario_variable
+          title: Source
+        variable_id:
+          type: string
+          minLength: 1
+          title: Variable Id
+      type: object
+      required:
+      - source
+      - variable_id
+      title: ScenarioVariable
     CodeSwitchToolParameters:
       properties:
         tool_slug:
@@ -2220,3 +2011,212 @@ components:
         - Include culturally appropriate transition phrases in each language
 
         - Common trigger: when user speaks in a different language'
+    GetScenariosByIdsRequest:
+      properties:
+        ids:
+          items:
+            type: string
+          type: array
+          title: Ids
+      type: object
+      required:
+      - ids
+      title: GetScenariosByIdsRequest
+    Language:
+      type: string
+      enum:
+      - en
+      - ar
+      - ur
+      title: Language
+      description: Language codes in ISO 639-1
+    CustomScenarioRecord:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        organization_id:
+          type: string
+          title: Organization Id
+        creator_id:
+          type: string
+          title: Creator Id
+        name:
+          type: string
+          title: Name
+        status:
+          $ref: '#/components/schemas/CustomScenarioStatus'
+        config:
+          $ref: '#/components/schemas/CustomScenarioConfig'
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        last_modified_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Modified By
+        deleted_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Deleted At
+      type: object
+      required:
+      - id
+      - created_at
+      - organization_id
+      - creator_id
+      - name
+      - status
+      - config
+      title: CustomScenarioRecord
+    FixedValue_bool_:
+      properties:
+        source:
+          type: string
+          const: fixed
+          title: Source
+        value:
+          type: boolean
+          title: Value
+        is_encrypted:
+          type: boolean
+          title: Is Encrypted
+          default: false
+      type: object
+      required:
+      - source
+      - value
+      title: FixedValue[bool]
+    TransferOwnershipRequest:
+      properties:
+        target_organization_id:
+          type: string
+          title: Target Organization Id
+      type: object
+      required:
+      - target_organization_id
+      title: TransferOwnershipRequest
+    UpdateCustomScenario:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        config:
+          anyOf:
+          - $ref: '#/components/schemas/UpsertCustomScenarioConfig'
+          - type: 'null'
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/CustomScenarioStatus'
+          - type: 'null'
+        last_updater_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Last Updater Id
+      type: object
+      required:
+      - id
+      title: UpdateCustomScenario
+    VoicemailDetectionToolParameters:
+      properties:
+        tool_slug:
+          type: string
+          const: voicemail-detection
+          title: Tool Slug
+        hangup_when_voicemail_detected:
+          type: boolean
+          title: Hangup When Voicemail Detected
+          default: true
+        message_before_hangup:
+          anyOf:
+          - $ref: '#/components/schemas/LLMInstruction'
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - type: 'null'
+            propertyNames:
+              $ref: '#/components/schemas/Language'
+            type: object
+          - type: 'null'
+          title: Message Before Hangup
+      type: object
+      required:
+      - tool_slug
+      title: VoicemailDetectionToolParameters
+      description: 'Detects when the call has reached a voicemail or answering machine and responds appropriately.
+
+
+        WHEN TO USE: Include in outbound call scenarios where the agent may reach voicemail.
+
+        BEST PRACTICES:
+
+        - Set hangup_when_voicemail_detected to true to end the call immediately on detection
+
+        - Use message_before_hangup with a MultiLingualMessage for a fixed recorded message
+
+        - Use message_before_hangup with an LLMInstruction to let the agent generate the message'
+    ZohoDeskCreateTicketToolParameters:
+      properties:
+        tool_slug:
+          type: string
+          const: zoho-desk-create-ticket
+          title: Tool Slug
+        ticket_creation_cases:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Ticket Creation Cases
+          description: List of cases when a ticket should be created.
+          examples:
+          - - When the request needs follow-up
+            - When there is a technical complaint
+            - When the customer requests a callback
+        ticket_formatting_instructions:
+          type: string
+          title: Ticket Formatting Instructions
+          description: Instructions for formatting the ticket content
+          examples:
+          - Include customer name, issue description, and requested resolution
+        can_read_previous_tickets:
+          type: boolean
+          title: Can Read Previous Tickets
+          description: When enabled, exposes a companion tool that searches the customer's previous Zoho Desk tickets so the agent can identify existing clients and reference prior context.
+          default: false
+      type: object
+      required:
+      - tool_slug
+      - ticket_creation_cases
+      - ticket_formatting_instructions
+      title: ZohoDeskCreateTicketToolParameters
+      description: 'Creates a support ticket in Zoho Desk for follow-up actions.
+
+
+        WHEN TO USE: When an issue needs to be tracked or followed up by the support team.
+
+        BEST PRACTICES:
+
+        - Define specific cases that warrant ticket creation
+
+        - Provide clear formatting instructions for ticket content
+
+        - Include instructions on what data to capture in the ticket
+
+
+        NOTE: Requires a functional Zoho Desk integration configured for the organization.'

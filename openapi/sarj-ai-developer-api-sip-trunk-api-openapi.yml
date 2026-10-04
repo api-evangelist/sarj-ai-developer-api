@@ -95,23 +95,10 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+    DeleteResponse:
+      properties: {}
       type: object
-      title: HTTPValidationError
-    Provider:
-      type: string
-      enum:
-      - voxa
-      - bevatel
-      - twilio
-      - maqsam
-      title: Provider
+      title: DeleteResponse
     CallerIdNumbers:
       properties:
         numbers:
@@ -122,34 +109,41 @@ components:
           default: []
       type: object
       title: CallerIdNumbers
-    UpsertSipTrunk:
+    ValidationError:
       properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        trunk_id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Trunk Id
-        provider:
-          $ref: '#/components/schemas/Provider'
-        trunk_name:
+          title: Message
+        type:
           type: string
-          title: Trunk Name
-        caller_id_numbers:
-          $ref: '#/components/schemas/CallerIdNumbers'
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - trunk_id
-      - provider
-      - trunk_name
-      - caller_id_numbers
-      title: UpsertSipTrunk
-    DeleteResponse:
-      properties: {}
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: DeleteResponse
+      title: HTTPValidationError
     SipTrunk:
       properties:
         id:
@@ -189,29 +183,35 @@ components:
       required:
       - items
       title: ListSipTrunksResponse
-    ValidationError:
+    Provider:
+      type: string
+      enum:
+      - voxa
+      - bevatel
+      - twilio
+      - maqsam
+      title: Provider
+    UpsertSipTrunk:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        trunk_id:
           type: string
-          title: Message
-        type:
+          title: Trunk Id
+        provider:
+          $ref: '#/components/schemas/Provider'
+        trunk_name:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Trunk Name
+        caller_id_numbers:
+          $ref: '#/components/schemas/CallerIdNumbers'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - trunk_id
+      - provider
+      - trunk_name
+      - caller_id_numbers
+      title: UpsertSipTrunk

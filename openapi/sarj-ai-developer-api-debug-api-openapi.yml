@@ -37,6 +37,22 @@ paths:
       - Debug
 components:
   schemas:
+    DecodingMode:
+      type: string
+      enum:
+      - hybrid
+      - rnnt
+      - ctc
+      title: DecodingMode
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     Body_debug_decode_endpoint_debug_decode_post:
       properties:
         file:
@@ -164,22 +180,6 @@ components:
       required:
       - file
       title: Body_debug_decode_endpoint_debug_decode_post
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DecodingMode:
-      type: string
-      enum:
-      - hybrid
-      - rnnt
-      - ctc
-      title: DecodingMode
     ValidationError:
       properties:
         loc:

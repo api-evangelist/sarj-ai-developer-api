@@ -76,6 +76,22 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    PhoneProviderMutationResponse:
+      properties:
+        provider_id:
+          type: string
+          title: Provider Id
+      additionalProperties: false
+      type: object
+      required:
+      - provider_id
+      title: PhoneProviderMutationResponse
+    ProviderType:
+      type: string
+      enum:
+      - carrier
+      - client_endpoint
+      title: ProviderType
     PhoneProviderListResponse:
       properties:
         items:
@@ -88,6 +104,12 @@ components:
       required:
       - items
       title: PhoneProviderListResponse
+    ProviderStatus:
+      type: string
+      enum:
+      - active
+      - deprecated
+      title: ProviderStatus
     HTTPValidationError:
       properties:
         detail:
@@ -97,12 +119,21 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ProviderStatus:
-      type: string
-      enum:
-      - active
-      - deprecated
-      title: ProviderStatus
+    UpdatePhoneProviderRequest:
+      properties:
+        provider_name:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+          title: Provider Name
+        status:
+          anyOf:
+          - $ref: '#/components/schemas/ProviderStatus'
+          - type: 'null'
+      additionalProperties: false
+      type: object
+      title: UpdatePhoneProviderRequest
     PhoneProviderListItem:
       properties:
         id:
@@ -141,37 +172,6 @@ components:
       - provider_name
       - type
       title: CreatePhoneProviderRequest
-    PhoneProviderMutationResponse:
-      properties:
-        provider_id:
-          type: string
-          title: Provider Id
-      additionalProperties: false
-      type: object
-      required:
-      - provider_id
-      title: PhoneProviderMutationResponse
-    ProviderType:
-      type: string
-      enum:
-      - carrier
-      - client_endpoint
-      title: ProviderType
-    UpdatePhoneProviderRequest:
-      properties:
-        provider_name:
-          anyOf:
-          - type: string
-            minLength: 1
-          - type: 'null'
-          title: Provider Name
-        status:
-          anyOf:
-          - $ref: '#/components/schemas/ProviderStatus'
-          - type: 'null'
-      additionalProperties: false
-      type: object
-      title: UpdatePhoneProviderRequest
     ValidationError:
       properties:
         loc:

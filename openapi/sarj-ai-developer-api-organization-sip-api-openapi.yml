@@ -209,58 +209,12 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    OrganizationSummary:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-      type: object
-      required:
-      - id
-      title: OrganizationSummary
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TrunkUsage:
-      properties:
-        is_global_default:
-          type: boolean
-          title: Is Global Default
-          default: false
-        assigned_organizations:
-          items:
-            $ref: '#/components/schemas/OrganizationSummary'
-          type: array
-          title: Assigned Organizations
-          default: []
-        is_in_use:
-          type: boolean
-          title: Is In Use
-          readOnly: true
-      type: object
-      required:
-      - is_in_use
-      title: TrunkUsage
-    SetDefaultTrunkRequest:
-      properties:
-        sip_trunk_id:
-          type: string
-          title: Sip Trunk Id
-      type: object
-      required:
-      - sip_trunk_id
-      title: SetDefaultTrunkRequest
+    SIPTrunkDirection:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      title: SIPTrunkDirection
     AssignTrunkRequest:
       properties:
         organization_id:
@@ -320,12 +274,58 @@ components:
       - usage
       - provider
       title: TrunkWithUsage
-    SIPTrunkDirection:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      title: SIPTrunkDirection
+    SetDefaultTrunkRequest:
+      properties:
+        sip_trunk_id:
+          type: string
+          title: Sip Trunk Id
+      type: object
+      required:
+      - sip_trunk_id
+      title: SetDefaultTrunkRequest
+    OrganizationSummary:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - id
+      title: OrganizationSummary
+    TrunkUsage:
+      properties:
+        is_global_default:
+          type: boolean
+          title: Is Global Default
+          default: false
+        assigned_organizations:
+          items:
+            $ref: '#/components/schemas/OrganizationSummary'
+          type: array
+          title: Assigned Organizations
+          default: []
+        is_in_use:
+          type: boolean
+          title: Is In Use
+          readOnly: true
+      type: object
+      required:
+      - is_in_use
+      title: TrunkUsage
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:

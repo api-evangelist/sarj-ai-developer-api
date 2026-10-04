@@ -171,111 +171,11 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ScenarioInboxMapping:
-      properties:
-        scenario_id:
-          type: string
-          title: Scenario Id
-        inbox_id:
-          type: string
-          title: Inbox Id
-      type: object
-      required:
-      - scenario_id
-      - inbox_id
-      title: ScenarioInboxMapping
-    UpdateMessagingProviderConfigRequest:
-      properties:
-        provider:
-          $ref: '#/components/schemas/MessagingProvider'
-        name:
-          type: string
-          title: Name
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-        auth_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auth Token
-        scenario_inbox_mappings:
-          items:
-            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
-          type: array
-          title: Scenario Inbox Mappings
-          default: []
-        enabled:
-          type: boolean
-          title: Enabled
-          default: true
-      type: object
-      required:
-      - provider
-      - name
-      - config
-      title: UpdateMessagingProviderConfigRequest
-    CreateMessagingProviderConfigRequest:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        provider:
-          $ref: '#/components/schemas/MessagingProvider'
-        name:
-          type: string
-          title: Name
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-        auth_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auth Token
-        scenario_inbox_mappings:
-          items:
-            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
-          type: array
-          title: Scenario Inbox Mappings
-          default: []
-        enabled:
-          type: boolean
-          title: Enabled
-          default: true
-      type: object
-      required:
-      - organization_id
-      - provider
-      - name
-      - config
-      title: CreateMessagingProviderConfigRequest
-    ScenarioInboxMappingRequest:
-      properties:
-        scenario_id:
-          type: string
-          format: uuid
-          title: Scenario Id
-        inbox_id:
-          type: string
-          title: Inbox Id
-      type: object
-      required:
-      - scenario_id
-      - inbox_id
-      title: ScenarioInboxMappingRequest
+    MessagingProvider:
+      type: string
+      enum:
+      - socialbot_whatsapp
+      title: MessagingProvider
     MessagingProviderConfigPublic:
       properties:
         id:
@@ -332,11 +232,65 @@ components:
       - created_at
       - updated_at
       title: MessagingProviderConfigPublic
-    MessagingProvider:
-      type: string
-      enum:
-      - socialbot_whatsapp
-      title: MessagingProvider
+    ScenarioInboxMappingRequest:
+      properties:
+        scenario_id:
+          type: string
+          format: uuid
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMappingRequest
+    UpdateMessagingProviderConfigRequest:
+      properties:
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        auth_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
+          type: array
+          title: Scenario Inbox Mappings
+          default: []
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      type: object
+      required:
+      - provider
+      - name
+      - config
+      title: UpdateMessagingProviderConfigRequest
+    ScenarioInboxMapping:
+      properties:
+        scenario_id:
+          type: string
+          title: Scenario Id
+        inbox_id:
+          type: string
+          title: Inbox Id
+      type: object
+      required:
+      - scenario_id
+      - inbox_id
+      title: ScenarioInboxMapping
     ListMessagingProviderConfigRequest:
       properties:
         organization_id:
@@ -356,6 +310,52 @@ components:
           title: Enabled
       type: object
       title: ListMessagingProviderConfigRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CreateMessagingProviderConfigRequest:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        provider:
+          $ref: '#/components/schemas/MessagingProvider'
+        name:
+          type: string
+          title: Name
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+        auth_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Token
+        scenario_inbox_mappings:
+          items:
+            $ref: '#/components/schemas/ScenarioInboxMappingRequest'
+          type: array
+          title: Scenario Inbox Mappings
+          default: []
+        enabled:
+          type: boolean
+          title: Enabled
+          default: true
+      type: object
+      required:
+      - organization_id
+      - provider
+      - name
+      - config
+      title: CreateMessagingProviderConfigRequest
     ValidationError:
       properties:
         loc:

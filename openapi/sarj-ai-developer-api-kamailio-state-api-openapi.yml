@@ -20,6 +20,74 @@ paths:
                 $ref: '#/components/schemas/KamailioStateSnapshot'
 components:
   schemas:
+    ConnectionTelephonyState:
+      properties:
+        connection:
+          $ref: '#/components/schemas/SipConnection'
+        provider_name:
+          type: string
+          title: Provider Name
+        dispatcher_set:
+          anyOf:
+          - $ref: '#/components/schemas/RpcDispatcherSet'
+          - type: 'null'
+        address_entries:
+          items:
+            $ref: '#/components/schemas/RpcAddressEntry'
+          type: array
+          title: Address Entries
+        registration:
+          anyOf:
+          - $ref: '#/components/schemas/RpcRegistration'
+          - type: 'null'
+        subscriber_present:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Subscriber Present
+        outbound_registration:
+          anyOf:
+          - $ref: '#/components/schemas/RpcRegistration'
+          - type: 'null'
+        outbound_subscriber_present:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Outbound Subscriber Present
+      additionalProperties: false
+      type: object
+      required:
+      - connection
+      - provider_name
+      - dispatcher_set
+      - address_entries
+      - registration
+      - subscriber_present
+      - outbound_registration
+      - outbound_subscriber_present
+      title: ConnectionTelephonyState
+    RpcContact:
+      properties:
+        address:
+          type: string
+          title: Address
+        expires:
+          type: integer
+          title: Expires
+        q:
+          type: number
+          title: Q
+        user_agent:
+          type: string
+          title: User Agent
+      additionalProperties: false
+      type: object
+      required:
+      - address
+      - expires
+      - q
+      - user_agent
+      title: RpcContact
     RpcRegistration:
       properties:
         aor:
@@ -36,37 +104,6 @@ components:
       - aor
       - contacts
       title: RpcRegistration
-    RpcSubnetEntry:
-      properties:
-        group:
-          type: integer
-          minimum: 0.0
-          title: Group
-        ip:
-          type: string
-          title: Ip
-        mask:
-          type: integer
-          maximum: 128.0
-          minimum: 0.0
-          title: Mask
-        port:
-          type: integer
-          maximum: 65535.0
-          minimum: 0.0
-          title: Port
-        tag:
-          type: string
-          title: Tag
-      additionalProperties: false
-      type: object
-      required:
-      - group
-      - ip
-      - mask
-      - port
-      - tag
-      title: RpcSubnetEntry
     RawTelephonyDumps:
       properties:
         dispatcher_sets:
@@ -115,13 +152,68 @@ components:
       - routers
       - allocations
       title: RawTelephonyDumps
-    Transport:
+    RpcAddressEntry:
+      properties:
+        table:
+          type: integer
+          minimum: 0.0
+          title: Table
+        group:
+          type: integer
+          minimum: 0.0
+          title: Group
+        ip:
+          type: string
+          title: Ip
+        port:
+          type: integer
+          maximum: 65535.0
+          minimum: 0.0
+          title: Port
+        tag:
+          type: string
+          title: Tag
+      additionalProperties: false
+      type: object
+      required:
+      - table
+      - group
+      - ip
+      - port
+      - tag
+      title: RpcAddressEntry
+    TelephonySection:
+      properties:
+        name:
+          $ref: '#/components/schemas/TelephonySectionName'
+        available:
+          type: boolean
+          title: Available
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - available
+      - detail
+      title: TelephonySection
+    SipConnectionStatus:
       type: string
       enum:
-      - udp
-      - tcp
-      - tls
-      title: Transport
+      - pending_verification
+      - active
+      - disabled
+      title: SipConnectionStatus
+    NumberFormat:
+      type: string
+      enum:
+      - e164
+      - no_plus
+      title: NumberFormat
     TelephonyRouterEntry:
       properties:
         number:
@@ -137,6 +229,104 @@ components:
       - number
       - account
       title: TelephonyRouterEntry
+    TelephonySectionName:
+      type: string
+      enum:
+      - dispatcher_sets
+      - addresses
+      - subnets
+      - registrations
+      - subscribers
+      - routers
+      - allocations
+      title: TelephonySectionName
+    TelephonySubscriberEntry:
+      properties:
+        username:
+          type: string
+          title: Username
+        domain:
+          type: string
+          title: Domain
+        account:
+          anyOf:
+          - type: integer
+            exclusiveMinimum: 0.0
+          - type: 'null'
+          title: Account
+      additionalProperties: false
+      type: object
+      required:
+      - username
+      - domain
+      - account
+      title: TelephonySubscriberEntry
+    OrphanReport:
+      properties:
+        dispatcher_setids:
+          items:
+            type: integer
+          type: array
+          title: Dispatcher Setids
+        address_groups:
+          items:
+            type: integer
+          type: array
+          title: Address Groups
+        subscriber_usernames:
+          items:
+            type: string
+          type: array
+          title: Subscriber Usernames
+        router_numbers:
+          items:
+            type: string
+          type: array
+          title: Router Numbers
+        allocations:
+          items:
+            $ref: '#/components/schemas/TelephonyAllocationEntry'
+          type: array
+          title: Allocations
+      additionalProperties: false
+      type: object
+      required:
+      - dispatcher_setids
+      - address_groups
+      - subscriber_usernames
+      - router_numbers
+      - allocations
+      title: OrphanReport
+      description: Telephony rows with no SIP claims; empty lists when the source section is unavailable.
+    TelephonyAllocationKind:
+      type: string
+      enum:
+      - setid
+      - address_group
+      title: TelephonyAllocationKind
+    RpcGateway:
+      properties:
+        destination:
+          type: string
+          title: Destination
+        flags:
+          type: string
+          title: Flags
+        priority:
+          type: integer
+          minimum: 0.0
+          title: Priority
+        attrs:
+          type: string
+          title: Attrs
+      additionalProperties: false
+      type: object
+      required:
+      - destination
+      - flags
+      - priority
+      - attrs
+      title: RpcGateway
     KamailioStateSnapshot:
       properties:
         sections:
@@ -161,6 +351,93 @@ components:
       - orphans
       - raw
       title: KamailioStateSnapshot
+    PlatformSipConnectionConfig:
+      properties:
+        path:
+          type: string
+          const: platform_sip
+          title: Path
+          default: platform_sip
+        outbound_setid:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Outbound Setid
+        inbound_group_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Inbound Group Id
+        inbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inbound Auth Username
+        outbound_auth_username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Outbound Auth Username
+        livekit_outbound_trunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Livekit Outbound Trunk Id
+      additionalProperties: false
+      type: object
+      required:
+      - outbound_setid
+      - inbound_group_id
+      - inbound_auth_username
+      title: PlatformSipConnectionConfig
+    RpcDispatcherSet:
+      properties:
+        id:
+          type: integer
+          minimum: 0.0
+          title: Id
+        gateways:
+          items:
+            $ref: '#/components/schemas/RpcGateway'
+          type: array
+          title: Gateways
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - gateways
+      title: RpcDispatcherSet
+    RpcSubnetEntry:
+      properties:
+        group:
+          type: integer
+          minimum: 0.0
+          title: Group
+        ip:
+          type: string
+          title: Ip
+        mask:
+          type: integer
+          maximum: 128.0
+          minimum: 0.0
+          title: Mask
+        port:
+          type: integer
+          maximum: 65535.0
+          minimum: 0.0
+          title: Port
+        tag:
+          type: string
+          title: Tag
+      additionalProperties: false
+      type: object
+      required:
+      - group
+      - ip
+      - mask
+      - port
+      - tag
+      title: RpcSubnetEntry
     SipConnection:
       properties:
         id:
@@ -209,158 +486,6 @@ components:
       - created_at
       - updated_at
       title: SipConnection
-    TelephonyAllocationEntry:
-      properties:
-        kind:
-          $ref: '#/components/schemas/TelephonyAllocationKind'
-        value:
-          type: integer
-          minimum: 0.0
-          title: Value
-        note:
-          type: string
-          title: Note
-        allocated_at:
-          type: string
-          format: date-time
-          title: Allocated At
-      additionalProperties: false
-      type: object
-      required:
-      - kind
-      - value
-      - note
-      - allocated_at
-      title: TelephonyAllocationEntry
-    ConnectionTelephonyState:
-      properties:
-        connection:
-          $ref: '#/components/schemas/SipConnection'
-        provider_name:
-          type: string
-          title: Provider Name
-        dispatcher_set:
-          anyOf:
-          - $ref: '#/components/schemas/RpcDispatcherSet'
-          - type: 'null'
-        address_entries:
-          items:
-            $ref: '#/components/schemas/RpcAddressEntry'
-          type: array
-          title: Address Entries
-        registration:
-          anyOf:
-          - $ref: '#/components/schemas/RpcRegistration'
-          - type: 'null'
-        subscriber_present:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Subscriber Present
-        outbound_registration:
-          anyOf:
-          - $ref: '#/components/schemas/RpcRegistration'
-          - type: 'null'
-        outbound_subscriber_present:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Outbound Subscriber Present
-      additionalProperties: false
-      type: object
-      required:
-      - connection
-      - provider_name
-      - dispatcher_set
-      - address_entries
-      - registration
-      - subscriber_present
-      - outbound_registration
-      - outbound_subscriber_present
-      title: ConnectionTelephonyState
-    SipConnectionStatus:
-      type: string
-      enum:
-      - pending_verification
-      - active
-      - disabled
-      title: SipConnectionStatus
-    TelephonyAllocationKind:
-      type: string
-      enum:
-      - setid
-      - address_group
-      title: TelephonyAllocationKind
-    RpcContact:
-      properties:
-        address:
-          type: string
-          title: Address
-        expires:
-          type: integer
-          title: Expires
-        q:
-          type: number
-          title: Q
-        user_agent:
-          type: string
-          title: User Agent
-      additionalProperties: false
-      type: object
-      required:
-      - address
-      - expires
-      - q
-      - user_agent
-      title: RpcContact
-    RpcGateway:
-      properties:
-        destination:
-          type: string
-          title: Destination
-        flags:
-          type: string
-          title: Flags
-        priority:
-          type: integer
-          minimum: 0.0
-          title: Priority
-        attrs:
-          type: string
-          title: Attrs
-      additionalProperties: false
-      type: object
-      required:
-      - destination
-      - flags
-      - priority
-      - attrs
-      title: RpcGateway
-    TelephonySection:
-      properties:
-        name:
-          $ref: '#/components/schemas/TelephonySectionName'
-        available:
-          type: boolean
-          title: Available
-        detail:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Detail
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - available
-      - detail
-      title: TelephonySection
-    NumberFormat:
-      type: string
-      enum:
-      - e164
-      - no_plus
-      title: NumberFormat
     LivekitDirectConnectionConfig:
       properties:
         path:
@@ -384,158 +509,33 @@ components:
       - livekit_inbound_trunk_id
       - livekit_outbound_trunk_id
       title: LivekitDirectConnectionConfig
-    OrphanReport:
-      properties:
-        dispatcher_setids:
-          items:
-            type: integer
-          type: array
-          title: Dispatcher Setids
-        address_groups:
-          items:
-            type: integer
-          type: array
-          title: Address Groups
-        subscriber_usernames:
-          items:
-            type: string
-          type: array
-          title: Subscriber Usernames
-        router_numbers:
-          items:
-            type: string
-          type: array
-          title: Router Numbers
-        allocations:
-          items:
-            $ref: '#/components/schemas/TelephonyAllocationEntry'
-          type: array
-          title: Allocations
-      additionalProperties: false
-      type: object
-      required:
-      - dispatcher_setids
-      - address_groups
-      - subscriber_usernames
-      - router_numbers
-      - allocations
-      title: OrphanReport
-      description: Telephony rows with no SIP claims; empty lists when the source section is unavailable.
-    RpcAddressEntry:
-      properties:
-        table:
-          type: integer
-          minimum: 0.0
-          title: Table
-        group:
-          type: integer
-          minimum: 0.0
-          title: Group
-        ip:
-          type: string
-          title: Ip
-        port:
-          type: integer
-          maximum: 65535.0
-          minimum: 0.0
-          title: Port
-        tag:
-          type: string
-          title: Tag
-      additionalProperties: false
-      type: object
-      required:
-      - table
-      - group
-      - ip
-      - port
-      - tag
-      title: RpcAddressEntry
-    TelephonySectionName:
+    Transport:
       type: string
       enum:
-      - dispatcher_sets
-      - addresses
-      - subnets
-      - registrations
-      - subscribers
-      - routers
-      - allocations
-      title: TelephonySectionName
-    RpcDispatcherSet:
+      - udp
+      - tcp
+      - tls
+      title: Transport
+    TelephonyAllocationEntry:
       properties:
-        id:
+        kind:
+          $ref: '#/components/schemas/TelephonyAllocationKind'
+        value:
           type: integer
           minimum: 0.0
-          title: Id
-        gateways:
-          items:
-            $ref: '#/components/schemas/RpcGateway'
-          type: array
-          title: Gateways
+          title: Value
+        note:
+          type: string
+          title: Note
+        allocated_at:
+          type: string
+          format: date-time
+          title: Allocated At
       additionalProperties: false
       type: object
       required:
-      - id
-      - gateways
-      title: RpcDispatcherSet
-    TelephonySubscriberEntry:
-      properties:
-        username:
-          type: string
-          title: Username
-        domain:
-          type: string
-          title: Domain
-        account:
-          anyOf:
-          - type: integer
-            exclusiveMinimum: 0.0
-          - type: 'null'
-          title: Account
-      additionalProperties: false
-      type: object
-      required:
-      - username
-      - domain
-      - account
-      title: TelephonySubscriberEntry
-    PlatformSipConnectionConfig:
-      properties:
-        path:
-          type: string
-          const: platform_sip
-          title: Path
-          default: platform_sip
-        outbound_setid:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Outbound Setid
-        inbound_group_id:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Inbound Group Id
-        inbound_auth_username:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Inbound Auth Username
-        outbound_auth_username:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Outbound Auth Username
-        livekit_outbound_trunk_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Livekit Outbound Trunk Id
-      additionalProperties: false
-      type: object
-      required:
-      - outbound_setid
-      - inbound_group_id
-      - inbound_auth_username
-      title: PlatformSipConnectionConfig
+      - kind
+      - value
+      - note
+      - allocated_at
+      title: TelephonyAllocationEntry

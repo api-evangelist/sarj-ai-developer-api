@@ -154,6 +154,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    SetDefaultReportTemplateRequest:
+      properties:
+        template_id:
+          type: string
+          title: Template Id
+      type: object
+      required:
+      - template_id
+      title: SetDefaultReportTemplateRequest
     ReportTemplate:
       properties:
         id:
@@ -201,45 +210,6 @@ components:
       - created_at
       - updated_at
       title: ReportTemplate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    VariableReportColumn:
-      properties:
-        source:
-          type: string
-          const: variable
-          title: Source
-          default: variable
-        key:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: Key
-      type: object
-      required:
-      - key
-      title: VariableReportColumn
-    StandardReportColumnRequest:
-      properties:
-        source:
-          type: string
-          const: standard
-          title: Source
-          default: standard
-        key:
-          $ref: '#/components/schemas/StandardColumn'
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      title: StandardReportColumnRequest
     CollectedDataReportColumn:
       properties:
         source:
@@ -256,27 +226,23 @@ components:
       required:
       - key
       title: CollectedDataReportColumn
-    StandardColumn:
-      type: string
-      enum:
-      - call_id
-      - phone_number
-      - name
-      - time
-      - status
-      - outcome
-      - duration
-      - transcript
-      title: StandardColumn
-    SetDefaultReportTemplateRequest:
+    VariableReportColumnRequest:
       properties:
-        template_id:
+        source:
           type: string
-          title: Template Id
+          const: variable
+          title: Source
+          default: variable
+        key:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Key
+      additionalProperties: false
       type: object
       required:
-      - template_id
-      title: SetDefaultReportTemplateRequest
+      - key
+      title: VariableReportColumnRequest
     CreateReportTemplateRequest:
       properties:
         name:
@@ -305,7 +271,16 @@ components:
       - name
       - columns
       title: CreateReportTemplateRequest
-    StandardReportColumn:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    StandardReportColumnRequest:
       properties:
         source:
           type: string
@@ -314,11 +289,12 @@ components:
           default: standard
         key:
           $ref: '#/components/schemas/StandardColumn'
+      additionalProperties: false
       type: object
       required:
       - key
-      title: StandardReportColumn
-    VariableReportColumnRequest:
+      title: StandardReportColumnRequest
+    VariableReportColumn:
       properties:
         source:
           type: string
@@ -330,11 +306,10 @@ components:
           maxLength: 100
           minLength: 1
           title: Key
-      additionalProperties: false
       type: object
       required:
       - key
-      title: VariableReportColumnRequest
+      title: VariableReportColumn
     UpdateReportTemplateRequest:
       properties:
         name:
@@ -364,6 +339,19 @@ components:
           title: Columns
       type: object
       title: UpdateReportTemplateRequest
+    StandardReportColumn:
+      properties:
+        source:
+          type: string
+          const: standard
+          title: Source
+          default: standard
+        key:
+          $ref: '#/components/schemas/StandardColumn'
+      type: object
+      required:
+      - key
+      title: StandardReportColumn
     CollectedDataReportColumnRequest:
       properties:
         source:
@@ -407,3 +395,15 @@ components:
       - msg
       - type
       title: ValidationError
+    StandardColumn:
+      type: string
+      enum:
+      - call_id
+      - phone_number
+      - name
+      - time
+      - status
+      - outcome
+      - duration
+      - transcript
+      title: StandardColumn
