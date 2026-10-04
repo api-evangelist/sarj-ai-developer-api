@@ -3,7 +3,7 @@
   "feeds": [
     {
       "source": "https://blog.sarj.ai",
-      "feed_url": "https://blog.sarj.ai/rss.xml",
+      "feed_url": "https://blog.sarj.ai/feed/",
       "title": "",
       "saved": 0,
       "method": "discovered"
@@ -23,6 +23,6 @@
       "method": "feed"
     }
   ],
-  "post_count": 4,
-  "fetched": "2026-09-19T20:17:39Z"
+  "post_count": 9,
+  "fetched": "2026-10-03T12:30:02Z"
 }
