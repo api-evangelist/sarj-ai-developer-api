@@ -1152,6 +1152,9 @@ apis:
   - type: Documentation
     url: https://platform-docs.sarj.ai/text-to-speech
 common:
+- type: CapabilityMap
+  url: capabilities/sarj-ai-developer-api-capability-edges.yml
+  name: Sarj AI Developer API Business Capability Map
 - type: Website
   url: https://www.sarj.ai/
 - type: Overlay
