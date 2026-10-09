@@ -19,11 +19,11 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   collections/sarj-ai-developer-api-admin-api.opencollection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-admin-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-admin-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-admin-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-agent-profiles-api.opencollection.json:
     method: derived
     evidence: openapi/sarj-ai-developer-api-agent-profiles-api
@@ -127,17 +127,17 @@ artifacts:
     method: derived
     evidence: openapi/sarj-ai-developer-api-report-templates-api
   collections/sarj-ai-developer-api-salesforce-api.opencollection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-salesforce-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-salesforce-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-salesforce-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-salla-api.opencollection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-salla-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-salla-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-salla-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-sarj-stt-api-api.opencollection.json:
     method: derived
     evidence: openapi/sarj-ai-developer-api-sarj-stt-api-api
@@ -199,11 +199,11 @@ artifacts:
     method: derived
     evidence: openapi/sarj-ai-developer-api-voices-api
   collections/sarj-ai-developer-api-zoho-api.opencollection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-zoho-api
+    method: unknown
+    evidence: no authorship recorded
   collections/sarj-ai-developer-api-zoho-api.postman_collection.json:
-    method: derived
-    evidence: openapi/sarj-ai-developer-api-zoho-api
+    method: unknown
+    evidence: no authorship recorded
   conformance/sarj-ai-developer-api-conformance.yml:
     method: searched
     evidence: declared in the artifact
@@ -216,43 +216,10 @@ artifacts:
   errors/sarj-ai-developer-api-problem-types.yml:
     method: derived
     evidence: declared in the artifact
-  kin/checks-2026-09-10T222408.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -375,6 +342,90 @@ artifacts:
   kin/score-2026-09-10T222408.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-11T174733.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/sarj-ai-developer-api-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -392,23 +443,27 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/sarj-ai-developer-api-developer-openapi.json:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/sarj-ai-developer-api-stt-openapi.json:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/sarj-ai-developer-api-tts-openapi.json:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/sarj-ai-developer-api-voice-platform-openapi.json:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
-  openapi/sarj-ai-developer-api-admin-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/sarj-ai-developer-api-agent-profiles-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-analytics-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-api-keys-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-audio-api-openapi.yml:
@@ -417,9 +472,15 @@ artifacts:
   openapi/sarj-ai-developer-api-batch-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-call-flags-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-calls-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  openapi/sarj-ai-developer-api-custom-scenarios-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-debug-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -429,7 +490,19 @@ artifacts:
   openapi/sarj-ai-developer-api-integrations-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  openapi/sarj-ai-developer-api-kamailio-state-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-knowledge-bases-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-livez-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-messaging-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-messaging-settings-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-metrics-api-openapi.yml:
@@ -441,6 +514,12 @@ artifacts:
   openapi/sarj-ai-developer-api-openai-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-organization-batch-settings-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-organization-settings-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-organization-sip-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -450,22 +529,58 @@ artifacts:
   openapi/sarj-ai-developer-api-organizations-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-phone-numbers-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-phone-provider-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-readyz-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-report-templates-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sarj-ai-developer-api-salesforce-api-openapi.yml:
+  openapi/sarj-ai-developer-api-reports-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sarj-ai-developer-api-salla-api-openapi.yml:
+  openapi/sarj-ai-developer-api-salesforce-integration-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-salla-integration-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-sarj-stt-api-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-scenario-generation-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-scenario-insights-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-scenario-templates-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-schedule-configs-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-settings-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-sip-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-sip-connection-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-sip-connections-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-sip-provisioning-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-sip-trunk-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-system-api-openapi.yml:
@@ -477,12 +592,18 @@ artifacts:
   openapi/sarj-ai-developer-api-task-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-users-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/sarj-ai-developer-api-voices-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/sarj-ai-developer-api-zoho-api-openapi.yml:
-    method: unknown
-    evidence: no authorship recorded
+  openapi/sarj-ai-developer-api-webhooks-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/sarj-ai-developer-api-zoho-integration-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/sarj-ai-developer-api-developer-overlay.yaml:
     method: generated
     evidence: declared in the artifact

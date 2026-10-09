@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/sarj-ai-developer-api-agent-profiles-api-openapi.yml, openapi/sarj-ai-developer-api-analytics-api-openapi.yml,
   openapi/sarj-ai-developer-api-api-keys-api-openapi.yml, openapi/sarj-ai-developer-api-audio-api-openapi.yml,
@@ -31,11 +31,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 281
   by_action_class:
-    acting: 166
-    connected: 115
+    connected: 131
+    acting: 150
   by_consequence:
-    write: 147
-    read: 115
+    read: 131
+    write: 131
     physical: 15
     safety-critical: 4
   human_in_the_loop_required: 4
@@ -44,18 +44,12 @@ operations:
   method: post
   operationId: agentProfilesListAgentProfiles
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/agent-profiles/
   method: post
   operationId: agentProfilesCreateAgentProfile
@@ -150,18 +144,12 @@ operations:
   method: post
   operationId: analyticsGetDashboard
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/api-keys/
   method: post
   operationId: apiKeysInsert
@@ -288,18 +276,12 @@ operations:
   method: post
   operationId: batchListBatches
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/calls/batch/{batch_id}
   method: get
   operationId: batchGetBatchDetail
@@ -424,18 +406,12 @@ operations:
   method: post
   operationId: callFlagsListFlags
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/flags/{flag_id}/status
   method: patch
   operationId: callFlagsUpdateFlagStatus
@@ -604,18 +580,12 @@ operations:
   method: post
   operationId: callsListCalls
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/calls/scheduled
   method: get
   operationId: callsListScheduledCalls
@@ -666,18 +636,12 @@ operations:
   method: post
   operationId: callsCountForOrg
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/calls/export
   method: post
   operationId: callsExportConversations
@@ -750,34 +714,22 @@ operations:
   method: post
   operationId: customScenariosListScenarios
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/scenarios/by-ids
   method: post
   operationId: customScenariosGetScenariosByIds
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/scenarios/create
   method: put
   operationId: customScenariosCreateScenario
@@ -1030,18 +982,12 @@ operations:
   method: post
   operationId: knowledgeBasesListKnowledgeBases
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/knowledge-bases/{knowledge_base_id}
   method: get
   operationId: knowledgeBasesGetKnowledgeBase
@@ -1276,18 +1222,12 @@ operations:
   method: post
   operationId: messagingSettingsListConfigs
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /metrics
   method: get
   operationId: metrics_metrics_get
@@ -2276,18 +2216,12 @@ operations:
   method: post
   operationId: reportsListReports
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/reports/{task_id}/download
   method: get
   operationId: reportsDownloadReport
@@ -2752,18 +2686,12 @@ operations:
   method: post
   operationId: settingsListVoices
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/settings/voices/{voice_id}
   method: get
   operationId: settingsGetVoice
@@ -3410,50 +3338,32 @@ operations:
   method: post
   operationId: taskManagementListTasks
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/task-management/list-by-call/{call_id}
   method: post
   operationId: taskManagementListTasksByCall
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/task-management/list-by-batch/{batch_id}
   method: post
   operationId: taskManagementListTasksByBatch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/users/me
   method: get
   operationId: usersMe
@@ -3468,18 +3378,12 @@ operations:
   method: post
   operationId: usersGetMany
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/beta/users/email/{email}
   method: get
   operationId: usersGetUserByEmail
