@@ -1,4 +1,4 @@
-# Sarj AI Developer API (sarj-ai-developer-api)
+# Sarj AI Developer API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,685 +64,218 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused on the Saudi and wider MENA market. The public developer surface is a REST API for outbound voice calls — place a call against a saved scenario, then retrieve its status, signed recording URL, transcript and asynchronous post-call outcome report. Alongside the call API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech with voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, an A2A agent card, a published Agent Skill, an llms.txt, webhook push notifications for call completion, and an official Python SDK.
+Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused on the Saudi and wider MENA market. The public developer surface is a REST API for outbound voice calls — place a call against a saved scenario (immediately, or booked up to 30 days ahead), cancel or reschedule it while it is still pending, create a retry policy governing how often a number is re-dialed, and retrieve the call's status, recording, transcript and asynchronous post-call outcome report. Alongside the call API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech with voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, a second unauthenticated MCP server over its documentation, an A2A agent card, a published Agent Skill with an agentskills.io discovery index, an llms.txt, webhook push notifications covering eleven call outcomes, and an official Python SDK.
 
-**APIs.json:** [https://sarj-ai-developer-api.apievangelist.com/apis.yml](https://sarj-ai-developer-api.apievangelist.com/apis.yml)
+**Areas:** Voice AI · Voice Agents · Conversational AI · Arabic AI · Outbound Calls · Telephony · Speech-to-Text · Text-to-Speech · Voice Cloning · MCP · Agent-Native · Saudi Arabia
 
-## Tags
+## Sarj AI Developer API on APIs.io
 
-- voice AI
-- voice agents
-- conversational AI
-- Arabic AI
-- outbound calls
-- telephony
-- speech to text
-- text to speech
-- voice cloning
-- MCP
-- agent-native
-- Saudi Arabia
-- MENA
+Everything profiled for Sarj AI Developer API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sarj-ai-developer-api/](https://apis.io/providers/sarj-ai-developer-api/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (49)
 
-- **Created:** 2026-08-04
-- **Modified:** 2026-08-09
+- [Sarj AI Developer API Agent Profiles API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-agent-profiles-api/) — The agent-profiles API from Sarj AI Developer API — 5 operation(s) for agent-profiles.
+- [Sarj AI Developer API Analytics API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-analytics-api/) — The analytics API from Sarj AI Developer API — 1 operation(s) for analytics.
+- [Sarj AI Developer API Audio API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-audio-api/) — The Audio API from Sarj AI Developer API — 3 operation(s) for audio.
+- [Sarj AI Developer API Batch API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-batch-api/) — The batch API from Sarj AI Developer API — 9 operation(s) for batch.
+- [Sarj AI Developer API Calls API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-calls-api/) — Create outbound voice calls and retrieve call details and transcripts.
+- [Sarj AI Developer API Debug API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-debug-api/) — The Debug API from Sarj AI Developer API — 1 operation(s) for debug.
+- [Sarj AI Developer API Health API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-health-api/) — The Health API from Sarj AI Developer API — 3 operation(s) for health.
+- [Sarj AI Developer API Integrations API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-integrations-api/) — The integrations API from Sarj AI Developer API — 19 operation(s) for integrations.
+- [Sarj AI Developer API Messaging API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-messaging-api/) — The messaging API from Sarj AI Developer API — 8 operation(s) for messaging.
+- [Sarj AI Developer API Metrics API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-metrics-api/) — The Metrics API from Sarj AI Developer API — 1 operation(s) for metrics.
+- [Sarj AI Developer API Models API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-models-api/) — The Models API from Sarj AI Developer API — 2 operation(s) for models.
+- [Sarj AI Developer API Openai API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-openai-api/) — The Openai API from Sarj AI Developer API — 1 operation(s) for openai.
+- [Sarj AI Developer API Organization Sip API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-organization-sip-api/) — The organization-sip API from Sarj AI Developer API — 7 operation(s) for organization-sip.
+- [Sarj AI Developer API Organization Variables API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-organization-variables-api/) — The organization-variables API from Sarj AI Developer API — 3 operation(s) for organization-variables.
+- [Sarj AI Developer API Organizations API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-organizations-api/) — The organizations API from Sarj AI Developer API — 7 operation(s) for organizations.
+- [Sarj AI Developer API Report Templates API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-report-templates-api/) — The report-templates API from Sarj AI Developer API — 3 operation(s) for report-templates.
+- [Sarj AI Developer API Sarj STT API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sarj-stt-api-api/) — The Sarj STT API API from Sarj AI Developer API — 1 operation(s) for sarj stt api.
+- [Sarj AI Developer API Settings API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-settings-api/) — The settings API from Sarj AI Developer API — 7 operation(s) for settings.
+- [Sarj AI Developer API Sip API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sip-api/) — The sip API from Sarj AI Developer API — 7 operation(s) for sip.
+- [Sarj AI Developer API System API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-system-api/) — Service health and status.
+- [Sarj AI Developer API Task API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-task-api/) — The task API from Sarj AI Developer API — 4 operation(s) for task.
+- [Sarj AI Developer API Task Management API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-task-management-api/) — The task-management API from Sarj AI Developer API — 5 operation(s) for task-management.
+- [Sarj AI Developer API Voices API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-voices-api/) — The Voices API from Sarj AI Developer API — 3 operation(s) for voices.
+- [Sarj AI Developer API API Keys API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-api-keys-api/) — The api-keys API from Sarj AI Developer API — 3 operation(s) for api-keys.
+- [Sarj AI Developer API Call Flags API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-call-flags-api/) — The call-flags API from Sarj AI Developer API — 4 operation(s) for call-flags.
+- [Sarj AI Developer API Custom Scenarios API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-custom-scenarios-api/) — The custom-scenarios API from Sarj AI Developer API — 5 operation(s) for custom-scenarios.
+- [Sarj AI Developer API Kamailio State API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-kamailio-state-api/) — The kamailio-state API from Sarj AI Developer API — 1 operation(s) for kamailio-state.
+- [Sarj AI Developer API Knowledge Bases API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-knowledge-bases-api/) — The knowledge-bases API from Sarj AI Developer API — 7 operation(s) for knowledge-bases.
+- [Sarj AI Developer API Livez API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-livez-api/) — The Livez API from Sarj AI Developer API — 1 operation(s) for livez.
+- [Sarj AI Developer API Messaging Settings API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-messaging-settings-api/) — The messaging-settings API from Sarj AI Developer API — 4 operation(s) for messaging-settings.
+- [Sarj AI Developer API Organization Batch Settings API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-organization-batch-settings-api/) — The organization-batch-settings API from Sarj AI Developer API — 1 operation(s) for organization-batch-settings.
+- [Sarj AI Developer API Organization Settings API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-organization-settings-api/) — The organization-settings API from Sarj AI Developer API — 1 operation(s) for organization-settings.
+- [Sarj AI Developer API Phone Numbers API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-phone-numbers-api/) — The phone-numbers API from Sarj AI Developer API — 13 operation(s) for phone-numbers.
+- [Sarj AI Developer API Phone Provider API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-phone-provider-api/) — The phone-provider API from Sarj AI Developer API — 2 operation(s) for phone-provider.
+- [Sarj AI Developer API Readyz API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-readyz-api/) — The Readyz API from Sarj AI Developer API — 1 operation(s) for readyz.
+- [Sarj AI Developer API Reports API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-reports-api/) — The reports API from Sarj AI Developer API — 2 operation(s) for reports.
+- [Sarj AI Developer API Salesforce Integration API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-salesforce-integration-api/) — The salesforce-integration API from Sarj AI Developer API — 2 operation(s) for salesforce-integration.
+- [Sarj AI Developer API Salla Integration API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-salla-integration-api/) — The salla-integration API from Sarj AI Developer API — 7 operation(s) for salla-integration.
+- [Sarj AI Developer API Scenario Generation API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-scenario-generation-api/) — The scenario-generation API from Sarj AI Developer API — 5 operation(s) for scenario-generation.
+- [Sarj AI Developer API Scenario Insights API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-scenario-insights-api/) — The scenario-insights API from Sarj AI Developer API — 2 operation(s) for scenario-insights.
+- [Sarj AI Developer API Scenario Templates API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-scenario-templates-api/) — The scenario-templates API from Sarj AI Developer API — 6 operation(s) for scenario-templates.
+- [Sarj AI Developer API Schedule Configs API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-schedule-configs-api/) — Create and manage retry policies for scheduled outbound calls.
+- [Sarj AI Developer API Sip Connection API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sip-connection-api/) — The sip-connection API from Sarj AI Developer API — 4 operation(s) for sip-connection.
+- [Sarj AI Developer API Sip Connections API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sip-connections-api/) — The sip-connections API from Sarj AI Developer API — 6 operation(s) for sip-connections.
+- [Sarj AI Developer API Sip Provisioning API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sip-provisioning-api/) — The sip-provisioning API from Sarj AI Developer API — 3 operation(s) for sip-provisioning.
+- [Sarj AI Developer API Sip Trunk API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-sip-trunk-api/) — The sip_trunk API from Sarj AI Developer API — 2 operation(s) for sip_trunk.
+- [Sarj AI Developer API Users API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-users-api/) — The users API from Sarj AI Developer API — 8 operation(s) for users.
+- [Sarj AI Developer API Webhooks API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-webhooks-api/) — The webhooks API from Sarj AI Developer API — 3 operation(s) for webhooks.
+- [Sarj AI Developer API Zoho Integration API](https://apis.io/apis/sarj-ai-developer-api/sarj-ai-developer-api-zoho-integration-api/) — The zoho-integration API from Sarj AI Developer API — 12 operation(s) for zoho-integration.
 
-## APIs
+### Published properties
 
-### Sarj AI Developer API Admin API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The admin API from Sarj AI Developer API — 4 operation(s) for admin.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Sarj Ai Developer Api Webhooks](https://apis.io/asyncapis/sarj-ai-developer-api/sarj-ai-developer-api-webhooks/)
 
-- admin
+#### MCP servers (2)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [OpenAPI](openapi/sarj-ai-developer-api-admin-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-admin-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-admin-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
+- [mcp](https://apis.io/servers/sarj-ai-developer-api/mcp/)
+- [Moved to /providers/sarj-ai-developer-api/](https://apis.io/servers/sarj-ai-developer-api/sarj-voice/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Sarj Ai Developer Api Agentic Access](https://apis.io/agentic-access/sarj-ai-developer-api/sarj-ai-developer-api-agentic-access/)
+
+#### Collections (31)
+
+Postman and Open Collection request collections.
+
+- [Sarj.ai Voice Admin API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-admin-api/)
+- [Sarj.ai Voice Agent Profiles API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-agent-profiles-api/)
+- [Sarj.ai Voice Analytics API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-analytics-api/)
+- [Sarj TTS Audio API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-audio-api/)
+- [Sarj.ai Voice Batch API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-batch-api/)
+- [Sarj Ai Developer Calls API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-calls-api/)
+- [Sarj STT Debug API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-debug-api/)
+- [Sarj.ai Developer API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-developer/)
+- [Sarj Ai Developer Health API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-health-api/)
+- [Sarj.ai Voice Integrations API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-integrations-api/)
+- [Sarj.ai Voice Messaging API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-messaging-api/)
+- [Sarj TTS Metrics API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-metrics-api/)
+- [Sarj TTS Models API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-models-api/)
+- [Sarj STT Openai API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-openai-api/)
+- [Sarj.ai Voice Organization Sip API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-organization-sip-api/)
+- [Sarj.ai Voice Organization Variables API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-organization-variables-api/)
+- [Sarj.ai Voice Organizations API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-organizations-api/)
+- [Sarj.ai Voice Report Templates API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-report-templates-api/)
+- [Sarj.ai Voice Salesforce API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-salesforce-api/)
+- [Sarj.ai Voice Salla API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-salla-api/)
+- [Sarj STT Sarj STT API API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-sarj-stt-api-api/)
+- [Sarj.ai Voice Settings API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-settings-api/)
+- [Sarj.ai Voice Sip API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-sip-api/)
+- [Sarj STT API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-stt/)
+- [Sarj.ai Developer System API](https://apis.io/collections/sarj-ai-developer-api/open-sarj-ai-developer-api-system-api/)
+- …and 6 more published on APIs.io
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Sarj Ai Developer Api Developer Overlay](https://apis.io/overlays/sarj-ai-developer-api/sarj-ai-developer-api-developer-overlay/)
+- [Sarj Ai Developer Api Stt Overlay](https://apis.io/overlays/sarj-ai-developer-api/sarj-ai-developer-api-stt-overlay/)
+- [Sarj Ai Developer Api Tts Overlay](https://apis.io/overlays/sarj-ai-developer-api/sarj-ai-developer-api-tts-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Sarj Ai Developer Api Authentication](https://apis.io/security/sarj-ai-developer-api/sarj-ai-developer-api-authentication/)
+- [Sarj Ai Developer Api Domain Security](https://apis.io/security/sarj-ai-developer-api/sarj-ai-developer-api-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Sarj Ai Developer Api Scopes](https://apis.io/scopes/sarj-ai-developer-api/sarj-ai-developer-api-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Sarj Ai Developer Api Plans Pricing](https://apis.io/plans/sarj-ai-developer-api/sarj-ai-developer-api-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Sarj Ai Developer Api Rate Limits](https://apis.io/rate-limits/sarj-ai-developer-api/sarj-ai-developer-api-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.sarj.ai/)
 - [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Agent Profiles API
-
-The agent-profiles API from Sarj AI Developer API — 5 operation(s) for agent-profiles.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- agent-profiles
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-agent-profiles-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-agent-profiles-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-agent-profiles-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Analytics API
-
-The analytics API from Sarj AI Developer API — 1 operation(s) for analytics.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- analytics
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-analytics-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-analytics-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-analytics-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Audio API
-
-The Audio API from Sarj AI Developer API — 3 operation(s) for audio.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Audio
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-audio-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-audio-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-audio-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Batch API
-
-The batch API from Sarj AI Developer API — 9 operation(s) for batch.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- batch
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-batch-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-batch-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-batch-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Calls API
-
-Create outbound voice calls and retrieve call details and transcripts.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Calls
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-calls-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-calls-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-calls-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Debug API
-
-The Debug API from Sarj AI Developer API — 1 operation(s) for debug.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Debug
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-debug-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-debug-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-debug-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Health API
-
-The Health API from Sarj AI Developer API — 3 operation(s) for health.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Health
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-health-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-health-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-health-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Integrations API
-
-The integrations API from Sarj AI Developer API — 19 operation(s) for integrations.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- integrations
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-integrations-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-integrations-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-integrations-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Messaging API
-
-The messaging API from Sarj AI Developer API — 8 operation(s) for messaging.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- messaging
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-messaging-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-messaging-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-messaging-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Metrics API
-
-The Metrics API from Sarj AI Developer API — 1 operation(s) for metrics.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Metrics
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-metrics-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-metrics-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-metrics-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Models API
-
-The Models API from Sarj AI Developer API — 2 operation(s) for models.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Models
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-models-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-models-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-models-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Openai API
-
-The Openai API from Sarj AI Developer API — 1 operation(s) for openai.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Openai
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-openai-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-openai-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-openai-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Organization Sip API
-
-The organization-sip API from Sarj AI Developer API — 7 operation(s) for organization-sip.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- organization-sip
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-organization-sip-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-organization-sip-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-organization-sip-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Organization Variables API
-
-The organization-variables API from Sarj AI Developer API — 3 operation(s) for organization-variables.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- organization-variables
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-organization-variables-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-organization-variables-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-organization-variables-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Organizations API
-
-The organizations API from Sarj AI Developer API — 7 operation(s) for organizations.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- organizations
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-organizations-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-organizations-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-organizations-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Report Templates API
-
-The report-templates API from Sarj AI Developer API — 3 operation(s) for report-templates.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- report-templates
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-report-templates-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-report-templates-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-report-templates-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Salesforce API
-
-The salesforce API from Sarj AI Developer API — 2 operation(s) for salesforce.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- salesforce
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-salesforce-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-salesforce-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-salesforce-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Salla API
-
-The salla API from Sarj AI Developer API — 3 operation(s) for salla.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- salla
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-salla-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-salla-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-salla-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Sarj STT API API
-
-The Sarj STT API API from Sarj AI Developer API — 1 operation(s) for sarj stt api.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Sarj STT API
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-sarj-stt-api-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-sarj-stt-api-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-sarj-stt-api-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Settings API
-
-The settings API from Sarj AI Developer API — 7 operation(s) for settings.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- settings
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-settings-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-settings-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-settings-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Sip API
-
-The sip API from Sarj AI Developer API — 7 operation(s) for sip.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- sip
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-sip-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-sip-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-sip-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API System API
-
-Service health and status.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- System
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-system-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-system-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-system-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Task API
-
-The task API from Sarj AI Developer API — 4 operation(s) for task.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- task
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-task-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-task-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-task-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Task Management API
-
-The task-management API from Sarj AI Developer API — 5 operation(s) for task-management.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- task-management
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-task-management-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-task-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-task-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Voices API
-
-The Voices API from Sarj AI Developer API — 3 operation(s) for voices.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- Voices
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-voices-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-voices-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-voices-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-### Sarj AI Developer API Zoho API
-
-The zoho API from Sarj AI Developer API — 10 operation(s) for zoho.
-
-- **Human URL:** [https://platform-docs.sarj.ai](https://platform-docs.sarj.ai)
-- **Base URL:** `https://platform-api.sarj.ai/api/v1`
-
-#### Tags
-
-- zoho
-
-#### Properties
-
-- [OpenAPI](openapi/sarj-ai-developer-api-zoho-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sarj-ai-developer-api-zoho-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sarj-ai-developer-api-zoho-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P](https://platform-api.sarj.ai/api/v1/mcp)
-- [Documentation](https://platform-docs.sarj.ai)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Webhooks](https://platform-docs.sarj.ai/webhooks)
-- [Documentation](https://platform-docs.sarj.ai/speech-to-text)
-- [Documentation](https://platform-docs.sarj.ai/text-to-speech)
-
-## Common Properties
-
-- [Overlay](overlays/sarj-ai-developer-api-developer-overlay.yaml)
-- [Developer Portal](https://platform-docs.sarj.ai)
-- [Documentation](https://platform-docs.sarj.ai)
-- [API Reference](https://platform-docs.sarj.ai/api-reference)
-- [Getting Started](https://platform-docs.sarj.ai/getting-started)
-- [Support](mailto:support@sarj.ai)
-- [Sign Up](https://platform.sarj.ai/sign-in)
-- [GitHub Organization](https://github.com/sarj-ai)
-- [L L M S Txt](llms/sarj-ai-developer-api-llms.txt)
-- [Agent Card](a2a/sarj-ai-developer-api-a2a.yml)
-- [Agent Skill](skills/_index.yml)
-- [M C P Server](mcp/sarj-ai-developer-api-mcp.yml)
-- [Tool Crosswalk](mcp/sarj-ai-developer-api-tool-crosswalk.yml)
-- [Packages](packages/sarj-ai-developer-api-packages.yml)
-- [S D Ks](packages/sarj-ai-developer-api-packages.yml)
-- [Well Known](well-known/sarj-ai-developer-api-well-known.yml)
-- [Authentication](authentication/sarj-ai-developer-api-authentication.yml)
-- [O Auth Scopes](scopes/sarj-ai-developer-api-scopes.yml)
-- [Domain Security](security/sarj-ai-developer-api-domain-security.yml)
-- [Conformance](conformance/sarj-ai-developer-api-conformance.yml)
-- [Error Catalog](errors/sarj-ai-developer-api-problem-types.yml)
-- [Lifecycle](lifecycle/sarj-ai-developer-api-lifecycle.yml)
-- [Conventions](conventions/sarj-ai-developer-api-conventions.yml)
-- [Webhooks](asyncapi/sarj-ai-developer-api-webhooks.yml)
-- [Data Model](data-model/sarj-ai-developer-api-data-model.yml)
-- [Agentic Access](agentic-access/sarj-ai-developer-api-agentic-access.yml)
-
-## Maintainers
-
-**FN:** Sarj AI Developer API
-**Email:** contact@sarj.ai
-**URL:** https://www.sarj.ai/en/
+- [Getting started](https://platform-docs.sarj.ai/getting-started)
+- [API reference](https://platform-docs.sarj.ai/api-reference)
+- [Sign up](https://platform.sarj.ai/sign-in)
+- [Blog](https://blog.sarj.ai)
+- [Terms of service](https://sarj.ai/terms)
+- [Privacy policy](https://sarj.ai/privacy)
+- [GitHub](https://github.com/sarj-ai)
+
+## API Evangelist rating
+
+**Kin Score 41.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 48.7 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 33.3 |
+| Access clarity | 21.1 |
+
+**Agent readiness 65.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | verified |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 33.0** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sarj-ai-developer-api/](https://apis.io/providers/sarj-ai-developer-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sarj AI Developer API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sarj-ai-developer-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
