@@ -1,0 +1,1253 @@
+name: Sarj AI Developer API
+description: Sarj.ai is a voice and chat AI agent platform built for Arabic, English and Urdu, focused
+  on the Saudi and wider MENA market. The public developer surface is a REST API for outbound voice calls
+  — place a call against a saved scenario (immediately, or booked up to 30 days ahead), cancel or reschedule
+  it while it is still pending, create a retry policy governing how often a number is re-dialed, and retrieve
+  the call's status, recording, transcript and asynchronous post-call outcome report. Alongside the call
+  API, Sarj publishes two OpenAI-compatible speech APIs (Speech-to-Text with streaming, and Text-to-Speech
+  with voice cloning), a hosted MCP server exposing createCall and getCall as native agent tools, a second
+  unauthenticated MCP server over its documentation, an A2A agent card, a published Agent Skill with an
+  agentskills.io discovery index, an llms.txt, webhook push notifications covering eleven call outcomes,
+  and an official Python SDK.
+url: https://raw.githubusercontent.com/api-evangelist/sarj-ai-developer-api/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  - scopes
+  - security
+  generated: '2026-09-02'
+  method: derived
+image: https://www.sarj.ai/og-image.png
+created: '2026-08-04'
+modified: '2026-09-16'
+specificationVersion: '0.23'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-04
+tags:
+- Voice AI
+- Voice Agents
+- Conversational AI
+- Arabic AI
+- Outbound Calls
+- Telephony
+- Speech-to-Text
+- Text-to-Speech
+- Voice Cloning
+- MCP
+- Agent-Native
+- Saudi Arabia
+- MENA
+- A2A
+tags_raw:
+- voice AI
+- voice agents
+- conversational AI
+- Arabic AI
+- outbound calls
+- telephony
+- speech to text
+- text to speech
+- voice cloning
+- MCP
+- agent-native
+- Saudi Arabia
+- MENA
+- A2A
+apis:
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-agent-profiles-api
+  name: Sarj AI Developer API Agent Profiles API
+  description: The agent-profiles API from Sarj AI Developer API — 5 operation(s) for agent-profiles.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - agent-profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-agent-profiles-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-analytics-api
+  name: Sarj AI Developer API Analytics API
+  description: The analytics API from Sarj AI Developer API — 1 operation(s) for analytics.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Analytics
+  tags_raw:
+  - analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-analytics-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-audio-api
+  name: Sarj AI Developer API Audio API
+  description: The Audio API from Sarj AI Developer API — 3 operation(s) for audio.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://sarj-omni-tts.sarj.ai
+  tags:
+  - Audio
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-audio-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-batch-api
+  name: Sarj AI Developer API Batch API
+  description: The batch API from Sarj AI Developer API — 9 operation(s) for batch.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Batch
+  tags_raw:
+  - batch
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-batch-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-calls-api
+  name: Sarj AI Developer API Calls API
+  description: Create outbound voice calls and retrieve call details and transcripts.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Calls
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-calls-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-debug-api
+  name: Sarj AI Developer API Debug API
+  description: The Debug API from Sarj AI Developer API — 1 operation(s) for debug.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://stt-rnnt-ar.sarj.ai
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-debug-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-health-api
+  name: Sarj AI Developer API Health API
+  description: The Health API from Sarj AI Developer API — 3 operation(s) for health.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-health-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-integrations-api
+  name: Sarj AI Developer API Integrations API
+  description: The integrations API from Sarj AI Developer API — 19 operation(s) for integrations.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Integration
+  tags_raw:
+  - integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-integrations-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-messaging-api
+  name: Sarj AI Developer API Messaging API
+  description: The messaging API from Sarj AI Developer API — 8 operation(s) for messaging.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Messaging
+  tags_raw:
+  - messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-messaging-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-metrics-api
+  name: Sarj AI Developer API Metrics API
+  description: The Metrics API from Sarj AI Developer API — 1 operation(s) for metrics.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://sarj-omni-tts.sarj.ai
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-metrics-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-models-api
+  name: Sarj AI Developer API Models API
+  description: The Models API from Sarj AI Developer API — 2 operation(s) for models.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://sarj-omni-tts.sarj.ai
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-models-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-openai-api
+  name: Sarj AI Developer API Openai API
+  description: The Openai API from Sarj AI Developer API — 1 operation(s) for openai.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://stt-rnnt-ar.sarj.ai
+  tags:
+  - OpenAI
+  tags_raw:
+  - Openai
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-openai-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-sip-api
+  name: Sarj AI Developer API Organization Sip API
+  description: >-
+    The organization-sip API from Sarj AI Developer API — 7 operation(s) for organization-sip.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - organization-sip
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-organization-sip-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-variables-api
+  name: Sarj AI Developer API Organization Variables API
+  description: >-
+    The organization-variables API from Sarj AI Developer API — 3 operation(s) for organization-variables.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - organization-variables
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-organization-variables-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-organizations-api
+  name: Sarj AI Developer API Organizations API
+  description: The organizations API from Sarj AI Developer API — 7 operation(s) for organizations.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Organization
+  tags_raw:
+  - organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-organizations-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-report-templates-api
+  name: Sarj AI Developer API Report Templates API
+  description: >-
+    The report-templates API from Sarj AI Developer API — 3 operation(s) for report-templates.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Report Templates
+  tags_raw:
+  - report-templates
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-report-templates-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sarj-stt-api-api
+  name: Sarj AI Developer API Sarj STT API
+  description: The Sarj STT API API from Sarj AI Developer API — 1 operation(s) for sarj stt api.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://stt-rnnt-ar.sarj.ai
+  tags:
+  - Sarj STT API
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sarj-stt-api-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-settings-api
+  name: Sarj AI Developer API Settings API
+  description: The settings API from Sarj AI Developer API — 7 operation(s) for settings.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Settings
+  tags_raw:
+  - settings
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-settings-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sip-api
+  name: Sarj AI Developer API Sip API
+  description: The sip API from Sarj AI Developer API — 7 operation(s) for sip.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - SIP
+  tags_raw:
+  - sip
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sip-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-system-api
+  name: Sarj AI Developer API System API
+  description: Service health and status.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-system-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-task-api
+  name: Sarj AI Developer API Task API
+  description: The task API from Sarj AI Developer API — 4 operation(s) for task.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Task
+  tags_raw:
+  - task
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-task-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-task-management-api
+  name: Sarj AI Developer API Task Management API
+  description: The task-management API from Sarj AI Developer API — 5 operation(s) for task-management.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Task Management
+  tags_raw:
+  - task-management
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-task-management-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-voices-api
+  name: Sarj AI Developer API Voices API
+  description: The Voices API from Sarj AI Developer API — 3 operation(s) for voices.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://sarj-omni-tts.sarj.ai
+  tags:
+  - Voice
+  tags_raw:
+  - Voices
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-voices-api-openapi.yml
+  - type: MCPServer
+    url: https://platform-api.sarj.ai/api/v1/mcp
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-api-keys-api
+  name: Sarj AI Developer API API Keys API
+  description: The api-keys API from Sarj AI Developer API — 3 operation(s) for api-keys.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - APIKeys
+  tags_raw:
+  - api-keys
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-call-flags-api
+  name: Sarj AI Developer API Call Flags API
+  description: The call-flags API from Sarj AI Developer API — 4 operation(s) for call-flags.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - call-flags
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-call-flags-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-custom-scenarios-api
+  name: Sarj AI Developer API Custom Scenarios API
+  description: >-
+    The custom-scenarios API from Sarj AI Developer API — 5 operation(s) for custom-scenarios.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - custom-scenarios
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-custom-scenarios-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-kamailio-state-api
+  name: Sarj AI Developer API Kamailio State API
+  description: The kamailio-state API from Sarj AI Developer API — 1 operation(s) for kamailio-state.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - kamailio-state
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-kamailio-state-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-knowledge-bases-api
+  name: Sarj AI Developer API Knowledge Bases API
+  description: The knowledge-bases API from Sarj AI Developer API — 7 operation(s) for knowledge-bases.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Knowledge Bases
+  tags_raw:
+  - knowledge-bases
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-knowledge-bases-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-livez-api
+  name: Sarj AI Developer API Livez API
+  description: The Livez API from Sarj AI Developer API — 1 operation(s) for livez.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Livez
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-livez-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-messaging-settings-api
+  name: Sarj AI Developer API Messaging Settings API
+  description: >-
+    The messaging-settings API from Sarj AI Developer API — 4 operation(s) for messaging-settings.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - MessagingSettings
+  tags_raw:
+  - messaging-settings
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-messaging-settings-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-batch-settings-api
+  name: Sarj AI Developer API Organization Batch Settings API
+  description: >-
+    The organization-batch-settings API from Sarj AI Developer API — 1 operation(s) for organization-batch-settings.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - organization-batch-settings
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-organization-batch-settings-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-organization-settings-api
+  name: Sarj AI Developer API Organization Settings API
+  description: >-
+    The organization-settings API from Sarj AI Developer API — 1 operation(s) for organization-settings.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Organization Settings
+  tags_raw:
+  - organization-settings
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-organization-settings-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-phone-numbers-api
+  name: Sarj AI Developer API Phone Numbers API
+  description: The phone-numbers API from Sarj AI Developer API — 13 operation(s) for phone-numbers.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Phone Numbers
+  tags_raw:
+  - phone-numbers
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-phone-numbers-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-phone-provider-api
+  name: Sarj AI Developer API Phone Provider API
+  description: The phone-provider API from Sarj AI Developer API — 2 operation(s) for phone-provider.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - phone-provider
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-phone-provider-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-readyz-api
+  name: Sarj AI Developer API Readyz API
+  description: The Readyz API from Sarj AI Developer API — 1 operation(s) for readyz.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Readyz
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-readyz-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-reports-api
+  name: Sarj AI Developer API Reports API
+  description: The reports API from Sarj AI Developer API — 2 operation(s) for reports.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Reports
+  tags_raw:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-reports-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-salesforce-integration-api
+  name: Sarj AI Developer API Salesforce Integration API
+  description: >-
+    The salesforce-integration API from Sarj AI Developer API — 2 operation(s) for salesforce-integration.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - salesforce-integration
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-salesforce-integration-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-salla-integration-api
+  name: Sarj AI Developer API Salla Integration API
+  description: >-
+    The salla-integration API from Sarj AI Developer API — 7 operation(s) for salla-integration.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - salla-integration
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-salla-integration-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-scenario-generation-api
+  name: Sarj AI Developer API Scenario Generation API
+  description: >-
+    The scenario-generation API from Sarj AI Developer API — 5 operation(s) for scenario-generation.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - scenario-generation
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-scenario-generation-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-scenario-insights-api
+  name: Sarj AI Developer API Scenario Insights API
+  description: >-
+    The scenario-insights API from Sarj AI Developer API — 2 operation(s) for scenario-insights.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - scenario-insights
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-scenario-insights-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-scenario-templates-api
+  name: Sarj AI Developer API Scenario Templates API
+  description: >-
+    The scenario-templates API from Sarj AI Developer API — 6 operation(s) for scenario-templates.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - scenario-templates
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-scenario-templates-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-schedule-configs-api
+  name: Sarj AI Developer API Schedule Configs API
+  description: Create and manage retry policies for scheduled outbound calls.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Schedule Configs
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-schedule-configs-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sip-connection-api
+  name: Sarj AI Developer API Sip Connection API
+  description: The sip-connection API from Sarj AI Developer API — 4 operation(s) for sip-connection.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - sip-connection
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sip-connection-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sip-connections-api
+  name: Sarj AI Developer API Sip Connections API
+  description: The sip-connections API from Sarj AI Developer API — 6 operation(s) for sip-connections.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - sip-connections
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sip-connections-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sip-provisioning-api
+  name: Sarj AI Developer API Sip Provisioning API
+  description: >-
+    The sip-provisioning API from Sarj AI Developer API — 3 operation(s) for sip-provisioning.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - sip-provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sip-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-sip-trunk-api
+  name: Sarj AI Developer API Sip Trunk API
+  description: The sip_trunk API from Sarj AI Developer API — 2 operation(s) for sip_trunk.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - SIP Trunk
+  tags_raw:
+  - sip_trunk
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-sip-trunk-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-users-api
+  name: Sarj AI Developer API Users API
+  description: The users API from Sarj AI Developer API — 8 operation(s) for users.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - User
+  tags_raw:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-users-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-webhooks-api
+  name: Sarj AI Developer API Webhooks API
+  description: The webhooks API from Sarj AI Developer API — 3 operation(s) for webhooks.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - Webhook
+  tags_raw:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+- aid: sarj-ai-developer-api:sarj-ai-developer-api-zoho-integration-api
+  name: Sarj AI Developer API Zoho Integration API
+  description: >-
+    The zoho-integration API from Sarj AI Developer API — 12 operation(s) for zoho-integration.
+  humanURL: https://platform-docs.sarj.ai
+  baseURL: https://platform-api.sarj.ai/api/v1
+  tags:
+  - zoho-integration
+  properties:
+  - type: OpenAPI
+    url: openapi/sarj-ai-developer-api-zoho-integration-api-openapi.yml
+  - type: Documentation
+    url: https://platform-docs.sarj.ai
+  - type: GettingStarted
+    url: https://platform-docs.sarj.ai/getting-started
+  - type: Webhooks
+    url: https://platform-docs.sarj.ai/webhooks
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/speech-to-text
+  - type: Documentation
+    url: https://platform-docs.sarj.ai/text-to-speech
+common:
+- type: CapabilityMap
+  url: capabilities/sarj-ai-developer-api-capability-edges.yml
+  name: Sarj AI Developer API Business Capability Map
+- type: Website
+  url: https://www.sarj.ai/
+- type: Overlay
+  url: overlays/sarj-ai-developer-api-developer-overlay.yaml
+- type: DeveloperPortal
+  url: https://platform-docs.sarj.ai
+- type: Documentation
+  url: https://platform-docs.sarj.ai
+- type: APIReference
+  url: https://platform-docs.sarj.ai/api-reference
+- type: GettingStarted
+  url: https://platform-docs.sarj.ai/getting-started
+- type: Support
+  url: mailto:support@sarj.ai
+- type: SignUp
+  url: https://platform.sarj.ai/sign-in
+- type: GitHubOrganization
+  url: https://github.com/sarj-ai
+- type: LLMsTxt
+  url: llms/sarj-ai-developer-api-llms.txt
+- type: AgentCard
+  url: a2a/sarj-ai-developer-api-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/sarj-ai-developer-api-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/sarj-ai-developer-api-tool-crosswalk.yml
+- type: Packages
+  url: packages/sarj-ai-developer-api-packages.yml
+- type: SDKs
+  url: packages/sarj-ai-developer-api-packages.yml
+- type: WellKnown
+  url: well-known/sarj-ai-developer-api-well-known.yml
+- type: Authentication
+  url: authentication/sarj-ai-developer-api-authentication.yml
+- type: OAuthScopes
+  url: scopes/sarj-ai-developer-api-scopes.yml
+- type: DomainSecurity
+  url: security/sarj-ai-developer-api-domain-security.yml
+- type: Conformance
+  url: conformance/sarj-ai-developer-api-conformance.yml
+- type: ErrorCatalog
+  url: errors/sarj-ai-developer-api-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/sarj-ai-developer-api-lifecycle.yml
+- type: Conventions
+  url: conventions/sarj-ai-developer-api-conventions.yml
+- type: Webhooks
+  url: asyncapi/sarj-ai-developer-api-webhooks.yml
+- type: DataModel
+  url: data-model/sarj-ai-developer-api-data-model.yml
+- type: AgenticAccess
+  url: agentic-access/sarj-ai-developer-api-agentic-access.yml
+- type: Plans
+  url: plans/sarj-ai-developer-api-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/sarj-ai-developer-api-rate-limits.yml
+- type: Console
+  url: https://platform-docs.sarj.ai/api-reference
+- type: Blog
+  url: https://blog.sarj.ai
+- type: BlogRSS
+  url: https://blog.sarj.ai/rss.xml
+- type: TermsOfService
+  url: https://sarj.ai/terms
+- type: PrivacyPolicy
+  url: https://sarj.ai/privacy
+- type: Contact
+  url: https://sarj.ai/contact
+maintainers:
+- FN: Sarj AI Developer API
+  url: https://www.sarj.ai/en/
+  email: contact@sarj.ai
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 97
+  at: '2026-08-04T12:01:50.428Z'
+x-enrichment:
+  date: '2026-09-11'
+  status: enriched
+  artifacts_added: 7
+  pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://platform-docs.sarj.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
