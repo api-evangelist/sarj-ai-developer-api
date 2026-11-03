@@ -24,17 +24,20 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: unknown
-  onboarding: self-serve
+  onboarding: approval
   trial: false
   try_now: false
   public: false
-  label: Self-serve signup
+  label: Requires approval
   confidence: medium
   source:
+  - plans
   - authentication
   - scopes
+  - rate-limits
   - security
-  generated: '2026-09-02'
+  - sandbox
+  generated: '2026-11-02'
   method: derived
 image: https://www.sarj.ai/og-image.png
 created: '2026-08-04'
